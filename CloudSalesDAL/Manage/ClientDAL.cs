@@ -51,7 +51,21 @@ namespace CloudSalesDAL
             return clientid;
         }
 
+        public bool InsertClientAuthorizeLog(string clientID, string orderID, int authorizeType, int userQuantity, DateTime? beginTime, DateTime? endTime, int systemType)
+        {
+            SqlParameter[] parms = { 
+                                       new SqlParameter("@ClientiD",clientID),
+                                       new SqlParameter("@OrderID",orderID),
+                                       new SqlParameter("@AuthorizeType",authorizeType),
+                                       new SqlParameter("@UserQuantity",userQuantity),
+                                       new SqlParameter("@BeginTime",beginTime),
+                                       new SqlParameter("@EndTime",endTime),
+                                       new SqlParameter("@SystemType",systemType),
+                                   };
+            string cmdTxt = "insert into ClientAuthorizeLog(ClientiD,OrderID,AuthorizeType,UserQuantity,BeginTime,EndTime,SystemType) values(@ClientiD,@OrderID,@AuthorizeType,@UserQuantity,@BeginTime,@EndTime,@SystemType)";
 
+            return ExecuteNonQuery(cmdTxt, parms, CommandType.Text) > 0;
+        }
         #endregion
 
         #region 编辑
@@ -65,12 +79,12 @@ namespace CloudSalesDAL
                                        new SqlParameter("@CityCode",cityCode),
                                        new SqlParameter("@Address",address),
                                        new SqlParameter("@Description",description),
-                                       new SqlParameter("@ContactName",contactName)
+                                       new SqlParameter("@ContactName",contactName),
+                                       new SqlParameter("@CreateUserID",userid),
+                                       new SqlParameter("@Modules",modules)
                                    };
 
-            string cmdText = "update Clients set CompanyName=@CompanyName,MobilePhone=@MobilePhone,Industry=@Industry, CityCode=@CityCode, Address=@Address,Description=@Description,ContactName=@ContactName where ClientiD=@ClientiD";
-
-            return ExecuteNonQuery(cmdText, parms, CommandType.Text) > 0;
+            return ExecuteNonQuery("P_UpdateClient", parms, CommandType.StoredProcedure) > 0;
         }
 
         public bool ClientAuthorize(string clientID,int userQuantity, int authorizeType, DateTime endTime)

@@ -1,11 +1,15 @@
 ﻿@{
     ViewBag.Title = "设置客户权限";
+    var authorizeType = @ViewBag.AuthorizeType;
 }
 @section script{
+    
     <script type="text/javascript">
         seajs.use(["scripts/clients"], function (client) {
             client.initClientAuthorize();
         });
+
+        $("#AuthorizeType").val(@authorizeType);
     </script>
 }
 
@@ -26,7 +30,7 @@
     </li>
     <li>
         <span class="columnname">授权类型：</span> 
-        <select style="cursor:pointer;" id="AuthorizeType" name="@ViewBag.AuthorizeType"">
+        <select style="cursor:pointer;" id="AuthorizeType">
             <option value="-1">选择授权类型</option>
             <option value="1">试用</option>
             <option value="2">付费</option>

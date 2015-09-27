@@ -88,6 +88,11 @@ namespace CloudSalesBusiness
             return clientid;
         }
 
+        public static bool InsertClientAuthorizeLog(ClientAuthorizeLog model)
+        {
+            return ClientDAL.BaseProvider.InsertClientAuthorizeLog(model.ClientID,model.OrderID,model.AuthorizeType,
+                model.UserQuantity,model.BeginTime,model.EndTime,model.SystemType);
+        }
         #endregion
         public static bool DeleteClient(string clientID)
         {
@@ -119,7 +124,21 @@ namespace CloudSalesBusiness
 
         public static bool ClientAuthorize(string clientID, int userQuantity, int authorizeType, DateTime endTime)
         {
-            return ClientDAL.BaseProvider.ClientAuthorize(clientID, userQuantity, authorizeType, endTime);
+            bool flag= ClientDAL.BaseProvider.ClientAuthorize(clientID, userQuantity, authorizeType, endTime);
+
+            if (flag)
+            {
+                ClientAuthorizeLog log = new ClientAuthorizeLog();
+                log.ClientID=clientID;
+                log.UserQuantity = userQuantity;
+                log.AuthorizeType = authorizeType;
+                log.BeginTime = endTime;
+                log.EndTime = endTime;
+                log.SystemType = 2;
+                log.OrderID = string.Empty;
+                ClientBusiness.InsertClientAuthorizeLog(log);
+            }
+            return flag;
         }
         #endregion
 
