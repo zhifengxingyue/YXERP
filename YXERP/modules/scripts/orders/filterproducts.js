@@ -1,6 +1,7 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
-    doT = require("dot");
+        Easydialog = require("easydialog");
+        doT = require("dot");
     require("cart");
     require("pager");
 
@@ -258,9 +259,13 @@
             doT.exec("template/orders/filter_product_list.html", function (templateFun) {
                 var html = templateFun(data.Items);
                 html = $(html);
-
+                //打开产品详情页
                 html.find(".productimg,.name").each(function () {
                     $(this).attr("href", $(this).attr("href") + "&type=" + _self.type);
+                });
+                //加入购物车
+                html.find(".btnAddCart").click(function () {
+
                 });
 
                 $("#productlist").append(html);
