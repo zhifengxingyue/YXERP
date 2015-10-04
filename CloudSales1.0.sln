@@ -25,6 +25,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YX.Database", "YX.Database"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CloudSalesDB", "CloudSalesDB\CloudSalesDB.sqlproj", "{86994CB6-735C-43CC-99F9-0E461EFB21A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.SDK", "MD.SDK\MD.SDK.csproj", "{C6CD2682-4DCA-4EE8-A5E5-A0E117073390}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebTest", "http://localhost:14386", "{F24322FF-7A77-4471-8E69-9C82F8E930E2}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{c6cd2682-4dca-4ee8-a5e5-a0e117073390}|MD.SDK.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_14386"
+		Debug.AspNetCompiler.PhysicalPath = "C:\Users\ge\Desktop\WebTest\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_14386\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_14386"
+		Release.AspNetCompiler.PhysicalPath = "C:\Users\ge\Desktop\WebTest\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_14386\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "C:\Users\ge\Desktop\WebTest\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +90,14 @@ Global
 		{86994CB6-735C-43CC-99F9-0E461EFB21A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86994CB6-735C-43CC-99F9-0E461EFB21A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86994CB6-735C-43CC-99F9-0E461EFB21A1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C6CD2682-4DCA-4EE8-A5E5-A0E117073390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6CD2682-4DCA-4EE8-A5E5-A0E117073390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6CD2682-4DCA-4EE8-A5E5-A0E117073390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6CD2682-4DCA-4EE8-A5E5-A0E117073390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24322FF-7A77-4471-8E69-9C82F8E930E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24322FF-7A77-4471-8E69-9C82F8E930E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24322FF-7A77-4471-8E69-9C82F8E930E2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24322FF-7A77-4471-8E69-9C82F8E930E2}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,8 +108,10 @@ Global
 		{6322CB56-2693-4600-922D-0DEC06A8F59C} = {715A45B7-3D24-43A9-B672-BB8B97E9500F}
 		{B86924C1-EC31-449F-97F3-258DFA43A44F} = {715A45B7-3D24-43A9-B672-BB8B97E9500F}
 		{C9ACA144-EA91-4FA5-A799-39D458AF1FCB} = {A2341884-9797-4A8E-8ECD-268569559579}
+		{C6CD2682-4DCA-4EE8-A5E5-A0E117073390} = {A2341884-9797-4A8E-8ECD-268569559579}
 		{BA148969-6AE6-48A8-B3CC-EE3E95141B80} = {5186CEE7-7220-4B7A-A6FF-1AA6CA384EE7}
 		{2540F126-E260-4533-B337-8A59E6960F35} = {5186CEE7-7220-4B7A-A6FF-1AA6CA384EE7}
+		{F24322FF-7A77-4471-8E69-9C82F8E930E2} = {5186CEE7-7220-4B7A-A6FF-1AA6CA384EE7}
 		{86994CB6-735C-43CC-99F9-0E461EFB21A1} = {7FC86644-335E-4990-A655-E790FE8312B7}
 	EndGlobalSection
 EndGlobal
