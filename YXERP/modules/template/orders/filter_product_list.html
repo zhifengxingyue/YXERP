@@ -13,7 +13,7 @@
         <a target="_blank" href="/Products/ChooseDetail?pid={%=item.ProductID%}&did={%=item.ProductDetailID%}" class="name">
             {%=item.ProductName%}
         </a>
-        <div class="btnAddCart">
+        <div class="btnAddCart" data-pid="{%=item.ProductID%}" data-did="{%=item.ProductDetailID%}">
             加入购物车
         </div>
     </div>

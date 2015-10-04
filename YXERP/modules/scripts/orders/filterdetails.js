@@ -1,8 +1,7 @@
 ﻿
 define(function (require, exports, module) {
     var Global = require("global"),
-        doT = require("dot"),
-        Easydialog = require("easydialog");
+        doT = require("dot");
 
     require("cart");
 
