@@ -28,7 +28,7 @@
             <ul class="price">
                 <li class="column">促&nbsp;&nbsp;销&nbsp;&nbsp;价：</li>
                 <li id="price" class="salesprice">￥@(model.Price.ToString("f2"))</li>
-                <li class="commonprice">￥@(model.CommonPrice.Value.ToString("f2"))</li>
+                @*<li class="commonprice">￥@(model.CommonPrice.Value.ToString("f2"))</li>*@
             </ul>
             <div class="attrs" id="saleattr">
                 @foreach (var attr in model.SaleAttrs)

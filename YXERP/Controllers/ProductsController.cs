@@ -671,6 +671,22 @@ namespace YXERP.Controllers
         }
 
         /// <summary>
+        /// 获取产品信息（加入购物车）
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
+        public JsonResult GetProductByIDForDetails(string productid)
+        {
+            var model = new ProductsBusiness().GetProductByIDForDetails(productid);
+            JsonDictionary.Add("Item", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
         /// 编辑产品状态
         /// </summary>
         /// <param name="productid"></param>
