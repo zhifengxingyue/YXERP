@@ -44,14 +44,17 @@ namespace CloudSalesBusiness
         public static Clients GetClientDetail(string clientID)
         {
             DataTable dt = ClientDAL.BaseProvider.GetClientDetail(clientID);
-            Clients item = new Clients();
+            Clients model = new Clients();
             if (dt.Rows.Count==1)
             {
                 DataRow row=dt.Rows[0];
-                item.FillData(row);
+                model.FillData(row);
+                model.City = CommonCache.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
+                model.IndustryEntity = IndustryBusiness.GetIndustryByClientID(AppSettings.Settings[AppSettingsWEB.Manage, "ClientID"]).Where(i => i.IndustryID.ToLower() == model.Industry.ToLower()).FirstOrDefault();
+                model.Modules = ModulesBusiness.GetModulesByClientID(clientID);
             }
 
-            return item;
+            return model;
         }
         #endregion
 
@@ -80,17 +83,63 @@ namespace CloudSalesBusiness
             }
             loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
             modules = modules.Substring(0, modules.Length - 1);
-            string clientid = new ClientDAL().InsertClient(model.CompanyName, model.ContactName, model.MobilePhone, model.Industry, model.CityCode,
+            string clientid = ClientDAL.BaseProvider.InsertClient(model.CompanyName, model.ContactName, model.MobilePhone, model.Industry, model.CityCode,
                                                              model.Address, model.Description, loginName, loginPwd, modules, userid, out result);
             return clientid;
         }
 
+        public static bool InsertClientAuthorizeLog(ClientAuthorizeLog model)
+        {
+            return ClientDAL.BaseProvider.InsertClientAuthorizeLog(model.ClientID,model.OrderID,model.AuthorizeType,
+                model.UserQuantity,model.BeginTime,model.EndTime,model.SystemType);
+        }
         #endregion
         public static bool DeleteClient(string clientID)
         {
             return CommonBusiness.Update("Clients", "Status", 9, " ClientID='" + clientID + "'");
         }
-        #region 编辑
+        #region  编辑
+        public static bool UpdateClient(Clients model, string loginName, string loginPwd, string userid, out int result)
+        {
+            string modules = "";
+            foreach (var item in model.Modules)
+            {
+                modules += item.ModulesID + ",";
+            }
+            if (modules == "")
+            {
+                result = 3;
+                return false;
+            }
+            loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
+            modules = modules.Substring(0, modules.Length - 1);
+
+            result = 1;
+            return ClientDAL.BaseProvider.UpdateClient(model.ClientID, model.CompanyName
+                , model.ContactName, model.MobilePhone, model.Industry
+                , model.CityCode, model.Address, model.Description
+                , loginName, loginPwd, modules, userid);
+
+        }
+
+        public static bool ClientAuthorize(string clientID, int userQuantity, int authorizeType, DateTime endTime)
+        {
+            bool flag= ClientDAL.BaseProvider.ClientAuthorize(clientID, userQuantity, authorizeType, endTime);
+
+            if (flag)
+            {
+                ClientAuthorizeLog log = new ClientAuthorizeLog();
+                log.ClientID=clientID;
+                log.UserQuantity = userQuantity;
+                log.AuthorizeType = authorizeType;
+                log.BeginTime = endTime;
+                log.EndTime = endTime;
+                log.SystemType = 2;
+                log.OrderID = string.Empty;
+                ClientBusiness.InsertClientAuthorizeLog(log);
+            }
+            return flag;
+        }
         #endregion
 
     }

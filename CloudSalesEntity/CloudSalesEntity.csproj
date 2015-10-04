@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manage\ClientAuthorizeLog.cs" />
     <Compile Include="System\Department.cs" />
     <Compile Include="System\Industry.cs" />
     <Compile Include="System\Role.cs" />
