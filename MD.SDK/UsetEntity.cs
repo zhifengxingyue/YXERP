@@ -7,8 +7,6 @@ namespace MD.SDK
 {
     public class UsetEntity
     {
-        public int error_code = 0;
-
         public string id
         {
             get;

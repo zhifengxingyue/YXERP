@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-
+using System.Configuration;
 namespace MD.SDK
 {
     public class HttpRequest
     {
-        static string MDApiUrl = System.Configuration.ConfigurationSettings.AppSettings["MDApiUrl"] ?? "https://api.mingdao.com";
-        
+        static string MDApiUrl = ConfigurationManager.AppSettings["MDApiUrl"] ?? "https://api.mingdao.com";
+
         public static string RequestServer(ApiOption apiOption, Dictionary<string, object> paras,RequestType requestType=RequestType.Get)
         {
             string url = MDApiUrl+ApiUrlArr[(int)apiOption];

@@ -20,23 +20,23 @@ namespace MD.SDK
             return JsonConvert.DeserializeObject<UsetList>(result);
         }
 
-        public static UsetEntity GetUserDetail(string token, string userID)
+        public static UserJson GetUserDetail(string token, string userID)
         {
             var paras = new Dictionary<string, object>();
             paras.Add("access_token", token);
             paras.Add("u_id", userID);
             var result = HttpRequest.RequestServer(ApiOption.user_detail, paras);
 
-            return JsonConvert.DeserializeObject<UsetEntity>(result);
+            return JsonConvert.DeserializeObject<UserJson>(result);
         }
 
-        public static UsetEntity GetPassportDetail(string token)
+        public static UserJson GetPassportDetail(string token)
         {
             var paras = new Dictionary<string, object>();
             paras.Add("access_token", token);
             var result = HttpRequest.RequestServer(ApiOption.passport_detail, paras);
 
-            return JsonConvert.DeserializeObject<UsetEntity>(result);
+            return JsonConvert.DeserializeObject<UserJson>(result);
         }
 
     }

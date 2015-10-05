@@ -5,10 +5,10 @@ using System.Text;
 
 namespace MD.SDK
 {
-    public class UsetList
+    public class UserJson
     {
-        public int error_code=0;
+        public int error_code = 0;
 
-        public List<UsetEntity> users;
+        public UsetEntity user;
     }
 }

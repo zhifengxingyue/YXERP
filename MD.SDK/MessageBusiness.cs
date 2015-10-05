@@ -5,12 +5,13 @@ using System.Text;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Configuration;
 namespace MD.SDK
 {
     public class MessageBusiness
     {
-        static string AppKey = System.Configuration.ConfigurationSettings.AppSettings["AppKey"];
-        static string AppSecret = System.Configuration.ConfigurationSettings.AppSettings["AppSecret"];
+        static string AppKey = ConfigurationManager.AppSettings["AppKey"] ?? "B9CC7B89CD9DF2E927793C5FFA90726F";
+        static string AppSecret = ConfigurationManager.AppSettings["AppSecret"] ?? "D35B79CA77D45CD1664DA27BA3E7376";
         public static string CreateSys(string token, string msg, string userID, string projectID, out int errorCode)
         {
             errorCode = 0;
