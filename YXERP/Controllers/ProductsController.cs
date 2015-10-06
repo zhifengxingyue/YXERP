@@ -640,10 +640,14 @@ namespace YXERP.Controllers
         /// 获取产品列表
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetProductList(string keyWords, int pageIndex, int totalCount)
+        public JsonResult GetProductList(string filter)
         {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            FilterProduct model = serializer.Deserialize<FilterProduct>(filter);
+            int totalCount = 0;
             int pageCount = 0;
-            List<Products> list = new ProductsBusiness().GetProductList(keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+
+            List<Products> list = new ProductsBusiness().GetProductList(model.CategoryID, model.BeginPrice, model.EndPrice, model.Keywords, model.OrderBy, model.IsAsc, PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);

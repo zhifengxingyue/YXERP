@@ -308,10 +308,10 @@ namespace CloudSalesBusiness
         /// <param name="pageCount">总页数</param>
         /// <param name="clientID">客户端ID</param>
         /// <returns></returns>
-        public List<Products> GetProductList(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        public List<Products> GetProductList(string categoryid, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
-            DataSet ds = dal.GetProductList(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
+            DataSet ds = dal.GetProductList(categoryid, beginprice, endprice, keyWords, orderby, isasc ? 1 : 0, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
 
             List<Products> list = new List<Products>();
             foreach (DataRow dr in ds.Tables[0].Rows)

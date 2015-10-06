@@ -23,7 +23,7 @@
 .salesattr .salesattr-values span{ min-width:80px;}
 
 #childproduct { overflow:auto;}
-.table-list { width:99%; margin-top:50px; }
+.table-list { width:99%; }
 
 /*添加子产品*/
 .product-details-add { width:500px; min-height:200px; }
@@ -32,6 +32,9 @@
 
 .product-imgS { position:absolute; top:80px; right:50px; width:150px; }
 .product-imgS img{ width:150px;}
+
+
+
 
 
 

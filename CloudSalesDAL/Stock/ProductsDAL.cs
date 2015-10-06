@@ -128,11 +128,16 @@ namespace CloudSalesDAL
             return ds;
         }
 
-        public DataSet GetProductList(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        public DataSet GetProductList(string categoryid, string beginprice, string endprice, string keyWords, string orderby, int isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@totalCount",SqlDbType.Int),
                                        new SqlParameter("@pageCount",SqlDbType.Int),
+                                       new SqlParameter("@orderColumn",orderby),
+                                       new SqlParameter("@isAsc",isasc),
+                                       new SqlParameter("@BeginPrice",beginprice),
+                                       new SqlParameter("@EndPrice",endprice),
+                                       new SqlParameter("@CategoryID",categoryid),
                                        new SqlParameter("@keyWords",keyWords),
                                        new SqlParameter("@pageSize",pageSize),
                                        new SqlParameter("@pageIndex",pageIndex),
