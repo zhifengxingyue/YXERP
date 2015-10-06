@@ -1,6 +1,24 @@
 ﻿
 /*新建客户端*/
-.contentnew { border-bottom:solid 1px #ccc; padding:20px;}
+    .clientnav {
+    border-bottom: solid 1px #ccc;
+    }
+
+    .clientnav ul li {
+        font-size:16px;
+        color:#999;
+        float:left;
+        padding:0px 10px 10px 10px;
+        margin-right:25px;
+        cursor:pointer;
+    }
+
+    .clientnav .navactive {
+        color:#002463;
+        border-bottom:4px solid #06c;
+    }
+
+.contentnew { border-bottom:solid 1px #ccc; padding:20px;display:none;}
 .contentnew li { margin-top:10px; line-height:25px; }
 .contentnew input { width:150px;}
 .contentnew select { width:150px; }

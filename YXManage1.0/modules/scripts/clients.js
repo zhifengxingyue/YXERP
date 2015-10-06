@@ -138,6 +138,15 @@ define(function (require, exports, module) {
     }
     //绑定事件
     Clients.detailEvent = function () {
+        //客户设置菜单
+        $(".clientnav ul li").click(function () {
+            $(".clientnav ul li").removeClass("navactive");
+            $("ul.contentnew").hide();
+
+            $(this).addClass("navactive");
+            $("ul.contentnew").eq(parseInt($(this).attr("BindIndex"))).show();
+        });
+
         //验证插件
         VerifyObject = Verify.createVerify({
             element: ".verify",
@@ -145,6 +154,7 @@ define(function (require, exports, module) {
             verifyType: "data-type",
             regText: "data-text"
         });
+
         //城市插件
         CityObject = City.createCity({
             elementID: "citySpan"
@@ -209,7 +219,7 @@ define(function (require, exports, module) {
             });
         });
 
-        //保存客户端
+        //保存客户详情
         $("#saveClient").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
@@ -248,6 +258,30 @@ define(function (require, exports, module) {
                 }
             });
         });
+
+        //客户授权
+        $("#saveClientAuthorize").bind("click", function () {
+         
+            //if (!VerifyObject.isPass()) {
+            //    return false;
+            //};
+
+            var client = {
+                ClientID: $("#clientID").val(),
+                AuthorizeType: $("#authorizeType").val(),
+                UserQuantity: $("#userQuantity").val(),
+                EndTime: $("#endTime").val(),
+            };
+
+            Global.post("/Client/SaveClientAuthorize", { client: JSON.stringify(client) }, function (data) {
+                if (data.Result == "1") {
+                    location.href = "/Client/Index";
+                } else if (data.Result == "2") {
+                    alert("登陆账号已存在!");
+                }
+            });
+
+        });
     };
     //客户详情
     Clients.getClientDetail = function (id) {
@@ -260,13 +294,18 @@ define(function (require, exports, module) {
                 $("#industry").val(item.Industry);
                 $("#address").val(item.Address);
                 $("#description").val(item.Description);
-                
+
                 var modules = item.Modules;
                 for (var i = 0; len = modules.length, i < len; i++) {
                     $("span.modules-item[data-value='" + modules[i].ModulesID + "']").addClass("active");
                 }
 
                 CityObject.setValue(item.City.CityCode);
+
+                $("#userQuantity").val(item.UserQuantity);
+                $("#authorizeType").val(item.AuthorizeType);
+                $("#endTime").val(item.EndTime.toDate("yyyy-MM-dd"));
+
             } else if (data.Result == "2") {
                 alert("登陆账号已存在!");
                 $("#loginName").val("");
@@ -350,27 +389,7 @@ define(function (require, exports, module) {
             //regText: "data-text"
         });
 
-        $("#saveClientAuthorize").bind("click", function () {
-            if (!VerifyObject.isPass()) {
-                return false;
-            };
-
-            var client = {
-                ClientID: $("#ClientID").val(),
-                Status: $("#AuthorizeType").val(),
-                UserQuantity: $("#UserQuantity").val(),
-                EndTime: $("#EndTime").val(),
-            };
-
-            Global.post("/Client/SaveClientAuthorize", { client: JSON.stringify(client) }, function (data) {
-                if (data.Result == "1") {
-                    location.href = "/Client/Index";
-                } else if (data.Result == "2") {
-                    alert("登陆账号已存在!");
-                }
-            });
-
-        });
+       
     };
     module.exports = Clients;
 });

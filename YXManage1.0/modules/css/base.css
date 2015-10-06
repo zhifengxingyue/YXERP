@@ -15,6 +15,9 @@ a {text-decoration:none; }
 
 .left { float:left;}
 .right {float: right;}
+.clear {
+ clear:both;
+}
 .center {text-align:center;}
 .tLeft {text-align:left;}
 .tRight {text-align:right;}
@@ -22,6 +25,9 @@ a {text-decoration:none; }
 .top {vertical-align:top;}
 .bottom {vertical-align:bottom;}
 .hide {display:none;}
+.block {
+    display: block;
+}
 .hand {cursor:pointer;}
 
 .lineHeight15 { height:15px; line-height:15px;}
@@ -63,6 +69,7 @@ a {text-decoration:none; }
 .mLeft20 {margin-left:20px;}
 .mLeft30 {margin-left:30px;}
 .mLeft50 {margin-left:50px;}
+.mLeft80 {margin-left:80px;}
 
 .mRight1 {margin-right:1px;}
 .mRight2 {margin-right:2px;}

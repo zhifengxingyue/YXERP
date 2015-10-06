@@ -205,9 +205,6 @@
     <Content Include="Views\Client\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Client\ClientAuthorize.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Client\Detail.cshtml" />
   </ItemGroup>
   <PropertyGroup>
