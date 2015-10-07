@@ -70,6 +70,20 @@ namespace YXManage.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult GetClientAuthorizeLogs(string clientID,int pageIndex, string keyWords)
+        {
+            int totalCount = 0, pageCount = 0;
+            var list = ClientBusiness.GetClientAuthorizeLogs(clientID,keyWords, PageSize, pageIndex, ref totalCount, ref pageCount);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         /// <summary>
         /// 添加行业
         /// </summary>

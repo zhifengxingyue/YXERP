@@ -56,6 +56,21 @@ namespace CloudSalesBusiness
 
             return model;
         }
+
+        public static List<ClientAuthorizeLog> GetClientAuthorizeLogs(string clientID,string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        {
+            DataTable dt = CommonBusiness.GetPagerData("ClientAuthorizeLog", "*", " Status<>9 and ClientID='" + clientID+"' ", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+            List<ClientAuthorizeLog> list = new List<ClientAuthorizeLog>();
+            ClientAuthorizeLog model;
+            foreach (DataRow item in dt.Rows)
+            {
+                model = new ClientAuthorizeLog();
+                model.FillData(item);
+                list.Add(model);
+            }
+
+            return list;
+        }
         #endregion
 
         #region 添加
