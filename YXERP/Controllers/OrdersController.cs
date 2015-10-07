@@ -22,7 +22,7 @@ namespace YXERP.Controllers
             return View();
         }
 
-        #region Ajax
+        #region Ajax 订单和购物车相关
 
         /// <summary>
         /// 过滤产品
@@ -80,6 +80,22 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        /// <summary>
+        /// 获取购物车产品
+        /// </summary>
+        /// <param name="ordertype"></param>
+        /// <returns></returns>
+        public JsonResult GetShoppingCart(EnumDocType ordertype)
+        {
+            var list = OrdersBusiness.GetShoppingCart(ordertype, CurrentUser.UserID);
+            JsonDictionary.Add("Items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         /// <summary>
         /// 编辑购物车产品数量
         /// </summary>
