@@ -15,6 +15,9 @@
 .product-add .column-name{ width:85px; float:left; }
 .product-add input[type="checkbox"] { vertical-align:middle; margin:0 2px; }
 
+/*添加产品组合规格*/
+.child-product-table { min-width:700px;  width:80%; margin-left:85px;}
+
 .edui-container { min-width:700px; width:80%; float:left; }
 
 .product-img { position:absolute; top:150px; right:50px; width:150px; }
@@ -23,7 +26,9 @@
 .salesattr .salesattr-values span{ min-width:80px;}
 
 #childproduct { overflow:auto;}
-.table-list { width:99%; }
+
+
+.child-table-list { width:99%; }
 
 /*添加子产品*/
 .product-details-add { width:500px; min-height:200px; }

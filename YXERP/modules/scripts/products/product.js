@@ -73,6 +73,83 @@ define(function (require, exports, module) {
         })
 
         $("#productName").focus();
+
+        //更改价格同步子产品
+        $("#price").change(function () {
+            $(".child-product-table").find(".price,.bigprice").val($("#price").val());
+        });
+
+        //组合子产品
+        $(".productsalesattr .attritem").click(function () {
+            var bl = false, details = [], isFirst = true;
+            $(".productsalesattr").each(function () {
+                bl = false;
+                var _attr = $(this), attrdetail = details;
+                //组合规格
+                _attr.find("input:checked").each(function () {
+                    bl = true;
+                    var _value = $(this);
+                    //首个规格
+                    if (isFirst) {
+                        var model = {};
+                        model.ids = _attr.data("id") + ":" + _value.val();
+                        model.saleAttr = _attr.data("id");
+                        model.attrValue = _value.val();
+                        model.names = _attr.data("text") + ":" + _value.data("text");
+                        model.layer = 1;
+                        details.push(model);
+                    }else {
+                        for (var i = 0, j = attrdetail.length; i < j; i++) {
+                            if (attrdetail[i].ids.indexOf(_value.data("id")) < 0) {
+                                var model = {};
+                                model.ids = attrdetail[i].ids + "," + _attr.data("id") + ":" + _value.val();
+                                model.saleAttr = attrdetail[i].saleAttr + "," + _attr.data("id");
+                                model.attrValue = attrdetail[i].attrValue + "," + _value.val();
+                                model.names = attrdetail[i].names + "," + _attr.data("text") + ":" + _value.data("text");
+                                model.layer = attrdetail[i].layer + 1;
+                                details.push(model);
+                            }
+                        }
+                    }
+                });
+                isFirst = false;
+            });
+            //选择所有属性
+            if (bl) {
+                var layer = $(".productsalesattr").length, items = [];
+                for (var i = 0, j = details.length; i < j; i++) {
+                    var model = details[i];
+                    if (model.layer == layer) {
+                        items.push(model);
+                    }
+                }
+                $(".child-product-li").empty();
+                //加载子产品
+                doT.exec("template/products/product_child_add_list.html", function (templateFun) {
+                    var innerText = templateFun(items);
+                    innerText = $(innerText);
+                    $(".child-product-li").append(innerText);
+
+                    innerText.find(".price,.bigprice").val($("#price").val());
+
+                    //价格必须大于0的数字
+                    innerText.find(".price,.bigprice").change(function () {
+                        var _this = $(this);
+                        if (!_this.val().isDouble() || _this.val() <= 0) {
+                            _this.val($("#price").val());
+                        }
+                    });
+
+                    //绑定启用插件
+                    innerText.find(".ico-del").click(function () {
+                        var _this = $(this);
+                        if (confirm("确认删除此规格吗？")) {
+                            _this.parents("tr.list-item").remove();
+                        }
+                    });
+                });
+            }
+        });
     }
     //保存产品
     Product.savaProduct = function () {
@@ -112,6 +189,26 @@ define(function (require, exports, module) {
             Description: encodeURI(editor.getContent())
         };
 
+        //快捷添加子产品
+        if (!_self.ProductID) {
+            var details = [];
+            $(".child-product-table .list-item").each(function () {
+                var _this = $(this);
+                var modelDetail = {
+                    DetailsCode: _this.find(".code").val(),
+                    ShapeCode: "",
+                    SaleAttr: _this.data("attr"),
+                    AttrValue: _this.data("value"),
+                    SaleAttrValue: _this.data("attrvalue"),
+                    Weight: 0,
+                    Price: _this.find(".price").val(),
+                    BigPrice: (Product.SmallUnitID != Product.BigUnitID ? _this.find(".bigprice").val() : _this.find(".price").val()) * Product.BigSmallMultiple,
+                    Description: ""
+                };
+                details.push(modelDetail);
+            });
+            Product.ProductDetails = details;
+        }
         Global.post("/Products/SavaProduct", {
             product: JSON.stringify(Product)
         }, function (data) {

@@ -58,6 +58,10 @@
     String.prototype.isInt = function () {
         return this.match(/^(0|([1-9]\d*))$/);
     }
+    //判断字符串是否数字
+    String.prototype.isDouble = function () {
+        return this.match(/^\d+(.\d+)?$/);
+    }
 
     /*重写alert*/
     window.alert = function (msg) {

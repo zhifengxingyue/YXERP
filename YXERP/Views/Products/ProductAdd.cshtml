@@ -106,6 +106,19 @@
         <li>
             <span class="column-name">是否推荐：</span><label><input type="checkbox" id="isRecommend" />是</label> 
         </li>
+        @foreach (CloudSalesEntity.ProductAttr attr in model.SaleAttrs)
+        {
+            <li data-id="@attr.AttrID" data-text="@attr.AttrName" class="productsalesattr">
+                <span class="column-name">@attr.AttrName：</span>
+                @foreach (CloudSalesEntity.AttrValue value in attr.AttrValues)
+                {
+                    <label class="mRight10"><input type="checkbox" class="attritem" data-id="@attr.AttrID" data-text="@value.ValueName" value="@value.ValueID" />@value.ValueName</label> 
+                }
+            </li>
+        }
+        <li class="child-product-li">
+         
+        </li>
         <li>
             <span class="column-name">产品说明：</span><div id="remark"></div>
         </li>
