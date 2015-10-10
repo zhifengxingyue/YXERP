@@ -12,11 +12,26 @@
 @section leftNav{
     @Html.Partial("_ClientLeftNav")
 }
+<link href="/modules/plug/laydate/need/laydate.css" rel="stylesheet" />
+<link href="/modules/plug/laydate/skins/molv/laydate.css" rel="stylesheet" />
+<script src="/modules/plug/laydate/laydate.js"></script>
 <link href="/modules/css/clients.css" rel="stylesheet" />
-<div class="headertitle">
-    <span>客户详情</span>
+
+<div class="clientnav">
+    <ul>
+        <li class="navactive" BindIndex="0">客户详情</li>
+        <li BindIndex="1">授权</li>
+        <li BindIndex="2">日志</li>
+        <li BindIndex="3">订单</li>
+        <li BindIndex="4">账单</li>
+        <div class="clear"></div>
+    </ul>
 </div>
-<ul class="contentnew">
+
+@*<div class="headertitle">
+    <span>客户详情</span>
+</div>*@
+<ul class="contentnew" style="display:block;">
     <li>
         <span class="columnname">公司名称：</span>
         <span><input type="text" id="name" class="verify" data-empty="公司名称不能为空!" /></span>
@@ -72,8 +87,86 @@
         <span class="columnname">备注：</span>
         <span><textarea id="description"></textarea></span>
     </li>
+    <li>
+        <div class="mTop20 mLeft80">
+            <input type="button" id="saveClient" class="btn" value="保存" />
+        </div>
+    </li>
 </ul>
-<div class="mTop20">
-    <input type="button" id="saveClient" class="btn" value="保存" />
+
+<ul class="contentnew">
+    <li>
+        <span class="columnname">授权人数：</span>
+        <span><input type="text" style="width:50px;" id="userQuantity"  class="verify" data-empty="授权人数不能为空!" /></span>
+    </li>
+    <li>
+        <span class="columnname">授权类型：</span> 
+        <select style="cursor:pointer;" id="authorizeType">
+            <option value="-1">选择授权类型</option>
+            <option value="1">试用</option>
+            <option value="2">付费</option>
+        </select>
+    </li>
+    <li>
+        <span class="columnname">到期时间：</span>
+        <span><input type="text" id="endTime"    maxlength="11"   /></span>
+    </li>
+     <li>
+        <div class="mTop20 mLeft80">
+            <input type="button" id="saveClientAuthorize" class="btn" value="授权" />
+        </div>
+    </li>
+</ul>
+
+<div class="contentnew">
+    <table class="table-list mTop20">
+        <tr class="tr-header" id="client-header">
+            <td class="">授权类型</td>
+            <td class="">授权人数</td>
+            <td class="">结束时间</td>
+        </tr>
+    </table>
+    <div id="pager" class="mTop20"></div>
 </div>
 <input type="hidden" id="clientID" value="@ViewBag.ID" />
+<script type="text/javascript">
+    $(function () {
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+    });
+    var end = {
+        elem: '#endTime',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(),
+        max: '2099-06-16',
+        istime: false,
+        istoday: false
+    };
+    laydate(end);
+    //日期范围限制
+    //var start = {
+    //    elem: '#BeginTime',
+    //    format: 'YYYY-MM-DD',
+    //    min: laydate.now(), //设定最小日期为当前日期
+    //    max: '2099-06-16', //最大日期
+    //    istime: false,
+    //    istoday: false,
+    //    choose: function (datas) {
+    //        end.min = datas; //开始日选好后，重置结束日的最小日期
+    //        end.start = datas //将结束日的初始值设定为开始日
+    //    }
+    //};
+    //var end = {
+    //    elem: '#EndTime',
+    //    format: 'YYYY-MM-DD',
+    //    min: laydate.now(),
+    //    max: '2099-06-16',
+    //    istime: false,
+    //    istoday: false
+    //    //choose: function (datas) {
+    //    //    start.max = datas; //结束日选好后，充值开始日的最大日期
+    //    //}
+    //};
+    ////laydate(start);
+    //laydate(end);
+</script>
+

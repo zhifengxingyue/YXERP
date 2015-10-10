@@ -136,6 +136,7 @@
     <Content Include="modules\scripts\layout.js" />
     <Content Include="modules\scripts\clients.js" />
     <Content Include="modules\template\client_list.html" />
+    <Content Include="modules\template\clientauthorizelog_list.html" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
@@ -203,9 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Client\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Client\ClientAuthorize.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Client\Detail.cshtml" />

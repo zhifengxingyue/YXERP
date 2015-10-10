@@ -138,6 +138,26 @@ define(function (require, exports, module) {
     }
     //绑定事件
     Clients.detailEvent = function () {
+        Clients.Params = {
+            pageIndex: 1,
+            clientID: $("#clientID").val()
+        };
+
+        //客户设置菜单
+        $(".clientnav ul li").click(function () {
+            $(".clientnav ul li").removeClass("navactive");
+            $(".contentnew").hide();
+
+            $(this).addClass("navactive");
+            var BindIndex = $(this).attr("BindIndex");
+            $(".contentnew").eq(parseInt(BindIndex)).show();
+            if (BindIndex == 2)
+            {
+                Clients.bindClientAuthorizeData();
+            }
+            
+        });
+
         //验证插件
         VerifyObject = Verify.createVerify({
             element: ".verify",
@@ -145,6 +165,7 @@ define(function (require, exports, module) {
             verifyType: "data-type",
             regText: "data-text"
         });
+
         //城市插件
         CityObject = City.createCity({
             elementID: "citySpan"
@@ -195,6 +216,7 @@ define(function (require, exports, module) {
                 }
             });
         });
+
         //判断账号是否存在
         $("#loginName").blur(function () {
             var value = $(this).val();
@@ -209,7 +231,7 @@ define(function (require, exports, module) {
             });
         });
 
-        //保存客户端
+        //保存客户详情
         $("#saveClient").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
@@ -248,6 +270,30 @@ define(function (require, exports, module) {
                 }
             });
         });
+
+        //客户授权
+        $("#saveClientAuthorize").bind("click", function () {
+         
+            //if (!VerifyObject.isPass()) {
+            //    return false;
+            //};
+
+            var client = {
+                ClientID: $("#clientID").val(),
+                AuthorizeType: $("#authorizeType").val(),
+                UserQuantity: $("#userQuantity").val(),
+                EndTime: $("#endTime").val(),
+            };
+
+            Global.post("/Client/SaveClientAuthorize", { client: JSON.stringify(client) }, function (data) {
+                if (data.Result == "1") {
+                    location.href = "/Client/Index";
+                } else if (data.Result == "2") {
+                    alert("登陆账号已存在!");
+                }
+            });
+
+        });
     };
     //客户详情
     Clients.getClientDetail = function (id) {
@@ -260,17 +306,67 @@ define(function (require, exports, module) {
                 $("#industry").val(item.Industry);
                 $("#address").val(item.Address);
                 $("#description").val(item.Description);
-                
+
                 var modules = item.Modules;
                 for (var i = 0; len = modules.length, i < len; i++) {
                     $("span.modules-item[data-value='" + modules[i].ModulesID + "']").addClass("active");
                 }
 
                 CityObject.setValue(item.City.CityCode);
+
+                $("#userQuantity").val(item.UserQuantity);
+                $("#authorizeType").val(item.AuthorizeType);
+                $("#endTime").val(item.EndTime.toDate("yyyy-MM-dd"));
+
             } else if (data.Result == "2") {
                 alert("登陆账号已存在!");
                 $("#loginName").val("");
             }
+        });
+    };
+    //绑定客户授权数据
+    Clients.bindClientAuthorizeData = function () {
+        var _self = this;
+        $("#client-header").nextAll().remove();
+        Global.post("/Client/GetClientAuthorizeLogs", Clients.Params, function (data) {
+            doT.exec("template/clientauthorizelog_list.html?3", function (templateFun) {
+                var innerText = templateFun(data.Items);
+                innerText = $(innerText);
+                $("#client-header").after(innerText);
+
+                //$(".table-list a.ico-del").bind("click", function () {
+                //    if (confirm("确定删除?")) {
+                //        Global.post("/Client/DeleteClient", { id: $(this).attr("data-id") }, function (data) {
+                //            if (data.Result == 1) {
+                //                location.href = "/Client/Index";
+                //            }
+                //            else {
+                //                alert("删除失败");
+                //            }
+                //        });
+                //    }
+                //});
+            });
+            $("#pager").paginate({
+                total_count: data.TotalCount,
+                count: data.PageCount,
+                start: Clients.Params.pageIndex,
+                display: 5,
+                border: true,
+                border_color: '#fff',
+                text_color: '#333',
+                background_color: '#fff',
+                border_hover_color: '#ccc',
+                text_hover_color: '#000',
+                background_hover_color: '#efefef',
+                rotate: true,
+                images: false,
+                mouse: 'slide',
+                onChange: function (page) {
+                    Clients.Params.pageIndex = page;
+                    Clients.bindData();
+                }
+            });
         });
     };
 
@@ -333,44 +429,5 @@ define(function (require, exports, module) {
         });
     }
 
-    //客户权限设置
-    Clients.initClientAuthorize = function () {
-        Clients.Params = {
-            pageIndex: 1
-        };
-        Clients.bindClientAuthorize();
-    };
-    //绑定事件
-    Clients.bindClientAuthorize = function () {
-        //验证插件
-        VerifyObject = Verify.createVerify({
-            element: ".verify",
-            emptyAttr: "data-empty"
-            //verifyType: "data-type",
-            //regText: "data-text"
-        });
-
-        $("#saveClientAuthorize").bind("click", function () {
-            if (!VerifyObject.isPass()) {
-                return false;
-            };
-
-            var client = {
-                ClientID: $("#ClientID").val(),
-                Status: $("#AuthorizeType").val(),
-                UserQuantity: $("#UserQuantity").val(),
-                EndTime: $("#EndTime").val(),
-            };
-
-            Global.post("/Client/SaveClientAuthorize", { client: JSON.stringify(client) }, function (data) {
-                if (data.Result == "1") {
-                    location.href = "/Client/Index";
-                } else if (data.Result == "2") {
-                    alert("登陆账号已存在!");
-                }
-            });
-
-        });
-    };
     module.exports = Clients;
 });

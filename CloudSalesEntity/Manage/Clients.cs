@@ -170,13 +170,14 @@ namespace CloudSalesEntity
 
         public Industry IndustryEntity { get; set; }
 
+        public int UserQuantity { get; set; }
+
+        public DateTime EndTime { get; set; }
 		#endregion Model
 
 
 
-        public int UserQuantity { get; set; }
-
-        public DateTime EndTime { get; set; }
+        
 
         /// <summary>
         /// 填充数据

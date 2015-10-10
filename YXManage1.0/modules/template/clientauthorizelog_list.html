@@ -1,0 +1,11 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="list-item">
+    <td>{%=item.AuthorizeType%}</td>
+    <td class="center">{%=item.UserQuantity%}</td>
+    <td class="center">{%=item.EndTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
+
+</tr>
+{% } %}
