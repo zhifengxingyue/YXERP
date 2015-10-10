@@ -17,6 +17,10 @@ namespace MD.SDK
 
         group_my_joined=6,
 
-        message_create_sys=7
+        message_create_sys=7,
+
+        task_v4_addTask,
+
+        calendar_create
     }
 }

@@ -95,7 +95,11 @@ namespace MD.SDK
 
         "/group/my_joined",
 
-        "/message/create_sys"
+        "/message/create_sys",
+
+        "/task/v4/addTask",
+
+        "/calendar/create"
         };
     }
 
