@@ -9,11 +9,9 @@ namespace MD.SDK
 {
     public class HttpRequest
     {
-        static string MDApiUrl = ConfigurationManager.AppSettings["MDApiUrl"] ?? "https://api.mingdao.com";
-
         public static string RequestServer(ApiOption apiOption, Dictionary<string, object> paras,RequestType requestType=RequestType.Get)
         {
-            string url = MDApiUrl+ApiUrlArr[(int)apiOption];
+            string url =AppAttr.MDApiUrl+ApiUrlArr[(int)apiOption];
             try
             {
                 string paraStr = string.Empty;
@@ -85,6 +83,8 @@ namespace MD.SDK
         }
 
         public static string[] ApiUrlArr = new string[] { 
+        "/oauth2/access_token",
+
         "/user/all",
         "/user/detail",
         "/passport/detail",
