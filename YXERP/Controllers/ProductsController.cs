@@ -615,7 +615,7 @@ namespace YXERP.Controllers
                 id = new ProductsBusiness().AddProduct(model.ProductCode, model.ProductName, model.GeneralName, model.IsCombineProduct.Value == 1, model.BrandID, model.BigUnitID, model.SmallUnitID,
                                                         model.BigSmallMultiple.Value, model.CategoryID, model.Status.Value, model.AttrList, model.ValueList, model.AttrValueList,
                                                         model.CommonPrice.Value, model.Price, model.Weight.Value, model.IsNew.Value == 1, model.IsRecommend.Value == 1, model.EffectiveDays.Value,
-                                                        model.DiscountValue.Value, model.ProductImage, model.ShapeCode, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
+                                                        model.DiscountValue.Value, model.ProductImage, model.ShapeCode, model.Description, model.ProductDetails, CurrentUser.UserID, CurrentUser.ClientID);
             }
             else
             {
@@ -640,10 +640,14 @@ namespace YXERP.Controllers
         /// 获取产品列表
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetProductList(string keyWords, int pageIndex, int totalCount)
+        public JsonResult GetProductList(string filter)
         {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            FilterProduct model = serializer.Deserialize<FilterProduct>(filter);
+            int totalCount = 0;
             int pageCount = 0;
-            List<Products> list = new ProductsBusiness().GetProductList(keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+
+            List<Products> list = new ProductsBusiness().GetProductList(model.CategoryID, model.BeginPrice, model.EndPrice, model.Keywords, model.OrderBy, model.IsAsc, PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);

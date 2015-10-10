@@ -211,7 +211,7 @@ namespace CloudSalesEntity
         /// <summary>
         /// 
         /// </summary>
-        public int? ConveyanceType
+        public int? ExpressType
         {
             set { _conveyancetype = value; }
             get { return _conveyancetype; }
@@ -219,7 +219,7 @@ namespace CloudSalesEntity
         /// <summary>
         /// 
         /// </summary>
-        public string ConveyanceCompany
+        public string ExpressID
         {
             set { _conveyancecompany = value; }
             get { return _conveyancecompany; }
@@ -227,7 +227,7 @@ namespace CloudSalesEntity
         /// <summary>
         /// 
         /// </summary>
-        public string ConveyanceCode
+        public string ExpressCode
         {
             set { _conveyancecode = value; }
             get { return _conveyancecode; }

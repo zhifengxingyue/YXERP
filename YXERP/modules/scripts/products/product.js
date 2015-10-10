@@ -8,16 +8,25 @@ define(function (require, exports, module) {
     require("pager");
     require("switch");
     var Params = {
+        PageIndex: 1,
         keyWords: "",
-        pageIndex: 1,
-        totalCount: 0
+        totalCount: 0,
+        CategoryID: "",
+        BeginPrice: "",
+        EndPrice: "",
+        OrderBy: "p.CreateTime desc",
+        IsAsc: false
     };
+    var CacheCategorys = [];
+    var CacheChildCategorys = [];
     var Product = {};
     //添加页初始化
     Product.init = function (Editor) {
+        var _self = this;
         editor = Editor;
-        Product.bindEvent();
+        _self.bindEvent();
     }
+    
     //绑定事件
     Product.bindEvent = function () {
         var _self = this;
@@ -64,6 +73,83 @@ define(function (require, exports, module) {
         })
 
         $("#productName").focus();
+
+        //更改价格同步子产品
+        $("#price").change(function () {
+            $(".child-product-table").find(".price,.bigprice").val($("#price").val());
+        });
+
+        //组合子产品
+        $(".productsalesattr .attritem").click(function () {
+            var bl = false, details = [], isFirst = true;
+            $(".productsalesattr").each(function () {
+                bl = false;
+                var _attr = $(this), attrdetail = details;
+                //组合规格
+                _attr.find("input:checked").each(function () {
+                    bl = true;
+                    var _value = $(this);
+                    //首个规格
+                    if (isFirst) {
+                        var model = {};
+                        model.ids = _attr.data("id") + ":" + _value.val();
+                        model.saleAttr = _attr.data("id");
+                        model.attrValue = _value.val();
+                        model.names = _attr.data("text") + ":" + _value.data("text");
+                        model.layer = 1;
+                        details.push(model);
+                    }else {
+                        for (var i = 0, j = attrdetail.length; i < j; i++) {
+                            if (attrdetail[i].ids.indexOf(_value.data("id")) < 0) {
+                                var model = {};
+                                model.ids = attrdetail[i].ids + "," + _attr.data("id") + ":" + _value.val();
+                                model.saleAttr = attrdetail[i].saleAttr + "," + _attr.data("id");
+                                model.attrValue = attrdetail[i].attrValue + "," + _value.val();
+                                model.names = attrdetail[i].names + "," + _attr.data("text") + ":" + _value.data("text");
+                                model.layer = attrdetail[i].layer + 1;
+                                details.push(model);
+                            }
+                        }
+                    }
+                });
+                isFirst = false;
+            });
+            //选择所有属性
+            if (bl) {
+                var layer = $(".productsalesattr").length, items = [];
+                for (var i = 0, j = details.length; i < j; i++) {
+                    var model = details[i];
+                    if (model.layer == layer) {
+                        items.push(model);
+                    }
+                }
+                $(".child-product-li").empty();
+                //加载子产品
+                doT.exec("template/products/product_child_add_list.html", function (templateFun) {
+                    var innerText = templateFun(items);
+                    innerText = $(innerText);
+                    $(".child-product-li").append(innerText);
+
+                    innerText.find(".price,.bigprice").val($("#price").val());
+
+                    //价格必须大于0的数字
+                    innerText.find(".price,.bigprice").change(function () {
+                        var _this = $(this);
+                        if (!_this.val().isDouble() || _this.val() <= 0) {
+                            _this.val($("#price").val());
+                        }
+                    });
+
+                    //绑定启用插件
+                    innerText.find(".ico-del").click(function () {
+                        var _this = $(this);
+                        if (confirm("确认删除此规格吗？")) {
+                            _this.parents("tr.list-item").remove();
+                        }
+                    });
+                });
+            }
+        });
     }
     //保存产品
     Product.savaProduct = function () {
@@ -103,6 +189,26 @@ define(function (require, exports, module) {
             Description: encodeURI(editor.getContent())
         };
 
+        //快捷添加子产品
+        if (!_self.ProductID) {
+            var details = [];
+            $(".child-product-table .list-item").each(function () {
+                var _this = $(this);
+                var modelDetail = {
+                    DetailsCode: _this.find(".code").val(),
+                    ShapeCode: "",
+                    SaleAttr: _this.data("attr"),
+                    AttrValue: _this.data("value"),
+                    SaleAttrValue: _this.data("attrvalue"),
+                    Weight: 0,
+                    Price: _this.find(".price").val(),
+                    BigPrice: (Product.SmallUnitID != Product.BigUnitID ? _this.find(".bigprice").val() : _this.find(".price").val()) * Product.BigSmallMultiple,
+                    Description: ""
+                };
+                details.push(modelDetail);
+            });
+            Product.ProductDetails = details;
+        }
         Global.post("/Products/SavaProduct", {
             product: JSON.stringify(Product)
         }, function (data) {
@@ -113,23 +219,158 @@ define(function (require, exports, module) {
     }
     //列表页初始化
     Product.initList = function () {
-        Product.getList();
-        Product.bindListEvent();
+        var _self = this;
+        _self.getChildCategory("");;
+        _self.bindListEvent();
     }
+    //获取分类信息和下级分类
+    Product.getChildCategory = function (pid) {
+        var _self = this;
+        $("#category-child").empty();
+
+        if (!CacheChildCategorys[pid]) {
+            Global.post("/Products/GetChildCategorysByID", {
+                categoryid: pid
+            }, function (data) {
+                CacheChildCategorys[pid] = data.Items;
+                _self.bindChildCagegory(pid);
+            });
+        } else {
+            _self.bindChildCagegory(pid);
+        }
+
+        Params.CategoryID = pid;
+        _self.getList();
+    }
+    //绑定下级分类
+    Product.bindChildCagegory = function (pid) {
+        var _self = this;
+        var length = CacheChildCategorys[pid].length;
+        if (length > 0) {
+            $(".category-child").show();
+            for (var i = 0; i < length; i++) {
+                var _ele = $(" <li data-id='" + CacheChildCategorys[pid][i].CategoryID + "'>" + CacheChildCategorys[pid][i].CategoryName + "</li>");
+                _ele.click(function () {
+                    //处理分类MAP
+                    var _map = $(" <li data-id='" + $(this).data("id") + "'>" + $(this).html() + "<span>></span></li>");
+                    _map.click(function () {
+                        $(this).nextAll().remove();
+                        _self.getChildCategory($(this).data("id"));
+                    })
+                    $(".category-map").append(_map);
+                    _self.getChildCategory($(this).data("id"));
+                });
+                $("#category-child").append(_ele);
+            }
+        } else {
+            $(".category-child").hide();
+        }
+    }
+
     //绑定列表页事件
     Product.bindListEvent = function () {
+        var _self = this;
+        $(".category-map li").click(function () {
+            $(this).nextAll().remove();
+            _self.getChildCategory($(this).data("id"));
+        });
+
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 Params.keyWords = keyWords;
                 Product.getList();
             });
         });
+        //价格筛选
+        $("#attr-price .attrValues .price").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.addClass("hover");
+                _this.siblings().removeClass("hover");
+                Params.BeginPrice = _this.data("begin");
+                Params.EndPrice = _this.data("end");
+                _self.getList();
+                $("#beginprice").val("");
+                $("#endprice").val("");
+            }
+        });
+        //搜索价格区间
+        $("#searchprice").click(function () {
+            if (!!$("#beginprice").val() && !isNaN($("#beginprice").val())) {
+                Params.BeginPrice = $("#beginprice").val();
+                $("#attr-price .attrValues .price").removeClass("hover");
+            } else if (!$("#beginprice").val()) {
+                Params.BeginPrice = "";
+            } else {
+                $("#beginprice").val("");
+            }
+
+            if (!!$("#endprice").val() && !isNaN($("#endprice").val())) {
+                Params.EndPrice = $("#endprice").val();
+                $("#attr-price .attrValues .price").removeClass("hover");
+            } else if (!$("#endprice").val()) {
+                Params.EndPrice = "";
+            } else {
+                $("#endprice").val("");
+            }
+
+            _self.getList();
+        });
+        //按时间排序
+        $(".orderby-new").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.addClass("hover");
+                _this.siblings().removeClass("hover");
+                Params.OrderBy = "p.CreateTime desc";
+                Params.IsAsc = false;
+                Params.PageIndex = 1;
+                _self.getList();
+            }
+        });
+
+        //按销量排序
+        $(".orderby-sales").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.addClass("hover");
+                _this.siblings().removeClass("hover");
+                Params.OrderBy = "p.SaleCount desc";
+                Params.IsAsc = false;
+                Params.PageIndex = 1;
+                _self.getList();
+            }
+        });
+
+        //按价格排序
+        $(".orderby-price").click(function () {
+            var _this = $(this);
+
+            if (!_this.hasClass("hover")) {
+                _this.addClass("hover");
+                _this.siblings().removeClass("hover");
+                Params.IsAsc = true;
+                Params.PageIndex = 1;
+            } else {
+                Params.IsAsc = !Params.IsAsc;
+            }
+            if (Params.IsAsc) {
+                _this.find(".shang").addClass("shang-hover");
+                _this.find(".xia").removeClass("xia-hover");
+                Params.OrderBy = "p.Price";
+            } else {
+                _this.find(".shang").removeClass("shang-hover");
+                _this.find(".xia").addClass("xia-hover");
+                Params.OrderBy = "p.Price desc";
+            }
+            _self.getList();
+        });
     }
     //获取产品列表
     Product.getList = function () {
         var _self = this;
         $("#product-items").nextAll().remove();
-        Global.post("/Products/GetProductList", Params, function (data) {
+        Global.post("/Products/GetProductList", { filter: JSON.stringify(Params) }, function (data) {
             doT.exec("template/products/product_list.html", function (templateFun) {
                 var innerText = templateFun(data.Items);
                 innerText = $(innerText);
@@ -164,7 +405,7 @@ define(function (require, exports, module) {
             $("#pager").paginate({
                 total_count: data.TotalCount,
                 count: data.PageCount,
-                start: Params.pageIndex,
+                start: Params.PageIndex,
                 display: 5,
                 border: true,
                 border_color: '#fff',
@@ -177,7 +418,7 @@ define(function (require, exports, module) {
                 images: false,
                 mouse: 'slide',
                 onChange: function (page) {
-                    Params.pageIndex = page;
+                    Params.PageIndex = page;
                     Product.getList();
                 }
             });

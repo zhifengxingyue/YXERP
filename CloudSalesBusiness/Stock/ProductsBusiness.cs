@@ -308,10 +308,10 @@ namespace CloudSalesBusiness
         /// <param name="pageCount">总页数</param>
         /// <param name="clientID">客户端ID</param>
         /// <returns></returns>
-        public List<Products> GetProductList(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        public List<Products> GetProductList(string categoryid, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
-            DataSet ds = dal.GetProductList(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
+            DataSet ds = dal.GetProductList(categoryid, beginprice, endprice, keyWords, orderby, isasc ? 1 : 0, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
 
             List<Products> list = new List<Products>();
             foreach (DataRow dr in ds.Tables[0].Rows)
@@ -658,7 +658,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public string AddProduct(string productCode, string productName, string generalName, bool iscombineproduct, string brandid, string bigunitid, string smallunitid, int bigSmallMultiple,
                                  string categoryid, int status, string attrlist, string valuelist, string attrvaluelist, decimal commonprice, decimal price, decimal weight, bool isnew,
-                                 bool isRecommend, int effectiveDays, decimal discountValue, string productImg, string shapeCode, string description, string operateid, string clientid)
+                                 bool isRecommend, int effectiveDays, decimal discountValue, string productImg, string shapeCode, string description, List<ProductDetail> details, string operateid, string clientid)
         {
             lock (SingleLock)
             {
@@ -681,8 +681,18 @@ namespace CloudSalesBusiness
                 }
 
                 var dal = new ProductsDAL();
-                return dal.AddProduct(productCode, productName, generalName, iscombineproduct, brandid, bigunitid, smallunitid, bigSmallMultiple, categoryid, status, attrlist,
+                string pid = dal.AddProduct(productCode, productName, generalName, iscombineproduct, brandid, bigunitid, smallunitid, bigSmallMultiple, categoryid, status, attrlist,
                                         valuelist, attrvaluelist, commonprice, price, weight, isnew, isRecommend, effectiveDays, discountValue, productImg, shapeCode, description, operateid, clientid);
+                //产品添加成功添加子产品
+                if (!string.IsNullOrEmpty(pid))
+                {
+                    foreach (var model in details)
+                    {
+                        model.ImgS = FILEPATH + DateTime.Now.ToString("yyyyMMddHHmmssms") + new Random().Next(1000, 9999).ToString() + ".png";
+                        dal.AddProductDetails(pid, model.DetailsCode, model.ShapeCode, model.SaleAttr, model.AttrValue, model.SaleAttrValue, model.Price, model.Weight, model.BigPrice, model.ImgS, model.Description, operateid, clientid);
+                    }
+                }
+                return pid;
             }
         }
         /// <summary>

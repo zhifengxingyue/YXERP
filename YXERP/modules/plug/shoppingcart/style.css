@@ -1,7 +1,28 @@
 ﻿
-.shopping-cart { position:fixed; right:0; bottom:0; overflow:auto; background-color:#fff; }
+.shopping-cart { position:fixed; right:0; bottom:0; background-color:#fff; }
 
 .shopping-cart .cart-header { background:url('/modules/images/ico-gouwuche.png') no-repeat 10px 5px; height:35px; width:150px; line-height:35px; 
                               font-size:20px; text-indent:40px; border:solid 1px #B10000; padding:5px 10px; cursor:pointer; }
 .shopping-cart .cart-header .totalcount{ line-height:35px;  font-size:20px; color:#B10000; margin-left:10px; }
-.shopping-cart .cart-header .totalcount:hover{ text-decoration:underline; }
+
+.cart-mainbody { padding:20px; position:relative; }
+.cart-mainbody .close_btn { background:#fff url(ico-big-close.png) no-repeat; cursor:pointer; height:48px; width:48px; border-radius:24px;  position:absolute; left:-20px;top:-20px;}
+
+.cart-product-div { max-height:450px; overflow-y:auto; overflow-x:hidden; }
+
+/*表格样式*/
+.cart-product-list { border-collapse:collapse;border-spacing:0; }
+.cart-product-list .tr-header{ font-weight:bold; height:35px; }
+.cart-product-list .tr-header td{ color:#2a3441;}
+.cart-product-list .line td{ border-right:solid 2px #fff; background-color:#c5dceb; height:3px; }
+
+.cart-product-list a{ color:#333;  vertical-align:middle;}
+.cart-product-list a:hover{ color:red; text-decoration:underline; }
+
+.cart-product-list .item { height:50px; vertical-align:middle; background-color:#FBFCFF; border-bottom:dashed 1px #ccc; }
+.cart-product-list .item img { width:30px; height:30px; display:inline-block;vertical-align:middle; }
+.cart-product-list .item .price { width:120px;}
+.cart-product-list .item .quantity { width:60px;}
+
+.bottom-div { width:99%; padding:20px 0px; }
+.btnconfirm { height:36px; background-color:#B10000; line-height:35px; color:#fff; font-size:14px; font-weight:bold; padding:0 50px; border:none; cursor:pointer; }
