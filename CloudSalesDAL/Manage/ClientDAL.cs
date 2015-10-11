@@ -84,7 +84,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@Modules",modules)
                                    };
 
-            return ExecuteNonQuery("P_UpdateClient", parms, CommandType.StoredProcedure) > 0;
+            return ExecuteNonQuery("M_UpdateClient", parms, CommandType.StoredProcedure) > 0;
         }
 
         public bool ClientAuthorize(string clientID,int userQuantity, int authorizeType, DateTime endTime)

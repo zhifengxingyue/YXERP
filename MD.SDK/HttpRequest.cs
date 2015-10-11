@@ -93,6 +93,7 @@ namespace MD.SDK
         "/post/v2/detail",
         "/post/update",
 
+
         "/group/my_joined",
 
         "/message/create_sys",
