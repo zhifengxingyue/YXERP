@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "模块产品列表";
+}
+
+@section script{
+    <script type="text/javascript">
+        seajs.use(["scripts/modulesproduct"], function (ModulesProduct) {
+            ModulesProduct.init();
+        });
+    </script>
+}
+@section leftNav{
+    @Html.Partial("_ModulesProductLeftNav")
+}
+<div class="headertitle">
+    <span>模块产品列表</span>
+</div>
+<table class="table-list mTop20">
+    <tr class="tr-header" id="client-header">
+        <td class="">操作</td>
+        <td class="">模块</td>
+        <td class="">周期量</td>
+        <td class="">周期</td>
+        <td class="">人数</td>
+        <td class="">价格</td>
+        <td class="">描述</td>
+        <td class="">创建时间</td>
+    </tr>
+</table>
+<div id="pager" class="mTop20"></div>

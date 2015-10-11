@@ -233,6 +233,7 @@ define(function (require, exports, module) {
 
         //保存客户详情
         $("#saveClient").click(function () {
+
             if (!VerifyObject.isPass()) {
                 return false;
             };
