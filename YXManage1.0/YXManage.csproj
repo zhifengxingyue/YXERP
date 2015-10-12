@@ -103,6 +103,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\ModulesProductController.cs" />
     <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -135,8 +136,10 @@
     <Content Include="modules\scripts\home.js" />
     <Content Include="modules\scripts\layout.js" />
     <Content Include="modules\scripts\clients.js" />
+    <Content Include="modules\scripts\modulesproduct.js" />
     <Content Include="modules\template\client_list.html" />
     <Content Include="modules\template\clientauthorizelog_list.html" />
+    <Content Include="modules\template\modulesproduct_list.html" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
@@ -207,6 +210,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Client\Detail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ModulesProduct\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ModulesProduct\Detail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ModulesProduct\_ModulesProductLeftNav.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

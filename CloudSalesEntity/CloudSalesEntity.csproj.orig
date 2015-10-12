@@ -40,8 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
+<<<<<<< HEAD
     <Compile Include="Stock\StorageDocAction.cs" />
+=======
     <Compile Include="Manage\ModulesProduct.cs" />
+>>>>>>> 8ddbe9d587804fbfc4f6a70756c57850534a6ead
     <Compile Include="System\Department.cs" />
     <Compile Include="System\Industry.cs" />
     <Compile Include="System\Role.cs" />

@@ -7,16 +7,24 @@ namespace MD.SDK
 {
     public enum ApiOption
     {
-        user_all=0,
-        user_detail=1,
-        passport_detail=2,
+        oauth2_access_token=0,
 
-        post_v2_all=3,
-        post_v2_detail=4,
-        post_update=5,
+        user_all=1,
+        user_detail=2,
+        passport_detail=3,
 
-        group_my_joined=6,
+        post_v2_all=4,
+        post_v2_detail=5,
+        post_update=6,
 
-        message_create_sys=7
+        group_my_joined=7,
+
+        message_create_sys=8,
+
+        task_v4_addTask=9,
+
+        calendar_create=10
+
+
     }
 }

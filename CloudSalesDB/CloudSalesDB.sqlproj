@@ -154,7 +154,7 @@
     <None Include="Procedures\Stock\P_AuditStorageIn.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Procedures\Manage\P_UpdateClient.sql" />
+    <None Include="Procedures\Manage\M_UpdateClient.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\Stock\P_UpdateStorageStatus.sql" />
