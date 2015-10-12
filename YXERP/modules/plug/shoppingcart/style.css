@@ -5,8 +5,7 @@
                               font-size:20px; text-indent:40px; border:solid 1px #B10000; padding:5px 10px; cursor:pointer; }
 .shopping-cart .cart-header .totalcount{ line-height:35px;  font-size:20px; color:#B10000; margin-left:10px; }
 
-.cart-mainbody { padding:20px; position:relative; }
-.cart-mainbody .close_btn { background:#fff url(ico-big-close.png) no-repeat; cursor:pointer; height:48px; width:48px; border-radius:24px;  position:absolute; left:-20px;top:-20px;}
+.cart-mainbody { padding:20px; position:relative; background-color:#FBFCFF; }
 
 .cart-product-div { max-height:450px; overflow-y:auto; overflow-x:hidden; }
 
@@ -26,3 +25,6 @@
 
 .bottom-div { width:99%; padding:20px 0px; }
 .btnconfirm { height:36px; background-color:#B10000; line-height:35px; color:#fff; font-size:14px; font-weight:bold; padding:0 50px; border:none; cursor:pointer; }
+
+.btnclose { height:36px; background-color:#eee; line-height:35px; color:#333; font-size:14px; font-weight:bold; padding:0 50px; border:none; cursor:pointer; }
+

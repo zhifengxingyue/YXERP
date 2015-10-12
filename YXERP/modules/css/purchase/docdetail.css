@@ -25,5 +25,14 @@
 
 .btnconfirm { height:36px; background-color:#B10000; color:#fff; font-size:14px; font-weight:bold; padding:0 20px; border:none; cursor:pointer; }
 
+/*日志样式*/
+.log-body { width:99%; }
+.log-body .log-item {width:99%; line-height:30px; overflow:auto; border-bottom:dashed 1px #eee; margin-top:10px; }
+.log-body .createuser { vertical-align:middle; }
+.createuser img { float:left; height:30px; width:30px; border-radius:15px; margin-top:15px; }
+.createuser h2 { float:left; vertical-align:middle; line-height:60px; width:60px; margin-left:10px; }
+.log-body .createtime { color:#999; }
+#pager { margin:20px auto; }
+
 
 

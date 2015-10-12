@@ -124,10 +124,12 @@
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
+    <Content Include="modules\scripts\purchase\docdetail.js" />
     <Content Include="modules\template\orders\product-detail.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
+    <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />

@@ -4,7 +4,13 @@
 }
 
 <link href="/modules/css/purchase/docdetail.css" rel="stylesheet" />
-
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/purchase/docdetail"], function (obj) {
+            obj.init('@(model.DocID)');
+        });
+    </script>
+}
 <div class="header-box">
     <span class="header-title left">采购单详细信息</span>
 </div>
@@ -60,4 +66,13 @@
             <td class="tRight">@(model.TotalMoney.ToString("f2"))</td>
         </tr>
     </table>
+    <div class="show-nav">
+        <ul class="show-nav-ul">
+            <li class="hover">操作日志</li>
+        </ul>
+    </div>
+    <div class="log-body">
+
+    </div>
+    <div id="pager"></div>
 </div>

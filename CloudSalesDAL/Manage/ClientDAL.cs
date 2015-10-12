@@ -10,6 +10,7 @@ namespace CloudSalesDAL
     public class ClientDAL : BaseDAL
     {
         public static ClientDAL BaseProvider = new ClientDAL();
+
         #region 查询
         public DataTable GetClientDetail(string clientID)
         {

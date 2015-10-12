@@ -138,6 +138,33 @@ namespace CloudSalesBusiness
             return str;
         }
 
+        /// <summary>
+        /// 获取单据操作记录
+        /// </summary>
+        /// <param name="docid"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="pageCount"></param>
+        /// <param name="clientID"></param>
+        /// <returns></returns>
+        public static List<StorageDocAction> GetStorageDocAction(string docid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        {
+            DataTable dt = CommonBusiness.GetPagerData("StorageDocAction", "*", "DocID='" + docid + "'", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+
+            List<StorageDocAction> list = new List<StorageDocAction>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                StorageDocAction model = new StorageDocAction();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, clientID);
+
+                list.Add(model);
+            }
+            return list;
+        }
+        
+
         #endregion
 
         #region 添加
@@ -243,7 +270,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public bool DeleteDoc(string docid, string userid, string operateip, string clientid)
         {
-            return CommonBusiness.Update("StorageDoc", "Status", (int)EnumDocStatus.Delete, "DocID='" + docid + "' and status=" + (int)EnumDocStatus.Normal);
+            return new OrdersDAL().UpdateStorageStatus(docid, (int)EnumDocStatus.Delete, "删除单据", userid, operateip, clientid);
         }
         /// <summary>
         /// 作废单据
@@ -255,7 +282,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public bool InvalidDoc(string docid, string userid, string operateip, string clientid)
         {
-            return CommonBusiness.Update("StorageDoc", "Status", (int)EnumDocStatus.Invalid, "DocID='" + docid + "' and status=" + (int)EnumDocStatus.Normal);
+            return new OrdersDAL().UpdateStorageStatus(docid, (int)EnumDocStatus.Invalid, "作废单据", userid, operateip, clientid);
         }
         /// <summary>
         /// 更换入库仓库
@@ -276,13 +303,13 @@ namespace CloudSalesBusiness
         /// <param name="userid">审核人</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public bool AuditStorageIn(string ids, string userid, string clientid)
+        public bool AuditStorageIn(string ids, string userid, string operateip, string clientid)
         {
             bool bl = false;
 
             foreach (string autoid in ids.Split(','))
             {
-                if (new OrdersDAL().AuditStorageIn(autoid, userid, clientid))
+                if (new OrdersDAL().AuditStorageIn(autoid, userid, operateip, clientid))
                 {
                     bl = true;
                 }

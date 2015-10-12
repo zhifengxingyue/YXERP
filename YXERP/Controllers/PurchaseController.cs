@@ -173,14 +173,36 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult AuditPurchase(string ids)
         {
-            bool bl = new OrdersBusiness().AuditStorageIn(ids, CurrentUser.UserID, CurrentUser.ClientID);
+            bool bl = new OrdersBusiness().AuditStorageIn(ids, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        } 
+        }
+
+        /// <summary>
+        /// 获取我的采购单
+        /// </summary>
+        /// <param name="keyWords"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public JsonResult GetStorageDocLog(string docid, int pageIndex, int totalCount)
+        {
+            int pageCount = 0;
+            List<StorageDocAction> list = OrdersBusiness.GetStorageDocAction(docid, 10, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         #endregion
 

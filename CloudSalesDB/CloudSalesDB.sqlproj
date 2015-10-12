@@ -156,4 +156,7 @@
   <ItemGroup>
     <None Include="Procedures\Manage\P_UpdateClient.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Stock\P_UpdateStorageStatus.sql" />
+  </ItemGroup>
 </Project>
