@@ -37,7 +37,7 @@ namespace CloudSalesDAL.Manage
                                        new SqlParameter("@CreateUserID",userid)
                                    };
 
-            string cmdTxt = "insert into ModulesProduct(ModulesID,Period,PeriodQuantity,UserQuantity,Price,Description,CreateUserID,CreateTime) values(@ModulesID,@Period,@PeriodQuantity,@UserQuantity,@Price,@Description,@CreateUserID,getdate())";
+            string cmdTxt = "insert into ModulesProduct(ProductID,ModulesID,Period,PeriodQuantity,UserQuantity,Price,Description,CreateUserID,CreateTime) values(NewID(),@ModulesID,@Period,@PeriodQuantity,@UserQuantity,@Price,@Description,@CreateUserID,getdate())";
 
             return ExecuteNonQuery(cmdTxt, parms, CommandType.Text) > 0;
         }

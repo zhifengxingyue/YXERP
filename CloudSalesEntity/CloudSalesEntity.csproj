@@ -39,11 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom\Activity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
     <Compile Include="Stock\StorageDocAction.cs" />
     <Compile Include="Manage\ModulesProduct.cs" />
     <Compile Include="System\Department.cs" />
-    <Compile Include="System\Industry.cs" />
+    <Compile Include="Common\Industry.cs" />
     <Compile Include="System\Role.cs" />
     <Compile Include="System\RolePermission.cs" />
     <Compile Include="System\UserDepart.cs" />
@@ -70,9 +71,9 @@
     <Compile Include="Common\Country.cs" />
     <Compile Include="Common\Menu.cs" />
     <Compile Include="ExpandFillData.cs" />
-    <Compile Include="Common\Log_Login.cs" />
-    <Compile Include="Common\Log_Error.cs" />
-    <Compile Include="Common\Log_Operate.cs" />
+    <Compile Include="Log\Log_Login.cs" />
+    <Compile Include="Log\Log_Error.cs" />
+    <Compile Include="Log\Log_Operate.cs" />
     <Compile Include="Manage\Clients.cs" />
     <Compile Include="Manage\Dictionary.cs" />
     <Compile Include="Manage\Modules.cs" />
@@ -81,9 +82,7 @@
     <Compile Include="Common\Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Log\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CloudSalesEnum\CloudSalesEnum.csproj">
       <Project>{b86924c1-ec31-449f-97f3-258dfa43a44f}</Project>

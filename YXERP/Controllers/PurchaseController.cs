@@ -183,7 +183,7 @@ namespace YXERP.Controllers
         }
 
         /// <summary>
-        /// 获取我的采购单
+        /// 获取单据日志
         /// </summary>
         /// <param name="keyWords"></param>
         /// <param name="pageIndex"></param>
