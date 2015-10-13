@@ -163,6 +163,13 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public int IsDefault { get; set; }
+
+        public void FillData(System.Data.DataRow dr) 
+        {
+            dr.FillData(this);
+        }
+
 	}
 }
 

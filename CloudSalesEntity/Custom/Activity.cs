@@ -7,6 +7,7 @@ namespace CloudSalesEntity
 {
     public class Activity
     {
+        [Property("Lower")] 
         public string ActivityID { get; set; }
 
         public string Name { get; set; }
@@ -21,14 +22,18 @@ namespace CloudSalesEntity
         /// </summary>
         public int Status { get; set; }
 
+        [Property("Lower")] 
         public string OwnerID { get; set; }
 
         public DateTime CreateTime { get; set; }
 
+        [Property("Lower")] 
         public DateTime CreateUserID { get; set; }
 
+        [Property("Lower")] 
         public string AgentID { get; set; }
 
+        [Property("Lower")] 
         public string ClientID { get; set; }
 
     }

@@ -262,6 +262,8 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public string AgentID { get; set; }
+
         /// <summary>
         /// 填充数据
         /// </summary>

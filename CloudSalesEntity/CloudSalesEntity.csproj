@@ -50,7 +50,7 @@
     <Compile Include="System\UserDepart.cs" />
     <Compile Include="System\UserRole.cs" />
     <Compile Include="System\Users.cs" />
-    <Compile Include="Agents.cs" />
+    <Compile Include="System\Agents.cs" />
     <Compile Include="Stock\AttrValue.cs" />
     <Compile Include="Stock\Brand.cs" />
     <Compile Include="Stock\Category.cs" />
