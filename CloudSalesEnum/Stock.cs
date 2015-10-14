@@ -7,6 +7,24 @@ using System.Text;
 namespace CloudSalesEnum
 {
     /// <summary>
+    /// 产品属性类型
+    /// </summary>
+    public enum EnumAttrType
+    {
+        /// <summary>
+        /// 产品属性
+        /// </summary>
+        [DescriptionAttribute("产品属性")]
+        Parameter = 1,
+        /// <summary>
+        /// 产品规格
+        /// </summary>
+        [DescriptionAttribute("产品规格")]
+        Specification = 2
+
+    }
+
+    /// <summary>
     /// 单据类型
     /// </summary>
     public enum EnumDocType

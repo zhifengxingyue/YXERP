@@ -14,14 +14,13 @@ namespace CloudSalesDAL
 
         #region 查询
 
-
-        public DataTable GetActivitys(string userid, int status, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
+        public DataTable GetActivitys(string userid, int stage, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@totalCount",SqlDbType.Int),
                                        new SqlParameter("@pageCount",SqlDbType.Int),
                                        new SqlParameter("@UserID",userid),
-                                       new SqlParameter("@Status",status),
+                                       new SqlParameter("@Stage",stage),
                                        new SqlParameter("@keyWords",keyWords),
                                        new SqlParameter("@pageSize",pageSize),
                                        new SqlParameter("@pageIndex",pageIndex),
@@ -49,6 +48,7 @@ namespace CloudSalesDAL
 
             return GetDataTable(sqlText, paras, CommandType.Text);
         }
+
         public DataTable GetActivityByCode(string activitycode)
         {
             string sqlText = "select * from Activity where ActivityCode=@ActivityCode";
@@ -94,8 +94,6 @@ namespace CloudSalesDAL
 
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
-
-
 
         #endregion
 

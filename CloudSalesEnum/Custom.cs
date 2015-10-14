@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace CloudSalesEnum
 {
-    public enum ActivityStatus
+    /// <summary>
+    /// 活动阶段
+    /// </summary>
+    public enum EnumActivityStage
     {
         All = -1,
         /// <summary>
@@ -20,5 +24,18 @@ namespace CloudSalesEnum
         /// 未开始
         /// </summary>
         NoBegin = 3
+    }
+
+    /// <summary>
+    /// 客户阶段标记
+    /// </summary>
+    public enum EnumCustomStageMark
+    {
+        [DescriptionAttribute("普通阶段")]
+        Normal = 0,
+        [DescriptionAttribute("新客户阶段")]
+        New = 1,
+        [DescriptionAttribute("成交阶段")]
+        Success = 2
     }
 }
