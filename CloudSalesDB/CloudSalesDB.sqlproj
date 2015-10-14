@@ -61,6 +61,7 @@
     <Folder Include="Procedures\Manage" />
     <Folder Include="Procedures\System" />
     <Folder Include="Procedures\Stock" />
+    <Folder Include="Procedures\Custom" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\InitDatabase.sql" />
@@ -158,5 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\Stock\P_UpdateStorageStatus.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_GetActivitys.sql" />
   </ItemGroup>
 </Project>

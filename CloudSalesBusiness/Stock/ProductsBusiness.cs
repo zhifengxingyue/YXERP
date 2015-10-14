@@ -18,7 +18,8 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 文件默认存储路径
         /// </summary>
-        public const string FILEPATH = "/Content/uploadFiles/";
+        public string FILEPATH = CloudSalesTool.AppSettings.Settings["UploadFilePath"];
+        public string TempPath = CloudSalesTool.AppSettings.Settings["UploadTempPath"];
 
         public static object SingleLock = new object();
 

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Custom\Activity.cs" />
+    <Compile Include="Custom\ActivityEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
     <Compile Include="Stock\StorageDocAction.cs" />
     <Compile Include="Manage\ModulesProduct.cs" />

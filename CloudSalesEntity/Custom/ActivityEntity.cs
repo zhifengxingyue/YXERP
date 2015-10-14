@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CloudSalesEntity
 {
-    public class Activity
+    public class ActivityEntity
     {
         [Property("Lower")] 
         public string ActivityID { get; set; }
@@ -14,9 +14,13 @@ namespace CloudSalesEntity
 
         public string Poster { get; set; }
 
+        public string ActivityCode { get; set; }
+
         public DateTime BeginTime { get; set; }
 
         public DateTime EndTime { get; set; }
+
+        public string Address { get; set; }
         /// <summary>
         /// 状态1正常 2结束 9删除
         /// </summary>
@@ -35,6 +39,12 @@ namespace CloudSalesEntity
 
         [Property("Lower")] 
         public string ClientID { get; set; }
+
+
+        public void FillData(System.Data.DataRow dr)
+        {
+            dr.FillData(this);
+        }
 
     }
 }

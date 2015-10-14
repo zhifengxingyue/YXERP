@@ -9,7 +9,7 @@ namespace YXManage.Controllers
 {
     public class BaseController : Controller
     {
-        protected string ClientID = AppSettings.Settings[AppSettingsWEB.Manage, "ClientID"];
+        protected string ClientID = AppSettings.Settings["ClientID"];
 
         protected int PageSize = 20;
 

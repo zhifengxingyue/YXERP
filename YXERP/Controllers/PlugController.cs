@@ -34,7 +34,7 @@ namespace YXERP.Controllers
         public JsonResult UploadFile()
         {
             string oldPath = "",
-                   folder = "/Content/tempfile/", 
+                   folder = CloudSalesTool.AppSettings.Settings["UploadTempPath"], 
                    action = "";
             if (Request.Form.AllKeys.Contains("oldPath"))
             {

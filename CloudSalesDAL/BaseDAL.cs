@@ -11,6 +11,27 @@ namespace CloudSalesDAL
     {
         public static string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
 
+        #region 通用方法
+
+        /// <summary>
+        /// 生成随机码0-9 A-Z
+        /// </summary>
+        /// <param name="length">长度</param>
+        /// <returns></returns>
+        public static string GetCode(int length)
+        {
+            Random rd = new Random();
+            string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            StringBuilder code = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                code.Append(str[rd.Next(str.Length)]);
+            }
+            return code.ToString();
+        }
+
+        #endregion
+
         /// <summary>
         /// 执行SQL语句返回影响的行数
         /// </summary>
