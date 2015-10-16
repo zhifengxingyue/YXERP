@@ -19,7 +19,7 @@ namespace CloudSalesDAL
                                     new SqlParameter("@LoginName",loginname),
                                     new SqlParameter("@LoginPwd",pwd)
                                    };
-            return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Department|Role|Permission|Modules");
+            return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
         }
 
         public DataTable GetUserByUserID(string userid)

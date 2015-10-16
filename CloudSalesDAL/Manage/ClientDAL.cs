@@ -31,7 +31,7 @@ namespace CloudSalesDAL
             result = 0;
             SqlParameter[] parms = { 
                                        new SqlParameter("@Result",result),
-                                       new SqlParameter("@ClientiD",clientid),
+                                       new SqlParameter("@ClientID",clientid),
                                        new SqlParameter("@CompanyName",companyName),
                                        new SqlParameter("@MobilePhone",mobilePhone),
                                        new SqlParameter("@Industry",industry),

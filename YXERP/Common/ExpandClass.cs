@@ -18,7 +18,6 @@ public static class ExpandClass
     /// </summary>
     public const string MANAGE_DEFAULT_CODE = "101000000";
 
-
     /// <summary>
     /// 获取下级菜单
     /// </summary>
@@ -52,25 +51,22 @@ public static class ExpandClass
             return new List<Menu>();
         }
     }
+
     /// <summary>
-    /// 获取二级菜单选中项
+    /// 加载三级菜单
     /// </summary>
-    /// <param name="html"></param>
     /// <param name="httpContext"></param>
-    /// <param name="menuCode"></param>
-    /// <param name="style"></param>
     /// <returns></returns>
-    public static string GetTopMenuActive(this HtmlHelper html, HttpContext httpContext, string menuCode, string style)
+    public static List<Menu> GetActions(HttpContext httpContext, string controller)
     {
-        if (httpContext.Session["topMenuCode"] != null && httpContext.Session["topMenuCode"].ToString() == menuCode)
+        if (!string.IsNullOrEmpty(controller))
         {
-            return style;
+            return ((CloudSalesEntity.Users)httpContext.Session["ClientManager"]).Menus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 3).ToList();
         }
-        else if (httpContext.Session["topMenuCode"] == null && menuCode == MANAGE_DEFAULT_CODE)
+        else
         {
-            return style;
+            return new List<Menu>();
         }
-        return "";
     }
 
     /// <summary>

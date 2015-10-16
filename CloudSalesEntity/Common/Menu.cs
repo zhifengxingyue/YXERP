@@ -127,6 +127,8 @@ namespace CloudSalesEntity
 			set{ _sort=value;}
 			get{return _sort;}
 		}
+
+        public int Layer { get; set; }
         /// <summary>
         /// 菜单包含权限
         /// </summary>

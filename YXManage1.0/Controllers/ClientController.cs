@@ -24,7 +24,7 @@ namespace YXManage.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Industry = IndustryBusiness.GetIndustryByClientID(ClientID);
+            ViewBag.Industry = IndustryBusiness.GetIndustrys();
             ViewBag.Modules = ModulesBusiness.GetModules();
             return View();
         }
@@ -32,7 +32,7 @@ namespace YXManage.Controllers
         public ActionResult Detail(string id)
         {
             ViewBag.ID = id;
-            ViewBag.Industry = IndustryBusiness.GetIndustryByClientID(ClientID);
+            ViewBag.Industry = IndustryBusiness.GetIndustrys();
             ViewBag.Modules = ModulesBusiness.GetModules();
             return View();
         }

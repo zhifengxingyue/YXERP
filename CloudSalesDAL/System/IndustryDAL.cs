@@ -11,13 +11,13 @@ namespace CloudSalesDAL
     {
         #region 查询
 
-        public DataTable GetIndustryByClientID(string clientid)
+        public DataTable GetIndustrys(string clientid = "")
         {
 
-            SqlParameter[] paras = { 
-                                    new SqlParameter("@ClientID",clientid)
-                                   };
-            return GetDataTable("select * from Industry where ClientID=@ClientID", paras, CommandType.Text);
+            //SqlParameter[] paras = { 
+            //                        new SqlParameter("@ClientID",clientid)
+            //                       };
+            return GetDataTable("select * from Industry where Status<>9");
         }
 
         #endregion

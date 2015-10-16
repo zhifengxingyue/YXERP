@@ -14,13 +14,67 @@ namespace CloudSalesBusiness
 
     public class CommonBusiness
     {
+        #region Cache
+
+        private static List<CityEntity> _citys;
+        /// <summary>
+        /// 城市
+        /// </summary>
+        public static List<CityEntity> Citys
+        {
+            get
+            {
+                if (_citys == null)
+                {
+                    DataTable dt = new CommonDAL().GetCitys();
+                    _citys = new List<CityEntity>();
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        CityEntity model = new CityEntity();
+                        model.FillData(dr);
+                        _citys.Add(model);
+                    }
+                }
+                return _citys;
+            }
+        }
+
+        private static List<Menu> _clientMenus;
+        /// <summary>
+        /// 客户端菜单
+        /// </summary>
+        public static List<Menu> ClientMenus
+        {
+            get
+            {
+                if (_clientMenus == null)
+                {
+                    _clientMenus = new List<Menu>();
+                    DataTable dt = new CommonDAL().GetMenus();
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Menu model = new Menu();
+                        model.FillData(dr);
+                        _clientMenus.Add(model);
+                    }
+                }
+                return _clientMenus;
+            }
+            set
+            {
+                _clientMenus = value;
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 获取地区列表
         /// </summary>
         /// <returns></returns>
         public static List<CityEntity> GetCitys()
         {
-            return CommonCache.Citys;
+            return CommonBusiness.Citys;
         }
 
         /// <summary>

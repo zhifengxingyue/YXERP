@@ -119,6 +119,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
+    <Content Include="modules\css\base.css" />
+    <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
@@ -348,7 +350,6 @@
     <Content Include="modules\css\warehouse\warehouse.css" />
     <Content Include="modules\css\warehouse\warehousetype.css" />
     <Content Include="modules\images\default.png" />
-    <Content Include="modules\images\header.jpg" />
     <Content Include="modules\images\ico-add.png" />
     <Content Include="modules\images\ico-back.png" />
     <Content Include="modules\images\ico-del-deep.png" />
@@ -361,10 +362,6 @@
     <Content Include="modules\images\ico-gouwuche.png" />
     <Content Include="modules\images\ico-home.png" />
     <Content Include="modules\images\ico-input-add.png" />
-    <Content Include="modules\images\ico-left-open.png" />
-    <Content Include="modules\images\ico-left-openL.png" />
-    <Content Include="modules\images\ico-left-pull.png" />
-    <Content Include="modules\images\ico-left-pullL.png" />
     <Content Include="modules\images\ico-logout.png" />
     <Content Include="modules\images\ico-name.png" />
     <Content Include="modules\images\ico-open.png" />
@@ -389,8 +386,6 @@
     <Content Include="modules\images\logo.png" />
     <Content Include="modules\images\logo_login.png" />
     <Content Include="modules\images\sidebar.gif" />
-    <Content Include="modules\images\submenu.gif" />
-    <Content Include="modules\images\topmenu.gif" />
     <Content Include="modules\plug\city.js" />
     <Content Include="modules\plug\datapager\images\next.png" />
     <Content Include="modules\plug\datapager\images\previous.png" />

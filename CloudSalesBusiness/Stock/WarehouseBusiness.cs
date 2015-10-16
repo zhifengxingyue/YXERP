@@ -108,7 +108,7 @@ namespace CloudSalesBusiness
             {
                 WareHouse model = new WareHouse();
                 model.FillData(dr);
-                model.City = CommonCache.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
+                model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
                 list.Add(model);
             }
             return list;
@@ -148,7 +148,7 @@ namespace CloudSalesBusiness
             if (dt.Rows.Count > 0)
             {
                 model.FillData(dt.Rows[0]);
-                model.City = CommonCache.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
+                model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
             }
             return model;
         }

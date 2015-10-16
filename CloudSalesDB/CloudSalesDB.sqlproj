@@ -71,10 +71,7 @@
     <None Include="Procedures\Manage\P_InsertClient.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Procedures\System\P_GetC_UserToLogin.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Procedures\P_GetModulesMenu.sql" />
+    <None Include="Procedures\System\P_GetUserToLogin.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\Stock\P_AddCategoryAttr.sql" />

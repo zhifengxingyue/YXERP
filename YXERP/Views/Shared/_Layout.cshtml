@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    <link href="/modules/css/base.css" rel="stylesheet" />
     <link href="/modules/css/layout.css" rel="stylesheet" />
     @RenderSection("css", false)
 </head>
@@ -13,57 +14,54 @@
         string action = Url.RequestContext.RouteData.Values["action"].ToString().ToUpper();
     }
     <header>
-        <div class="logo left"><img src="/modules/images/logo.png" /></div>
-        <div class="menu left">
-            <ul>
-                @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.MANAGE_TOP_CODE))
-                { 
-                    <li class="left topMenu" data-code="@(model.MenuCode)">
-                        <a class="@Html.GetTopMenuActive(HttpContext.Current,model.MenuCode,"select")" href="/Base/TransCenter/@(model.MenuCode)"> @(model.Name)</a> 
-                    </li>
-                }
-            </ul>
-            
+        <div class="logo left">
+            <a href="/Home/Index"><img src="/modules/images/logo.png" /></a>
         </div>
-        <div class="help right">
-            <ul>
-                <li class="left">
-                    <a class="ico-logout" href="/Home/Logout">退出</a> 
+        <ul class="modules left">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="controllerMenu" class="menu left">
+            @foreach (CloudSalesEntity.Menu model in ExpandClass.GetControllers(HttpContext.Current))
+            { 
+                <li class="left" data-code="@(model.MenuCode)">
+                    <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)"> @(model.Name)</a> 
                 </li>
-            </ul>
+            }
+        </ul>
+        <div class="currentuser right">
+            <span>
+                <img src="@(string.IsNullOrEmpty(CurrentUser.Avatar)?"/modules/images/defaultavatar.png":CurrentUser.Avatar)" class="avatar" />
+            </span>
+            <span class="username">
+                @(CurrentUser.Name)
+            </span>
+            <span class="dropdown">
+                <span class="dropdown-top"></span>
+                <span class="dropdown-bottom"></span>
+            </span>
         </div>
     </header>
     <div class="main-body">
         <nav>
-            <div class="admin-name">
-                <span class="bolder long">@(string.IsNullOrEmpty(CurrentUser.Name)? CurrentUser.LoginName : CurrentUser.Name)</span> 欢迎您！
-            </div>
             <div class="top-nav">
-                <img alt="首页" src="/modules/images/ico-home.png"/>
-                <span class="bolder"><a href="javascript:void(0);" >功能菜单</a></span>
+                <span class="controller-name">功能菜单</span>
             </div>
             <div class="nav-list">
-                
-                @foreach (CloudSalesEntity.Menu model in ExpandClass.GetControllers(HttpContext.Current))
+                @foreach (CloudSalesEntity.Menu model in ExpandClass.GetActions(HttpContext.Current, controller))
                 {
-                    <div class="controller @(model.Controller.ToUpper()==controller ? "select" : "")">
-                        <span class="ico-img"></span>
-                        <span class="bolder menu-name">@(model.Name)</span>
-                        <ul>
-                            @foreach (CloudSalesEntity.Menu child in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
-                            {
-                                <li class="action "><a class="@(child.View.ToUpper()==action ? "select" : "")" href="/@(child.Controller + "/" + child.View)" >@(child.Name)</a></li>
-                            }
-                        </ul>
-                    </div>
+                    <ul class="action-box @(model.View.ToUpper()==action ? "select" : "")">
+                        <li class="action "><a href="/@(model.Controller + "/" + model.View)" >@(model.Name)</a></li>
+                    </ul>
                 }
+                
             </div>
             
         </nav>
         <div class="main-content">
             @RenderBody()
         </div>
-        <div class="ico-left-pull" data-status="open"></div>
     </div>
     <script type="text/javascript" src="/Scripts/sea.js"></script>
     <script type="text/javascript" src="/Scripts/sea-config.js"></script>

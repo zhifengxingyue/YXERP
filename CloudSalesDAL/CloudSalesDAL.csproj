@@ -52,7 +52,7 @@
     <Compile Include="System\IndustryDAL.cs" />
     <Compile Include="Stock\ProductsDAL.cs" />
     <Compile Include="Stock\WarehouseDAL.cs" />
-    <Compile Include="CommonDAL.cs" />
+    <Compile Include="Common\CommonDAL.cs" />
     <Compile Include="Manage\ClientDAL.cs" />
     <Compile Include="Manage\ModulesDAL.cs" />
     <Compile Include="Manage\M_UsersDAL.cs" />

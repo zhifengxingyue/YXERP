@@ -38,7 +38,7 @@ namespace YXERP.Controllers
 
 
         /// <summary>
-        /// 管理员登录
+        /// 员工登录
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="pwd"></param>

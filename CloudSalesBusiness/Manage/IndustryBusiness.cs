@@ -11,6 +11,30 @@ namespace CloudSalesBusiness
 {
     public class IndustryBusiness
     {
+        #region Cache
+
+        private static List<Industry> _industrys;
+
+        /// <summary>
+        /// 行业
+        /// </summary>
+        public static List<Industry> Industrys
+        {
+            get
+            {
+                if (_industrys == null)
+                {
+                    _industrys = new List<Industry>();
+                }
+                return _industrys;
+            }
+            set
+            {
+                _industrys = value;
+            }
+        }
+
+        #endregion
 
         #region 查询
 
@@ -19,23 +43,23 @@ namespace CloudSalesBusiness
         /// </summary>
         /// <param name="clientid"></param>
         /// <returns></returns>
-        public static List<Industry> GetIndustryByClientID(string clientid)
+        public static List<Industry> GetIndustrys()
         {
-            if (CommonCache.Industry.ContainsKey(clientid.ToLower()))
+            if (IndustryBusiness.Industrys.Count > 0)
             {
-                return CommonCache.Industry[clientid.ToLower()];
+                return IndustryBusiness.Industrys;
             }
             else
             {
                 List<Industry> list = new List<Industry>();
-                DataTable dt = new IndustryDAL().GetIndustryByClientID(clientid);
+                DataTable dt = new IndustryDAL().GetIndustrys();
                 foreach (DataRow item in dt.Rows)
                 {
                     Industry model = new Industry();
                     model.FillData(item);
                     list.Add(model);
                 }
-                CommonCache.Industry.Add(clientid.ToLower(), list);
+                IndustryBusiness.Industrys = list;
                 return list;
             }
         }
@@ -58,11 +82,7 @@ namespace CloudSalesBusiness
             //处理缓存
             if (!string.IsNullOrEmpty(id))
             {
-                if (!CommonCache.Industry.ContainsKey(clientid.ToLower()))
-                {
-                    CommonCache.Industry[clientid.ToLower()] = new List<Industry>();
-                }
-                CommonCache.Industry[clientid.ToLower()].Add(new Industry()
+                IndustryBusiness.Industrys.Add(new Industry()
                 {
                     IndustryID = id,
                     Name = name,

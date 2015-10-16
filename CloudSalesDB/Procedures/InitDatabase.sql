@@ -42,6 +42,6 @@ declare @UserID nvarchar(64)=NEWID()
 
 /*后台-初始化数据*/
 insert into M_Users(UserID,LoginName,LoginPWD,Name,IsAdmin,Status,CreateUserID) 
-			values(@UserID,'Admin','ADA9D527563353B415575BD5BAAE0469','管理员',1,1,@UserID)
+			values(@UserID,'admin','ADA9D527563353B415575BD5BAAE0469','云销科技',1,1,@UserID)
 
 

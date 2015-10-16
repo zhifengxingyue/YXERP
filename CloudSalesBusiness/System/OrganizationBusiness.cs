@@ -68,33 +68,7 @@ namespace CloudSalesBusiness
                 model = new Users();
                 model.FillData(ds.Tables["User"].Rows[0]);
 
-                if (CommonCache.ClientMenus.ContainsKey(model.ClientID))
-                {
-                    model.Menus = CommonCache.ClientMenus[model.ClientID];
-                }
-                else if (ds.Tables.Contains("Modules"))
-                {
-                    List<Menu> list = new List<Menu>();
-                    var modules = CommonCache.Modules;
-                    foreach (DataRow dr in ds.Tables["Modules"].Rows)
-                    {
-                        Modules module = new Modules();
-                        module.FillData(dr);
-                        if (modules.ContainsKey(module.ModulesID))
-                        {
-                            foreach (var item in modules[module.ModulesID])
-                            {
-                                if (list.Where(m => m.MenuCode == item.MenuCode).Count() == 0)
-                                {
-                                    list.Add(item);
-                                }
-                            }
-                        }
-                    }
-                    list = list.OrderBy(m => m.Sort).ToList();
-                    CommonCache.ClientMenus.Add(model.ClientID, list);
-                    model.Menus = list;
-                }
+                model.Menus = CommonBusiness.ClientMenus;
             }
 
             //记录登录日志
