@@ -120,12 +120,14 @@
     <Content Include="modules\css\base.css" />
     <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-dropdown.png" />
+    <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
+    <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />

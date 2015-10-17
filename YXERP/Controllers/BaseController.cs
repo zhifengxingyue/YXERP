@@ -51,24 +51,17 @@ namespace YXERP.Controllers
         protected Dictionary<string, object> JsonDictionary = new Dictionary<string, object>();
 
         /// <summary>
-        /// 模块跳转
+        /// 获取云销系统一级菜单列表
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult TransCenter(string id)
+        public JsonResult GetTopMenus()
         {
-            if (CurrentUser == null)
+            JsonDictionary.Add("Items", CurrentUser.Menus.Where(m => m.PCode == ExpandClass.CLIENT_TOP_CODE).ToList());
+            return new JsonResult()
             {
-                return Redirect("/Home/Login");
-            }
-            var menu = CurrentUser.Menus.Where(m => m.MenuCode == id).FirstOrDefault();
-            if (menu == null)
-            {
-                return Redirect("/Home/Index");
-            }
-            HttpContext.Session["topMenuCode"] = id;
-            return Redirect("/" + menu.Controller);
-
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
     }

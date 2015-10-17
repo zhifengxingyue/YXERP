@@ -1,0 +1,12 @@
+﻿
+<div class="choose-modules">
+    <div class="top-lump"></div>
+    <ul class="modules-list">
+        {%
+	        for(var i=0, j=$data.length; i < j; i++){
+	        var item = $data[i];
+        %}
+        <li class="modules-item"><a href="/{%=item.Controller%}/{%=item.View%}">{%=item.Name%}</a></li>
+        {% } %}
+    </ul>
+</div>

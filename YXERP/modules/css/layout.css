@@ -15,8 +15,8 @@ select{ border:solid 1px #ccc; border-radius:5px;height:25px; line-height:25px; 
 select option{ padding:2px; }
 
 /*按钮和图标*/
-.btn { height:25px; padding:0px 10px; line-height:25px; background-color:#4B98E8 ; color:#fff; 
-       border:none; font-weight:bold; cursor:pointer; display:inline-block; border-radius:0;}
+.btn {  padding:5px 10px; background-color:#4B98E8; color:#fefefe; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.btn:hover { background-color:#2F74B9;  }
 
 .btnccc { height:25px; padding:0px 8px; line-height:22px; background-color:#eee ; color:#333; 
        border:solid 1px #ccc; cursor:pointer; display:inline-block;}
@@ -70,8 +70,18 @@ header { height:60px; width:100%; background-color:#2F74B9; position:fixed; top:
 header .logo { width:30px; height:30px; margin-top:15px; margin-left:15px; }
 header .logo img{ height:30px; }
 
-header .modules { width:30px; margin-left:85px; margin-top:18px; }
+header .modules { width:30px; margin-left:85px; margin-top:18px; cursor:pointer; }
 header .modules li{ height:4px; width:30px; background-color:#BFD2F2; margin-top:4px; }
+
+.choose-modules { position:fixed; background-color:#fff; width:240px; z-index:1000; border-radius:2px; border:solid 1px #efefef; box-shadow:0 0 2px #ccc;}
+.choose-modules .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
+                            width:0; height:0; position:absolute; left:107px; top:-9px; }
+.choose-modules .modules-list { padding:5px 0; }
+.choose-modules .modules-list .modules-item{ height:35px; line-height:35px; float:left; width:120px; }
+.modules-list .modules-item a{ width:80px;padding-left:40px; display:inline-block; font-size:14px; color:#666;}
+.choose-modules .modules-list .modules-item:hover{  }
+.modules-list .modules-item:hover a{ color:#2F74B9;}
+
 
 header .menu { height:60px; margin-left:60px; }
 header .menu a{ color:#BFD2F2; height:60px; line-height:60px;text-align:center; width:80px; display:inline-block; font-size:14px;}
@@ -110,10 +120,10 @@ nav .select a{ color:#318AE4; border-bottom:none;}
 /*内容页样式*/
 .main-content { margin-left:160px; padding-top:60px; }
 
-.header-box { border-bottom:solid 1px #7faaca; margin:15px; height:35px; }
+.header-box { border-bottom:solid 1px #ccc; margin:15px; height:35px; }
 .ico-goback { background:url(../images/ico-goback.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
 .ico-gonext { background:url(../images/ico-gonext.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
-.header-title { height:20px; line-height:20px; padding-left:10px; margin-top:6px; border-left:solid 5px #7faaca; font-weight:bold; color:#7faaca; font-size:16px; }
+.header-title { height:28px; line-height:28px; color:#666; font-size:20px; background:url('/modules/images/ico-nav.png') no-repeat left; padding-left:25px; }
 
 /*搜索样式*/
 .search-box { margin:20px; }

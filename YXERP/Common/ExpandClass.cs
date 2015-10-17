@@ -12,11 +12,11 @@ public static class ExpandClass
     /// <summary>
     /// 顶层菜单编码
     /// </summary>
-    public const string MANAGE_TOP_CODE = "100000000";
+    public const string CLIENT_TOP_CODE = "100000000";
     /// <summary>
     /// 默认菜单编码
     /// </summary>
-    public const string MANAGE_DEFAULT_CODE = "101000000";
+    public const string CLIENT_DEFAULT_CODE = "101000000";
 
     /// <summary>
     /// 获取下级菜单
@@ -40,16 +40,18 @@ public static class ExpandClass
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
-    public static List<Menu> GetControllers(HttpContext httpContext)
+    public static List<Menu> GetControllers(HttpContext httpContext, string controller)
     {
-        if (httpContext.Session["ClientManager"] != null && httpContext.Session["topMenuCode"] != null)
+        if (httpContext.Session["ClientManager"] != null)
         {
-            return ((CloudSalesEntity.Users)httpContext.Session["ClientManager"]).Menus.Where(m => m.PCode == httpContext.Session["topMenuCode"].ToString()).ToList();
+            CloudSalesEntity.Users model = (CloudSalesEntity.Users)httpContext.Session["ClientManager"];
+            var menu = model.Menus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 2).FirstOrDefault();
+            if (menu != null)
+            {
+                return model.Menus.Where(m => m.PCode == menu.PCode).ToList();
+            }
         }
-        else
-        {
-            return new List<Menu>();
-        }
+        return new List<Menu>();
     }
 
     /// <summary>

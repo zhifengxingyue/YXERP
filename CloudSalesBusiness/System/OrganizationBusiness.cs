@@ -96,6 +96,24 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <param name="agentid">代理商ID</param>
+        /// <returns></returns>
+        public static List<Role> GetRoles(string agentid)
+        {
+            DataTable dt = new OrganizationDAL().GetRoles(agentid);
+            List<Role> list = new List<Role>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Role model = new Role();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 获取用户信息(缓存)
         /// </summary>
         /// <param name="userid"></param>
@@ -138,10 +156,35 @@ namespace CloudSalesBusiness
         /// <param name="operateid">操作人</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public string AddDepartment(string name, string parentid, string description, string operateid, string agentid, string clientid)
+        public string CreateDepartment(string name, string parentid, string description, string operateid, string agentid, string clientid)
         {
-            var dal = new OrganizationDAL();
-            return dal.AddDepartment(name, parentid, description, operateid, agentid, clientid);
+            string departid = Guid.NewGuid().ToString();
+            bool bl = OrganizationDAL.BaseProvider.CreateDepartment(departid, name, parentid, description, operateid, agentid, clientid);
+            if (bl)
+            {
+                return departid;
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// 添加角色
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="parentid">上级ID</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid">操作人</param>
+        /// <param name="clientid">客户端ID</param>
+        /// <returns></returns>
+        public string CreateRole(string name, string parentid, string description, string operateid, string agentid, string clientid)
+        {
+            string roleid = Guid.NewGuid().ToString();
+            bool bl = OrganizationDAL.BaseProvider.CreateRole(roleid, name, parentid, description, operateid, agentid, clientid);
+            if (bl)
+            {
+                return roleid;
+            }
+            return "";
         }
 
         #endregion

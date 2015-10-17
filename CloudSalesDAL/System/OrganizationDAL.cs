@@ -10,6 +10,8 @@ namespace CloudSalesDAL
 {
     public class OrganizationDAL :BaseDAL
     {
+        public static OrganizationDAL BaseProvider = new OrganizationDAL();
+
         #region 查询
 
         public DataSet GetUserByUserName(string loginname, string pwd)
@@ -44,18 +46,28 @@ namespace CloudSalesDAL
             return GetDataTable(sql, paras, CommandType.Text);
         }
 
+        public DataTable GetRoles(string agentid)
+        {
+            string sql = "select * from Role where AgentID=@AgentID and Status<>9";
+
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@AgentID",agentid)
+                                   };
+
+            return GetDataTable(sql, paras, CommandType.Text);
+        }
+
         #endregion
 
         #region 添加
 
-        public string AddDepartment(string name, string parentid, string description, string operateid, string agentid, string clientid)
+        public bool CreateDepartment(string departid, string name, string parentid, string description, string operateid, string agentid, string clientid)
         {
-            string id = Guid.NewGuid().ToString();
             string sql = "insert into Department(DepartID,Name,ParentID,Status,Description,CreateUserID,AgentID,ClientID) "+
                         " values(@DepartID,@Name,@ParentID,1,@Description,@CreateUserID,@AgentID,@ClientID)";
 
             SqlParameter[] paras = { 
-                                       new SqlParameter("@DepartID",id),
+                                       new SqlParameter("@DepartID",departid),
                                        new SqlParameter("@Name",name),
                                        new SqlParameter("@ParentID",parentid),
                                        new SqlParameter("@Description",description),
@@ -64,11 +76,25 @@ namespace CloudSalesDAL
                                        new SqlParameter("@ClientID",clientid)
                                    };
 
-            if (ExecuteNonQuery(sql, paras, CommandType.Text) > 0)
-            {
-                return id;
-            }
-            return "";
+            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+        }
+
+        public bool CreateRole(string roleid, string name, string parentid, string description, string operateid, string agentid, string clientid)
+        {
+            string sql = "insert into Department(DepartID,Name,ParentID,Status,IsDefault,Description,CreateUserID,AgentID,ClientID) " +
+                        " values(@DepartID,@Name,@ParentID,1,0,@Description,@CreateUserID,@AgentID,@ClientID)";
+
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@Name",name),
+                                       new SqlParameter("@ParentID",parentid),
+                                       new SqlParameter("@Description",description),
+                                       new SqlParameter("@CreateUserID",operateid),
+                                       new SqlParameter("@AgentID",agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
         }
 
         #endregion

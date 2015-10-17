@@ -1,5 +1,28 @@
 ﻿@{
-    ViewBag.Title = "角色管理";
+    ViewBag.Title = "角色权限";
 }
 
-<h2>Roles</h2>
+@section css{
+    <link rel="stylesheet" href="/modules/css/organization/department.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/organization/department"], function (obj) {
+            obj.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">角色权限</span><a href="javascript:void(0)" class="ico-add left mLeft20 mTop4">添加角色</a>
+</div>
+<div class="content-body">
+    <ul class="entity-list">
+        @foreach (var item in (List<CloudSalesEntity.Role>)ViewBag.Items)
+        {
+            <li class="entity-item">
+                <input type="text" data-id="@(item.RoleID)" data-value="@(item.Name)" value="@(item.Name)" />
+                <span data-id="@(item.RoleID)" class="ico-delete"></span>
+            </li>
+        }
+    </ul>
+</div>

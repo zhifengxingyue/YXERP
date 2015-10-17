@@ -17,16 +17,16 @@
         <div class="logo left">
             <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
         </div>
-        <ul class="modules left">
+        <ul class="modules left" id="choosemodules">
             <li></li>
             <li></li>
             <li></li>
         </ul>
         <ul id="controllerMenu" class="menu left">
-            @foreach (CloudSalesEntity.Menu model in ExpandClass.GetControllers(HttpContext.Current))
+            @foreach (CloudSalesEntity.Menu model in ExpandClass.GetControllers(HttpContext.Current, controller))
             { 
                 <li class="left" data-code="@(model.MenuCode)">
-                    <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)"> @(model.Name)</a> 
+                    <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)/@(model.View)"> @(model.Name)</a> 
                 </li>
             }
         </ul>

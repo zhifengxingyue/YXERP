@@ -3,10 +3,10 @@
     ViewBag.Title = "上海云销系统科技有限公司";
 }
 <ul>
-    @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.MANAGE_TOP_CODE))
+    @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
     { 
         <li class="left topMenu" data-code="@(model.MenuCode)">
-            <a href="/Base/TransCenter/@(model.MenuCode)"> @(model.Name)</a> 
+            <a href="/@(model.Controller)"> @(model.Name)</a> 
         </li>
     }
 </ul>

@@ -27,6 +27,7 @@ namespace YXERP.Controllers
 
         public ActionResult Roles()
         {
+            ViewBag.Items = OrganizationBusiness.GetRoles(CurrentUser.AgentID);
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace YXERP.Controllers
             string ID = "";
             if (string.IsNullOrEmpty(model.DepartID))
             {
-                ID = new OrganizationBusiness().AddDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                ID = new OrganizationBusiness().CreateDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             }
             else
             {
@@ -67,6 +68,7 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         /// <summary>
         /// 删除部门
         /// </summary>
