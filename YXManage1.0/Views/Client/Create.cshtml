@@ -1,22 +1,21 @@
 ﻿@{
     ViewBag.Title = "新建客户";
 }
+<link href="/modules/css/clients.css" rel="stylesheet" />
 
-@section script{
+@section scripts{
     <script type="text/javascript">
            seajs.use(["scripts/clients"], function (client) {
                client.createInit();
            });
     </script>
 }
-@section leftNav{
-    @Html.Partial("_ClientLeftNav")
-}
-<link href="/modules/css/clients.css" rel="stylesheet" />
+
 <div class="headertitle">
     <span>新建客户</span>
 </div>
-<ul class="contentnew">
+
+<ul class="contentnew" style="display:block;">
     <li>
         <span class="columnname">公司名称：</span>
         <span><input type="text" id="name" class="verify" data-empty="公司名称不能为空!" /></span>
@@ -73,6 +72,7 @@
         <span><textarea id="description"></textarea></span>
     </li>
 </ul>
-<div class="mTop20">
+
+<div class="mTop20 mLeft20">
     <input type="button" id="saveClient" class="btn" value="保存" />
 </div>

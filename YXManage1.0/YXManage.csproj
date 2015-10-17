@@ -42,6 +42,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="Microsoft.CSharp" />
@@ -117,10 +120,13 @@
     <Content Include="modules\css\home.css" />
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\modules.css" />
+    <Content Include="modules\images\default.png" />
+    <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-home-hover.png" />
     <Content Include="modules\images\ico-home.png" />
     <Content Include="modules\images\ico-logout-hover.png" />
     <Content Include="modules\images\ico-logout.png" />
+    <Content Include="modules\images\logo.png" />
     <Content Include="modules\images\open.png" />
     <Content Include="modules\images\pull.png" />
     <Content Include="modules\plug\city.js" />
@@ -194,16 +200,7 @@
     <Content Include="Views\Modules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Modules\_ModulesLeftNav.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_HomeLeftNav.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Client\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Client\_ClientLeftNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Client\Create.cshtml" />
@@ -216,9 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ModulesProduct\Detail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ModulesProduct\_ModulesProductLeftNav.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -238,7 +232,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>7411</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:15444/</IISUrl>
+          <IISUrl>http://localhost:1544/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -8,7 +8,8 @@ using System.Web.Script.Serialization;
 using CloudSalesBusiness;
 using CloudSalesTool;
 using CloudSalesEntity;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 namespace YXManage.Controllers
 {
     [YXManage.Common.UserAuthorize]
@@ -112,6 +113,7 @@ namespace YXManage.Controllers
 
             int result = 0;
             if (string.IsNullOrEmpty(model.ClientID))
+
             {
                 string clientid = ClientBusiness.InsertClient(model, loginName, loginName, CurrentUser.UserID, out result);
                 JsonDictionary.Add("Result", result);

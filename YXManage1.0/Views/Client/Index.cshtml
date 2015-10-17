@@ -2,19 +2,18 @@
     ViewBag.Title = "客户列表";
 }
 
-@section script{
+@section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/clients"], function (client) {
             client.init();
         });
     </script>
 }
-@section leftNav{
-    @Html.Partial("_ClientLeftNav")
-}
+
 <div class="headertitle">
     <span>客户列表</span>
 </div>
+
 <table class="table-list mTop20">
     <tr class="tr-header" id="client-header">
         <td class="">操作</td>
@@ -28,4 +27,5 @@
         <td class="">注册日期</td>
     </tr>
 </table>
+
 <div id="pager" class="mTop20"></div>

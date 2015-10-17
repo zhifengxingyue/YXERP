@@ -228,7 +228,9 @@ define(function (require, exports, module) {
 
             var last = _ulwrapdiv.find('li').eq(o.start - 1);
             last.attr('id', 'tmp');
-            var left = document.getElementById('tmp').offsetLeft / 2;
+            var left = 0;
+            if (document.getElementById('tmp'))
+             left = document.getElementById('tmp').offsetLeft / 2;
             last.removeAttr('id');
             var tmp = left - (outsidewidth / 2);
             if (ver == 'ie7') _ulwrapdiv.animate({ scrollLeft: left + tmp - _first.parent().width() + 52 + 'px' });

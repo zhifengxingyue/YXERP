@@ -1,30 +1,36 @@
 ﻿@{
-    ViewBag.Title = "模块产品";
+    ViewBag.Title = "系统产品";
 }
 
-@section script{
+@section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/modulesproduct"], function (ModulesProduct) {
             ModulesProduct.detailInit($("#id").val());
         });
     </script>
 }
-@section leftNav{
-    @Html.Partial("_ModulesProductLeftNav")
-}
 <link href="/modules/css/clients.css" rel="stylesheet" />
 <div class="headertitle">
-    <span id="pageTitle">添加模块产品</span>
+    <span id="pageTitle">添加产品</span>
 </div>
 <ul class="contentnew" style="display:block;">
     <li>
-        <span class="columnname">模块：</span>
+        <span class="columnname">产品：</span>
         <span>
             <select id="ModulesID">
                 @foreach (CloudSalesEntity.Modules model in (List<CloudSalesEntity.Modules>)ViewBag.Modules)
                 {
                     <option value="@(model.ModulesID)" data-name="@(model.Name)">@(model.Name)</option>
                 }
+            </select>
+        </span>
+    </li>
+    <li>
+        <span class="columnname">用户类型：</span>
+        <span>
+            <select id="UserType">
+                <option value="1">公司用户</option>
+                <option value="2">代理商用户</option>
             </select>
         </span>
     </li>
@@ -68,7 +74,7 @@
         <span><textarea id="Description"></textarea></span>
     </li>
 </ul>
-<div class="mTop20">
+<div class="mTop20 mLeft20">
     <input type="button" id="saveModulesProduct" class="btn" value="添加" />
 </div>
 <input type="hidden" id="id" value="@ViewBag.ID" />

@@ -27,6 +27,10 @@ namespace CloudSalesEntity.Manage
 
         public string CreateUserID { get; set; }
 
+        public int Type { get; set; }
+
+        public int IsChild { get; set; }
+
         /// <summary>
         /// 填充数据
         /// </summary>

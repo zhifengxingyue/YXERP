@@ -25,7 +25,7 @@ namespace CloudSalesDAL.Manage
         #region 添加
 
         public bool InsertModulesProduct(string modulesID, int period, int periodQuantity, int userQuantity, decimal price, 
-                                   string description,  string userid)
+                                   string description,int type,int userType,  string userid)
         {
             SqlParameter[] parms = { 
                                        new SqlParameter("@ModulesID",modulesID),
@@ -34,10 +34,12 @@ namespace CloudSalesDAL.Manage
                                        new SqlParameter("@UserQuantity",userQuantity),
                                        new SqlParameter("@Price",price),
                                        new SqlParameter("@Description",description),
+                                       new SqlParameter("@Type",type),
+                                       new SqlParameter("@UserType",userType),
                                        new SqlParameter("@CreateUserID",userid)
                                    };
 
-            string cmdTxt = "insert into ModulesProduct(ProductID,ModulesID,Period,PeriodQuantity,UserQuantity,Price,Description,CreateUserID,CreateTime) values(NewID(),@ModulesID,@Period,@PeriodQuantity,@UserQuantity,@Price,@Description,@CreateUserID,getdate())";
+            string cmdTxt = "insert into ModulesProduct(ProductID,ModulesID,Period,PeriodQuantity,UserQuantity,Price,Description,Type,userType,CreateUserID,CreateTime) values(NewID(),@ModulesID,@Period,@PeriodQuantity,@UserQuantity,@Price,@Description,@Type,@UserType,@CreateUserID,getdate())";
 
             return ExecuteNonQuery(cmdTxt, parms, CommandType.Text) > 0;
         }
@@ -46,7 +48,7 @@ namespace CloudSalesDAL.Manage
 
         #region 编辑
        public bool UpdateModulesProduct(int autoID,string modulesID, int period, int periodQuantity, int userQuantity, decimal price, 
-                                   string description)
+                                   string description,int type,int userType)
         {
             SqlParameter[] parms = {
                                        new SqlParameter("@AutoID",autoID),
@@ -56,9 +58,11 @@ namespace CloudSalesDAL.Manage
                                        new SqlParameter("@UserQuantity",userQuantity),
                                        new SqlParameter("@Price",price),
                                        new SqlParameter("@Description",description),
+                                       new SqlParameter("@Type",type),
+                                       new SqlParameter("@UserType",userType)
                                    };
 
-            string cmdTxt = "update ModulesProduct set ModulesID=@ModulesID,Period=@Period,PeriodQuantity=@PeriodQuantity,UserQuantity=@UserQuantity,Price=@Price,Description=@Description where AutoID=@AutoID";
+            string cmdTxt = "update ModulesProduct set ModulesID=@ModulesID,Period=@Period,PeriodQuantity=@PeriodQuantity,UserQuantity=@UserQuantity,Price=@Price,Description=@Description,type=@Type,userType=@UserType where AutoID=@AutoID";
 
             return ExecuteNonQuery(cmdTxt, parms, CommandType.Text) > 0;
         }
