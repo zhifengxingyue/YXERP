@@ -13,9 +13,9 @@ namespace CloudSalesEnum
     {
         [DescriptionAttribute("管理系统")]
         Manage = 1,
-        [DescriptionAttribute("客户端（公司）")]
+        [DescriptionAttribute("云销系统")]
         Client = 2,
-        [DescriptionAttribute("代理商")]
+        [DescriptionAttribute("代理商系统")]
         Agent = 3
     }
 
@@ -28,7 +28,7 @@ namespace CloudSalesEnum
         All = -1,
         [DescriptionAttribute("禁用")]
         Invalid = 0,
-        [DescriptionAttribute("启用")]
+        [DescriptionAttribute("正常")]
         Valid = 1,
         [DescriptionAttribute("删除")]
         Delete = 9
@@ -42,9 +42,9 @@ namespace CloudSalesEnum
         Failed = 0,
         [DescriptionAttribute("成功")]
         Success = 1,
-        [DescriptionAttribute("错误")]
+        [DescriptionAttribute("系统错误")]
         Error = 10001,
-        [DescriptionAttribute("已存在")]
+        [DescriptionAttribute("存在数据")]
         Exists = 10002
     }
 

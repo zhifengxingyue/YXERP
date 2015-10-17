@@ -99,7 +99,6 @@
   <ItemGroup>
     <Compile Include="Common\ExpandClass.cs" />
     <Compile Include="Common\UserAuthorize.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerRPTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -122,6 +120,7 @@
     <Content Include="modules\css\base.css" />
     <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-dropdown.png" />
+    <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
@@ -379,7 +378,6 @@
     <Content Include="modules\images\ico-tree-open.png" />
     <Content Include="modules\images\ico-tree-pull.png" />
     <Content Include="modules\images\ico-help.png" />
-    <Content Include="modules\images\ico_search.gif" />
     <Content Include="modules\images\loginBackground.jpg" />
     <Content Include="modules\images\loginbarBackground2.gif" />
     <Content Include="modules\images\loginMainBackground.jpg" />
