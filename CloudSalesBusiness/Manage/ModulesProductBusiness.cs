@@ -15,7 +15,7 @@ namespace CloudSalesBusiness.Manage
         public static bool InsertModulesProduct(ModulesProduct model)
         {
             return ModulesProductDAL.BaseProvider.InsertModulesProduct(model.ModulesID, model.Period, model.PeriodQuantity, model.UserQuantity,
-                model.Price, model.Description, model.CreateUserID);
+                model.Price, model.Description,model.Type,model.IsChild, model.CreateUserID);
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace CloudSalesBusiness.Manage
         public static bool UpdateModulesProduct(ModulesProduct model)
         {
             return ModulesProductDAL.BaseProvider.UpdateModulesProduct(model.AutoID,model.ModulesID, model.Period, model.PeriodQuantity, model.UserQuantity,
-                model.Price, model.Description);
+                model.Price, model.Description,model.Type,model.IsChild);
         }
         #endregion
 

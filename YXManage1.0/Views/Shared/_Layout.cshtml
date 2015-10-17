@@ -1,31 +1,109 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
     <title>@ViewBag.Title</title>
     <link href="/modules/css/base.css" rel="stylesheet" />
     <link href="/modules/css/layout.css" rel="stylesheet" />
-    <script src="/Scripts/jquery-1.11.1.js"></script>
-    <script src="/modules/scripts/layout.js"></script>
-    
+    @RenderSection("css", false)
 </head>
 <body>
+    @{
+        var controller =  Url.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+        var action = Url.RequestContext.RouteData.Values["action"].ToString().ToLower();
+        var CurrentUser = (CloudSalesEntity.M_Users)Session["Manager"];
+    }
     <header>
-        <div class="header-box">
-            <a href="/Home/Index" class="left home" title="首页"></a>
-            <a href="/Home/Logout" class="right logout" title="退出"></a>
+        <div class="logo left">
+            <a href="/Home/Index"><img src="/modules/images/logo.png" /></a>
+        </div>
+        <ul class="modules left">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="controllerMenu" class="menu left">
+                <li class="left" >
+                    <a class="" href="/Client/index" BindController="client"> 客户</a>
+                    <a class="" href="/ModulesProduct/index" BindController="modulesproduct"> 产品</a> 
+                    <a class="" href="/Modules/index" BindController="modules">模块</a> 
+                </li>
+        </ul>
+        <div class="currentuser right">
+            <span>
+                <img src="/modules/images/defaultavatar.png" class="avatar" />
+            </span>
+            <span class="username">
+               @CurrentUser.LoginName
+            </span>
+            <span class="dropdown">
+                <span class="dropdown-top"></span>
+                <span class="dropdown-bottom"></span>
+            </span>
         </div>
     </header>
-    <div class="main-box">
-         @RenderSection("leftNav",false)
-        <div class="main-body">
+
+    <div class="main-body">
+        <nav BindController="client">
+            <div class="top-nav">
+                <span class="controller-name">客户管理</span>
+            </div>
+            <div class="nav-list">
+                    <ul class="action-box" BindAction="create">
+                        <li class="action "><a href="/Client/Create" >添加客户</a></li>
+                    </ul>
+                    <ul class="action-box" BindAction="index">
+                        <li class="action "><a href="/Client/index" >客户列表</a></li>
+                    </ul>
+            </div>
+            
+        </nav>
+        <nav BindController="modulesproduct">
+            <div class="top-nav">
+                <span class="controller-name">产品管理</span>
+            </div>
+            <div class="nav-list">
+                    <ul class="action-box" BindAction="detail">
+                        <li class="action "><a href="/ModulesProduct/Detail" >添加产品</a></li>
+                    </ul>
+                    <ul class="action-box" BindAction="index">
+                        <li class="action "><a href="/ModulesProduct/index" >产品列表</a></li>
+                    </ul>
+            </div>
+            
+        </nav>
+        <nav BindController="modules">
+            <div class="top-nav">
+                <span class="controller-name">模块管理</span>
+            </div>
+            <div class="nav-list">
+                    <ul class="action-box" BindAction="index">
+                        <li class="action "><a href="/Modules/index" >模块列表</a></li>
+                    </ul>
+            </div>
+            
+        </nav>
+        <div class="main-content">
+            <section>
             @RenderBody()
+            </section>
         </div>
     </div>
-    <footer>
-        
-    </footer>
-    <script src="/Scripts/sea.js"></script>
-    <script src="/Scripts/sea-config.js"></script>
-    @RenderSection("script",false)
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="/Scripts/sea.js"></script>
+    <script type="text/javascript" src="/Scripts/sea-config.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/layout"], function (layout) {
+            layout.init();
+        });
+
+        $(function () {
+            $("nav[BindController='@controller']").addClass("block");
+            $("nav[BindController='@controller'] ul[BindAction='@action']").addClass("select");
+            $("#controllerMenu li a[BindController='@controller']").addClass("select");
+        }); 
+    </script>
+    @RenderSection("scripts", false)
 </body>
+    
 </html>

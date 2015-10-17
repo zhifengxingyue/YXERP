@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         ModulesProduct.detailEvent();
 
         if (id != 0) {
-            $("#pageTitle").html("设置模块产品");
+            $("#pageTitle").html("设置产品");
             $("#saveModulesProduct").val("保存");
             ModulesProduct.getModulesProductDetail(id);
         }
@@ -43,6 +43,11 @@ define(function (require, exports, module) {
                 return false;
             };
 
+            var Type = 1;
+            if ($("#ModulesID").find("option:selected").text().indexOf("代理商")!=-1)
+            {
+                Type = 2;
+            }
             var modulesProduct = {
                 AutoID: $("#id").val(),
                 ModulesID: $("#ModulesID").val(),
@@ -50,7 +55,9 @@ define(function (require, exports, module) {
                 PeriodQuantity: $("#PeriodQuantity").val(),
                 UserQuantity: $("#UserQuantity").val(),
                 Price: $("#Price").val(),
-                Description: $("#Description").val()
+                Description: $("#Description").val(),
+                UserType: $("#UserType").val(),
+                Type: Type
             };
 
             Global.post("/ModulesProduct/SaveModulesProduct", { modulesProduct: JSON.stringify(modulesProduct) }, function (data) {
@@ -58,7 +65,6 @@ define(function (require, exports, module) {
                     location.href = "/ModulesProduct/Index";
                 } else if (data.Result == "2") {
                     //alert("登陆账号已存在!");
-                    //$("#loginName").val("");
                 }
             });
         });

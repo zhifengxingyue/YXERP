@@ -2,13 +2,14 @@
 /*新建客户端*/
     .clientnav {
     border-bottom: solid 1px #ccc;
+    padding:14px 0px 0px 0px;
     }
 
     .clientnav ul li {
         font-size:16px;
         color:#999;
         float:left;
-        padding:0px 10px 10px 10px;
+        padding:0px 10px 13px 10px;
         margin-right:25px;
         cursor:pointer;
     }
@@ -18,9 +19,13 @@
         border-bottom:4px solid #06c;
     }
 
+    .clientnav ul li:hover {
+        color:#06c;
+    }
+
 .contentnew { border-bottom:solid 1px #ccc; padding:20px;display:none;}
 .contentnew li { margin-top:10px; line-height:25px; }
-.contentnew input { width:150px;}
+.contentnew input[type="text"] { width:150px;}
 .contentnew select { width:150px; }
 .contentnew textarea { width:300px;  }
 .contentnew .columnname { color:#666; padding-right:20px; vertical-align:top; width:60px; line-height:25px;}

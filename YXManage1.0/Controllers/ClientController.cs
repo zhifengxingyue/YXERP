@@ -8,7 +8,8 @@ using System.Web.Script.Serialization;
 using CloudSalesBusiness;
 using CloudSalesTool;
 using CloudSalesEntity;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 namespace YXManage.Controllers
 {
     [YXManage.Common.UserAuthorize]
@@ -34,6 +35,19 @@ namespace YXManage.Controllers
             ViewBag.ID = id;
             ViewBag.Industry = IndustryBusiness.GetIndustrys();
             ViewBag.Modules = ModulesBusiness.GetModules();
+            return View();
+        }
+
+        public ActionResult MDEvent(FormCollection paras)
+        {
+            string signature = paras["signature"];
+            string timestamp = paras["timestamp"];
+            string nonce = paras["nonce"];
+            string content = paras["content"];
+            JObject contentObj =(JObject) JsonConvert.DeserializeObject(content);
+            string uid = contentObj["uid"].ToString();
+
+            ViewBag.uid = uid;
             return View();
         }
 
