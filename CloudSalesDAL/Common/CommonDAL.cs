@@ -15,7 +15,7 @@ namespace CloudSalesDAL
         /// <returns></returns>
         public DataTable GetMenus()
         {
-            DataTable dt = GetDataTable("select * from Menu where Type=1 and IsHide=0 ");
+            DataTable dt = GetDataTable("select * from Menu where Type=1 and IsHide=0 order by Sort ");
             return dt;
         }
 

@@ -21,7 +21,7 @@ namespace YXERP.Controllers
 
         public ActionResult Department()
         {
-            ViewBag.Items = OrganizationBusiness.GetDepartments(CurrentUser.ClientID);
+            ViewBag.Items = OrganizationBusiness.GetDepartments(CurrentUser.AgentID);
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace YXERP.Controllers
             string ID = "";
             if (string.IsNullOrEmpty(model.DepartID))
             {
-                ID = new OrganizationBusiness().AddDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
+                ID = new OrganizationBusiness().AddDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             }
             else
             {

@@ -19,6 +19,7 @@
             _ele.find("input").focus();
         });
     }
+
     //附加元素事件
     ObjectJS.bindElementEvent = function (elments) {
         var _self = this;
@@ -56,7 +57,7 @@
             var _this = $(this);
             if (_this.data("id") != "") {
                 if (confirm("部门删除后不可恢复,确认删除吗？")) {
-                    _self.deleteDepartment(_this.data("id"), function (status) {
+                    _self.deleteModel(_this.data("id"), function (status) {
                         if (status == 1) {
                             _this.parent().remove();
                         } else if (status == 10002) {
@@ -69,9 +70,8 @@
             }
         })
     }
-
     //删除
-    ObjectJS.deleteDepartment = function (id, callback) {
+    ObjectJS.deleteModel = function (id, callback) {
         Global.post("/Organization/DeleteDepartment", { departid: id }, function (data) {
             !!callback && callback(data.Status);
         })

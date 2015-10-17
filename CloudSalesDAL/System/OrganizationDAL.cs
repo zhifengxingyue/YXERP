@@ -33,12 +33,12 @@ namespace CloudSalesDAL
             return GetDataTable(sql, paras, CommandType.Text);
         }
 
-        public DataTable GetDepartments(string clientid)
+        public DataTable GetDepartments(string agentid)
         {
-            string sql = "select * from Department where ClientID=@ClientID and Status<>9";
+            string sql = "select * from Department where AgentID=@AgentID and Status<>9";
 
             SqlParameter[] paras = { 
-                                    new SqlParameter("@ClientID",clientid)
+                                    new SqlParameter("@AgentID",agentid)
                                    };
 
             return GetDataTable(sql, paras, CommandType.Text);
@@ -48,11 +48,11 @@ namespace CloudSalesDAL
 
         #region 添加
 
-        public string AddDepartment(string name, string parentid, string description, string operateid, string clientid)
+        public string AddDepartment(string name, string parentid, string description, string operateid, string agentid, string clientid)
         {
             string id = Guid.NewGuid().ToString();
-            string sql = "insert into Department(DepartID,Name,ParentID,Status,Description,CreateUserID,ClientID) "+
-                        " values(@DepartID,@Name,@ParentID,1,@Description,@CreateUserID,@ClientID)";
+            string sql = "insert into Department(DepartID,Name,ParentID,Status,Description,CreateUserID,AgentID,ClientID) "+
+                        " values(@DepartID,@Name,@ParentID,1,@Description,@CreateUserID,@AgentID,@ClientID)";
 
             SqlParameter[] paras = { 
                                        new SqlParameter("@DepartID",id),
@@ -60,6 +60,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@ParentID",parentid),
                                        new SqlParameter("@Description",description),
                                        new SqlParameter("@CreateUserID",operateid),
+                                       new SqlParameter("@AgentID",agentid),
                                        new SqlParameter("@ClientID",clientid)
                                    };
 
@@ -72,7 +73,7 @@ namespace CloudSalesDAL
 
         #endregion
 
-        #region 编辑
+        #region 编辑/删除
 
         public bool UpdateDepartment(string departid, string name, string description)
         {
@@ -87,10 +88,7 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
         }
 
-
         #endregion
 
-        #region 删除
-        #endregion
     }
 }

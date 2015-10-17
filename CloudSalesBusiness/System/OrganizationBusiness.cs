@@ -80,11 +80,11 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 获取部门列表
         /// </summary>
-        /// <param name="clientid">客户端ID</param>
+        /// <param name="agentid">代理商ID</param>
         /// <returns></returns>
-        public static List<Department> GetDepartments(string clientid)
+        public static List<Department> GetDepartments(string agentid)
         {
-            DataTable dt = new OrganizationDAL().GetDepartments(clientid);
+            DataTable dt = new OrganizationDAL().GetDepartments(agentid);
             List<Department> list = new List<Department>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -138,15 +138,15 @@ namespace CloudSalesBusiness
         /// <param name="operateid">操作人</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public string AddDepartment(string name, string parentid, string description, string operateid, string clientid)
+        public string AddDepartment(string name, string parentid, string description, string operateid, string agentid, string clientid)
         {
             var dal = new OrganizationDAL();
-            return dal.AddDepartment(name, parentid, description, operateid, clientid);
+            return dal.AddDepartment(name, parentid, description, operateid, agentid, clientid);
         }
 
         #endregion
 
-        #region 编辑
+        #region 编辑/删除
 
         /// <summary>
         /// 编辑部门
@@ -175,13 +175,13 @@ namespace CloudSalesBusiness
         {
             if (status == EnumStatus.Delete)
             {
-                object count = CommonBusiness.Select(" UserDepart ", " count(0) ", " DepartID='" + departid + "' and Status=1 ");
+                object count = CommonBusiness.Select("UserDepart", "count(0)", "DepartID='" + departid + "' and Status=1");
                 if (Convert.ToInt32(count) > 0)
                 {
                     return EnumResultStatus.Exists;
                 }
             }
-            if (CommonBusiness.Update(" Department ", " Status ", (int)status, " DepartID='" + departid + "'"))
+            if (CommonBusiness.Update("Department", "Status", (int)status, "DepartID='" + departid + "'"))
             {
                 return EnumResultStatus.Success;
             }
@@ -191,9 +191,6 @@ namespace CloudSalesBusiness
             }
         }
 
-        #endregion
-
-        #region 删除
         #endregion
     }
 }
