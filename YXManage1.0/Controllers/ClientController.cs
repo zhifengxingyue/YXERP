@@ -38,19 +38,6 @@ namespace YXManage.Controllers
             return View();
         }
 
-        public ActionResult MDEvent(FormCollection paras)
-        {
-            string signature = paras["signature"];
-            string timestamp = paras["timestamp"];
-            string nonce = paras["nonce"];
-            string content = paras["content"];
-            JObject contentObj =(JObject) JsonConvert.DeserializeObject(content);
-            string uid = contentObj["uid"].ToString();
-
-            ViewBag.uid = uid;
-            return View();
-        }
-
         #region Ajax
 
         /// <summary>
@@ -126,6 +113,7 @@ namespace YXManage.Controllers
 
             int result = 0;
             if (string.IsNullOrEmpty(model.ClientID))
+
             {
                 string clientid = ClientBusiness.InsertClient(model, loginName, loginName, CurrentUser.UserID, out result);
                 JsonDictionary.Add("Result", result);
