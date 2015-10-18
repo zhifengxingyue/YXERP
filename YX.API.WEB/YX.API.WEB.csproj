@@ -156,12 +156,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Client\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Client\MDEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CloudSalesBusiness\CloudSalesBusiness.csproj">

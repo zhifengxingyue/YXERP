@@ -5,17 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 
 using CloudSalesBusiness.Manage;
-using CloudSalesTool;
-using CloudSalesEntity.Manage;
 using System.Web.Script.Serialization;
+using CloudSalesEntity.Manage;
 namespace YXManage.Controllers
 {
     [YXManage.Common.UserAuthorize]
-    public class ModulesProductController :BaseController
+    public class ExpressCompanyController:BaseController
     {
-        //
-        // GET: /ModulesProduct/
-
         #region view
         public ActionResult Index()
         {
@@ -24,21 +20,17 @@ namespace YXManage.Controllers
 
         public ActionResult Detail(string id)
         {
-            ViewBag.Modules = CloudSalesBusiness.ModulesBusiness.GetModules();
-            if(string.IsNullOrEmpty(id))
-                ViewBag.ID = 0;
-            else
-                ViewBag.ID = int.Parse(id);
+            ViewBag.ExpressID =id;
 
             return View();
         }
         #endregion
 
         #region ajax
-        public JsonResult GetModulesProducts(int pageIndex, string keyWords)
+        public JsonResult GetExpressCompanys(int pageIndex, string keyWords)
         {
             int totalCount = 0, pageCount = 0;
-            var list = ModulesProductBusiness.GetModulesProducts(keyWords, PageSize, pageIndex, ref totalCount, ref pageCount);
+            var list = ExpressCompanyBusiness.GetExpressCompanys(keyWords, PageSize, pageIndex, ref totalCount, ref pageCount);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
@@ -49,9 +41,9 @@ namespace YXManage.Controllers
             };
         }
 
-        public JsonResult GetModulesProductDetail(int id)
+        public JsonResult GetExpressCompanyDetail(string id)
         {
-            var item = ModulesProductBusiness.GetModulesProductDetail(id);
+            var item = ExpressCompanyBusiness.GetExpressCompanyDetail(id);
             JsonDictionary.Add("Item", item);
             JsonDictionary.Add("Result", 1);
             return new JsonResult()
@@ -61,21 +53,21 @@ namespace YXManage.Controllers
             };
         }
 
-        public JsonResult SaveModulesProduct(string modulesProduct)
+        public JsonResult SaveExpressCompany(string expressCompany)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            ModulesProduct model = serializer.Deserialize<ModulesProduct>(modulesProduct);
+            ExpressCompany model = serializer.Deserialize<ExpressCompany>(expressCompany);
 
             bool flag = false;
-            if (model.AutoID==0)
+            if (model.AutoID == 0)
             {
-                model.CreateUserID =string.Empty;
-                 flag =ModulesProductBusiness.InsertModulesProduct(model);
+                model.CreateUserID = string.Empty;
+                flag = ExpressCompanyBusiness.InsertExpressCompany(model);
             }
             else
             {
                 model.CreateUserID = string.Empty;
-                flag = ModulesProductBusiness.UpdateModulesProduct(model);
+                flag = ExpressCompanyBusiness.UpdateExpressCompany(model);
             }
             JsonDictionary.Add("Result", flag ? 1 : 0);
 
@@ -86,9 +78,9 @@ namespace YXManage.Controllers
             };
         }
 
-        public JsonResult DeleteModulesProduct(int id)
+        public JsonResult DeleteExpressCompany(string id)
         {
-            bool flag = ModulesProductBusiness.DeleteModulesProduct(id);
+            bool flag = ExpressCompanyBusiness.DeleteExpressCompany(id);
             JsonDictionary.Add("Result", flag ? 1 : 0);
             return new JsonResult()
             {
