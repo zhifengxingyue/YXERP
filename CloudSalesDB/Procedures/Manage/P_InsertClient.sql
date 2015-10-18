@@ -76,11 +76,6 @@ set @Err+=@@error
 insert into UserRole(UserID,RoleID,CreateUserID,ClientID) values(@UserID,@RoleID,@UserID,@ClientID) 
 set @Err+=@@error
 
-
---客户端模块
-exec('insert into ClientModules(ClientID,ModulesID,CreateUserID) select '''+@ClientID+''',ModulesID,'''+@CreateUserID+''' from Modules where ModulesID in('+@Modules+')')
-set @Err+=@@error
-
 if(@Err>0)
 begin
 	set @Result=0

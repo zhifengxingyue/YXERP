@@ -26,7 +26,10 @@ define(function (require, exports, module) {
 
         $(document).click(function (e) {
             if (!$(e.target).parents().hasClass("modules") && !$(e.target).hasClass("modules")) {
-                $(".choose-modules").hide();
+                $(".choose-modules").fadeOut("1000");
+            }
+            if (!$(e.target).parents().hasClass("currentuser") && !$(e.target).hasClass("currentuser")) {
+                $(".dropdown-userinfo").fadeOut("1000");
             }
         });
 
@@ -38,13 +41,18 @@ define(function (require, exports, module) {
                     doT.exec("template/common/choosemodules.html", function (templateFun) {
                         var innerHHML = templateFun(data.Items);
                         innerHHML = $(innerHHML);
-                        innerHHML.css({ "top": offset.top + 42, "left": 25 });
+                        innerHHML.css({ "top": offset.top + 42, "left": 25 }).fadeIn("1000");
                         $("body").append(innerHHML);
                     });
                 });
             } else {
-                $(".choose-modules").show();
+                $(".choose-modules").fadeIn("1000");
             }
+        });
+        //登录信息展开
+        $("#currentUser").click(function () {
+            var offset = $(this).offset();
+            $(".dropdown-userinfo").css({ "top": offset.top + 60, "right": 50 }).fadeIn("1000");
         });
 
         //二级菜单选中名称

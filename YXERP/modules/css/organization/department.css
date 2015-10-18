@@ -1,9 +1,0 @@
-﻿
-
-.entity-list { width:100%; }
-.entity-list li{ height:30px; line-height:30px; width:120px; float:left; margin:10px 20px; position:relative;  }
-.entity-list li input{ height:28px; line-height:30px; width:120px; text-align:center;  border:solid 1px #ccc; cursor:pointer;  }
-.entity-list li input:hover{ border:solid 1px #7faaca; }
-.entity-list li span{ position:absolute; right:-20px; top:-9px; display:none; background-color:white; }
-.entity-list li:hover span{ display:inline-block; }
-

@@ -21,7 +21,6 @@ namespace YXERP.Controllers
 
         public ActionResult Department()
         {
-            ViewBag.Items = OrganizationBusiness.GetDepartments(CurrentUser.AgentID);
             return View();
         }
 
@@ -37,6 +36,21 @@ namespace YXERP.Controllers
         }
 
         #region 部门
+
+        /// <summary>
+        /// 获取部门列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetDepartments()
+        {
+            var list = OrganizationBusiness.GetDepartments(CurrentUser.AgentID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult() 
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior=JsonRequestBehavior.AllowGet
+            };
+        }
 
         /// <summary>
         /// 保存部门

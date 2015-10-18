@@ -90,6 +90,10 @@ namespace CloudSalesBusiness
             {
                 Department model = new Department();
                 model.FillData(dr);
+                if (!string.IsNullOrEmpty(model.CreateUserID))
+                {
+                    model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                }
                 list.Add(model);
             }
             return list;
@@ -117,18 +121,18 @@ namespace CloudSalesBusiness
         /// 获取用户信息(缓存)
         /// </summary>
         /// <param name="userid"></param>
-        /// <param name="clientid"></param>
+        /// <param name="agentid"></param>
         /// <returns></returns>
-        public static Users GetUserByUserID(string userid, string clientid)
+        public static Users GetUserByUserID(string userid, string agentid)
         {
-            if (!Users.ContainsKey(clientid))
+            if (!Users.ContainsKey(agentid))
             {
-                Users.Add(clientid, new List<Users>());
+                Users.Add(agentid, new List<Users>());
             }
 
-            if (Users[clientid].Where(u => u.UserID == userid).Count() > 0)
+            if (Users[agentid].Where(u => u.UserID == userid).Count() > 0)
             {
-                return Users[clientid].Where(u => u.UserID == userid).FirstOrDefault();
+                return Users[agentid].Where(u => u.UserID == userid).FirstOrDefault();
             }
             else
             {
@@ -137,7 +141,7 @@ namespace CloudSalesBusiness
                 if (dt.Rows.Count > 0)
                 {
                     model.FillData(dt.Rows[0]);
-                    Users[clientid].Add(model);
+                    Users[agentid].Add(model);
                 }
                 return model;
             }

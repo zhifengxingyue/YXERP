@@ -32,7 +32,6 @@ namespace YXERP.Controllers
         public ActionResult Logout()
         {
             Session["ClientManager"] = null;
-            Session["topMenuCode"] = null;
             return Redirect("/Home/Login");
         }
 

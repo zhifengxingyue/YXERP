@@ -1,0 +1,6 @@
+﻿
+.create-model {  }
+.create-model li{ margin-top:10px; overflow:auto; }
+.create-model li .columnname{ width:60px; }
+.create-model li input{ width:180px; }
+.create-model li textarea{ width:300px; }

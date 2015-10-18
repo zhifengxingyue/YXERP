@@ -129,6 +129,8 @@
     <Content Include="modules\scripts\purchase\docdetail.js" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
+    <Content Include="modules\template\organization\departments.html" />
+    <Content Include="modules\template\organization\department-detail.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
@@ -339,7 +341,7 @@
     <Content Include="Global.asax" />
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\login.css" />
-    <Content Include="modules\css\organization\department.css" />
+    <Content Include="modules\css\system\organization.css" />
     <Content Include="modules\css\products\attr.css" />
     <Content Include="modules\css\products\brand.css" />
     <Content Include="modules\css\products\unit.css" />
@@ -535,7 +537,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\tempfile\" />
-    <Folder Include="modules\template\organization\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

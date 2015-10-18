@@ -3,7 +3,7 @@
 }
 
 @section css{
-    <link rel="stylesheet" href="/modules/css/organization/department.css" />
+    <link rel="stylesheet" href="/modules/css/system/organization.css" />
 }
 @section scripts{
     <script type="text/javascript">
@@ -13,19 +13,18 @@
     </script>
 }
 <div class="header-box">
-    <span class="header-title left">企业部门管理</span>
-    <div class="btn mLeft20">创建部门</div>
+    <span class="header-title left">部门管理</span>
+    <div class="btn mLeft20" id="createModel">创建部门</div>
 </div>
 <div class="content-body">
-    <ul class="entity-list">
-        @foreach (var item in (List<CloudSalesEntity.Department>)ViewBag.Items)
-        {
-            <li class="entity-item">
-                <input type="text" data-id="@(item.DepartID)" data-value="@(item.Name)" value="@(item.Name)" />
-                <span data-id="@(item.DepartID)" class="ico-delete"></span>
-            </li>
-        }
-       
-        <li id="addEntity"><a href="javascript:void(0)" class="ico-add left mTop4">添加部门</a></li>
-    </ul>
+    <table class="table-list">
+        <tr class="tr-header">
+            <td>名称</td>
+            <td>描述</td>
+            <td class="width150">创建时间</td>
+            <td class="width150">创建人</td>
+            <td class="width80">编辑</td>
+            <td class="width80">删除</td>
+        </tr>
+    </table>
 </div>

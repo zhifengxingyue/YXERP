@@ -30,7 +30,7 @@
                 </li>
             }
         </ul>
-        <div class="currentuser right">
+        <div id="currentUser" class="currentuser right">
             <span>
                 <img src="@(string.IsNullOrEmpty(CurrentUser.Avatar)?"/modules/images/defaultavatar.png":CurrentUser.Avatar)" class="avatar" />
             </span>
@@ -62,6 +62,13 @@
         <div class="main-content">
             @RenderBody()
         </div>
+    </div>
+    @*点击头像展开下拉列表*@
+    <div class="dropdown-userinfo hide">
+        <div class="top-lump"></div>
+        <ul class="items-list">
+            <li class="item"><a href="/Home/Logout">安全退出</a></li>
+        </ul>
     </div>
     <script type="text/javascript" src="/Scripts/sea.js"></script>
     <script type="text/javascript" src="/Scripts/sea-config.js"></script>
