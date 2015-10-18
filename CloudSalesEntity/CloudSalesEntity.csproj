@@ -43,6 +43,7 @@
     <Compile Include="Custom\CustomSourceEntity.cs" />
     <Compile Include="Custom\CustomStageEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
+    <Compile Include="Manage\ExpressCompany.cs" />
     <Compile Include="Stock\StorageDocAction.cs" />
     <Compile Include="Manage\ModulesProduct.cs" />
     <Compile Include="System\Department.cs" />
