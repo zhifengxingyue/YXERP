@@ -31,6 +31,8 @@ define(function (require, exports, module) {
         _this.setting.type = [];
         _this.setting.type["mobile"] = /^1[3|5|6|8]\d{9}$/;
         _this.setting.type["email"] = /^\w+(.\w+)+@\w+.\w+$/;
+        _this.setting.type["url"] = /^[A-Za-z]+:\/\/[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\?\/.=]+$/;
+        _this.setting.type["number"] =/^[0-9]*$/;
     }
 
     //默认参数

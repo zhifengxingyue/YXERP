@@ -48,6 +48,7 @@
     <Compile Include="Custom\ActivityDAL.cs" />
     <Compile Include="Custom\CustomDAL.cs" />
     <Compile Include="Manage\ModulesProductDAL.cs" />
+    <Compile Include="Manage\ExpressCompanyDAL.cs" />
     <Compile Include="Stock\OrdersDAL.cs" />
     <Compile Include="System\IndustryDAL.cs" />
     <Compile Include="Stock\ProductsDAL.cs" />
