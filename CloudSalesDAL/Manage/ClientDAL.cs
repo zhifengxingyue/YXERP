@@ -25,7 +25,7 @@ namespace CloudSalesDAL
         #region 添加
 
         public string InsertClient(string companyName, string contactName, string mobilePhone, string industry, string cityCode, string address,
-                                   string description, string loginName, string loginPwd, string modules, string userid, out int result)
+                                   string description, string loginName, string loginPwd, string userid, out int result)
         {
             string clientid = Guid.NewGuid().ToString();
             result = 0;
@@ -41,12 +41,11 @@ namespace CloudSalesDAL
                                        new SqlParameter("@ContactName",contactName),
                                        new SqlParameter("@LoginName",loginName),
                                        new SqlParameter("@LoginPWD",loginPwd),
-                                       new SqlParameter("@Modules",modules),
                                        new SqlParameter("@CreateUserID",userid)
                                    };
             parms[0].Direction = ParameterDirection.Output;
 
-            ExecuteNonQuery("P_InsertClient", parms, CommandType.StoredProcedure);
+            ExecuteNonQuery("M_InsertClient", parms, CommandType.StoredProcedure);
 
             result = Convert.ToInt32(parms[0].Value);
             return clientid;
@@ -70,7 +69,7 @@ namespace CloudSalesDAL
         #endregion
 
         #region 编辑
-        public bool UpdateClient(string clientID, string companyName, string contactName, string mobilePhone, string industry, string cityCode, string address,string description, string loginName, string loginPwd, string modules, string userid)
+        public bool UpdateClient(string clientID, string companyName, string contactName, string mobilePhone, string industry, string cityCode, string address,string description, string loginName, string loginPwd, string userid)
         {
             SqlParameter[] parms = { 
                                        new SqlParameter("@ClientiD",clientID),
@@ -81,8 +80,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@Address",address),
                                        new SqlParameter("@Description",description),
                                        new SqlParameter("@ContactName",contactName),
-                                       new SqlParameter("@CreateUserID",userid),
-                                       new SqlParameter("@Modules",modules)
+                                       new SqlParameter("@CreateUserID",userid)
                                    };
 
             return ExecuteNonQuery("M_UpdateClient", parms, CommandType.StoredProcedure) > 0;

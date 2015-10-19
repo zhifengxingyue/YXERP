@@ -86,20 +86,9 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static string InsertClient(Clients model, string loginName, string loginPwd, string userid, out int result)
         {
-            string modules = "";
-            foreach (var item in model.Modules)
-            {
-                modules += item.ModulesID + ",";
-            }
-            if (modules == "")
-            {
-                result = 3;
-                return "";
-            }
             loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
-            modules = modules.Substring(0, modules.Length - 1);
             string clientid = ClientDAL.BaseProvider.InsertClient(model.CompanyName, model.ContactName, model.MobilePhone, model.Industry, model.CityCode,
-                                                             model.Address, model.Description, loginName, loginPwd, modules, userid, out result);
+                                                             model.Address, model.Description, loginName, loginPwd, userid, out result);
             return clientid;
         }
 
@@ -116,24 +105,11 @@ namespace CloudSalesBusiness
         #region  编辑
         public static bool UpdateClient(Clients model, string loginName, string loginPwd, string userid, out int result)
         {
-            string modules = "";
-            foreach (var item in model.Modules)
-            {
-                modules += item.ModulesID + ",";
-            }
-            if (modules == "")
-            {
-                result = 3;
-                return false;
-            }
-            loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
-            modules = modules.Substring(0, modules.Length - 1);
-
             result = 1;
             return ClientDAL.BaseProvider.UpdateClient(model.ClientID, model.CompanyName
                 , model.ContactName, model.MobilePhone, model.Industry
                 , model.CityCode, model.Address, model.Description
-                , loginName, loginPwd, modules, userid);
+                , loginName, loginPwd, userid);
 
         }
 
