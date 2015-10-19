@@ -7,7 +7,7 @@ using CloudSalesDAL;
 using CloudSalesEntity;
 using System.Data;
 
-namespace CloudSalesBusiness
+namespace CloudSalesBusiness.Manage
 {
     public class IndustryBusiness
     {
@@ -64,6 +64,14 @@ namespace CloudSalesBusiness
             }
         }
 
+        public static Industry GetIndustryDetail(string id)
+        {
+            Industry model = new Industry();
+            DataTable dt = new IndustryDAL().GetIndustryDetail(id);
+            model.FillData(dt.Rows[0]);
+
+            return model;
+        }
         #endregion
 
         #region 添加
@@ -76,7 +84,7 @@ namespace CloudSalesBusiness
         /// <param name="userid">操作人</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns>行业ID</returns>
-        public string InsertIndustry(string name, string description, string userid, string clientid)
+        public static string InsertIndustry(string name, string description, string userid, string clientid)
         {
             string id = new IndustryDAL().InsertIndustry(name, description, userid, clientid);
             //处理缓存
@@ -93,6 +101,29 @@ namespace CloudSalesBusiness
                 });
             }
             return id;
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 编辑行业
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="description">描述</param>
+        public static bool UpdateIndustry(string id, string name, string description)
+        {
+            bool flag = new IndustryDAL().UpdateIndustry(id,name, description);
+            //处理缓存
+            if (flag)
+            {
+                Industry industry = IndustryBusiness.Industrys.Find(m => m.IndustryID == id);
+                industry.Name = name;
+                industry.Description = description; 
+            }
+
+            return flag;
         }
 
         #endregion

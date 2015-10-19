@@ -20,6 +20,14 @@ namespace CloudSalesDAL
             return GetDataTable("select * from Industry where Status<>9");
         }
 
+        public DataTable GetIndustryDetail(string id)
+        {
+
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@IndustryID",id)
+                                   };
+            return GetDataTable("select * from Industry where IndustryID=@IndustryID and Status<>9",paras,CommandType.Text);
+        }
         #endregion
 
         #region 添加
@@ -37,6 +45,22 @@ namespace CloudSalesDAL
                                    };
 
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0 ? industryID : "";
+        }
+
+        #endregion
+
+        #region 编辑
+
+        public bool UpdateIndustry(string id,string name, string description)
+        {
+            string sql = "update Industry set name=@Name,Description=@Description where IndustryID=@IndustryID";
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@IndustryID",id),
+                                       new SqlParameter("@Name",name),
+                                       new SqlParameter("@Description",description)
+                                   };
+
+            return ExecuteNonQuery(sql, paras, CommandType.Text)>0;
         }
 
         #endregion

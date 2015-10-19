@@ -64,7 +64,13 @@ namespace CloudSalesEntity
 		public string Description
 		{
 			set{ _description=value;}
-			get{return _description;}
+			get
+            {
+                if (!string.IsNullOrEmpty(_description))
+                    return _description;
+                else
+                    return string.Empty;
+            }
 		}
 		/// <summary>
 		/// 

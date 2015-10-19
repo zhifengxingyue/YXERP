@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
 using CloudSalesBusiness;
+using CloudSalesBusiness.Manage;
 using CloudSalesTool;
 using CloudSalesEntity;
 using Newtonsoft.Json;
@@ -92,7 +93,7 @@ namespace YXManage.Controllers
         /// <returns></returns>
         public JsonResult CreateIndustry(string name)
         {
-            string id = new IndustryBusiness().InsertIndustry(name, "", string.Empty, ClientID);
+            string id =IndustryBusiness.InsertIndustry(name, "", string.Empty, ClientID);
             JsonDictionary.Add("ID", id);
             return new JsonResult()
             {

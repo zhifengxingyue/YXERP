@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "行业管理";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/industry"], function (Industry) {
+            Industry.detailInit($("#IndustryID").val());
+        });
+    </script>
+}
+<link href="/modules/css/clients.css" rel="stylesheet" />
+<div class="headertitle">
+    <span id="pageTitle">添加公司行业</span>
+</div>
+<ul class="contentnew" style="display:block;">
+    <li>
+        <span class="columnname">名称：</span>
+        <span><input type="text" id="Name" class="verify"  maxlength="11"  data-empty="名称不能为空!" /></span>
+    </li>
+     <li>
+        <span class="columnname">描述：</span>
+        <span><textarea id="Description"></textarea></span>
+    </li>
+</ul>
+<div class="mTop20 mLeft20">
+    <input type="button" id="saveIndustry" class="btn" value="添加" />
+</div>
+<input type="hidden" id="IndustryID" value="@ViewBag.IndustryID" />
