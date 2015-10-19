@@ -29,7 +29,9 @@ namespace MD.SDK.Business
 
             var tokenEntity = JsonConvert.DeserializeObject<TokenEntity>(result);
             string token = tokenEntity.access_token;
-            return UserBusiness.GetPassportDetail(token);
+            var model = UserBusiness.GetPassportDetail(token);
+            model.user.token = token;
+            return model;
         }
     }
 }

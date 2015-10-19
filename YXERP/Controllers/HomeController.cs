@@ -1,9 +1,12 @@
-﻿using MD.SDK.Business;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+
+using MD.SDK.Business;
+using CloudSalesBusiness;
 
 namespace YXERP.Controllers
 {
@@ -45,9 +48,31 @@ namespace YXERP.Controllers
             return Redirect(OauthBusiness.GetAuthorizeUrl());
         }
 
+        //处理明道登录回掉
         public ActionResult MDCallBack(string code)
         {
             var user = OauthBusiness.GetMDUser(code);
+            //是否已添加到云销
+            var model = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id);
+            if (!string.IsNullOrEmpty(model.UserID))
+            {
+                model.MDToken = user.user.token;
+                Session["ClientManager"] = model;
+                return Redirect("/Home/Index");
+            }
+            else
+            {
+                int error = 0;
+                bool isAdmin = MD.SDK.Entity.App.AppBusiness.IsAppAdmin(user.user.token, user.user.id, out error);
+                if (isAdmin)
+                {
+
+                }
+                else
+                {
+ 
+                }
+            }
             return View();
         }
 

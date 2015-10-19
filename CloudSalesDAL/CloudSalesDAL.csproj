@@ -50,7 +50,7 @@
     <Compile Include="Manage\ModulesProductDAL.cs" />
     <Compile Include="Manage\ExpressCompanyDAL.cs" />
     <Compile Include="Stock\OrdersDAL.cs" />
-    <Compile Include="System\IndustryDAL.cs" />
+    <Compile Include="Manage\IndustryDAL.cs" />
     <Compile Include="Stock\ProductsDAL.cs" />
     <Compile Include="Stock\WarehouseDAL.cs" />
     <Compile Include="Common\CommonDAL.cs" />

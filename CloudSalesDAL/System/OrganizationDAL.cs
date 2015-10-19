@@ -35,6 +35,17 @@ namespace CloudSalesDAL
             return GetDataTable(sql, paras, CommandType.Text);
         }
 
+        public DataTable GetUserByMDUserID(string userid)
+        {
+            string sql = "select * from Users where MDUserID=@UserID";
+
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@UserID",userid)
+                                   };
+
+            return GetDataTable(sql, paras, CommandType.Text);
+        }
+
         public DataTable GetDepartments(string agentid)
         {
             string sql = "select * from Department where AgentID=@AgentID and Status<>9";

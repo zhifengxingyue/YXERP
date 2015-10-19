@@ -43,6 +43,8 @@ namespace MD.SDK
             set;
         }
 
+        public string token { get; set; }
+
         public ProjectEntity project
         {
             get;

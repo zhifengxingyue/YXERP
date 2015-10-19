@@ -264,6 +264,8 @@ namespace CloudSalesEntity
 
         public string MDUserID { get; set; }
 
+        public string MDToken { get; set; }
+
         public string AgentID { get; set; }
 
         /// <summary>

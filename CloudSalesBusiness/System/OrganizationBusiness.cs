@@ -78,6 +78,36 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 根据明道用户ID和网络ID获取云销用户信息
+        /// </summary>
+        /// <param name="mduserid"></param>
+        /// <param name="mdprojectid"></param>
+        /// <returns></returns>
+        public static Users GetUserByMDUserID(string mduserid, string mdprojectid)
+        {
+            if (!Users.ContainsKey(mdprojectid))
+            {
+                Users.Add(mdprojectid, new List<Users>());
+            }
+
+            if (Users[mdprojectid].Where(u => u.MDUserID == mduserid).Count() > 0)
+            {
+                return Users[mdprojectid].Where(u => u.MDUserID == mduserid).FirstOrDefault();
+            }
+            else
+            {
+                DataTable dt = new OrganizationDAL().GetUserByMDUserID(mduserid);
+                Users model = new Users();
+                if (dt.Rows.Count > 0)
+                {
+                    model.FillData(dt.Rows[0]);
+                    Users[mdprojectid].Add(model);
+                }
+                return model;
+            }
+        }
+
+        /// <summary>
         /// 获取部门列表
         /// </summary>
         /// <param name="agentid">代理商ID</param>
