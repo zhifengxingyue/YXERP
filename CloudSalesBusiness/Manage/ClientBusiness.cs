@@ -34,7 +34,7 @@ namespace CloudSalesBusiness
                 model = new Clients();
                 model.FillData(item);
                 model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
-                model.IndustryEntity = IndustryBusiness.GetIndustrys().Where(i => i.IndustryID.ToLower() == model.Industry.ToLower()).FirstOrDefault();
+                model.IndustryEntity =Manage.IndustryBusiness.GetIndustrys().Where(i => i.IndustryID.ToLower() == model.Industry.ToLower()).FirstOrDefault();
                 list.Add(model);
             }
 
@@ -50,7 +50,7 @@ namespace CloudSalesBusiness
                 DataRow row=dt.Rows[0];
                 model.FillData(row);
                 model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
-                model.IndustryEntity = IndustryBusiness.GetIndustrys().Where(i => i.IndustryID.ToLower() == model.Industry.ToLower()).FirstOrDefault();
+                model.IndustryEntity =Manage.IndustryBusiness.GetIndustrys().Where(i => i.IndustryID.ToLower() == model.Industry.ToLower()).FirstOrDefault();
                 model.Modules = ModulesBusiness.GetModulesByClientID(clientID);
             }
 

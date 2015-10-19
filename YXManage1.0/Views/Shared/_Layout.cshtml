@@ -26,8 +26,8 @@
                 <li class="left" >
                     <a class="" href="/Client/index" BindController="client"> 客户</a>
                     <a class="" href="/ModulesProduct/index" BindController="modulesproduct"> 产品</a> 
-                    <a class="" href="/Modules/index" BindController="modules">模块</a> 
                     <a class="" href="/ExpressCompany/index" BindController="expresscompany">快递公司</a> 
+                    <a class="" href="/Industry/index" BindController="industry">公司行业</a> 
                 </li>
         </ul>
         <div class="currentuser right">
@@ -73,17 +73,6 @@
             </div>
             
         </nav>
-        <nav BindController="modules">
-            <div class="top-nav">
-                <span class="controller-name">模块管理</span>
-            </div>
-            <div class="nav-list">
-                    <ul class="action-box" BindAction="index">
-                        <li class="action "><a href="/Modules/index" >模块列表</a></li>
-                    </ul>
-            </div>
-            
-        </nav>
 
         <nav BindController="expresscompany">
             <div class="top-nav">
@@ -95,6 +84,21 @@
                     </ul>
                 <ul class="action-box" BindAction="index">
                         <li class="action "><a href="/ExpressCompany/index" >快递公司列表</a></li>
+                    </ul>
+            </div>
+            
+        </nav>
+
+        <nav BindController="industry">
+            <div class="top-nav">
+                <span class="controller-name">公司行业管理</span>
+            </div>
+            <div class="nav-list">
+                    <ul class="action-box" BindAction="detail">
+                        <li class="action "><a href="/Industry/Detail" >添加公司行业</a></li>
+                    </ul>
+                <ul class="action-box" BindAction="index">
+                        <li class="action "><a href="/Industry/index" >公司行业列表</a></li>
                     </ul>
             </div>
             

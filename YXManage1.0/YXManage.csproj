@@ -106,6 +106,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ExpressCompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndustryController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Controllers\ModulesProductController.cs" />
     <Compile Include="Controllers\PlugController.cs" />
@@ -149,10 +150,12 @@
     <Content Include="modules\scripts\clients.js" />
     <Content Include="modules\scripts\modulesproduct.js" />
     <Content Include="modules\scripts\expresscompany.js" />
+    <Content Include="modules\scripts\industry.js" />
     <Content Include="modules\template\client_list.html" />
     <Content Include="modules\template\clientauthorizelog_list.html" />
     <Content Include="modules\template\modulesproduct_list.html" />
     <Content Include="modules\template\expresscompany_list.html" />
+    <Content Include="modules\template\industry_list.html" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
@@ -226,6 +229,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ExpressCompany\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Industry\Detail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Industry\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
