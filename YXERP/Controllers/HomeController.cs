@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MD.SDK.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,6 +42,12 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult MDLogin()
         {
+            return Redirect(OauthBusiness.GetAuthorizeUrl());
+        }
+
+        public ActionResult MDCallBack(string code)
+        {
+            var user = OauthBusiness.GetMDUser(code);
             return View();
         }
 

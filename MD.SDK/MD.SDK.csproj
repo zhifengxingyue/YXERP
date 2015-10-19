@@ -47,6 +47,7 @@
     <Compile Include="Business\CalendarBusiness.cs" />
     <Compile Include="Business\GroupBusiness.cs" />
     <Compile Include="Business\OauthBusiness.cs" />
+    <Compile Include="Business\AppBusiness.cs" />
     <Compile Include="Entity\Calendar\CalendarEntity.cs" />
     <Compile Include="Entity\Token\TokenEntity.cs" />
     <Compile Include="HttpRequest.cs" />

@@ -23,7 +23,9 @@ namespace MD.SDK
 
         task_v4_addTask=9,
 
-        calendar_create=10
+        calendar_create=10,
+
+        app_is_admin = 11
 
 
     }

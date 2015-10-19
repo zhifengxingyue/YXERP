@@ -1,6 +1,6 @@
 ﻿
 
-* { padding: 0; margin: 0; font-size:9pt; color:#333; font-family:"微软雅黑","宋体","黑体"; }/*033d91*/
+* { padding: 0; margin: 0; font-size:9pt; color:#333; font-family:"微软雅黑"; }/*033d91*/
 li{ list-style-type:none;}
 a { text-decoration: none; color: #004369; }
 textarea { min-height: 75px; border:solid 1px #ccc; border-radius:2px;text-indent:3px;}
@@ -80,7 +80,8 @@ header .modules li{ height:4px; width:30px; background-color:#BFD2F2; margin-top
 header .modules:hover .modulesname { color:#fff; }
 header .modules:hover li { background-color:#fff; }
 
-.choose-modules { position:fixed; background-color:#fff; width:140px; z-index:1000; border-radius:2px; border:solid 1px #efefef; box-shadow:0 0 5px #ccc;}
+.choose-modules { position:fixed; background-color:#fff; width:140px; z-index:1000; border-radius:2px; border:solid 1px #efefef; 
+                  box-shadow:0 0 5px #ccc; top:60px; left:160px;}
 .choose-modules .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
                             width:0; height:0; position:absolute; left:10px; top:-9px; }
 .choose-modules .modules-list { padding:5px 0; }
@@ -111,7 +112,8 @@ header .currentuser:hover .username{ color:#fff;}
 header .currentuser:hover .dropdown-top{ border-top:solid 8px #fff;}
 
 
-.dropdown-userinfo { position:fixed; background-color:#fff; width:120px; z-index:1000; border-radius:2px; border:solid 1px #efefef; box-shadow:0 0 5px #ccc;}
+.dropdown-userinfo { position:fixed; background-color:#fff; width:120px; z-index:1000; border-radius:2px; border:solid 1px #efefef;
+                     box-shadow:0 0 5px #ccc; top:60px; right:50px;}
 .dropdown-userinfo .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
                                width:0; height:0; position:absolute; left:50px; top:-9px; }
 .dropdown-userinfo .items-list { padding:5px 0; overflow:auto; }

@@ -12,23 +12,24 @@ namespace MD.SDK.Business
         public static string GetAuthorizeUrl()
         {
             string url = string.Empty;
-            url = string.Format("{0}/oauth2/authorize?app_key={1}&redirect_uri={2}", AppAttr.MDApiUrl, AppAttr.AppKey, AppAttr.CallbackUrl);
+            url = string.Format("{0}/oauth2/authorize?app_key={1}&redirect_uri={2}", AppAttr.MDApiUrl, AppAttr.AppKey, AppAttr.CallBackUrl);
 
             return url;
         }
 
-        public static string GetToken(string code)
+        public static UserJson GetMDUser(string code)
         {
             var paras = new Dictionary<string, object>();
             paras.Add("code", code);
-            paras.Add("redirect_uri", AppAttr.CallbackUrl);
+            paras.Add("redirect_uri", AppAttr.CallBackUrl);
             paras.Add("grant_type", "authorization_code");
             paras.Add("app_key", AppAttr.AppKey);
             paras.Add("app_secret", AppAttr.AppSecret);
             var result = HttpRequest.RequestServer(ApiOption.oauth2_access_token, paras, RequestType.Post);
 
             var tokenEntity = JsonConvert.DeserializeObject<TokenEntity>(result);
-            return tokenEntity.access_token;
+            string token = tokenEntity.access_token;
+            return UserBusiness.GetPassportDetail(token);
         }
     }
 }

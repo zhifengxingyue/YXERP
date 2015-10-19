@@ -162,7 +162,6 @@
     <Content Include="Views\Purchase\PurchaseAudit.cshtml" />
     <Content Include="Views\Purchase\DocDetail.cshtml" />
     <Content Include="Views\Purchase\AuditDetail.cshtml" />
-    <Content Include="Views\Home\MDLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />
@@ -584,6 +583,10 @@
       <Project>{c9aca144-ea91-4fa5-a799-39d458af1fcb}</Project>
       <Name>CloudSalesTool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MD.SDK\MD.SDK.csproj">
+      <Project>{c6cd2682-4dca-4ee8-a5e5-a0e117073390}</Project>
+      <Name>MD.SDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Products\Index.cshtml" />
@@ -707,7 +710,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60447</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:18089/</IISUrl>
+          <IISUrl>http://localhost:8888/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
