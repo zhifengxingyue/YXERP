@@ -44,12 +44,13 @@ AS
 
 begin tran
 
-declare @Err int,@PIDList nvarchar(max),@SaleAttr  nvarchar(max),@BUnitID nvarchar(64),@MUnitID nvarchar(64)
+declare @Err int,@PIDList nvarchar(max),@SaleAttr  nvarchar(max),@Multiple int
+
 set @Err=0
 
 select @PIDList=PIDList,@SaleAttr=SaleAttr from Category where CategoryID=@CategoryID
 
-select @BUnitID=[BigUnitID],@MUnitID=[SmallUnitID] from [Products] where ProductID=@ProductID
+select @Multiple=BigSmallMultiple from [Products] where ProductID=@ProductID
 
 Update [Products] set [ProductName]=@ProductName,[GeneralName]=@GeneralName,[IsCombineProduct]=@IsCombineProduct,[BrandID]=@BrandID,
 						[BigUnitID]=@BigUnitID,[SmallUnitID]=@SmallUnitID,[BigSmallMultiple]=@BigSmallMultiple ,
@@ -59,17 +60,13 @@ Update [Products] set [ProductName]=@ProductName,[GeneralName]=@GeneralName,[IsC
 						[ShapeCode]=@ShapeCode ,[Description]=@Description ,[UpdateTime]=getdate()
 where ProductID=@ProductID
 
+--处理子产品大单位价格
+if(@Multiple<>@BigSmallMultiple)
+begin
+	update ProductDetail set BigPrice=BigPrice/@Multiple*@BigSmallMultiple where ProductID=@ProductID
+	set @Err+=@@Error
+end
 
-if(@BUnitID<>@BigUnitID and @BUnitID<>@MUnitID)
-begin
-	update ProductDetail set UnitID=@BigUnitID where ProductID=@ProductID and UnitID=@BUnitID
-	set @Err+=@@Error
-end
-if(@MUnitID<>@SmallUnitID)
-begin
-	update ProductDetail set UnitID=@SmallUnitID where ProductID=@ProductID and UnitID=@MUnitID
-	set @Err+=@@Error
-end
 
 
 set @Err+=@@Error

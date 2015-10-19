@@ -39,16 +39,28 @@ define(function (require, exports, module) {
             if ($(".choose-modules").length == 0) {
                 Global.post("/Base/GetTopMenus", {}, function (data) {
                     doT.exec("template/common/choosemodules.html", function (templateFun) {
-                        var innerHHML = templateFun(data.Items);
-                        innerHHML = $(innerHHML);
-                        innerHHML.css({ "top": offset.top + 42, "left": 25 }).fadeIn("1000");
-                        $("body").append(innerHHML);
+                        var innerHTML = templateFun(data.Items);
+                        innerHTML = $(innerHTML);
+                        //鼠标进入
+                        innerHTML.find(".modules-item").mouseenter(function () {
+                            var _this = $(this).find("img");
+                            _this.attr("src", _this.data("hover"));
+                        });
+                        //鼠标离开
+                        innerHTML.find(".modules-item").mouseleave(function () {
+                            var _this = $(this).find("img");
+                            _this.attr("src", _this.data("ico"));
+                        });
+
+                        innerHTML.css({ "top": offset.top + 42, "left": 160 }).fadeIn("1000");
+                        $("body").append(innerHTML);
                     });
                 });
             } else {
                 $(".choose-modules").fadeIn("1000");
             }
         });
+
         //登录信息展开
         $("#currentUser").click(function () {
             var offset = $(this).offset();

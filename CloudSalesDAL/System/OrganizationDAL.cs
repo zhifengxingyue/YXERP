@@ -81,8 +81,8 @@ namespace CloudSalesDAL
 
         public bool CreateRole(string roleid, string name, string parentid, string description, string operateid, string agentid, string clientid)
         {
-            string sql = "insert into Department(DepartID,Name,ParentID,Status,IsDefault,Description,CreateUserID,AgentID,ClientID) " +
-                        " values(@DepartID,@Name,@ParentID,1,0,@Description,@CreateUserID,@AgentID,@ClientID)";
+            string sql = "insert into Role(RoleID,Name,ParentID,Status,IsDefault,Description,CreateUserID,AgentID,ClientID) " +
+                        " values(@RoleID,@Name,@ParentID,1,0,@Description,@CreateUserID,@AgentID,@ClientID)";
 
             SqlParameter[] paras = { 
                                        new SqlParameter("@RoleID",roleid),

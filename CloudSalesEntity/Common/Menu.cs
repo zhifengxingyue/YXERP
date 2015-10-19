@@ -95,6 +95,9 @@ namespace CloudSalesEntity
 			set{ _icopath=value;}
 			get{return _icopath;}
 		}
+
+        public string IcoHover { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>

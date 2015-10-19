@@ -115,6 +115,22 @@
     <Compile Include="Models\FilterProduct.cs" />
     <None Include="modules\plug\umeditor\net\Uploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\menuico\account.png" />
+    <Content Include="Content\menuico\accounthover.png" />
+    <Content Include="Content\menuico\agents.png" />
+    <Content Include="Content\menuico\agentshover.png" />
+    <Content Include="Content\menuico\custom.png" />
+    <Content Include="Content\menuico\customhover.png" />
+    <Content Include="Content\menuico\info.png" />
+    <Content Include="Content\menuico\infohover.png" />
+    <Content Include="Content\menuico\report.png" />
+    <Content Include="Content\menuico\reporthover.png" />
+    <Content Include="Content\menuico\sales.png" />
+    <Content Include="Content\menuico\saleshover.png" />
+    <Content Include="Content\menuico\stock.png" />
+    <Content Include="Content\menuico\stockhover.png" />
+    <Content Include="Content\menuico\system.png" />
+    <Content Include="Content\menuico\systemhover.png" />
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
@@ -122,8 +138,11 @@
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />
+    <Content Include="modules\plug\easydialog\ico-close-hover.png" />
+    <Content Include="modules\plug\easydialog\ico-close.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
+    <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
@@ -131,6 +150,8 @@
     <Content Include="modules\template\orders\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />
+    <Content Include="modules\template\organization\roles.html" />
+    <Content Include="modules\template\organization\role-detail.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
@@ -141,6 +162,7 @@
     <Content Include="Views\Purchase\PurchaseAudit.cshtml" />
     <Content Include="Views\Purchase\DocDetail.cshtml" />
     <Content Include="Views\Purchase\AuditDetail.cshtml" />
+    <Content Include="Views\Home\MDLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />
@@ -365,7 +387,6 @@
     <Content Include="modules\images\ico-gouwuche.png" />
     <Content Include="modules\images\ico-home.png" />
     <Content Include="modules\images\ico-input-add.png" />
-    <Content Include="modules\images\ico-logout.png" />
     <Content Include="modules\images\ico-name.png" />
     <Content Include="modules\images\ico-open.png" />
     <Content Include="modules\images\ico-orderby-down-hover.png" />
@@ -398,7 +419,6 @@
     <Content Include="modules\plug\doT.js" />
     <Content Include="modules\plug\easydialog\easydialog.css" />
     <Content Include="modules\plug\easydialog\easydialog.js" />
-    <Content Include="modules\plug\easydialog\ico-big-close.png" />
     <Content Include="modules\plug\seach_keys\seach_keys.js" />
     <Content Include="modules\plug\seach_keys\style.css" />
     <Content Include="modules\plug\shoppingcart\shoppingcart.html" />

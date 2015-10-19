@@ -112,6 +112,10 @@ namespace CloudSalesBusiness
             {
                 Role model = new Role();
                 model.FillData(dr);
+                if (!string.IsNullOrEmpty(model.CreateUserID))
+                {
+                    model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                }
                 list.Add(model);
             }
             return list;

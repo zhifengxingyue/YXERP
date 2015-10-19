@@ -26,7 +26,6 @@ namespace YXERP.Controllers
 
         public ActionResult Roles()
         {
-            ViewBag.Items = OrganizationBusiness.GetRoles(CurrentUser.AgentID);
             return View();
         }
 
@@ -62,20 +61,19 @@ namespace YXERP.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Department model = serializer.Deserialize<Department>(entity);
 
-            string ID = "";
             if (string.IsNullOrEmpty(model.DepartID))
             {
-                ID = new OrganizationBusiness().CreateDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                model.DepartID = new OrganizationBusiness().CreateDepartment(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             }
             else
             {
                 bool bl = new OrganizationBusiness().UpdateDepartment(model.DepartID, model.Name, model.Description, CurrentUser.UserID, OperateIP);
-                if (bl)
+                if (!bl)
                 {
-                    ID = model.DepartID;
+                    model.DepartID = "";
                 }
             }
-            JsonDictionary.Add("ID", ID);
+            JsonDictionary.Add("model", model);
             return new JsonResult
             {
                 Data = JsonDictionary,
@@ -92,6 +90,51 @@ namespace YXERP.Controllers
         {
             var status = new OrganizationBusiness().UpdateDepartmentStatus(departid, CloudSalesEnum.EnumStatus.Delete, CurrentUser.UserID, OperateIP);
             JsonDictionary.Add("Status", (int)status);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetRoles()
+        {
+            var list = OrganizationBusiness.GetRoles(CurrentUser.AgentID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 保存角色
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public JsonResult SaveRole(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Role model = serializer.Deserialize<Role>(entity);
+
+            if (string.IsNullOrEmpty(model.RoleID))
+            {
+                model.RoleID = new OrganizationBusiness().CreateRole(model.Name, model.ParentID, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            }
+            else
+            {
+                bool bl = new OrganizationBusiness().UpdateDepartment(model.RoleID, model.Name, model.Description, CurrentUser.UserID, OperateIP);
+                if (!bl)
+                {
+                    model.RoleID = "";
+                }
+            }
+            JsonDictionary.Add("model", model);
             return new JsonResult
             {
                 Data = JsonDictionary,

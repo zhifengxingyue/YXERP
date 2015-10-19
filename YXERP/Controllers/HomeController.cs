@@ -35,6 +35,15 @@ namespace YXERP.Controllers
             return Redirect("/Home/Login");
         }
 
+        /// <summary>
+        /// 明道登录
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MDLogin()
+        {
+            return View();
+        }
+
 
         /// <summary>
         /// 员工登录

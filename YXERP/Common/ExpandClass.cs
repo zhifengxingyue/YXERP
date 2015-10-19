@@ -35,41 +35,40 @@ public static class ExpandClass
             return new List<Menu>();
         }
     }
+
     /// <summary>
-    /// 加载二级菜单
+    /// 获取菜单
     /// </summary>
     /// <param name="httpContext"></param>
+    /// <param name="menuCode"></param>
     /// <returns></returns>
-    public static List<Menu> GetControllers(HttpContext httpContext, string controller)
+    public static Menu GetMenuByCode(HttpContext httpContext, string menuCode)
+    {
+        if (httpContext.Session["ClientManager"] != null)
+        {
+            return ((CloudSalesEntity.Users)httpContext.Session["ClientManager"]).Menus.Where(m => m.MenuCode == menuCode).FirstOrDefault();
+        }
+        else
+        {
+            return new Menu();
+        }
+    }
+
+    /// <summary>
+    /// 返回controllerMenu
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <param name="controller"></param>
+    /// <returns></returns>
+    public static Menu GetController(HttpContext httpContext, string controller)
     {
         if (httpContext.Session["ClientManager"] != null)
         {
             CloudSalesEntity.Users model = (CloudSalesEntity.Users)httpContext.Session["ClientManager"];
-            var menu = model.Menus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 2).FirstOrDefault();
-            if (menu != null)
-            {
-                return model.Menus.Where(m => m.PCode == menu.PCode).ToList();
-            }
+            return model.Menus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 2).FirstOrDefault();
         }
-        return new List<Menu>();
-    }
-
-    /// <summary>
-    /// 加载三级菜单
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <returns></returns>
-    public static List<Menu> GetActions(HttpContext httpContext, string controller)
-    {
-        if (!string.IsNullOrEmpty(controller))
-        {
-            return ((CloudSalesEntity.Users)httpContext.Session["ClientManager"]).Menus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 3).ToList();
-        }
-        else
-        {
-            return new List<Menu>();
-        }
-    }
+        return new Menu();
+    } 
 
     /// <summary>
     /// 将对象转换成JSON对象

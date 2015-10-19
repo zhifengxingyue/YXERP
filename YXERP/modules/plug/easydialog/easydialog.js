@@ -642,7 +642,7 @@ define(function (require, exports, module) {
                     overlayer = doc.getElementById('overlay');
 
 
-                //event.bind( overlayer, 'click',self.close);
+                event.bind( overlayer, 'click',self.close);
 
                 // 绑定确定按钮的回调函数
                 if (dialogYesBtn) {

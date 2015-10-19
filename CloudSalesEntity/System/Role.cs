@@ -109,7 +109,11 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public int IsDefault { get; set; }
+
         public string AgentID { get; set; }
+
+        public Users CreateUser { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {
