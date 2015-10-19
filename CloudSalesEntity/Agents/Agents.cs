@@ -163,6 +163,8 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public string MDProjectID { get; set; }
+
         public int IsDefault { get; set; }
 
         public void FillData(System.Data.DataRow dr) 

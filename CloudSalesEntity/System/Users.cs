@@ -262,6 +262,8 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public string MDUserID { get; set; }
+
         public string AgentID { get; set; }
 
         /// <summary>
