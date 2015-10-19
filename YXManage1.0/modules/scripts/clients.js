@@ -30,16 +30,6 @@ define(function (require, exports, module) {
         CityObject = City.createCity({
             elementID: "citySpan"
         });
-        //选择模块
-        $(".modules-item").first().addClass("active");
-        $(".modules-item:gt(0)").click(function () {
-            var _this = $(this);
-            if (_this.hasClass("active")) {
-                _this.removeClass("active");
-            } else {
-                _this.addClass("active");
-            }
-        });
 
         //更换行业
         $("#industry").change(function () {
@@ -134,7 +124,8 @@ define(function (require, exports, module) {
         Clients.detailEvent();
         //行业为空
         if ($("#industry option").length == 1) $("#industry").change();
-        Clients.getClientDetail(id);
+        if(id)
+            Clients.getClientDetail(id);
     }
     //绑定事件
     Clients.detailEvent = function () {
@@ -170,16 +161,7 @@ define(function (require, exports, module) {
         CityObject = City.createCity({
             elementID: "citySpan"
         });
-        //选择模块
-        $(".modules-item").first().addClass("active");
-        $(".modules-item:gt(0)").click(function () {
-            var _this = $(this);
-            if (_this.hasClass("active")) {
-                _this.removeClass("active");
-            } else {
-                _this.addClass("active");
-            }
-        });
+ 
 
         //更换行业
         $("#industry").change(function () {
@@ -241,15 +223,6 @@ define(function (require, exports, module) {
                 $("#industryName").css("borderColor", "red");
                 return false;
             }
-            var modules = [];
-            $(".modules-item").each(function () {
-                var _this = $(this);
-                if (_this.hasClass("active")) {
-                    modules.push({
-                        ModulesID: _this.data("value")
-                    });
-                }
-            });
             var client = {
                 ClientID: $("#clientID").val(),
                 CompanyName: $("#name").val(),
@@ -258,8 +231,7 @@ define(function (require, exports, module) {
                 Industry: $("#industry").val(),
                 CityCode: CityObject.getCityCode(),
                 Address: $("#address").val(),
-                Description: $("#description").val(),
-                Modules: modules
+                Description: $("#description").val()
             };
 
             Global.post("/Client/SaveClient", { client: JSON.stringify(client), loginName: $("#loginName").val() }, function (data) {

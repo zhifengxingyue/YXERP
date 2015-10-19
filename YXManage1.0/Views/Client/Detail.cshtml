@@ -82,14 +82,14 @@
         <span><input type="text" placeholder="详细地址..." class="width300" id="address" /></span>
     </li>
 
-    <li>
+    @*<li>
         <span class="columnname">模块：</span>
         
         @foreach (CloudSalesEntity.Modules model in (List<CloudSalesEntity.Modules>)ViewBag.Modules)
         {
             <span class="direction modules-item" title="@(model.Description)" data-value="@(model.ModulesID)">@(model.Name)</span>
         }
-    </li>
+    </li>*@
     <li>
         <span class="columnname">备注：</span>
         <span><textarea id="description"></textarea></span>
