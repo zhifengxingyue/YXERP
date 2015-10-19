@@ -52,7 +52,7 @@ define(function (require, exports, module) {
                             _this.attr("src", _this.data("ico"));
                         });
 
-                        innerHTML.css({ "top": offset.top + 42, "left": 160 }).fadeIn("1000");
+                        innerHTML.fadeIn("1000");
                         $("body").append(innerHTML);
                     });
                 });
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
         //登录信息展开
         $("#currentUser").click(function () {
             var offset = $(this).offset();
-            $(".dropdown-userinfo").css({ "top": offset.top + 60, "right": 50 }).fadeIn("1000");
+            $(".dropdown-userinfo").fadeIn("1000");
         });
 
         //二级菜单选中名称

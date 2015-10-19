@@ -100,7 +100,9 @@ namespace MD.SDK
 
         "/task/v4/addTask",
 
-        "/calendar/create"
+        "/calendar/create",
+
+        "/app/is_admin"
         };
     }
 
