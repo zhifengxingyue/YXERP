@@ -26,9 +26,12 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Clients> GetClients(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
-            DataTable dt = CommonBusiness.GetPagerData("Clients", "*", "Status<>9", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+            string whereSql = "Status<>9";
+            if (!string.IsNullOrEmpty(keyWords))
+                whereSql += " and ( CompanyName like '%" + keyWords + "%'  or  MobilePhone like '%" + keyWords + "%')"; 
+            DataTable dt = CommonBusiness.GetPagerData("Clients", "*", whereSql, "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
             List<Clients> list = new List<Clients>();
-            Clients model;
+            Clients model; 
             foreach (DataRow item in dt.Rows)
             {
                 model = new Clients();
@@ -98,18 +101,19 @@ namespace CloudSalesBusiness
                 model.UserQuantity,model.BeginTime,model.EndTime,model.SystemType);
         }
         #endregion
+
         public static bool DeleteClient(string clientID)
         {
             return CommonBusiness.Update("Clients", "Status", 9, " ClientID='" + clientID + "'");
         }
         #region  编辑
-        public static bool UpdateClient(Clients model, string loginName, string loginPwd, string userid, out int result)
+        public static bool UpdateClient(Clients model, string userid, out int result)
         {
             result = 1;
             return ClientDAL.BaseProvider.UpdateClient(model.ClientID, model.CompanyName
                 , model.ContactName, model.MobilePhone, model.Industry
                 , model.CityCode, model.Address, model.Description
-                , loginName, loginPwd, userid);
+                , userid);
 
         }
 

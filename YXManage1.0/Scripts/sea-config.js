@@ -19,6 +19,8 @@ seajs.config({
         "verify": "plug/verify.js",
         //城市地区
         "city": "plug/city.js",
+        //搜索插件
+        "search": "plug/seach_keys/seach_keys.js"
     }
 });
 

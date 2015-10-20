@@ -72,7 +72,7 @@ namespace CloudSalesDAL
         #endregion
 
         #region 编辑
-        public bool UpdateClient(string clientID, string companyName, string contactName, string mobilePhone, string industry, string cityCode, string address,string description, string loginName, string loginPwd, string userid)
+        public bool UpdateClient(string clientID, string companyName, string contactName, string mobilePhone, string industry, string cityCode, string address,string description,string userid)
         {
             SqlParameter[] parms = { 
                                        new SqlParameter("@ClientiD",clientID),
