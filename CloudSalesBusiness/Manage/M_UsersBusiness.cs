@@ -22,7 +22,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static M_Users GetM_UserByUserName(string loginname, string pwd, string operateip)
         {
-            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd, loginname);
+            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd);
             DataTable dt = new M_UsersDAL().GetM_UserByUserName(loginname, pwd);
             M_Users model = null;
             if (dt.Rows.Count > 0)

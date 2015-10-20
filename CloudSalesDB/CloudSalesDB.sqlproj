@@ -160,4 +160,10 @@
   <ItemGroup>
     <None Include="Procedures\Custom\P_GetActivitys.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_GetUserByMDUserID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_InsterUser.sql" />
+  </ItemGroup>
 </Project>

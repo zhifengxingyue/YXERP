@@ -35,15 +35,14 @@ namespace CloudSalesDAL
             return GetDataTable(sql, paras, CommandType.Text);
         }
 
-        public DataTable GetUserByMDUserID(string userid)
+        public DataSet GetUserByMDUserID(string userid)
         {
-            string sql = "select * from Users where MDUserID=@UserID";
-
             SqlParameter[] paras = { 
-                                    new SqlParameter("@UserID",userid)
+                                    new SqlParameter("@MDUserID",userid)
                                    };
+            return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
 
-            return GetDataTable(sql, paras, CommandType.Text);
+
         }
 
         public DataTable GetDepartments(string agentid)
@@ -106,6 +105,39 @@ namespace CloudSalesDAL
                                    };
 
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+        }
+
+        public bool CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
+                               string roleid, string departid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
+        {
+            result = 0;
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@Result",result),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@LoginName",loginname),
+                                       new SqlParameter("@LoginPwd",loginpwd),
+                                       new SqlParameter("@Name",name),
+                                       new SqlParameter("@Mobile",mobile),
+                                       new SqlParameter("@Email",email),
+                                       new SqlParameter("@CityCode",citycode),
+                                       new SqlParameter("@Address",address),
+                                       new SqlParameter("@Jobs",jobs),
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@DepartID",departid),
+                                       new SqlParameter("@AgentID",agentid),
+                                       new SqlParameter("@MDUserID",mduserid),
+                                       new SqlParameter("@MDProjectID",mdprojectid),
+                                       new SqlParameter("@IsAppAdmin",isAppAdmin),
+                                       new SqlParameter("@CreateUserID",operateid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            paras[0].Direction = ParameterDirection.Output;
+
+            bool bl = ExecuteNonQuery("P_InsterUser", paras, CommandType.StoredProcedure) > 0;
+            result = Convert.ToInt32(paras[0].Value);
+
+            return bl;
         }
 
         #endregion

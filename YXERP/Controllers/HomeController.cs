@@ -40,6 +40,10 @@ namespace YXERP.Controllers
             return Redirect("/Home/Login");
         }
 
+        public ActionResult InfoPage() 
+        {
+            return View();
+        }
         /// <summary>
         /// 明道登录
         /// </summary>
@@ -52,14 +56,15 @@ namespace YXERP.Controllers
         //明道登录回掉
         public ActionResult MDCallBack(string code)
         {
+            string operateip = string.IsNullOrEmpty(Request.Headers.Get("X-Real-IP")) ? Request.UserHostAddress : Request.Headers["X-Real-IP"];
             var user = OauthBusiness.GetMDUser(code);
             if (user.error_code <= 0)
             {
-                var model = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id);
+                var model = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
                 //已注册云销账户
-                if (!string.IsNullOrEmpty(model.UserID))
+                if (model != null)
                 {
-                    //云销系统未注销
+                    //未注销
                     if (model.Status.Value != 9)
                     {
                         model.MDToken = user.user.token;
@@ -85,19 +90,25 @@ namespace YXERP.Controllers
                             var clientid = ClientBusiness.InsertClient(clientModel, "", "", "", out result, user.user.email, user.user.id, user.user.project.id);
                             if (!string.IsNullOrEmpty(clientid))
                             {
-                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id); ;
+                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
                                 return Redirect("/Home/Index");
                             }
 
                         }
                         else
                         {
- 
+                            int result = 0;
+                            string userid = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
+                            if (!string.IsNullOrEmpty(userid))
+                            {
+                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
+                                return Redirect("/Home/Index");
+                            }
                         }
                     }
                     else
                     {
-
+                        return Redirect("/Home/InfoPage");
                     }
                 }
             }

@@ -42,7 +42,7 @@ namespace CloudSalesBusiness
         #region 查询
 
         /// <summary>
-        /// 客户端账号是否存在
+        /// 账号是否存在
         /// </summary>
         /// <param name="loginName">账号</param>
         /// <returns></returns>
@@ -60,7 +60,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static Users GetUserByUserName(string loginname, string pwd, string operateip)
         {
-            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd, loginname);
+            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd);
             DataSet ds = new OrganizationDAL().GetUserByUserName(loginname, pwd);
             Users model = null;
             if (ds.Tables.Contains("User") && ds.Tables["User"].Rows.Count > 0)
@@ -83,15 +83,19 @@ namespace CloudSalesBusiness
         /// <param name="mduserid"></param>
         /// <param name="mdprojectid"></param>
         /// <returns></returns>
-        public static Users GetUserByMDUserID(string mduserid, string mdprojectid)
+        public static Users GetUserByMDUserID(string mduserid, string mdprojectid, string operateip)
         {
-            DataTable dt = new OrganizationDAL().GetUserByMDUserID(mduserid);
-            Users model = new Users();
-            if (dt.Rows.Count > 0)
+            DataSet ds = new OrganizationDAL().GetUserByMDUserID(mduserid);
+            Users model = null;
+            if (ds.Tables.Contains("User") && ds.Tables["User"].Rows.Count > 0)
             {
-                model.FillData(dt.Rows[0]);
+                model = new Users();
+                model.FillData(ds.Tables["User"].Rows[0]);
+
                 model.Menus = CommonBusiness.ClientMenus;
             }
+            //记录登录日志
+            LogBusiness.AddLoginLog(mduserid, model != null, CloudSalesEnum.EnumSystemType.Client, operateip);
             return model;
         }
 
@@ -209,6 +213,42 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 return roleid;
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// 添加员工
+        /// </summary>
+        /// <param name="loginname">登录名</param>
+        /// <param name="loginpwd">密码</param>
+        /// <param name="name">姓名</param>
+        /// <param name="mobile">手机</param>
+        /// <param name="email">邮箱</param>
+        /// <param name="citycode">城市</param>
+        /// <param name="address">地址</param>
+        /// <param name="jobs">职位</param>
+        /// <param name="roleid">角色ID</param>
+        /// <param name="departid">部门ID</param>
+        /// <param name="agentid"代理商ID></param>
+        /// <param name="clientid">客户端ID</param>
+        /// <param name="mduserid">明道用户ID</param>
+        /// <param name="mdprojectid">明道网络ID</param>
+        /// <param name="isAppAdmin">是否应用管理员</param>
+        /// <param name="operateid">操作人</param>
+        /// <param name="result">返回结果 0 失败 1成功 2账号已存在</param>
+        /// <returns></returns>
+        public static string CreateUser(string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
+                               string roleid, string departid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
+        {
+            string userid = Guid.NewGuid().ToString();
+
+            loginpwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginpwd);
+
+            bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
+            if (bl)
+            {
+                return userid;
             }
             return "";
         }

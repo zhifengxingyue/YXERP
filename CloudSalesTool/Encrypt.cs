@@ -13,21 +13,21 @@ namespace CloudSalesTool
         /// <param name="pwd">密码</param>
         /// <param name="userName">用户名</param>
         /// <returns></returns>
-        public static string GetEncryptPwd(string pwd, string userName)
+        public static string GetEncryptPwd(string pwd)
         {
-            userName = userName.ToUpper();
-            for (int i = 0; i < userName.Length; i++)
+            var code = "Sj2yF98jUhg8874G";
+            for (int i = 0; i < code.Length; i++)
             {
                 if (i % 3 == 1)
                 {
-                    pwd = userName[i] + pwd;
+                    pwd = code[i] + pwd;
                 }
             }
-            for (int i = 0; i < userName.Length; i++)
+            for (int i = 0; i < code.Length; i++)
             {
                 if (i % 2 == 0)
                 {
-                    pwd += userName[i];
+                    pwd += code[i];
                 }
             }
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(pwd, "MD5");//System.Web.Configuration.FormsAuthPasswordFormat;
