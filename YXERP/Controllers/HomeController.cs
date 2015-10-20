@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using MD.SDK.Business;
 using CloudSalesBusiness;
+using CloudSalesEntity;
 
 namespace YXERP.Controllers
 {
@@ -48,32 +49,59 @@ namespace YXERP.Controllers
             return Redirect(OauthBusiness.GetAuthorizeUrl());
         }
 
-        //处理明道登录回掉
+        //明道登录回掉
         public ActionResult MDCallBack(string code)
         {
             var user = OauthBusiness.GetMDUser(code);
-            //是否已添加到云销
-            var model = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id);
-            if (!string.IsNullOrEmpty(model.UserID))
+            if (user.error_code <= 0)
             {
-                model.MDToken = user.user.token;
-                Session["ClientManager"] = model;
-                return Redirect("/Home/Index");
-            }
-            else
-            {
-                int error = 0;
-                bool isAdmin = MD.SDK.Entity.App.AppBusiness.IsAppAdmin(user.user.token, user.user.id, out error);
-                if (isAdmin)
+                var model = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id);
+                //已注册云销账户
+                if (!string.IsNullOrEmpty(model.UserID))
                 {
-
+                    //云销系统未注销
+                    if (model.Status.Value != 9)
+                    {
+                        model.MDToken = user.user.token;
+                        Session["ClientManager"] = model;
+                        return Redirect("/Home/Index");
+                    }
                 }
                 else
                 {
+                    int error = 0;
+                    bool isAdmin = MD.SDK.Entity.App.AppBusiness.IsAppAdmin(user.user.token, user.user.id, out error);
+                    if (isAdmin)
+                    {
+                        bool bl = AgentsBusiness.IsExistsMDProject(user.user.project.id);
+                        //明道网络未注册
+                        if (!bl)
+                        {
+                            int result = 0;
+                            Clients clientModel = new Clients();
+                            clientModel.CompanyName = user.user.project.name;
+                            clientModel.ContactName = user.user.name;
+                            clientModel.MobilePhone = user.user.mobile_phone;
+                            var clientid = ClientBusiness.InsertClient(clientModel, "", "", "", out result, user.user.email, user.user.id, user.user.project.id);
+                            if (!string.IsNullOrEmpty(clientid))
+                            {
+                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id); ;
+                                return Redirect("/Home/Index");
+                            }
+
+                        }
+                        else
+                        {
  
+                        }
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
-            return View();
+            return Redirect("/Home/Login");
         }
 
 

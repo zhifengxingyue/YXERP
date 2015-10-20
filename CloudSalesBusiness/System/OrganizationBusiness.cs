@@ -78,33 +78,21 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
-        /// 根据明道用户ID和网络ID获取云销用户信息
+        /// 根据明道用户ID和网络ID获取云销用户信息（登录）
         /// </summary>
         /// <param name="mduserid"></param>
         /// <param name="mdprojectid"></param>
         /// <returns></returns>
         public static Users GetUserByMDUserID(string mduserid, string mdprojectid)
         {
-            if (!Users.ContainsKey(mdprojectid))
+            DataTable dt = new OrganizationDAL().GetUserByMDUserID(mduserid);
+            Users model = new Users();
+            if (dt.Rows.Count > 0)
             {
-                Users.Add(mdprojectid, new List<Users>());
+                model.FillData(dt.Rows[0]);
+                model.Menus = CommonBusiness.ClientMenus;
             }
-
-            if (Users[mdprojectid].Where(u => u.MDUserID == mduserid).Count() > 0)
-            {
-                return Users[mdprojectid].Where(u => u.MDUserID == mduserid).FirstOrDefault();
-            }
-            else
-            {
-                DataTable dt = new OrganizationDAL().GetUserByMDUserID(mduserid);
-                Users model = new Users();
-                if (dt.Rows.Count > 0)
-                {
-                    model.FillData(dt.Rows[0]);
-                    Users[mdprojectid].Add(model);
-                }
-                return model;
-            }
+            return model;
         }
 
         /// <summary>

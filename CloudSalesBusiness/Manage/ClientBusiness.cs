@@ -84,11 +84,11 @@ namespace CloudSalesBusiness
         /// <param name="userid">操作人</param>
         /// <param name="result">0：失败 1：成功 2：账号已存在 3：模块未选择</param>
         /// <returns></returns>
-        public static string InsertClient(Clients model, string loginName, string loginPwd, string userid, out int result)
+        public static string InsertClient(Clients model, string loginName, string loginPwd, string userid, out int result, string email = "", string mduserid = "", string mdprojectid = "")
         {
             loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
             string clientid = ClientDAL.BaseProvider.InsertClient(model.CompanyName, model.ContactName, model.MobilePhone, model.Industry, model.CityCode,
-                                                             model.Address, model.Description, loginName, loginPwd, userid, out result);
+                                                             model.Address, model.Description, loginName, loginPwd, email, mduserid, mdprojectid, userid, out result);
             return clientid;
         }
 

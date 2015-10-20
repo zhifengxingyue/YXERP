@@ -262,10 +262,15 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        [Property("Lower")] 
         public string MDUserID { get; set; }
+
+        [Property("Lower")] 
+        public string MDProjectID { get; set; }
 
         public string MDToken { get; set; }
 
+        [Property("Lower")] 
         public string AgentID { get; set; }
 
         /// <summary>
