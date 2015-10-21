@@ -18,8 +18,8 @@ select option{ padding:2px; }
 .btn {  padding:5px 10px; background-color:#4B98E8; color:#fefefe; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
 .btn:hover { background-color:#2F74B9;  }
 
-.btnccc { height:25px; padding:0px 8px; line-height:22px; background-color:#eee ; color:#333; 
-       border:solid 1px #ccc; cursor:pointer; display:inline-block;}
+.btnccc {  padding:5px 10px; background-color:#e3e3e3; color:#333; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.btnccc:hover { background-color:#ccc;  }
 
 /*添加*/
 .ico-add{ background:url(../images/ico-add.png) no-repeat; height:24px; min-width:24px; line-height:24px; 

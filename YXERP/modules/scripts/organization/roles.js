@@ -176,7 +176,15 @@
 
             innerHtml.find("input").change(function () {
                 var _this = $(this);
-                $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
+                if (_this.prop("checked")) {
+                    _this.parent().addClass("checked").removeClass("check");
+                    $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
+                    $("#" + _this.data("id")).find("label").addClass("checked").removeClass("check");
+                } else {
+                    _this.parent().addClass("check").removeClass("checked");
+                    $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
+                    $("#" + _this.data("id")).find("label").addClass("check").removeClass("checked");
+                }
             });
 
             //默认选中拥有权限
@@ -185,6 +193,7 @@
                 for (var i = 0, j = menus.length; i < j; i++) {
                     if (_this.data("id") == menus[i].MenuCode) {
                         _this.prop("checked", true);
+                        _this.parent().addClass("checked").removeClass("check");
                     }
                 }
             });
@@ -251,21 +260,27 @@
                 }
             }
 
-            _item.append("<label class='pLeft5 left'><input type='checkbox' class='left'  value='" + cacheMenu[menuCode][i].MenuCode + "' data-id='" + cacheMenu[menuCode][i].MenuCode + "' /><span>" + cacheMenu[menuCode][i].Name + "</span></label>");
+            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[menuCode][i].MenuCode + "' data-id='" + cacheMenu[menuCode][i].MenuCode + "' /><span>" + cacheMenu[menuCode][i].Name + "</span></label>");
 
             _div.append(_item);
 
             _item.find("input").change(function () {
                 var _this = $(this);
-                $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
-                //下架选中上级默认选中
                 if (_this.prop("checked")) {
+                    _this.parent().addClass("checked").removeClass("check");
+                    $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
+                    $("#" + _this.data("id")).find("label").addClass("checked").removeClass("check");
                     _this.parents().each(function () {
                         var _parent = $(this);
                         if (_parent.hasClass("childbox")) {
                             _parent.prev().find("input").prop("checked", true);
+                            _parent.prev().find("label").addClass("checked").removeClass("check");
                         }
                     });
+                } else {
+                    _this.parent().addClass("check").removeClass("checked");
+                    $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
+                    $("#" + _this.data("id")).find("label").addClass("check").removeClass("checked");
                 }
             });
             //默认加载下级
@@ -296,6 +311,7 @@
             for (var i = 0, j = menus.length; i < j; i++) {
                 if (_this.data("id") == menus[i].MenuCode) {
                     _this.prop("checked", true);
+                    _this.parent().addClass("checked").removeClass("check");
                 }
             }
         });

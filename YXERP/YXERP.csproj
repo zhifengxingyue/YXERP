@@ -135,6 +135,8 @@
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
     <Content Include="modules\images\defaultavatar.png" />
+    <Content Include="modules\images\ico-check.png" />
+    <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />

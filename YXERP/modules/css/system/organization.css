@@ -8,15 +8,20 @@
 
 /*权限树状结构样式*/
 .menulist { border-bottom:solid 1px #ccc; padding-bottom:20px; }
-.menulist .menuitem { height:30px; }
-.menulist .menuitem label{ height:28px; line-height:28px; color:#333; display:inline-block; border:solid 1px #ccc; padding:0 15px 0 5px; }
-.menulist .menuitem input{ margin-top:7px; }
-.menulist .menuitem label span{ margin-left:5px;}
-.menulist .icoopen,.menulist  .icoclose { display:inline-block; width:24px; height:24px; vertical-align:top; margin-top:3px; cursor:pointer;}
+.menulist .menuitem { height:40px; }
+.menulist .menuitem label{ height:28px; line-height:26px; cursor:pointer; display:inline-block; padding:0 15px 0 10px; margin:5px 0 0 5px;}
+
+.menulist .menuitem .check { background:url('/modules/images/ico-check.png') no-repeat 4px 4px; border:solid 1px #ccc; }
+.menulist .menuitem .checked { background:url('/modules/images/ico-checked.png') no-repeat 4px 4px; border:solid 1px #4B98E8; }
+
+.menulist .menuitem input{ margin-top:8px; opacity:0;}
+.menulist .menuitem label span{ margin-left:10px; color:#333; font-size:14px;}
+.menulist .icoopen,.menulist  .icoclose { display:inline-block; width:20px; height:20px; vertical-align:top; margin-top:11px; cursor:pointer; margin-left:5px;}
 .menulist .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat;  }
 .menulist .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat;}
-.menulist .leftline{ background:url('/modules/images/ico-tree-full.png') no-repeat;display:inline-block; width:30px; height:30px; }
-.menulist .lastline{ background:url('/modules/images/ico-tree-last.png') no-repeat; display:inline-block; width:30px; height:30px;}
-.menulist .line{ background:url('/modules/images/ico-tree-line.png') no-repeat;display:inline-block; width:30px; height:30px; }
-.menulist .null{ display:inline-block; width:30px; height:30px;}
+.menulist .leftline{ background:url('/modules/images/ico-tree-full.png') no-repeat -5px;display:inline-block; width:35px; height:40px; }
+.menulist .lastline{ background:url('/modules/images/ico-tree-last.png') no-repeat -5px; display:inline-block; width:35px; height:40px;}
+.menulist .line{ background:url('/modules/images/ico-tree-line.png') no-repeat -5px;display:inline-block; width:35px; height:40px; }
+.menulist .null{ display:inline-block; width:40px; height:40px;}
+
 
