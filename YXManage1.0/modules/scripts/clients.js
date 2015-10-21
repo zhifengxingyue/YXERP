@@ -9,7 +9,13 @@ define(function (require, exports, module) {
         doT = require("dot"),
         City = require("city");
     var VerifyObject, CityObject;
+
     var Clients = {};
+    Clients.Params = {
+        pageIndex: 1,
+        keyWords: ""
+    };
+
     //新建客户初始化
     Clients.createInit = function (id) {
         Clients.createEvent();
@@ -129,11 +135,6 @@ define(function (require, exports, module) {
     }
     //绑定事件
     Clients.detailEvent = function () {
-        Clients.Params = {
-            pageIndex: 1,
-            clientID: $("#clientID").val()
-        };
-
         //客户设置菜单
         $(".clientnav ul li").click(function () {
             $(".clientnav ul li").removeClass("navactive");
@@ -195,20 +196,6 @@ define(function (require, exports, module) {
                     var option = "<option value=\"" + data.ID + "\" selected=\"selected\" data-name=\"" + name + "\">" + name + "</option>";
                     $("#industry").prepend(option);
                     $("#otherIndustry").hide();
-                }
-            });
-        });
-
-        //判断账号是否存在
-        $("#loginName").blur(function () {
-            var value = $(this).val();
-            if (!value) {
-                return;
-            }
-            Global.post("/Client/IsExistLoginName", { loginName: value }, function (data) {
-                if (data.Result) {
-                    $("#loginName").val("");
-                    alert("登录账号已存在!");
                 }
             });
         });
@@ -345,19 +332,23 @@ define(function (require, exports, module) {
 
     //客户列表初始化
     Clients.init = function () {
-        Clients.Params = {
-            pageIndex: 1
-        };
         Clients.bindEvent();
         Clients.bindData();
     };
     //绑定事件
     Clients.bindEvent = function () {
-
+        require.async("search", function () {
+            $(".searth-module").searchKeys(function (keyWords) {
+                Clients.Params.pageIndex = 1;
+                Clients.Params.keyWords = keyWords;
+                Clients.bindData();
+            });
+        });
     };
     //绑定数据
     Clients.bindData = function () {
         var _self = this;
+        //$(".search-ipt").val('');
         $("#client-header").nextAll().remove();
         Global.post("/Client/GetClients", Clients.Params, function (data) {
             doT.exec("template/client_list.html?3", function (templateFun) {

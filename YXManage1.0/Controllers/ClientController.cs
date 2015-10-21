@@ -27,7 +27,6 @@ namespace YXManage.Controllers
         public ActionResult Create()
         {
             ViewBag.Industry = IndustryBusiness.GetIndustrys();
-            //ViewBag.Modules = ModulesBusiness.GetModules();
             return View();
         }
 
@@ -35,7 +34,6 @@ namespace YXManage.Controllers
         {
             ViewBag.ID = id;
             ViewBag.Industry = IndustryBusiness.GetIndustrys();
-            //ViewBag.Modules = ModulesBusiness.GetModules();
             return View();
         }
 
@@ -122,7 +120,7 @@ namespace YXManage.Controllers
             }
             else
             {
-                bool flag = ClientBusiness.UpdateClient(model, loginName, loginName, CurrentUser.UserID, out result);
+                bool flag = ClientBusiness.UpdateClient(model, CurrentUser.UserID, out result);
                 JsonDictionary.Add("Result", flag?1:0);
             }
 
