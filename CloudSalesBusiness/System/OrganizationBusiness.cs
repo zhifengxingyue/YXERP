@@ -21,7 +21,7 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 缓存用户信息
         /// </summary>
-        public static Dictionary<string, List<Users>> Users
+        private static Dictionary<string, List<Users>> Users
         {
             get 
             {

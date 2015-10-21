@@ -18,7 +18,7 @@ namespace CloudSalesBusiness.Manage
         /// <summary>
         /// 行业
         /// </summary>
-        public static List<Industry> Industrys
+        private static List<Industry> Industrys
         {
             get
             {

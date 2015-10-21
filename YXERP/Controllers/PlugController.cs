@@ -18,7 +18,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetCityByPCode(string cityCode)
         {
-            var list = CommonBusiness.GetCitys().Where(c => c.PCode == cityCode);
+            var list = CommonBusiness.Citys.Where(c => c.PCode == cityCode);
             JsonDictionary.Add("Items", list);
             return new JsonResult()
             {

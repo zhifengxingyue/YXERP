@@ -74,15 +74,6 @@ namespace CloudSalesBusiness
         #endregion
 
         /// <summary>
-        /// 获取地区列表
-        /// </summary>
-        /// <returns></returns>
-        public static List<CityEntity> GetCitys()
-        {
-            return CommonBusiness.Citys;
-        }
-
-        /// <summary>
         /// 修改表中某字段值
         /// </summary>
         /// <param name="tableName">表名</param>
