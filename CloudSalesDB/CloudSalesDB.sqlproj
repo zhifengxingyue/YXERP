@@ -166,4 +166,10 @@
   <ItemGroup>
     <None Include="Procedures\System\P_InsterUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_DeleteRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_UpdateRolePermission.sql" />
+  </ItemGroup>
 </Project>

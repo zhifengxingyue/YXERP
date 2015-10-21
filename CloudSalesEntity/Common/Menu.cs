@@ -132,10 +132,8 @@ namespace CloudSalesEntity
 		}
 
         public int Layer { get; set; }
-        /// <summary>
-        /// 菜单包含权限
-        /// </summary>
-        public List<Permission> Permission { get; set; }
+
+        public List<Menu> ChildMenus { get; set; }
 
 		#endregion Model
 

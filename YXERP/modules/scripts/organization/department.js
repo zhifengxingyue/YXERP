@@ -117,7 +117,7 @@
     //删除
     ObjectJS.deleteModel = function (id, callback) {
         Global.post("/Organization/DeleteDepartment", { departid: id }, function (data) {
-            !!callback && callback(data.Status);
+            !!callback && callback(data.status);
         })
     }
 

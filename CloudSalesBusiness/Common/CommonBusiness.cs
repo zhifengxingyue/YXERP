@@ -57,6 +57,11 @@ namespace CloudSalesBusiness
                         model.FillData(dr);
                         _clientMenus.Add(model);
                     }
+                    foreach (var menu in _clientMenus)
+                    {
+                        menu.ChildMenus = _clientMenus.Where(m => m.PCode == menu.MenuCode).ToList();
+                    }
+
                 }
                 return _clientMenus;
             }

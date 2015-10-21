@@ -67,6 +67,18 @@ namespace CloudSalesDAL
             return GetDataTable(sql, paras, CommandType.Text);
         }
 
+        public DataSet GetRoleByID(string roleid, string agentid)
+        {
+            string sql = "select * from Role where RoleID=@RoleID and AgentID=@AgentID and Status<>9; select * from RolePermission where RoleID=@RoleID";
+
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+
+            return GetDataSet(sql, paras, CommandType.Text, "Role|Menus");
+        }
+
         #endregion
 
         #region 添加
@@ -144,17 +156,55 @@ namespace CloudSalesDAL
 
         #region 编辑/删除
 
-        public bool UpdateDepartment(string departid, string name, string description)
+        public bool UpdateDepartment(string departid, string name, string description, string agentid)
         {
-            string sql = "update Department set Name=@Name,Description=@Description where DepartID=@DepartID";
+            string sql = "update Department set Name=@Name,Description=@Description where DepartID=@DepartID and AgentID=@AgentID";
 
             SqlParameter[] paras = { 
                                        new SqlParameter("@DepartID",departid),
                                        new SqlParameter("@Name",name),
-                                       new SqlParameter("@Description",description)
+                                       new SqlParameter("@Description",description),
+                                       new SqlParameter("@AgentID",agentid)
                                    };
 
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+        }
+
+        public bool UpdateRole(string roleid, string name, string description, string agentid)
+        {
+            string sql = "update Role set Name=@Name,Description=@Description where RoleID=@RoleID and AgentID=@AgentID";
+
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@Name",name),
+                                       new SqlParameter("@Description",description),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+        }
+
+        public bool DeleteRole(string roleid, string agentid, out int result)
+        {
+            result = 0;
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@Result",result),
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            bool bl = ExecuteNonQuery("P_DeleteRole", paras, CommandType.StoredProcedure) > 0;
+            result = Convert.ToInt32(paras[0].Value);
+            return bl;
+        }
+
+        public bool UpdateRolePermission(string roleid, string permissions, string userid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@Permissions",permissions)
+                                   };
+            return ExecuteNonQuery("P_UpdateRolePermission", paras, CommandType.StoredProcedure) > 0;
         }
 
         #endregion

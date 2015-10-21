@@ -44,6 +44,7 @@ namespace YXERP.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// 明道登录
         /// </summary>
@@ -114,7 +115,6 @@ namespace YXERP.Controllers
             }
             return Redirect("/Home/Login");
         }
-
 
         /// <summary>
         /// 员工登录

@@ -152,6 +152,7 @@
     <Content Include="modules\template\organization\department-detail.html" />
     <Content Include="modules\template\organization\roles.html" />
     <Content Include="modules\template\organization\role-detail.html" />
+    <Content Include="modules\template\organization\permissions.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
@@ -163,6 +164,7 @@
     <Content Include="Views\Purchase\DocDetail.cshtml" />
     <Content Include="Views\Purchase\AuditDetail.cshtml" />
     <Content Include="Views\Home\InfoPage.cshtml" />
+    <Content Include="Views\Organization\RolePermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />

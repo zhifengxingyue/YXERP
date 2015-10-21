@@ -144,6 +144,31 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 获取角色详情（权限明细）
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="agentid"></param>
+        /// <returns></returns>
+        public static Role GetRoleByID(string roleid, string agentid)
+        {
+            Role model = null;
+            DataSet ds = OrganizationDAL.BaseProvider.GetRoleByID(roleid, agentid);
+            if (ds.Tables.Contains("Role") && ds.Tables["Role"].Rows.Count > 0)
+            {
+                model = new Role();
+                model.FillData(ds.Tables["Role"].Rows[0]);
+                model.Menus = new List<Menu>();
+                foreach (DataRow dr in ds.Tables["Menus"].Rows)
+                {
+                    Menu menu = new Menu();
+                    menu.FillData(dr);
+                    model.Menus.Add(menu);
+                }
+            }
+            return model;
+        }
+
+        /// <summary>
         /// 获取用户信息(缓存)
         /// </summary>
         /// <param name="userid"></param>
@@ -266,10 +291,10 @@ namespace CloudSalesBusiness
         /// <param name="operateid">操作人</param>
         /// <param name="operateip">操作IP</param>
         /// <returns></returns>
-        public bool UpdateDepartment(string departid, string name, string description, string operateid, string operateip)
+        public bool UpdateDepartment(string departid, string name, string description, string operateid, string operateip, string agentid)
         {
             var dal = new OrganizationDAL();
-            return dal.UpdateDepartment(departid, name, description);
+            return dal.UpdateDepartment(departid, name, description, agentid);
         }
 
         /// <summary>
@@ -280,7 +305,7 @@ namespace CloudSalesBusiness
         /// <param name="operateid">操作人</param>
         /// <param name="operateip">操作IP</param>
         /// <returns></returns>
-        public EnumResultStatus UpdateDepartmentStatus(string departid, EnumStatus status, string operateid, string operateip)
+        public EnumResultStatus UpdateDepartmentStatus(string departid, EnumStatus status, string operateid, string operateip, string agentid)
         {
             if (status == EnumStatus.Delete)
             {
@@ -290,7 +315,7 @@ namespace CloudSalesBusiness
                     return EnumResultStatus.Exists;
                 }
             }
-            if (CommonBusiness.Update("Department", "Status", (int)status, "DepartID='" + departid + "'"))
+            if (CommonBusiness.Update("Department", "Status", (int)status, "DepartID='" + departid + "' and AgentID='" + agentid + "'"))
             {
                 return EnumResultStatus.Success;
             }
@@ -298,6 +323,47 @@ namespace CloudSalesBusiness
             {
                 return EnumResultStatus.Failed;
             }
+        }
+
+        /// <summary>
+        /// 编辑角色
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="name">名称</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid">操作人</param>
+        /// <param name="ip">IP</param>
+        /// <param name="agentid">代理商ID</param>
+        /// <returns></returns>
+        public bool UpdateRole(string roleid, string name, string description, string operateid, string ip, string agentid)
+        {
+            return OrganizationDAL.BaseProvider.UpdateRole(roleid, name, description, agentid);
+        }
+
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <param name="agentid"></param>
+        /// <param name="result">0 失败 1成功 10002 存在员工</param>
+        /// <returns></returns>
+        public bool DeleteRole(string roleid, string operateid, string ip, string agentid, out int result)
+        {
+            return OrganizationDAL.BaseProvider.DeleteRole(roleid, agentid, out result);
+        }
+        /// <summary>
+        /// 编辑角色权限
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="permissions"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public bool UpdateRolePermission(string roleid, string permissions, string operateid, string ip)
+        {
+            return OrganizationDAL.BaseProvider.UpdateRolePermission(roleid, permissions, operateid);
         }
 
         #endregion

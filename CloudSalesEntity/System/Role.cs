@@ -15,6 +15,7 @@
 *└──────────────────────────────────┘
 */
 using System;
+using System.Collections.Generic;
 namespace CloudSalesEntity
 {
 	/// <summary>
@@ -114,6 +115,8 @@ namespace CloudSalesEntity
         public string AgentID { get; set; }
 
         public Users CreateUser { get; set; }
+
+        public List<Menu> Menus { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {

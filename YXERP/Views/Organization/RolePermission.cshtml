@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "设置权限";
+    var menus = (List<CloudSalesEntity.Menu>)ViewBag.Menus;
+    var model = (CloudSalesEntity.Role)ViewBag.Model;
+}
+
+@section css{
+    <link rel="stylesheet" href="/modules/css/system/organization.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/organization/roles"], function (obj) {
+            obj.initPermission('@(model.RoleID)', '@Html.ToJSONString(menus)', '@Html.ToJSONString(model.Menus)');
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">设置权限</span>
+</div>
+<div class="content-body">
+    <h2>@(model.Name)</h2>
+    <div id="rolePermission" class="menulist mTop10">
+
+    </div>
+    <div class="mTop20">
+        <a href="javascript:void(0)" class="btn" id="savePermission">保存</a>
+        <a href="/Organization/Roles" class="btn">返回</a>
+    </div>
+</div>

@@ -51,7 +51,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
-		public string PermissionID
+        public string MenuCode
 		{
 			set{ _permissionid=value;}
 			get{return _permissionid;}

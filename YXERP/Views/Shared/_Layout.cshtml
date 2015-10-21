@@ -20,13 +20,10 @@
         </div>
         <div class="modules left" id="choosemodules">
             <div class="modulesname left">
-                @(ExpandClass.GetMenuByCode(HttpContext.Current, controllerMenu.PCode).Name)
+                主菜单
             </div>
-            <ul class="right">
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
+            <span class="right">
+            </span>
         </div>
         <ul id="controllerMenu" class="menu left">
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
