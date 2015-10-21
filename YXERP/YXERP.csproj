@@ -140,11 +140,15 @@
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />
+    <Content Include="modules\plug\chooseuser\chooseuser.js" />
+    <Content Include="modules\plug\chooseuser\chooseuser.html" />
+    <Content Include="modules\plug\chooseuser\style.css" />
     <Content Include="modules\plug\easydialog\ico-close-hover.png" />
     <Content Include="modules\plug\easydialog\ico-close.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\organization\roles.js" />
+    <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
@@ -646,9 +650,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Warehouse\WareArea.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orders\Index.cshtml" />

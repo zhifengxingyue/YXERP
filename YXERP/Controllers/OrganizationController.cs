@@ -188,6 +188,21 @@ namespace YXERP.Controllers
             };
         }
 
+        /// <summary>
+        /// 获取明道用户列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetMDUsers()
+        {
+            var list = MD.SDK.UserBusiness.GetUserAll(CurrentUser.MDToken, "", 1, 1000);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
     }

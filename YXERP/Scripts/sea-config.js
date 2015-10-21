@@ -28,7 +28,9 @@ seajs.config({
         //搜索插件
         "search": "plug/seach_keys/seach_keys.js",
         //购物车
-        "cart": "plug/shoppingcart/shoppingcart.js"
+        "cart": "plug/shoppingcart/shoppingcart.js",
+        //选择员工
+        "chooseuser": "plug/chooseuser/chooseuser.js"
     }
 });
 

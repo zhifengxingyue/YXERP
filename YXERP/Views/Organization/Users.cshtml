@@ -2,4 +2,21 @@
     ViewBag.Title = "员工管理";
 }
 
-<h2>Users</h2>
+@section css{
+    <link rel="stylesheet" href="/modules/css/system/organization.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/organization/users"], function (obj) {
+            obj.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">员工管理</span>
+    <input type="button" class="btn mLeft20" id="addUser" value="添加员工" />
+    <input type="button" class="btn mLeft20" id="addMDUser" value="明道用户导入" />
+</div>
+<div class="content-body">
+
+</div>
