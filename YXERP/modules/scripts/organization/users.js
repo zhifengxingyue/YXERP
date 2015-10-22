@@ -14,7 +14,6 @@
         _self.bindEvent();
         _self.getList();
     }
-
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
@@ -123,7 +122,6 @@
             $(".tr-header").after(innerhtml);
         });
     }
-
     //保存实体
     ObjectJS.saveModel = function (model) {
         var _self = this;

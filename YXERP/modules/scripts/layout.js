@@ -68,11 +68,12 @@ define(function (require, exports, module) {
         });
 
 
+        //二级菜单图标事件处理
         $("#controllerMenu a").mouseenter(function () {
             var _this = $(this).find("img");
             _this.attr("src", _this.data("hover"));
         });
-        //鼠标离开
+
         $("#controllerMenu a").mouseleave(function () {
             if (!$(this).hasClass("select")) {
                 var _this = $(this).find("img");

@@ -69,6 +69,8 @@ namespace YXERP.Controllers
                     if (model.Status.Value != 9)
                     {
                         model.MDToken = user.user.token;
+                        if (string.IsNullOrEmpty(model.Avatar)) model.Avatar = user.user.avatar;
+
                         Session["ClientManager"] = model;
                         return Redirect("/Home/Index");
                     }
@@ -91,7 +93,12 @@ namespace YXERP.Controllers
                             var clientid = ClientBusiness.InsertClient(clientModel, "", "", "", out result, user.user.email, user.user.id, user.user.project.id);
                             if (!string.IsNullOrEmpty(clientid))
                             {
-                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
+                                var current = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
+
+                                current.MDToken = user.user.token;
+                                if (string.IsNullOrEmpty(current.Avatar)) current.Avatar = user.user.avatar;
+                                Session["ClientManager"] = current;
+
                                 return Redirect("/Home/Index");
                             }
 
@@ -102,7 +109,12 @@ namespace YXERP.Controllers
                             string userid = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
                             if (!string.IsNullOrEmpty(userid))
                             {
-                                Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
+                                var current = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
+
+                                current.MDToken = user.user.token;
+                                if (string.IsNullOrEmpty(current.Avatar)) current.Avatar = user.user.avatar;
+                                Session["ClientManager"] = current;
+
                                 return Redirect("/Home/Index");
                             }
                         }
