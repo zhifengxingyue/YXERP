@@ -31,7 +31,7 @@
                 <li class="left" data-code="@(model.MenuCode)">
                     <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)/@(model.View)">
                         <img data-ico="@(model.IcoPath)" data-hover="@(model.IcoHover)" src="@(model.IcoPath)" /> 
-                         @(model.Name)
+                        <span>@(model.Name)</span>
                     </a> 
                 </li>
             }

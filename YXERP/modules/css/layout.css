@@ -92,10 +92,13 @@ header .modules:hover span { border-top-color:#fff; }
 
 
 header .menu { height:60px; margin-left:60px; }
-header .menu a{ color:#BFD2F2; height:60px; line-height:60px;text-align:center; width:100px; display:inline-block; font-size:14px;}
-header .menu a img{ width:16px; height:16px; vertical-align:middle;}
-header .menu a:hover { color:#fefefe;}
+header .menu a{  height:60px; line-height:60px;text-align:center; width:110px; display:inline-block; }
+header .menu a img{ width:16px; height:16px; margin-top:23px; margin-left:15px; float:left; }
+header .menu a span{ margin-left:8px; float:left; color:#BFD2F2; font-size:14px;}
 header .menu .select{ background-color:#174A7F;color:#fefefe;}
+
+header .menu a:hover span,header .menu .select span{ color:#fefefe;}
+
 
 /*登录信息*/
 header .currentuser { margin-right:50px; cursor:pointer;}

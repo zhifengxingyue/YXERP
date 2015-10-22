@@ -67,8 +67,23 @@ define(function (require, exports, module) {
             $(".dropdown-userinfo").fadeIn("1000");
         });
 
+
+        $("#controllerMenu a").mouseenter(function () {
+            var _this = $(this).find("img");
+            _this.attr("src", _this.data("hover"));
+        });
+        //鼠标离开
+        $("#controllerMenu a").mouseleave(function () {
+            if (!$(this).hasClass("select")) {
+                var _this = $(this).find("img");
+                _this.attr("src", _this.data("ico"));
+            }
+        });
+
+        $("#controllerMenu .select img").attr("src", $("#controllerMenu .select img").data("hover"));
+
         //二级菜单选中名称
-        $(".controller-name").html($("#controllerMenu .select").html());
+        $(".controller-name").html($("#controllerMenu .select span").html());
     }
     module.exports = LayoutObject;
 })
