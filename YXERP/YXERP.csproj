@@ -169,6 +169,7 @@
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
+    <Content Include="modules\scripts\organization\structure.js" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />

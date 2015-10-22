@@ -65,7 +65,6 @@
 
     /*重写alert*/
     window.alert = function (msg) {
-
         $("#window_alert").remove();
         var left = 0, top = 250, alertwidth = 0,
             alert = $("<div />").attr("id", "window_alert").addClass("alert"),

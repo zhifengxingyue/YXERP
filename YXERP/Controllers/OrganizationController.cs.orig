@@ -261,20 +261,7 @@ namespace YXERP.Controllers
             };
         }
 
-        /// <summary>
-        /// 根据上级获取用户列表
-        /// </summary>
-        /// <param name="parentid"></param>
-        /// <returns></returns>
-        public JsonResult GetUsersByParentID(string parentid)
-        {
-            return new JsonResult()
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
+<<<<<<< HEAD
 
         /// <summary>
         /// 获取用户列表
@@ -289,12 +276,25 @@ namespace YXERP.Controllers
 
             var list = OrganizationBusiness.GetUsers(model.Keywords,model.DepartID,model.RoleID, PageSize, model.PageIndex, ref totalCount, ref pageCount);
             JsonDictionary.Add("items", list);
+=======
+        /// <summary>
+        /// 根据上级获取用户列表
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <returns></returns>
+        public JsonResult GetUsersByParentID(string parentid)
+        {
+>>>>>>> 948637d278ce76ac64422efe15f0499057e55fda
             return new JsonResult()
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 948637d278ce76ac64422efe15f0499057e55fda
         #endregion
 
     }

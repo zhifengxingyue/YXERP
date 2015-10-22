@@ -204,6 +204,29 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 根据代理商ID获取员工列表（缓存）
+        /// </summary>
+        /// <param name="agentid">代理商ID</param>
+        /// <returns></returns>
+        public static List<Users> GetUsers(string agentid)
+        {
+            if (!Users.ContainsKey(agentid))
+            {
+                List<Users> list = new List<CloudSalesEntity.Users>();
+                DataTable dt = OrganizationDAL.BaseProvider.GetUsers(agentid);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Users model = new Users();
+                    model.FillData(dr);
+                    list.Add(model);
+                }
+                Users.Add(agentid, list);
+                return list;
+            }
+            return Users[agentid];
+        }
+
+        /// <summary>
         /// 获取用户信息(缓存)
         /// </summary>
         /// <param name="userid"></param>
@@ -213,9 +236,8 @@ namespace CloudSalesBusiness
         {
             if (!Users.ContainsKey(agentid))
             {
-                Users.Add(agentid, new List<Users>());
+                GetUsers(agentid);
             }
-
             if (Users[agentid].Where(u => u.UserID == userid).Count() > 0)
             {
                 return Users[agentid].Where(u => u.UserID == userid).FirstOrDefault();
