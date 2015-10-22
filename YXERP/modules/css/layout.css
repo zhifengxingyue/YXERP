@@ -92,7 +92,8 @@ header .modules:hover span { border-top-color:#fff; }
 
 
 header .menu { height:60px; margin-left:60px; }
-header .menu a{ color:#BFD2F2; height:60px; line-height:60px;text-align:center; width:80px; display:inline-block; font-size:14px;}
+header .menu a{ color:#BFD2F2; height:60px; line-height:60px;text-align:center; width:100px; display:inline-block; font-size:14px;}
+header .menu a img{ width:16px; height:16px; vertical-align:middle;}
 header .menu a:hover { color:#fefefe;}
 header .menu .select{ background-color:#174A7F;color:#fefefe;}
 

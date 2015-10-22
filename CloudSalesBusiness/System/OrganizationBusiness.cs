@@ -255,7 +255,8 @@ namespace CloudSalesBusiness
         /// <param name="jobs">职位</param>
         /// <param name="roleid">角色ID</param>
         /// <param name="departid">部门ID</param>
-        /// <param name="agentid"代理商ID></param>
+        /// <param name="parentid">上级ID</param>
+        /// <param name="agentid">代理商ID></param>
         /// <param name="clientid">客户端ID</param>
         /// <param name="mduserid">明道用户ID</param>
         /// <param name="mdprojectid">明道网络ID</param>
@@ -264,13 +265,13 @@ namespace CloudSalesBusiness
         /// <param name="result">返回结果 0 失败 1成功 2账号已存在</param>
         /// <returns></returns>
         public static string CreateUser(string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
-                               string roleid, string departid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
+                               string roleid, string departid, string parentid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
         {
             string userid = Guid.NewGuid().ToString();
 
             loginpwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginpwd);
 
-            bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
+            bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
             if (bl)
             {
                 return userid;

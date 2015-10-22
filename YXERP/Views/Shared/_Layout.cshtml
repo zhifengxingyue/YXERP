@@ -29,7 +29,10 @@
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
             { 
                 <li class="left" data-code="@(model.MenuCode)">
-                    <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)/@(model.View)"> @(model.Name)</a> 
+                    <a class="@(model.Controller.ToUpper()==controller ? "select" : "")" href="/@(model.Controller)/@(model.View)">
+                        <img data-ico="@(model.IcoPath)" data-hover="@(model.IcoHover)" src="@(model.IcoPath)" /> 
+                         @(model.Name)
+                    </a> 
                 </li>
             }
         </ul>

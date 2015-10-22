@@ -216,6 +216,47 @@ namespace YXERP.Controllers
             };
         }
 
+        /// <summary>
+        /// 添加明道用户
+        /// </summary>
+        /// <param name="parentid">上级ID</param>
+        /// <param name="mduserids">明道Id列表</param>
+        /// <returns></returns>
+        public JsonResult SaveMDUser(string parentid, string mduserids)
+        {
+            bool bl = false;
+
+            string[] list = mduserids.Split(',');
+            foreach (string mduserid in list)
+            {
+                if (!string.IsNullOrEmpty(mduserid) && !string.IsNullOrEmpty(CurrentUser.MDToken))
+                {
+                    var model = MD.SDK.UserBusiness.GetUserDetail(CurrentUser.MDToken, mduserid);
+                    if (model.error_code <= 0)
+                    {
+                        var user = model.user;
+                        int error = 0, result = 0; 
+
+                        bool isAdmin = MD.SDK.Entity.App.AppBusiness.IsAppAdmin(CurrentUser.MDToken, user.id, out error);
+
+                        OrganizationBusiness.CreateUser("", "", user.name, user.mobile_phone, user.email, "", "", "", "", "", parentid, CurrentUser.AgentID, CurrentUser.ClientID, user.id, user.project.id, isAdmin ? 1 : 0, CurrentUser.UserID, out result);
+                        //添加成功
+                        if (result == 1)
+                        {
+                            bl = true;
+                        }
+                    }
+                }
+            }
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
     }

@@ -120,7 +120,7 @@ namespace CloudSalesDAL
         }
 
         public bool CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
-                               string roleid, string departid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
+                               string roleid, string departid, string parentid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
         {
             result = 0;
             SqlParameter[] paras = { 
@@ -136,6 +136,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@Jobs",jobs),
                                        new SqlParameter("@RoleID",roleid),
                                        new SqlParameter("@DepartID",departid),
+                                       new SqlParameter("@ParentID",parentid),
                                        new SqlParameter("@AgentID",agentid),
                                        new SqlParameter("@MDUserID",mduserid),
                                        new SqlParameter("@MDProjectID",mdprojectid),

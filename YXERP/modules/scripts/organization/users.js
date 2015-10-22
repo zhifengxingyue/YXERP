@@ -25,8 +25,22 @@
                 title: "明道用户导入",
                 type: 2,
                 single: false,
-                callback: function (data) {
-                    console.log(data);
+                callback: function (items) {
+                    var ids = "";
+                    for (var i = 0; i < items.length; i++) {
+                        ids += items[i].id + ",";
+                    }
+                    alert(ids);
+                    if (ids.length > 0) {
+                        Global.post("/Organization/SaveMDUser", {
+                            parentid: "",
+                            mduserids: ids
+                        }, function (data) {
+                            if (data.status) {
+                                _self.getList();
+                            }
+                        })
+                    }
                 }
             });
         });

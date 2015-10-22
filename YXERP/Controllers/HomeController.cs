@@ -99,7 +99,7 @@ namespace YXERP.Controllers
                         else
                         {
                             int result = 0;
-                            string userid = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
+                            string userid = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
                             if (!string.IsNullOrEmpty(userid))
                             {
                                 Session["ClientManager"] = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
