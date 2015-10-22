@@ -43,6 +43,7 @@ namespace YXERP.Controllers
 
         public ActionResult Structure()
         {
+
             return View();
         }
 
@@ -250,6 +251,20 @@ namespace YXERP.Controllers
             }
 
             JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 根据上级获取用户列表
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <returns></returns>
+        public JsonResult GetUsersByParentID(string parentid)
+        {
             return new JsonResult()
             {
                 Data = JsonDictionary,

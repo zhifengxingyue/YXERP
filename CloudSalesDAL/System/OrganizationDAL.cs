@@ -24,6 +24,27 @@ namespace CloudSalesDAL
             return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
         }
 
+        public DataSet GetUserByMDUserID(string userid)
+        {
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@MDUserID",userid)
+                                   };
+            return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
+
+
+        }
+
+        public DataTable GetUsers(string agentid)
+        {
+            string sql = "select * from Users where AgentID=@AgentID and Status<>9";
+
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@AgentID",agentid)
+                                   };
+
+            return GetDataTable(sql, paras, CommandType.Text);
+        }
+
         public DataTable GetUserByUserID(string userid)
         {
             string sql = "select * from Users where UserID=@UserID";
@@ -33,16 +54,6 @@ namespace CloudSalesDAL
                                    };
 
             return GetDataTable(sql, paras, CommandType.Text);
-        }
-
-        public DataSet GetUserByMDUserID(string userid)
-        {
-            SqlParameter[] paras = { 
-                                    new SqlParameter("@MDUserID",userid)
-                                   };
-            return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
-
-
         }
 
         public DataTable GetDepartments(string agentid)
