@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="Models\FilterProduct.cs" />
     <None Include="modules\plug\umeditor\net\Uploader.cs" />
+    <Compile Include="Models\FilterUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\menuico\account.png" />
     <Content Include="Content\menuico\accounthover.png" />
@@ -178,6 +179,7 @@
     <Content Include="modules\template\organization\roles.html" />
     <Content Include="modules\template\organization\role-detail.html" />
     <Content Include="modules\template\organization\permissions.html" />
+    <Content Include="modules\template\organization\users.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />

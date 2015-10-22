@@ -100,6 +100,41 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="keyWords"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="pageCount"></param>
+        /// <returns></returns>
+        public static List<Users> GetUsers(string keyWords, string departID, string roleID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        {
+            string whereSql = "u.Status<>9";
+            whereSql += " and u.DepartID=d.DepartID and u.RoleID=r.RoleID";
+
+            if (!string.IsNullOrEmpty(keyWords))
+                whereSql += " and ( u.name like '%" + keyWords + "%'  or  d.name like '%" + keyWords + "%' or  r.name like '%" + keyWords + "%')";
+            if (!string.IsNullOrEmpty(departID))
+                whereSql += " and u.departID='" + departID + "'";
+
+            if (!string.IsNullOrEmpty(roleID))
+                whereSql += " and u.roleID='" + roleID + "'";
+
+            DataTable dt = CommonBusiness.GetPagerData("Users as u ,Department as d,Role as r", "u.*,d.Name as DepartName,r.Name as RoleName", whereSql, "u.userID", pageSize, pageIndex, out totalCount, out pageCount);
+            List<Users> list = new List<Users>();
+            Users model;
+            foreach (DataRow item in dt.Rows)
+            {
+                model = new Users();
+                model.FillData(item);
+                list.Add(model);
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// 获取部门列表
         /// </summary>
         /// <param name="agentid">代理商ID</param>

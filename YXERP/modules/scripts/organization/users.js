@@ -8,6 +8,14 @@
     var Model = {};
 
     var ObjectJS = {};
+
+    ObjectJS.Params = {
+        PageIndex: 1,
+        DepartID:"",
+        RoleID:"",
+        KeyWords: ""
+    };
+
     //初始化
     ObjectJS.init = function () {
         var _self = this;
@@ -17,6 +25,23 @@
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+        require.async("search", function () {
+            $(".searth-module").searchKeys(function (keyWords) {
+                ObjectJS.Params.PageIndex = 1;
+                ObjectJS.Params.keyWords = keyWords;
+                ObjectJS.Params.DepartID = $("#Departments").val();
+                ObjectJS.Params.RoleID = $("#Roles").val();
+                ObjectJS.getList();
+            });
+        });
+
+        $("#Departments,#Roles").change(function () {
+            ObjectJS.Params.PageIndex = 1;
+            ObjectJS.Params.keyWords = $(".search-ipt").val();
+            ObjectJS.Params.DepartID = $("#Departments").val();
+            ObjectJS.Params.RoleID = $("#Roles").val();
+            ObjectJS.getList();
+        });
 
         //添加明道用户
         $("#addMDUser").click(function () {
@@ -85,39 +110,39 @@
     ObjectJS.getList = function () {
         var _self = this;
         $(".tr-header").nextAll().remove();
-        Global.post("/Organization/GetDepartments", {}, function (data) {
+        Global.post("/Organization/GetUsers", { filter: JSON.stringify(ObjectJS.Params) }, function (data) {
             _self.bindList(data.items);
         });
     }
     //加载列表
     ObjectJS.bindList = function (items) {
         var _self = this;
-        doT.exec("template/organization/departments.html", function (template) {
+        doT.exec("template/organization/users.html", function (template) {
             var innerhtml = template(items);
             innerhtml = $(innerhtml);
 
-            //删除
-            innerhtml.find(".ico-del").click(function () {
-                var _this = $(this);
-                if (confirm("部门删除后不可恢复,确认删除吗？")) {
-                    _self.deleteModel(_this.data("id"), function (status) {
-                        if (status == 1) {
-                            _this.parent().parent().remove();
-                        } else if (status == 10002) {
-                            alert("此部门存在员工，请移除员工后重新操作！");
-                        }
-                    });
-                }
-            });
+            ////删除
+            //innerhtml.find(".ico-del").click(function () {
+            //    var _this = $(this);
+            //    if (confirm("部门删除后不可恢复,确认删除吗？")) {
+            //        _self.deleteModel(_this.data("id"), function (status) {
+            //            if (status == 1) {
+            //                _this.parent().parent().remove();
+            //            } else if (status == 10002) {
+            //                alert("此部门存在员工，请移除员工后重新操作！");
+            //            }
+            //        });
+            //    }
+            //});
 
-            //编辑
-            innerhtml.find(".ico-edit").click(function () {
-                var _this = $(this);
-                Model.DepartID = _this.data("id");
-                Model.Name = _this.parent().siblings(".name").html();
-                Model.Description = _this.parent().siblings(".desc").html();
-                _self.createModel();
-            });
+            ////编辑
+            //innerhtml.find(".ico-edit").click(function () {
+            //    var _this = $(this);
+            //    Model.DepartID = _this.data("id");
+            //    Model.Name = _this.parent().siblings(".name").html();
+            //    Model.Description = _this.parent().siblings(".desc").html();
+            //    _self.createModel();
+            //});
 
             $(".tr-header").after(innerhtml);
         });

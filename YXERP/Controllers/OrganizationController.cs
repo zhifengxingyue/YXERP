@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using YXERP.Models;
 
 namespace YXERP.Controllers
 {
@@ -38,6 +39,8 @@ namespace YXERP.Controllers
 
         public ActionResult Users()
         {
+            ViewBag.Roles = OrganizationBusiness.GetRoles(CurrentUser.AgentID);
+            ViewBag.Departments = OrganizationBusiness.GetDepartments(CurrentUser.AgentID);
             return View();
         }
 
@@ -257,6 +260,26 @@ namespace YXERP.Controllers
             };
         }
 
+
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetUsers(string filter)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            FilterUser model = serializer.Deserialize<FilterUser>(filter);
+            int totalCount = 0;
+            int pageCount = 0;
+
+            var list = OrganizationBusiness.GetUsers(model.Keywords,model.DepartID,model.RoleID, PageSize, model.PageIndex, ref totalCount, ref pageCount);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
     }

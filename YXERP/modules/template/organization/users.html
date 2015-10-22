@@ -1,0 +1,18 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="list-item">
+    <td class="name">{%=item.LoginName%}</td>
+    <td class="desc">{%=item.DepartName%}</td>
+    <td class="desc">{%=item.RoleName%}</td>
+    <td class="desc">{%=item.Email%}</td>
+    <td class="desc">{%=item.MobilePhone%}</td>
+    <td class='center'>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
+    <td class='center'>{%=(item.CreateUser ? item.CreateUser.Name:"--")%}</td>
+    <td class="center"><a class="ico-edit" title="编辑" data-id="{%=item.UserID%}" href="javascript:void(0)"></a></td>
+    <td class="center">
+        <a class="ico-del" href="javascript:void(0)" title="删除" data-id="{%=item.UserID%}"></a>
+    </td>
+</tr>
+{% } %}

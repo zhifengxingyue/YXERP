@@ -260,6 +260,10 @@ namespace CloudSalesEntity
 			set{ _clientid=value;}
 			get{return _clientid;}
 		}
+
+        public string DepartName { get; set; }
+
+        public string RoleName { get; set; }
 		#endregion Model
 
         [Property("Lower")] 

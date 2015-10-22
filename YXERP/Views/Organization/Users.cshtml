@@ -18,5 +18,43 @@
     <input type="button" class="btn mLeft20" id="addMDUser" value="明道用户导入" />
 </div>
 <div class="content-body">
-
+    <div class="mBottom15">
+    <div class="left">
+        <span>部门：</span>
+        <select id="Departments">
+            <option value=""  selected ="selected">所有</option>
+            @{
+                foreach(var item in ViewBag.Departments){
+                <option value="@item.DepartID">@item.Name</option>
+                }
+                }
+        </select>
+        <span class="pLeft30">角色：</span>
+        <span >
+        <select id="Roles">
+            <option value=""  selected ="selected">所有</option>
+            @{
+                foreach(var item in ViewBag.Roles){
+                <option value="@item.RoleID">@item.Name</option>
+                }
+                }
+        </select>
+            </span>
+    </div>
+    <div class="right searth-module" data-text="输入关键字" data-width="200"> </div>
+    <div class="clear"></div>
+    </div>
+    <table class="table-list mTop20">
+        <tr class="tr-header">
+            <td>名称</td>
+             <td>部门名称</td>
+            <td>角色</td>
+             <td>Email</td>
+            <td>电话</td>
+            <td class="width150">创建时间</td>
+            <td class="width150">创建人</td>
+            <td class="width80">编辑</td>
+            <td class="width80">删除</td>
+        </tr>
+    </table>
 </div>
