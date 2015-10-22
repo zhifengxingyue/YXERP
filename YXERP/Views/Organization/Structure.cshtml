@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "组织架构";
+}
+
+@section css{
+    <link rel="stylesheet" href="/modules/css/system/organization.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/organization/structure"], function (obj) {
+            obj.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">组织架构</span>
+</div>
+<div class="content-body">
+
+</div>

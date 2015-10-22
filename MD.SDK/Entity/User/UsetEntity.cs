@@ -45,6 +45,14 @@ namespace MD.SDK
 
         public string token { get; set; }
 
+        public string firstname
+        {
+            get
+            {
+                return Net.Sourceforge.Pinyin4j.PinyinHelper.ToHanyuPinyinString(this.name, new Net.Sourceforge.Pinyin4j.Format.HanyuPinyinOutputFormat(), " ").ToCharArray()[0].ToString().ToUpper();
+            }
+        }
+
         public ProjectEntity project
         {
             get;

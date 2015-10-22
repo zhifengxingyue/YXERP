@@ -24,6 +24,7 @@
             ChooseUser.create({
                 title: "明道用户导入",
                 type: 2,
+                single: false,
                 callback: function (data) {
                     console.log(data);
                 }

@@ -173,7 +173,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-add span {  display:inline-block; color:#333; vertical-align:top;}
 
 /*信息层样式*/
-.alert { border: 1px solid #5996CE;  background-color: #fff; font-size: 13px; margin: auto; position: fixed; top: 30%; z-index: 9999; 
+.alert { border: 1px solid #5996CE;  background-color: #fff; font-size: 13px; margin: auto; position: fixed; top: 30%; z-index: 10001; 
          padding: 15px; display: inline-block; min-width: 330px; text-align: center; -moz-box-shadow: 0 0 30px #ccc;
          box-shadow: 0 0 30px #ccc; -webkit-box-shadow: 0 0 30px #ccc; }
 

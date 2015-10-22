@@ -42,6 +42,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Net.Sourceforge.Pinyin4j, Version=2.5.4923.25935, Culture=neutral, PublicKeyToken=cca84b18351af388, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Net.Sourceforge.Pinyin4j.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="Microsoft.CSharp" />
@@ -131,6 +135,7 @@
     <Content Include="Content\menuico\stockhover.png" />
     <Content Include="Content\menuico\system.png" />
     <Content Include="Content\menuico\systemhover.png" />
+    <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
@@ -141,7 +146,7 @@
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
-    <Content Include="modules\plug\chooseuser\chooseuser.html" />
+    <Content Include="modules\plug\chooseuser\choosemduser.html" />
     <Content Include="modules\plug\chooseuser\style.css" />
     <Content Include="modules\plug\easydialog\ico-close-hover.png" />
     <Content Include="modules\plug\easydialog\ico-close.png" />
@@ -171,6 +176,7 @@
     <Content Include="Views\Purchase\AuditDetail.cshtml" />
     <Content Include="Views\Home\InfoPage.cshtml" />
     <Content Include="Views\Organization\RolePermission.cshtml" />
+    <Content Include="Views\Organization\Structure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />

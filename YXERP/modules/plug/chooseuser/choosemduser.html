@@ -1,6 +1,6 @@
 ﻿
 <div class="chooseuser-header">
-	<div id="chooseuserSearch" data-width="690"></div>
+	<div id="chooseuserSearch" data-width="690" data-text="输入姓名/手机号/邮箱搜索..." ></div>
 </div>
 <div class="chooseuser-body">
     <div class="chooseuser-left left">
@@ -42,11 +42,11 @@
 	            for(var i=0, j=$data.length; i < j; i++){
 	            var item = $data[i];
             %}
-                <li data-first="{%=item.firstname%}" data-search="{%=item.name+"|"+item.email%}" data-id="{%=item.id%}">
+                <li data-first="{%=item.firstname%}" data-search="{%=item.name.toLowerCase()+"|"+item.email.toLowerCase()+"|"+item.mobile_phone.toLowerCase()%}" data-id="{%=item.id%}">
 				    <img class="left" src="{%=item.avatar%}" alt=""/>
-				    <span class="left">{%=item.name%}</span>
-				    <span class="left">{%=item.job%}</span>
-				    <a href="javascript:void(0);" class="left useradd">添加</a>
+				    <span class="left name long">{%=item.name%}</span>
+				    <span class="left mobile long">{%=item.mobile_phone||item.email%}</span>
+				    <a href="javascript:void(0);" data-id="{%=item.id%}" class="left useradd">添加</a>
 			    </li>
             {% } %}
             </ul>
@@ -55,9 +55,9 @@
     <div class="chooseuser-right right">
         <ul class="choose-type">
             <li class="left">已选中</li>
-            <li class="right clear-choose" id="clear-choose">全部清空</li>
+            <li class="right clear-choose" id="clearChoose">全部清空</li>
         </ul>
-        <ul class="userlist-choose">
+        <ul class="userlist-choose" id="userlistChoose">
 
         </ul>
     </div>

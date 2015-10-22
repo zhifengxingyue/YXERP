@@ -41,7 +41,12 @@ namespace YXERP.Controllers
             return View();
         }
 
-        #region 部门
+        public ActionResult Structure()
+        {
+            return View();
+        }
+
+        #region Ajax
 
         /// <summary>
         /// 获取部门列表
@@ -194,8 +199,16 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetMDUsers()
         {
-            var list = MD.SDK.UserBusiness.GetUserAll(CurrentUser.MDToken, "", 1, 1000);
-            JsonDictionary.Add("items", list);
+            if (!string.IsNullOrEmpty(CurrentUser.MDToken))
+            {
+                var list = MD.SDK.UserBusiness.GetUserAll(CurrentUser.MDToken, "", 1, 1000).users;
+                JsonDictionary.Add("status", true);
+                JsonDictionary.Add("items", list.OrderBy(u => u.name));
+            }
+            else 
+            {
+                JsonDictionary.Add("status", false);
+            }
             return new JsonResult()
             {
                 Data = JsonDictionary,
