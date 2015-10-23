@@ -21,7 +21,7 @@ namespace CloudSalesDAL
                                     new SqlParameter("@LoginName",loginname),
                                     new SqlParameter("@LoginPwd",pwd)
                                    };
-            return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
+            return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Permission");//|Department|Role
         }
 
         public DataSet GetUserByMDUserID(string userid)
@@ -29,7 +29,7 @@ namespace CloudSalesDAL
             SqlParameter[] paras = { 
                                     new SqlParameter("@MDUserID",userid)
                                    };
-            return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Department|Role|Permission");
+            return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Permission");//|Department|Role
 
 
         }

@@ -59,6 +59,14 @@ namespace YXERP.Controllers
         public JsonResult GetDepartments()
         {
             var list = OrganizationBusiness.GetDepartments(CurrentUser.AgentID);
+            foreach (var item in list)
+            {
+                if (item.CreateUser == null && !string.IsNullOrEmpty(item.CreateUserID))
+                {
+                    var user = OrganizationBusiness.GetUserByUserID(item.CreateUserID, CurrentUser.AgentID);
+                    item.CreateUser = new Users() { Name = user.Name };
+                }
+            }
             JsonDictionary.Add("items", list);
             return new JsonResult() 
             {
@@ -120,6 +128,14 @@ namespace YXERP.Controllers
         public JsonResult GetRoles()
         {
             var list = OrganizationBusiness.GetRoles(CurrentUser.AgentID);
+            foreach (var item in list)
+            {
+                if (item.CreateUser == null && !string.IsNullOrEmpty(item.CreateUserID))
+                {
+                    var user = OrganizationBusiness.GetUserByUserID(item.CreateUserID, CurrentUser.AgentID);
+                    item.CreateUser = new Users() { Name = user.Name };
+                }
+            }
             JsonDictionary.Add("items", list);
             return new JsonResult()
             {

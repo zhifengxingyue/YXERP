@@ -266,8 +266,12 @@ namespace CloudSalesEntity
         [Property("Lower")] 
         public string DepartID { get; set; }
 
+        public Department Department { get; set; }
+
         [Property("Lower")] 
         public string RoleID { get; set; }
+
+        public Role Role { get; set; }
 
         [Property("Lower")] 
         public string MDUserID { get; set; }

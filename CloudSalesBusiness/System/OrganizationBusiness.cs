@@ -21,6 +21,9 @@ namespace CloudSalesBusiness
         private static Dictionary<string, List<Department>> _cacheDeparts;
         private static Dictionary<string, List<Role>> _cacheRoles;
 
+        private static Dictionary<string, List<Department>> _cacheDepartsNoUser;
+        private static Dictionary<string, List<Role>> _cacheRolesNoUser;
+
         /// <summary>
         /// 缓存用户信息
         /// </summary>
@@ -109,6 +112,9 @@ namespace CloudSalesBusiness
                 model = new Users();
                 model.FillData(ds.Tables["User"].Rows[0]);
 
+                model.Department = GetDepartmentByID(model.DepartID, model.AgentID);
+                model.Role = GetRoleByIDCache(model.RoleID, model.AgentID);
+
                 model.Menus = CommonBusiness.ClientMenus;
             }
 
@@ -132,6 +138,9 @@ namespace CloudSalesBusiness
             {
                 model = new Users();
                 model.FillData(ds.Tables["User"].Rows[0]);
+
+                model.Department = GetDepartmentByID(model.DepartID, model.AgentID);
+                model.Role = GetRoleByIDCache(model.RoleID, model.AgentID);
 
                 model.Menus = CommonBusiness.ClientMenus;
 
@@ -202,16 +211,22 @@ namespace CloudSalesBusiness
                 {
                     Department model = new Department();
                     model.FillData(dr);
-                    if (!string.IsNullOrEmpty(model.CreateUserID))
-                    {
-                        model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
-                    }
                     list.Add(model);
                 }
                 Departments.Add(agentid, list);
                 return list;
             }
             return Departments[agentid];
+        }
+        /// <summary>
+        /// 根据ID获取部门
+        /// </summary>
+        /// <param name="departid"></param>
+        /// <param name="agendid"></param>
+        /// <returns></returns>
+        public static Department GetDepartmentByID(string departid, string agendid)
+        {
+            return GetDepartments(agendid).Where(d => d.DepartID == departid).FirstOrDefault();
         }
 
         /// <summary>
@@ -229,16 +244,23 @@ namespace CloudSalesBusiness
                 {
                     Role model = new Role();
                     model.FillData(dr);
-                    if (!string.IsNullOrEmpty(model.CreateUserID))
-                    {
-                        model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
-                    }
                     list.Add(model);
                 }
                 Roles.Add(agentid, list);
                 return list;
             }
             return Roles[agentid];
+        }
+
+        /// <summary>
+        /// 根据ID获取角色
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="agentid"></param>
+        /// <returns></returns>
+        public static Role GetRoleByIDCache(string roleid, string agentid)
+        {
+            return GetRoles(agentid).Where(r => r.RoleID == roleid).FirstOrDefault();
         }
 
         /// <summary>
@@ -281,6 +303,10 @@ namespace CloudSalesBusiness
                 {
                     Users model = new Users();
                     model.FillData(dr);
+
+                    model.Department = GetDepartmentByID(model.DepartID, agentid);
+                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
+
                     list.Add(model);
                 }
                 Users.Add(agentid, list);
@@ -312,6 +338,10 @@ namespace CloudSalesBusiness
                 if (dt.Rows.Count > 0)
                 {
                     model.FillData(dt.Rows[0]);
+
+                    model.Department = GetDepartmentByID(model.DepartID, agentid);
+                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
+
                     Users[agentid].Add(model);
                 }
                 return model;
@@ -345,7 +375,6 @@ namespace CloudSalesBusiness
                     Name = name,
                     Description = description,
                     CreateTime = DateTime.Now,
-                    CreateUser = GetUserByUserID(operateid, agentid),
                     CreateUserID = operateid,
                     Status = 1,
                     AgentID = agentid,
@@ -379,7 +408,6 @@ namespace CloudSalesBusiness
                     Name = name,
                     Description = description,
                     CreateTime = DateTime.Now,
-                    CreateUser = GetUserByUserID(operateid, agentid),
                     CreateUserID = operateid,
                     Status = 1,
                     IsDefault = 0,
