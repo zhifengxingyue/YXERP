@@ -54,7 +54,6 @@
                     for (var i = 0; i < items.length; i++) {
                         ids += items[i].id + ",";
                     }
-                    alert(ids);
                     if (ids.length > 0) {
                         Global.post("/Organization/SaveMDUser", {
                             parentid: "",

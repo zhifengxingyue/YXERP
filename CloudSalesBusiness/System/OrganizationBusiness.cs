@@ -171,9 +171,9 @@ namespace CloudSalesBusiness
         /// <param name="totalCount"></param>
         /// <param name="pageCount"></param>
         /// <returns></returns>
-        public static List<Users> GetUsers(string keyWords, string departID, string roleID, string agentID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        public static List<Users> GetUsers(string keyWords, string departID, string roleID, string agentid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
-            string whereSql = "AgentID='" + agentID + "' and Status<>9";
+            string whereSql = "AgentID='" + agentid + "' and Status<>9";
 
             if (!string.IsNullOrEmpty(keyWords))
                 whereSql += " and ( Name like '%" + keyWords + "%')";
@@ -190,6 +190,11 @@ namespace CloudSalesBusiness
             {
                 model = new Users();
                 model.FillData(item);
+
+                model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                model.Department = GetDepartmentByID(model.DepartID, model.AgentID);
+                model.Role = GetRoleByIDCache(model.RoleID, model.AgentID);
+
                 list.Add(model);
             }
 
@@ -441,12 +446,14 @@ namespace CloudSalesBusiness
         /// <param name="operateid">操作人</param>
         /// <param name="result">返回结果 0 失败 1成功 2账号已存在</param>
         /// <returns></returns>
-        public static string CreateUser(string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
+        public static Users CreateUser(string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
                                string roleid, string departid, string parentid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
         {
             string userid = Guid.NewGuid().ToString();
 
             loginpwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginpwd);
+
+            Users user = null;
 
             bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
             if (bl)
@@ -454,16 +461,14 @@ namespace CloudSalesBusiness
                 //处理缓存
                 if (!string.IsNullOrEmpty(agentid))
                 {
-                    GetUserByUserID(userid, agentid);
+                    user = GetUserByUserID(userid, agentid);
                 }
                 else if (!string.IsNullOrEmpty(mduserid) && !string.IsNullOrEmpty(mdprojectid))
                 {
-                    GetUserByMDUserID(mduserid, mdprojectid, "");
-
+                    user = GetUserByMDUserID(mduserid, mdprojectid, "");
                 }
-                return userid;
             }
-            return "";
+            return user;
         }
 
         #endregion

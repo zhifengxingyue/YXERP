@@ -242,8 +242,8 @@
                 _item.append("<span class='lastline left'></span>");
 
                 //加载显示下属图标和缓存数据
-                if (cacheMenu[menuCode][i].ChildMenus > 0) {
-                    _item.append("<span data-id='" + cacheMenu[menuCode][i].MenuCode + "' data-eq='last' data-state='close' class='icoopen openchild'></span>");
+                if (cacheMenu[menuCode][i].ChildMenus.length > 0) {
+                    _item.append("<span data-id='" + cacheMenu[menuCode][i].MenuCode + "' data-eq='last' data-state='close' class='icoopen openchild left'></span>");
                     if (!cacheMenu[cacheMenu[menuCode][i].MenuCode]) {
                         cacheMenu[cacheMenu[menuCode][i].MenuCode] = cacheMenu[menuCode][i].ChildMenus;
                     }
@@ -252,8 +252,8 @@
                 _item.append("<span class='leftline left'></span>");
 
                 //加载显示下属图标和缓存数据
-                if (cacheMenu[menuCode][i].ChildMenus > 0) {
-                    _item.append("<span data-id='" + cacheMenu[menuCode][i].MenuCode + "' data-eq='' data-state='close' class='icoOpen openchild'></span>");
+                if (cacheMenu[menuCode][i].ChildMenus.length > 0) {
+                    _item.append("<span data-id='" + cacheMenu[menuCode][i].MenuCode + "' data-eq='' data-state='close' class='icoopen openchild left'></span>");
                     if (!cacheMenu[cacheMenu[menuCode][i].MenuCode]) {
                         cacheMenu[cacheMenu[menuCode][i].MenuCode] = cacheMenu[menuCode][i].ChildMenus;
                     }

@@ -46,7 +46,8 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
-		public string DepartID
+        [Property("Lower")] 
+        public string DepartID
 		{
 			set{ _departid=value;}
 			get{return _departid;}
@@ -94,7 +95,8 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
-		public string CreateUserID
+        [Property("Lower")] 
+        public string CreateUserID
 		{
 			set{ _createuserid=value;}
 			get{return _createuserid;}
@@ -102,6 +104,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
+        [Property("Lower")] 
 		public string ClientID
 		{
 			set{ _clientid=value;}
@@ -111,6 +114,7 @@ namespace CloudSalesEntity
 
         public Users CreateUser { get; set; }
 
+        [Property("Lower")] 
         public string AgentID { get; set; }
 
         public void FillData(System.Data.DataRow dr)

@@ -47,6 +47,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
+        [Property("Lower")] 
 		public string RoleID
 		{
 			set{ _roleid=value;}
@@ -95,6 +96,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
+        [Property("Lower")] 
 		public string CreateUserID
 		{
 			set{ _createuserid=value;}
@@ -103,6 +105,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
+        [Property("Lower")] 
 		public string ClientID
 		{
 			set{ _clientid=value;}
@@ -112,6 +115,7 @@ namespace CloudSalesEntity
 
         public int IsDefault { get; set; }
 
+        [Property("Lower")] 
         public string AgentID { get; set; }
 
         public Users CreateUser { get; set; }

@@ -263,6 +263,8 @@ namespace CloudSalesEntity
 
 		#endregion Model
 
+        public Users CreateUser { get; set; }
+
         [Property("Lower")] 
         public string DepartID { get; set; }
 

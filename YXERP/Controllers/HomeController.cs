@@ -106,13 +106,12 @@ namespace YXERP.Controllers
                         else
                         {
                             int result = 0;
-                            string userid = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
-                            if (!string.IsNullOrEmpty(userid))
+                            var current = OrganizationBusiness.CreateUser("", "", user.user.name, user.user.mobile_phone, user.user.email, "", "", "", "", "", "", "", "", user.user.id, user.user.project.id, 1, "", out result);
+                            if (current != null)
                             {
-                                var current = OrganizationBusiness.GetUserByMDUserID(user.user.id, user.user.project.id, operateip);
-
                                 current.MDToken = user.user.token;
                                 if (string.IsNullOrEmpty(current.Avatar)) current.Avatar = user.user.avatar;
+
                                 Session["ClientManager"] = current;
 
                                 return Redirect("/Home/Index");
