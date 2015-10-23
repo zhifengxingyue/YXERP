@@ -46,7 +46,15 @@ namespace YXERP.Controllers
 
         public ActionResult Structure()
         {
-
+            var list = OrganizationBusiness.GetUsersByParentID("6666666666", CurrentUser.AgentID);
+            if (list.Count > 0)
+            {
+                ViewBag.Model = list[0];
+            }
+            else
+            {
+                ViewBag.Model = new Users();
+            }
             return View();
         }
 
@@ -304,15 +312,16 @@ namespace YXERP.Controllers
         /// </summary>
         /// <param name="parentid"></param>
         /// <returns></returns>
-        public JsonResult GetUsersByParentID(string parentid)
+        public JsonResult GetUsersByParentID(string parentid = "")
         {
+            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID);
+            JsonDictionary.Add("items", list.Where(m => m.ParentID == parentid).OrderBy(m => m.FirstName).ToList());
             return new JsonResult()
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
 
         /// <summary>
         /// 获取用户列表
@@ -327,6 +336,22 @@ namespace YXERP.Controllers
 
             var list = OrganizationBusiness.GetUsers(model.Keywords, model.DepartID, model.RoleID, CurrentUser.AgentID, PageSize, model.PageIndex, ref totalCount, ref pageCount);
             JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        /// <summary>
+        /// 编辑组织架构
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="parentid"></param>
+        /// <returns></returns>
+        public JsonResult UpdateUserParentID(string userid, string parentid)
+        {
+            bool bl = new OrganizationBusiness().UpdateUserParentID(userid, parentid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP);
+            JsonDictionary.Add("status", bl);
             return new JsonResult()
             {
                 Data = JsonDictionary,

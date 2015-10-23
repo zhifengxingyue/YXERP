@@ -22,17 +22,20 @@ define(function (require, exports, module) {
     //默认参数
     PlugJS.prototype.default = {
         title:"选择员工", //标题
-        type: 1,  //类型 1：云销 2：明道
+        type: 1,  //类型 1：云销用户选择 2：明道用户导入 3：组织架构设置
         single: false,
         callback: null   //回调
     };
 
     PlugJS.prototype.init = function () {
-        var _self = this, url = "";
-        if (!_self.setting.url && _self.setting.type == 1) {
+        var _self = this, url = "", templateUrl = "/plug/chooseuser/chooseuser.html";
+        if (_self.setting.type == 1) {
             url = "/Organization/GetUsers";
-        } else if (!_self.setting.url && _self.setting.type == 2) {
+        } else if (_self.setting.type == 2) {
             url = "/Organization/GetMDUsers";
+            templateUrl = "/plug/chooseuser/choosemduser.html";
+        } else if (_self.setting.type == 3) {
+            url = "/Organization/GetUsersByParentID";
         }
         Global.post(url, {}, function (data) {
             //从明道获取数据失败
@@ -40,7 +43,7 @@ define(function (require, exports, module) {
                 alert("您还不是明道用户，不能从明道导入用户！");
                 return;
             }
-            doT.exec("/plug/chooseuser/choosemduser.html", function (template) {
+            doT.exec(templateUrl, function (template) {
                 var innerHtml = template(data.items);
 
                 Easydialog.open({

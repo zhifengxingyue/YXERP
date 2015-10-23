@@ -172,4 +172,7 @@
   <ItemGroup>
     <None Include="Procedures\System\P_UpdateRolePermission.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_UpdateUserParentID.sql" />
+  </ItemGroup>
 </Project>

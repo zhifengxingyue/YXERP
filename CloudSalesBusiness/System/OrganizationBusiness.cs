@@ -199,6 +199,45 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 根据代理商ID获取员工列表（缓存）
+        /// </summary>
+        /// <param name="agentid">代理商ID</param>
+        /// <returns></returns>
+        public static List<Users> GetUsers(string agentid)
+        {
+            if (!Users.ContainsKey(agentid))
+            {
+                List<Users> list = new List<CloudSalesEntity.Users>();
+                DataTable dt = OrganizationDAL.BaseProvider.GetUsers(agentid);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Users model = new Users();
+                    model.FillData(dr);
+
+                    model.Department = GetDepartmentByID(model.DepartID, agentid);
+                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
+
+                    list.Add(model);
+                }
+                Users.Add(agentid, list);
+                return list;
+            }
+            return Users[agentid].Where(m => m.Status == 1).ToList();
+        }
+
+        /// <summary>
+        /// 获取下级列表
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <param name="agentid"></param>
+        /// <returns></returns>
+        public static List<Users> GetUsersByParentID(string parentid, string agentid)
+        {
+            var user = GetUsers(agentid);
+            return user.Where(m => m.ParentID == parentid).ToList();
+        }
+
+        /// <summary>
         /// 获取部门列表
         /// </summary>
         /// <param name="agentid">代理商ID</param>
@@ -288,33 +327,6 @@ namespace CloudSalesBusiness
                 }
             }
             return model;
-        }
-
-        /// <summary>
-        /// 根据代理商ID获取员工列表（缓存）
-        /// </summary>
-        /// <param name="agentid">代理商ID</param>
-        /// <returns></returns>
-        public static List<Users> GetUsers(string agentid)
-        {
-            if (!Users.ContainsKey(agentid))
-            {
-                List<Users> list = new List<CloudSalesEntity.Users>();
-                DataTable dt = OrganizationDAL.BaseProvider.GetUsers(agentid);
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Users model = new Users();
-                    model.FillData(dr);
-
-                    model.Department = GetDepartmentByID(model.DepartID, agentid);
-                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
-
-                    list.Add(model);
-                }
-                Users.Add(agentid, list);
-                return list;
-            }
-            return Users[agentid];
         }
 
         /// <summary>
@@ -580,6 +592,25 @@ namespace CloudSalesBusiness
         public bool UpdateRolePermission(string roleid, string permissions, string operateid, string ip)
         {
             return OrganizationDAL.BaseProvider.UpdateRolePermission(roleid, permissions, operateid);
+        }
+        /// <summary>
+        /// 编辑员工上级
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="parentid"></param>
+        /// <param name="agentid"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public bool UpdateUserParentID(string userid, string parentid, string agentid, string operateid, string ip)
+        {
+            bool bl = OrganizationDAL.BaseProvider.UpdateUserParentID(userid, parentid, agentid);
+            if (bl)
+            {
+                var user = GetUserByUserID(userid, agentid);
+                user.ParentID = parentid;
+            }
+            return bl;
         }
 
         #endregion

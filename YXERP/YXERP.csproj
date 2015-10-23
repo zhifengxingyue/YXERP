@@ -164,6 +164,7 @@
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
     <Content Include="modules\plug\chooseuser\choosemduser.html" />
     <Content Include="modules\plug\chooseuser\style.css" />
+    <Content Include="modules\plug\chooseuser\chooseuser.html" />
     <Content Include="modules\plug\easydialog\ico-close-hover.png" />
     <Content Include="modules\plug\easydialog\ico-close.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />

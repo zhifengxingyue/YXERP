@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "组织架构";
+    var model = (CloudSalesEntity.Users)ViewBag.Model;
 }
 
 @section css{
@@ -8,7 +9,7 @@
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/organization/structure"], function (obj) {
-            obj.init();
+            obj.init('@(model.UserID)');
         });
     </script>
 }
@@ -16,7 +17,25 @@
     <span class="header-title left">组织架构</span>
 </div>
 <div class="content-body">
-    <div class="create-first">
+
+    <div id="structure" class="structure-list">
+         <div class="user-item">
+             <div class="user-avatar">
+                 <img src="@(string.IsNullOrEmpty(model.Avatar)?"/modules/images/defaultavatar.png":model.Avatar)" />
+             </div>
+             <ul class="user-name">
+                 <li class="long">
+                     @(model.Name+(string.IsNullOrEmpty(model.Jobs)?"":"-"+model.Jobs))
+                 </li>
+                 <li class="long">
+                     @(model.Department!=null?model.Department.Name:"")
+                 </li>
+             </ul>
+             <div class="ico-dropdown"></div>
+        </div>
+    </div>
+   
+    <div class="create-first hide">
         <span class="plus">+</span>
         添加最高领导人
     </div>

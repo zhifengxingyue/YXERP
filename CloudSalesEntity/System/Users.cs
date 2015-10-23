@@ -263,6 +263,14 @@ namespace CloudSalesEntity
 
 		#endregion Model
 
+        public string FirstName 
+        {
+            get
+            {
+                return Net.Sourceforge.Pinyin4j.PinyinHelper.ToHanyuPinyinString(this.Name, new Net.Sourceforge.Pinyin4j.Format.HanyuPinyinOutputFormat(), " ").ToCharArray()[0].ToString().ToUpper();
+            }
+        }
+
         public Users CreateUser { get; set; }
 
         [Property("Lower")] 

@@ -219,6 +219,17 @@ namespace CloudSalesDAL
             return ExecuteNonQuery("P_UpdateRolePermission", paras, CommandType.StoredProcedure) > 0;
         }
 
+        public bool UpdateUserParentID(string userid, string parentid, string agentid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@ParentID",parentid),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+            bool bl = ExecuteNonQuery("P_UpdateUserParentID", paras, CommandType.StoredProcedure) > 0;
+            return bl;
+        }
+
         #endregion
 
     }
