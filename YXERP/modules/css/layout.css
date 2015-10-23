@@ -71,15 +71,15 @@ header .logo img{ height:30px; }
 
 
 /*选择一级菜单*/
-header .modules { width:80px; margin-left:60px; margin-top:20px; cursor:pointer; }
-header .modules .modulesname { color:#BFD2F2; font-size:16px; }
-header .modules span{ border-top:solid 10px #BFD2F2; border-left:solid 10px transparent ;border-right:solid 10px transparent; margin-top:6px; }
+header .modules { width:70px; margin-left:65px; margin-top:22px; cursor:pointer; }
+header .modules .modulesname { color:#BFD2F2; font-size:14px; }
+header .modules span{ border-top:solid 8px #BFD2F2; border-left:solid 8px transparent ;border-right:solid 8px transparent; margin-top:6px; }
 
 header .modules:hover .modulesname { color:#fff; }
 header .modules:hover span { border-top-color:#fff;}
 
 header .modules.hover .modulesname { color:#fff; }
-header .modules.hover span { border-bottom:solid 10px #fff; border-top:none; }
+header .modules.hover span { border-bottom:solid 8px #fff; border-top:none; }
 
 .choose-modules { position:fixed; background-color:#fff; width:140px; z-index:1000; border-radius:2px; border:solid 1px #eee; 
                   box-shadow:0 0 5px #ccc; top:60px; left:160px;}
@@ -167,7 +167,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-list tr{ height:25px;  background-color: #fff;}
 .table-list tr:hover { background-color: #f6f6f6; }
 .table-list td{ padding:5px 10px; }
-.table-list a{ color:#333;  vertical-align:middle;}
+.table-list a{ color:#4a98e7;  vertical-align:middle;}
 .table-list a:hover{ color:red; text-decoration:underline; }
 .table-list .tr-header{ text-align:center; font-weight:bold; height:35px; background-color:#eee; color:#333;}
 

@@ -17,7 +17,10 @@ namespace CloudSalesBusiness
 
         #region Cache
 
-        public static Dictionary<string, List<Users>> _cacheUsers;
+        private static Dictionary<string, List<Users>> _cacheUsers;
+        private static Dictionary<string, List<Department>> _cacheDeparts;
+        private static Dictionary<string, List<Role>> _cacheRoles;
+
         /// <summary>
         /// 缓存用户信息
         /// </summary>
@@ -34,6 +37,44 @@ namespace CloudSalesBusiness
             set
             {
                 _cacheUsers = value;
+            }
+        }
+
+        /// <summary>
+        /// 缓存部门信息
+        /// </summary>
+        private static Dictionary<string, List<Department>> Departments
+        {
+            get
+            {
+                if (_cacheDeparts == null)
+                {
+                    _cacheDeparts = new Dictionary<string, List<Department>>();
+                }
+                return _cacheDeparts;
+            }
+            set
+            {
+                _cacheDeparts = value;
+            }
+        }
+
+        /// <summary>
+        /// 缓存角色信息
+        /// </summary>
+        private static Dictionary<string, List<Role>> Roles
+        {
+            get
+            {
+                if (_cacheRoles == null)
+                {
+                    _cacheRoles = new Dictionary<string, List<Role>>();
+                }
+                return _cacheRoles;
+            }
+            set
+            {
+                _cacheRoles = value;
             }
         }
 
@@ -93,9 +134,22 @@ namespace CloudSalesBusiness
                 model.FillData(ds.Tables["User"].Rows[0]);
 
                 model.Menus = CommonBusiness.ClientMenus;
+
+                //处理缓存
+                if (!Users.ContainsKey(model.AgentID))
+                {
+                    GetUsers(model.AgentID);
+                }
+                if (Users[model.AgentID].Where(u => u.MDUserID == mduserid).Count() == 0)
+                {
+                    Users[model.AgentID].Add(model);
+                }
             }
-            //记录登录日志
-            LogBusiness.AddLoginLog(mduserid, model != null, CloudSalesEnum.EnumSystemType.Client, operateip);
+            if (!string.IsNullOrEmpty(operateip))
+            {
+                //记录登录日志
+                LogBusiness.AddLoginLog(mduserid, model != null, CloudSalesEnum.EnumSystemType.Client, operateip);
+            }
             return model;
         }
 
@@ -108,20 +162,19 @@ namespace CloudSalesBusiness
         /// <param name="totalCount"></param>
         /// <param name="pageCount"></param>
         /// <returns></returns>
-        public static List<Users> GetUsers(string keyWords, string departID, string roleID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        public static List<Users> GetUsers(string keyWords, string departID, string roleID, string agentID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
-            string whereSql = "u.Status<>9";
-            whereSql += " and u.DepartID=d.DepartID and u.RoleID=r.RoleID";
+            string whereSql = "AgentID='" + agentID + "' and Status<>9";
 
             if (!string.IsNullOrEmpty(keyWords))
-                whereSql += " and ( u.name like '%" + keyWords + "%'  or  d.name like '%" + keyWords + "%' or  r.name like '%" + keyWords + "%')";
+                whereSql += " and ( Name like '%" + keyWords + "%')";
             if (!string.IsNullOrEmpty(departID))
-                whereSql += " and u.departID='" + departID + "'";
+                whereSql += " and DepartID='" + departID + "'";
 
             if (!string.IsNullOrEmpty(roleID))
-                whereSql += " and u.roleID='" + roleID + "'";
+                whereSql += " and RoleID='" + roleID + "'";
 
-            DataTable dt = CommonBusiness.GetPagerData("Users as u ,Department as d,Role as r", "u.*,d.Name as DepartName,r.Name as RoleName", whereSql, "u.userID", pageSize, pageIndex, out totalCount, out pageCount);
+            DataTable dt = CommonBusiness.GetPagerData("Users", "*", whereSql, "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
             List<Users> list = new List<Users>();
             Users model;
             foreach (DataRow item in dt.Rows)
@@ -141,19 +194,24 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Department> GetDepartments(string agentid)
         {
-            DataTable dt = new OrganizationDAL().GetDepartments(agentid);
-            List<Department> list = new List<Department>();
-            foreach (DataRow dr in dt.Rows)
+            if (!Departments.ContainsKey(agentid))
             {
-                Department model = new Department();
-                model.FillData(dr);
-                if (!string.IsNullOrEmpty(model.CreateUserID))
+                DataTable dt = new OrganizationDAL().GetDepartments(agentid);
+                List<Department> list = new List<Department>();
+                foreach (DataRow dr in dt.Rows)
                 {
-                    model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                    Department model = new Department();
+                    model.FillData(dr);
+                    if (!string.IsNullOrEmpty(model.CreateUserID))
+                    {
+                        model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                    }
+                    list.Add(model);
                 }
-                list.Add(model);
+                Departments.Add(agentid, list);
+                return list;
             }
-            return list;
+            return Departments[agentid];
         }
 
         /// <summary>
@@ -163,19 +221,24 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Role> GetRoles(string agentid)
         {
-            DataTable dt = new OrganizationDAL().GetRoles(agentid);
-            List<Role> list = new List<Role>();
-            foreach (DataRow dr in dt.Rows)
+            if (!Roles.ContainsKey(agentid))
             {
-                Role model = new Role();
-                model.FillData(dr);
-                if (!string.IsNullOrEmpty(model.CreateUserID))
+                DataTable dt = new OrganizationDAL().GetRoles(agentid);
+                List<Role> list = new List<Role>();
+                foreach (DataRow dr in dt.Rows)
                 {
-                    model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                    Role model = new Role();
+                    model.FillData(dr);
+                    if (!string.IsNullOrEmpty(model.CreateUserID))
+                    {
+                        model.CreateUser = GetUserByUserID(model.CreateUserID, model.AgentID);
+                    }
+                    list.Add(model);
                 }
-                list.Add(model);
+                Roles.Add(agentid, list);
+                return list;
             }
-            return list;
+            return Roles[agentid];
         }
 
         /// <summary>
@@ -227,7 +290,7 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
-        /// 获取用户信息(缓存)
+        /// 获取用户信息
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="agentid"></param>
@@ -274,6 +337,20 @@ namespace CloudSalesBusiness
             bool bl = OrganizationDAL.BaseProvider.CreateDepartment(departid, name, parentid, description, operateid, agentid, clientid);
             if (bl)
             {
+                //处理缓存
+                var departs = GetDepartments(agentid);
+                departs.Add(new Department()
+                {
+                    DepartID = departid,
+                    Name = name,
+                    Description = description,
+                    CreateTime = DateTime.Now,
+                    CreateUser = GetUserByUserID(operateid, agentid),
+                    CreateUserID = operateid,
+                    Status = 1,
+                    AgentID = agentid,
+                    ClientID = clientid
+                });
                 return departid;
             }
             return "";
@@ -294,6 +371,21 @@ namespace CloudSalesBusiness
             bool bl = OrganizationDAL.BaseProvider.CreateRole(roleid, name, parentid, description, operateid, agentid, clientid);
             if (bl)
             {
+                //处理缓存
+                var roles = GetRoles(agentid);
+                roles.Add(new Role()
+                {
+                    RoleID = roleid,
+                    Name = name,
+                    Description = description,
+                    CreateTime = DateTime.Now,
+                    CreateUser = GetUserByUserID(operateid, agentid),
+                    CreateUserID = operateid,
+                    Status = 1,
+                    IsDefault = 0,
+                    AgentID = agentid,
+                    ClientID = clientid
+                });
                 return roleid;
             }
             return "";
@@ -331,6 +423,16 @@ namespace CloudSalesBusiness
             bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
             if (bl)
             {
+                //处理缓存
+                if (!string.IsNullOrEmpty(agentid))
+                {
+                    GetUserByUserID(userid, agentid);
+                }
+                else if (!string.IsNullOrEmpty(mduserid) && !string.IsNullOrEmpty(mdprojectid))
+                {
+                    GetUserByMDUserID(mduserid, mdprojectid, "");
+
+                }
                 return userid;
             }
             return "";
@@ -352,7 +454,15 @@ namespace CloudSalesBusiness
         public bool UpdateDepartment(string departid, string name, string description, string operateid, string operateip, string agentid)
         {
             var dal = new OrganizationDAL();
-            return dal.UpdateDepartment(departid, name, description, agentid);
+            bool bl = dal.UpdateDepartment(departid, name, description, agentid);
+            if (bl)
+            {
+                //处理缓存
+                var model = GetDepartments(agentid).Where(d => d.DepartID == departid).FirstOrDefault();
+                model.Name = name;
+                model.Description = description;
+            }
+            return bl;
         }
 
         /// <summary>
@@ -375,6 +485,8 @@ namespace CloudSalesBusiness
             }
             if (CommonBusiness.Update("Department", "Status", (int)status, "DepartID='" + departid + "' and AgentID='" + agentid + "'"))
             {
+                var model = GetDepartments(agentid).Where(d => d.DepartID == departid).FirstOrDefault();
+                model.Status = (int)status;
                 return EnumResultStatus.Success;
             }
             else
@@ -395,7 +507,15 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public bool UpdateRole(string roleid, string name, string description, string operateid, string ip, string agentid)
         {
-            return OrganizationDAL.BaseProvider.UpdateRole(roleid, name, description, agentid);
+            bool bl = OrganizationDAL.BaseProvider.UpdateRole(roleid, name, description, agentid);
+            if (bl)
+            {
+                //处理缓存
+                var model = GetRoles(agentid).Where(d => d.RoleID == roleid).FirstOrDefault();
+                model.Name = name;
+                model.Description = description;
+            }
+            return bl;
         }
 
         /// <summary>
@@ -409,7 +529,13 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public bool DeleteRole(string roleid, string operateid, string ip, string agentid, out int result)
         {
-            return OrganizationDAL.BaseProvider.DeleteRole(roleid, agentid, out result);
+            bool bl = OrganizationDAL.BaseProvider.DeleteRole(roleid, agentid, out result);
+            if (bl)
+            {
+                var model = GetRoles(agentid).Where(d => d.RoleID == roleid).FirstOrDefault();
+                model.Status = 9;
+            }
+            return bl;
         }
         /// <summary>
         /// 编辑角色权限

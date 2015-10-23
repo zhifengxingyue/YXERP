@@ -287,7 +287,7 @@ namespace YXERP.Controllers
             int totalCount = 0;
             int pageCount = 0;
 
-            var list = OrganizationBusiness.GetUsers(model.Keywords,model.DepartID,model.RoleID, PageSize, model.PageIndex, ref totalCount, ref pageCount);
+            var list = OrganizationBusiness.GetUsers(model.Keywords, model.DepartID, model.RoleID, CurrentUser.AgentID, PageSize, model.PageIndex, ref totalCount, ref pageCount);
             JsonDictionary.Add("items", list);
             return new JsonResult()
             {

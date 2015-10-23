@@ -14,6 +14,7 @@
 .long { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .red { color:red !important;}
+.bRed { border-color:red !important; }
 
 /*字体*/
 .font14 {font-size:14px; }

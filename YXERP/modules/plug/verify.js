@@ -50,7 +50,7 @@ define(function (require, exports, module) {
             //非空判断
             if (!!_this.attr(_self.setting.emptyAttr) && !_this.val().trim()) {
                 if (_this.next().attr("class") != "verify-fail-err") {
-                    _this.css("border-color", "red");
+                    _this.addClass("bRed");
                     _this.after($("<span class=\"verify-fail-err\">" + _this.attr(_self.setting.emptyAttr) + "</span>").css("color", "red"));
                 } else {
                     _this.next().html(_this.attr(_self.setting.emptyAttr));
@@ -59,14 +59,14 @@ define(function (require, exports, module) {
             else if (!!_this.attr(_self.setting.verifyType) && !!_this.val() && !_this.val().match(_self.setting.type[_this.attr(_self.setting.verifyType)])) {
                 //_this.val("");
                 if (_this.next().attr("class") != "verify-fail-err") {
-                    _this.css("border-color", "red");
+                    _this.addClass("bRed");
                     _this.after($("<span class=\"verify-fail-err\">" + (_this.attr(_self.setting.regText) || "") + "</span>").css("color", "red"));
                 } else {
                     _this.next().html(_this.attr(_self.setting.regText));
                 }
             }
             else {
-                _this.css("border-color", "#ccc");
+                _this.removeClass("bRed");
                 _this.next(".verify-fail-err").remove();
             }
         });

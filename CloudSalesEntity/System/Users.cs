@@ -261,10 +261,13 @@ namespace CloudSalesEntity
 			get{return _clientid;}
 		}
 
-        public string DepartName { get; set; }
-
-        public string RoleName { get; set; }
 		#endregion Model
+
+        [Property("Lower")] 
+        public string DepartID { get; set; }
+
+        [Property("Lower")] 
+        public string RoleID { get; set; }
 
         [Property("Lower")] 
         public string MDUserID { get; set; }
