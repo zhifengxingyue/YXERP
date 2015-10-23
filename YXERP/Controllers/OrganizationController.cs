@@ -314,8 +314,8 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetUsersByParentID(string parentid = "")
         {
-            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID);
-            JsonDictionary.Add("items", list.Where(m => m.ParentID == parentid).OrderBy(m => m.FirstName).ToList());
+            var list = OrganizationBusiness.GetUsersByParentID(parentid, CurrentUser.AgentID).OrderBy(m => m.FirstName).ToList();
+            JsonDictionary.Add("items", list);
             return new JsonResult()
             {
                 Data = JsonDictionary,
@@ -348,9 +348,20 @@ namespace YXERP.Controllers
         /// <param name="userid"></param>
         /// <param name="parentid"></param>
         /// <returns></returns>
-        public JsonResult UpdateUserParentID(string userid, string parentid)
+        public JsonResult UpdateUserParentID(string ids, string parentid)
         {
-            bool bl = new OrganizationBusiness().UpdateUserParentID(userid, parentid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP);
+            bool bl = false;//
+            string[] list = ids.Split(',');
+            foreach (var userid in list)
+            {
+                if (!string.IsNullOrEmpty(userid))
+                {
+                    if (new OrganizationBusiness().UpdateUserParentID(userid, parentid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP))
+                    {
+                        bl = true;
+                    }
+                }
+            }
             JsonDictionary.Add("status", bl);
             return new JsonResult()
             {

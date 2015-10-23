@@ -233,8 +233,15 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Users> GetUsersByParentID(string parentid, string agentid)
         {
-            var user = GetUsers(agentid);
-            return user.Where(m => m.ParentID == parentid).ToList();
+            var users = GetUsers(agentid).Where(m => m.ParentID == parentid).ToList();
+            foreach (var user in users)
+            {
+                if (user.ChildUsers == null || user.ChildUsers.Count == 0)
+                {
+                    user.ChildUsers = GetUsersByParentID(user.UserID, agentid);
+                }
+            }
+            return users;
         }
 
         /// <summary>

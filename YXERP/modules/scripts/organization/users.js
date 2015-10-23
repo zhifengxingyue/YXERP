@@ -25,6 +25,14 @@
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        });
+
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 ObjectJS.Params.PageIndex = 1;

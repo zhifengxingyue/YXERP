@@ -18,7 +18,7 @@
 .menulist .menuitem label span{ margin-left:10px; color:#333; font-size:14px;}
 .menulist .menuitem label:hover span,.menulist .menuitem .checked span{ color:#4a98e7; }
 
-.menulist .icoopen,.menulist  .icoclose { display:inline-block; width:20px; height:20px; margin-top:11px; cursor:pointer; margin-left:5px;}
+.menulist .icoopen,.menulist  .icoclose { display:inline-block; width:20px; height:20px; margin-top:12px; cursor:pointer; margin-left:-28px;}
 .menulist .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat;  }
 .menulist .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat;}
 .menulist .leftline{ background:url('/modules/images/ico-tree-full.png') no-repeat -5px;display:inline-block; width:35px; height:40px; }
@@ -31,7 +31,11 @@
                 color:#4a98e7; font-size:18px; cursor:pointer;}
 .create-first .plus{color:#4a98e7; font-size:30px; font-weight:bold; top:3px; position:relative; }
 
-.structure-list .user-item { height:50px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee; margin-top:10px; padding:10px; position:relative; }
+
+.child-item { height:85px; width:100%; }
+.structure-list .user-item { height:50px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee;
+                             margin-top:12px; padding:10px; position:relative; cursor:pointer; float:left; }
+.structure-list .user-item:hover { border:solid 1px #4a98e7; }
 .structure-list .user-avatar { height:50px; width:50px; float:left; }
 .structure-list .user-avatar img{ height:50px; width:50px; border-radius:25px;}
 
@@ -39,5 +43,13 @@
 .structure-list  .user-name li{ line-height:15px;width:120px; }
 
 .structure-list .ico-dropdown { position:absolute; right:10px; top:10px; }
+
+.child-item .icoopen,.child-item  .icoclose { display:inline-block; width:20px; height:20px; margin-top:40px; cursor:pointer; margin-left:-46px;}
+.child-item .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat;  }
+.child-item .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat;}
+.child-item .leftline{ background:url('/modules/images/ico-structure-full.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
+.child-item .lastline{ background:url('/modules/images/ico-structure-last.png') no-repeat -5px; display:inline-block; width:65px; height:85px;}
+.child-item .line{ background:url('/modules/images/ico-structure-line.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
+.child-item .null{ display:inline-block; width:65px; height:85px;}
 
 

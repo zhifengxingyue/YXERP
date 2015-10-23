@@ -294,6 +294,8 @@ namespace CloudSalesEntity
         [Property("Lower")] 
         public string AgentID { get; set; }
 
+        public List<Users> ChildUsers { get; set; }
+
         /// <summary>
         /// 填充数据
         /// </summary>

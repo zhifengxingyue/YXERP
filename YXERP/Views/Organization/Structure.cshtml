@@ -9,7 +9,7 @@
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/organization/structure"], function (obj) {
-            obj.init('@(model.UserID)');
+            obj.init('@(Html.ToJSONString(model))');
         });
     </script>
 }
@@ -19,19 +19,21 @@
 <div class="content-body">
 
     <div id="structure" class="structure-list">
-         <div class="user-item">
-             <div class="user-avatar">
-                 <img src="@(string.IsNullOrEmpty(model.Avatar)?"/modules/images/defaultavatar.png":model.Avatar)" />
-             </div>
-             <ul class="user-name">
-                 <li class="long">
-                     @(model.Name+(string.IsNullOrEmpty(model.Jobs)?"":"-"+model.Jobs))
-                 </li>
-                 <li class="long">
-                     @(model.Department!=null?model.Department.Name:"")
-                 </li>
-             </ul>
-             <div class="ico-dropdown"></div>
+        <div class="child-item">
+             <div class="user-item">
+                 <div class="user-avatar">
+                     <img src="@(string.IsNullOrEmpty(model.Avatar)?"/modules/images/defaultavatar.png":model.Avatar)" />
+                 </div>
+                 <ul class="user-name">
+                     <li class="long">
+                         @(model.Name+(string.IsNullOrEmpty(model.Jobs)?"":"-"+model.Jobs))
+                     </li>
+                     <li class="long">
+                         @(model.Department!=null?model.Department.Name:"")
+                     </li>
+                 </ul>
+                 <div class="ico-dropdown" data-id="@(model.UserID)"></div>
+            </div>
         </div>
     </div>
    
@@ -40,3 +42,8 @@
         添加最高领导人
     </div>
 </div>
+<ul class="dropdown-ul hide" style="width:90px;">
+    <li id="addChild">添加下属</li>
+    <li id="changeObject">替换人员</li>
+    <li id="removeObject">移除人员</li>
+</ul>

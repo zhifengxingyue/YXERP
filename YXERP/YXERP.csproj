@@ -159,6 +159,9 @@
     <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\images\ico-nav.png" />
+    <Content Include="modules\images\ico-structure-full.png" />
+    <Content Include="modules\images\ico-structure-last.png" />
+    <Content Include="modules\images\ico-structure-line.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\images\ico_searchhover.png" />
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
@@ -183,6 +186,7 @@
     <Content Include="modules\template\organization\role-detail.html" />
     <Content Include="modules\template\organization\permissions.html" />
     <Content Include="modules\template\organization\users.html" />
+    <Content Include="modules\template\organization\structure.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
