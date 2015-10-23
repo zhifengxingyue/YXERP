@@ -17,12 +17,44 @@
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        });
+
         $("#createModel").click(function () {
             var _this = $(this);
             Model.RoleID = "";
             Model.Name = "";
             Model.Description = "";
             _self.createModel();
+        });
+        //删除
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            if (confirm("角色删除后不可恢复,确认删除吗？")) {
+                _self.deleteModel(_this.data("id"), function (status) {
+                    if (status == 1) {
+                        _self.getList();
+                    } else if (status == 10002) {
+                        alert("此角色存在员工，请移除员工后重新操作！");
+                    }
+                });
+            }
+        });
+        //编辑
+        $("#updateObject").click(function () {
+            var _this = $(this);
+            Global.post("/Organization/GetRoleByID", { id: _this.data("id") }, function (data) {
+                var model = data.model;
+                Model.RoleID = model.RoleID;
+                Model.Name = model.Name;
+                Model.Description = model.Description;
+                _self.createModel();
+            });
         });
     }
     //添加/编辑弹出层
@@ -78,33 +110,21 @@
             innerhtml = $(innerhtml);
 
             //初始管理员角色不能编辑
-            innerhtml.find(".ico-del,.setpermission,.ico-edit").each(function () {
+            innerhtml.find(".ico-dropdown,.setpermission").each(function () {
                 if ($(this).data("type") == 1) {
                     $(this).remove();
                 }
             });
-
-            //删除
-            innerhtml.find(".ico-del").click(function () {
+            //操作
+            innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-                if (confirm("角色删除后不可恢复,确认删除吗？")) {
-                    _self.deleteModel(_this.data("id"), function (status) {
-                        if (status == 1) {
-                            _this.parent().parent().remove();
-                        } else if (status == 10002) {
-                            alert("此角色存在员工，请移除员工后重新操作！");
-                        }
+                if (_this.data("type") != 1) {
+                    var position = _this.find(".ico-dropdown").position();
+                    $(".dropdown-ul li").data("id", _this.data("id"));
+                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left-55 }).show().mouseleave(function () {
+                        $(this).hide();
                     });
                 }
-            });
-
-            //编辑
-            innerhtml.find(".ico-edit").click(function () {
-                var _this = $(this);
-                Model.RoleID = _this.data("id");
-                Model.Name = _this.parent().siblings(".name").html();
-                Model.Description = _this.parent().siblings(".desc").html();
-                _self.createModel();
             });
 
             $(".tr-header").after(innerhtml);

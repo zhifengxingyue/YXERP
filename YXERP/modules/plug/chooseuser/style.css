@@ -1,7 +1,6 @@
 ﻿
 /*头部搜索*/
 .chooseuser-header { margin-bottom: 10px; }
-#chooseuserSearch { width:700px; }
 
 /**/
 .chooseuser-body { width:700px; overflow:auto; border-bottom:solid 1px #ccc; padding-bottom:15px; margin-bottom:15px;  }

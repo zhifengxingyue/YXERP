@@ -21,9 +21,6 @@ namespace CloudSalesBusiness
         private static Dictionary<string, List<Department>> _cacheDeparts;
         private static Dictionary<string, List<Role>> _cacheRoles;
 
-        private static Dictionary<string, List<Department>> _cacheDepartsNoUser;
-        private static Dictionary<string, List<Role>> _cacheRolesNoUser;
-
         /// <summary>
         /// 缓存用户信息
         /// </summary>
@@ -221,7 +218,7 @@ namespace CloudSalesBusiness
                 Departments.Add(agentid, list);
                 return list;
             }
-            return Departments[agentid];
+            return Departments[agentid].Where(m => m.Status == 1).ToList();
         }
         /// <summary>
         /// 根据ID获取部门
@@ -254,7 +251,7 @@ namespace CloudSalesBusiness
                 Roles.Add(agentid, list);
                 return list;
             }
-            return Roles[agentid];
+            return Roles[agentid].Where(m => m.Status == 1).ToList();
         }
 
         /// <summary>
@@ -385,6 +382,7 @@ namespace CloudSalesBusiness
                     AgentID = agentid,
                     ClientID = clientid
                 });
+                Departments[agentid] = departs;
                 return departid;
             }
             return "";
@@ -419,6 +417,7 @@ namespace CloudSalesBusiness
                     AgentID = agentid,
                     ClientID = clientid
                 });
+                Roles[agentid] = roles;
                 return roleid;
             }
             return "";

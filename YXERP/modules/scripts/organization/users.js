@@ -120,28 +120,15 @@
             var innerhtml = template(items);
             innerhtml = $(innerhtml);
 
-            ////删除
-            //innerhtml.find(".ico-del").click(function () {
-            //    var _this = $(this);
-            //    if (confirm("部门删除后不可恢复,确认删除吗？")) {
-            //        _self.deleteModel(_this.data("id"), function (status) {
-            //            if (status == 1) {
-            //                _this.parent().parent().remove();
-            //            } else if (status == 10002) {
-            //                alert("此部门存在员工，请移除员工后重新操作！");
-            //            }
-            //        });
-            //    }
-            //});
-
-            ////编辑
-            //innerhtml.find(".ico-edit").click(function () {
-            //    var _this = $(this);
-            //    Model.DepartID = _this.data("id");
-            //    Model.Name = _this.parent().siblings(".name").html();
-            //    Model.Description = _this.parent().siblings(".desc").html();
-            //    _self.createModel();
-            //});
+            //操作
+            innerhtml.find(".dropdown").click(function () {
+                var _this = $(this);
+                var position = _this.find(".ico-dropdown").position();
+                $(".dropdown-ul li").data("id", _this.data("id"));
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left-80 }).show().mouseleave(function () {
+                    $(this).hide();
+                });
+            });
 
             $(".tr-header").after(innerhtml);
         });
@@ -152,7 +139,6 @@
         Global.post("/Organization/SaveDepartment", { entity: JSON.stringify(model) }, function (data) {
             if (data.model.DepartID.length > 0) {
                 _self.getList();
-                //_self.bindList([data.model]);
             }
         })
     }

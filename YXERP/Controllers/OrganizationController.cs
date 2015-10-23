@@ -75,6 +75,17 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult GetDepartmentByID(string id)
+        {
+            var model = OrganizationBusiness.GetDepartmentByID(id, CurrentUser.AgentID);
+            JsonDictionary.Add("model", model);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         /// <summary>
         /// 保存部门
         /// </summary>
@@ -137,6 +148,17 @@ namespace YXERP.Controllers
                 }
             }
             JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetRoleByID(string id)
+        {
+            var model = OrganizationBusiness.GetRoleByID(id, CurrentUser.AgentID);
+            JsonDictionary.Add("model", model);
             return new JsonResult()
             {
                 Data = JsonDictionary,
@@ -255,9 +277,9 @@ namespace YXERP.Controllers
                     if (model.error_code <= 0)
                     {
                         var user = model.user;
-                        int error = 0, result = 0; 
+                        int error = 0, result = 0;
 
-                        bool isAdmin = MD.SDK.Entity.App.AppBusiness.IsAppAdmin(CurrentUser.MDToken, user.id, out error);
+                        bool isAdmin = false;//MD.SDK.Entity.App.AppBusiness.IsAppAdmin(CurrentUser.MDToken, user.id, out error);
 
                         OrganizationBusiness.CreateUser("", "", user.name, user.mobile_phone, user.email, "", "", "", "", "", parentid, CurrentUser.AgentID, CurrentUser.ClientID, user.id, user.project.id, isAdmin ? 1 : 0, CurrentUser.UserID, out result);
                         //添加成功
@@ -311,6 +333,7 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         #endregion
 
     }

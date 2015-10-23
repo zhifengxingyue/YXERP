@@ -160,6 +160,7 @@
     <Content Include="modules\images\ico-dropdown.png" />
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico_search.png" />
+    <Content Include="modules\images\ico_searchhover.png" />
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
     <Content Include="modules\plug\chooseuser\choosemduser.html" />
     <Content Include="modules\plug\chooseuser\style.css" />

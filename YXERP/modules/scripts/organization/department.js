@@ -17,6 +17,13 @@
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        });
+        //添加
         $("#createModel").click(function () {
             var _this = $(this);
             Model.DepartID = "";
@@ -24,6 +31,31 @@
             Model.Description = "";
             _self.createModel();
         });
+        //删除
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            if (confirm("部门删除后不可恢复,确认删除吗？")) {
+                _self.deleteModel(_this.data("id"), function (status) {
+                    if (status == 1) {
+                        _self.getList();
+                    } else if (status == 10002) {
+                        alert("此部门存在员工，请移除员工后重新操作！");
+                    }
+                });
+            }
+        });
+        //编辑
+        $("#updateObject").click(function () {
+            var _this = $(this);
+            Global.post("/Organization/GetDepartmentByID", { id: _this.data("id") }, function (data) {
+                var model = data.model;
+                Model.DepartID = model.DepartID;
+                Model.Name = model.Name;
+                Model.Description = model.Description;
+                _self.createModel();
+            });
+        });
+
     }
     //添加/编辑弹出层
     ObjectJS.createModel = function () {
@@ -77,27 +109,16 @@
             var innerhtml = template(items);
             innerhtml = $(innerhtml);
 
-            //删除
-            innerhtml.find(".ico-del").click(function () {
+            //下拉事件
+            innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-                if (confirm("部门删除后不可恢复,确认删除吗？")) {
-                    _self.deleteModel(_this.data("id"), function (status) {
-                        if (status == 1) {
-                            _this.parent().parent().remove();
-                        } else if (status == 10002) {
-                            alert("此部门存在员工，请移除员工后重新操作！");
-                        }
-                    });
-                }
-            });
 
-            //编辑
-            innerhtml.find(".ico-edit").click(function () {
-                var _this = $(this);
-                Model.DepartID = _this.data("id");
-                Model.Name = _this.parent().siblings(".name").html();
-                Model.Description = _this.parent().siblings(".desc").html();
-                _self.createModel();
+                var position = _this.find(".ico-dropdown").position();
+                $(".dropdown-ul li").data("id",_this.data("id"));
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                    $(this).hide();
+                });
+                
             });
 
             $(".tr-header").after(innerhtml);
