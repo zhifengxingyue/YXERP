@@ -159,6 +159,7 @@
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
     <Content Include="modules\images\defaultavatar.png" />
+    <Content Include="modules\images\ico-addhover.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown.png" />
@@ -172,6 +173,8 @@
     <Content Include="modules\plug\chooseuser\choosemduser.html" />
     <Content Include="modules\plug\chooseuser\style.css" />
     <Content Include="modules\plug\chooseuser\chooseuser.html" />
+    <Content Include="modules\plug\dropdown\dropdown.js" />
+    <Content Include="modules\plug\dropdown\style.css" />
     <Content Include="modules\plug\easydialog\ico-close-hover.png" />
     <Content Include="modules\plug\easydialog\ico-close.png" />
     <Content Include="modules\plug\laydate\index.html" />
@@ -211,6 +214,7 @@
     <Content Include="modules\template\organization\users.html" />
     <Content Include="modules\template\organization\structure.html" />
     <Content Include="modules\template\organization\structureitem.html" />
+    <Content Include="modules\template\organization\setuserrole.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />

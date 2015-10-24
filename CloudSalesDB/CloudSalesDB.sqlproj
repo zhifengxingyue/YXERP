@@ -178,4 +178,10 @@
   <ItemGroup>
     <None Include="Procedures\System\P_ChangeUsersParentID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_DeleteUserByID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_UpdateUserRole.sql" />
+  </ItemGroup>
 </Project>

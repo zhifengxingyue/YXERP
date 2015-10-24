@@ -657,6 +657,49 @@ namespace CloudSalesBusiness
             }
             return bl;
         }
+        /// <summary>
+        /// 删除员工
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="agentid"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public bool DeleteUserByID(string userid, string agentid, string operateid, string ip, out int result)
+        {
+            bool bl = OrganizationDAL.BaseProvider.DeleteUserByID(userid, agentid, out result);
+            if (bl)
+            {
+                var user = GetUserByUserID(userid, agentid);
+                user.Status = 9;
+                user.ParentID = "";
+
+                var list = GetUsersByParentID(userid, agentid);
+                foreach (var model in list)
+                {
+                    model.ParentID = "";
+                }
+
+            }
+            return bl;
+        }
+        //编辑员工角色
+        public bool UpdateUserRole(string userid, string roleid, string agentid, string operateid, string ip)
+        {
+            var user = GetUserByUserID(userid, agentid);
+            if (user.RoleID.ToLower() != roleid.ToLower())
+            {
+                bool bl = OrganizationDAL.BaseProvider.UpdateUserRole(userid, roleid, agentid, operateid);
+                if (bl)
+                {
+                    user.RoleID = roleid;
+                    user.Role = GetRoleByID(roleid, agentid);
+                }
+                return bl;
+            }
+            return true;
+        }
 
         #endregion
     }

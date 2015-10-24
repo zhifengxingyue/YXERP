@@ -399,6 +399,36 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        /// <summary>
+        /// 删除员工
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public JsonResult DeleteUserByID(string userid)
+        {
+            int result = 0;
+            bool bl = new OrganizationBusiness().DeleteUserByID(userid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP, out result);
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        //编辑员工角色
+        public JsonResult UpdateUserRole(string userid,string roleid)
+        {
+            bool bl = new OrganizationBusiness().UpdateUserRole(userid, roleid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP);
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         #endregion
 

@@ -5,7 +5,7 @@
         Easydialog = require("easydialog"),
         ChooseUser = require("chooseuser");
 
-    var Model = {};
+    var Model = {}, CacheRole = [];
 
     var ObjectJS = {};
 
@@ -21,10 +21,30 @@
         var _self = this;
         _self.bindEvent();
         _self.getList();
+
+        
     }
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+
+        //缓存角色
+        Global.post("/Organization/GetRoles", {}, function (data) {
+            CacheRole = data.items;
+            require.async("dropdown", function () {
+                $("#ddlRole").dropdown({
+                    defaultText: "全部角色",
+                    defaultValue: "",
+                    data: data.items,
+                    dataValue: "RoleID",
+                    dataText: "Name",
+                    width: "180",
+                    onChange: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
 
         $(document).click(function (e) {
             //隐藏下拉
@@ -32,20 +52,19 @@
                 $(".dropdown-ul").hide();
             }
         });
-
+        //搜索框
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 ObjectJS.Params.PageIndex = 1;
                 ObjectJS.Params.keyWords = keyWords;
-                ObjectJS.Params.DepartID = $("#Departments").val();
-                ObjectJS.Params.RoleID = $("#Roles").val();
                 ObjectJS.getList();
             });
         });
 
+
+
         $("#Departments,#Roles").change(function () {
             ObjectJS.Params.PageIndex = 1;
-            ObjectJS.Params.keyWords = $(".search-ipt").val();
             ObjectJS.Params.DepartID = $("#Departments").val();
             ObjectJS.Params.RoleID = $("#Roles").val();
             ObjectJS.getList();
@@ -70,12 +89,100 @@
                             if (data.status) {
                                 _self.getList();
                             }
-                        })
+                        });
                     }
                 }
             });
         });
+        //注销员工
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            if (confirm("员工注销后不能再使用系统，确认注销吗?")) {
+                Global.post("/Organization/DeleteUserByID", {
+                    userid: _this.data("id")
+                }, function (data) {
+                    if (data.status) {
+                        _self.getList();
+                    }
+                });
+            }
+        });
+        //设置角色
+        $("#setObjectRole").click(function () {
+            var _this = $(this);
+            doT.exec("template/organization/setuserrole.html", function (template) {
+                var innerHtml = template(CacheRole);
+                Easydialog.open({
+                    container: {
+                        id: "show-model-setRole",
+                        header: "设置员工角色",
+                        content: innerHtml,
+                        yesFn: function () {
+                            $("#setUserRoleBox .role-item").each(function () {
+                                var _role = $(this);
+                                //保存角色
+                                if (_role.hasClass("hover")) {
+                                    if (_role.data("id") == _this.data("roleid")) {
+                                        return;
+                                    }
+                                    Global.post("/Organization/UpdateUserRole", {
+                                        userid: _this.data("id"),
+                                        roleid: _role.data("id")
+                                    }, function (data) {
+                                        if (data.status) {
+                                            _self.getList();
+                                        }
+                                    });
+                                    return;
+                                }
+                            });
+                        },
+                        callback: function () {
+
+                        }
+                    }
+                });
+                //默认选中当前角色
+                $("#setUserRoleBox .role-item[data-id=" + _this.data("roleid") + "]").addClass("hover");
+
+                $("#setUserRoleBox .role-item").click(function () {
+                    $(this).siblings().removeClass("hover");
+                    $(this).addClass("hover");
+                });
+            });
+        });
     }
+
+    //获取列表
+    ObjectJS.getList = function () {
+        var _self = this;
+        $(".tr-header").nextAll().remove();
+        Global.post("/Organization/GetUsers", { filter: JSON.stringify(ObjectJS.Params) }, function (data) {
+            _self.bindList(data.items);
+        });
+    }
+    //加载列表
+    ObjectJS.bindList = function (items) {
+        var _self = this;
+        doT.exec("template/organization/users.html", function (template) {
+            var innerhtml = template(items);
+            innerhtml = $(innerhtml);
+
+            //操作
+            innerhtml.find(".dropdown").click(function () {
+                var _this = $(this);
+                var position = _this.find(".ico-dropdown").position();
+                $(".dropdown-ul li").data("id", _this.data("id")).data("roleid", _this.data("roleid"));
+
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left-80 }).show().mouseleave(function () {
+                    $(this).hide();
+                });
+            });
+
+            $(".tr-header").after(innerhtml);
+        });
+    }
+
     //添加/编辑弹出层
     ObjectJS.createModel = function () {
         var _self = this;
@@ -111,34 +218,6 @@
             $("#modelName").val(Model.Name);
             $("#modelDescription").val(Model.Description);
 
-        }); 
-    }
-    //获取列表
-    ObjectJS.getList = function () {
-        var _self = this;
-        $(".tr-header").nextAll().remove();
-        Global.post("/Organization/GetUsers", { filter: JSON.stringify(ObjectJS.Params) }, function (data) {
-            _self.bindList(data.items);
-        });
-    }
-    //加载列表
-    ObjectJS.bindList = function (items) {
-        var _self = this;
-        doT.exec("template/organization/users.html", function (template) {
-            var innerhtml = template(items);
-            innerhtml = $(innerhtml);
-
-            //操作
-            innerhtml.find(".dropdown").click(function () {
-                var _this = $(this);
-                var position = _this.find(".ico-dropdown").position();
-                $(".dropdown-ul li").data("id", _this.data("id"));
-                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left-80 }).show().mouseleave(function () {
-                    $(this).hide();
-                });
-            });
-
-            $(".tr-header").after(innerhtml);
         });
     }
     //保存实体
@@ -148,12 +227,6 @@
             if (data.model.DepartID.length > 0) {
                 _self.getList();
             }
-        })
-    }
-    //删除
-    ObjectJS.deleteModel = function (id, callback) {
-        Global.post("/Organization/DeleteDepartment", { departid: id }, function (data) {
-            !!callback && callback(data.status);
         })
     }
 

@@ -13,7 +13,7 @@ input[type="password"]:focus { border:solid 1px #318ae4; }
 textarea { min-height: 75px; border:solid 1px #ccc; border-radius:2px;text-indent:3px;}
 textarea:focus { border:solid 1px #318ae4;}
 
-select{ border:solid 1px #ccc; border-radius:5px;height:25px; line-height:25px; padding:0 5px;}
+select{ border:solid 1px #ccc; border-radius:2px; height:25px; line-height:25px; padding:0 5px;}
 select option{ padding:2px; }
 
 /*按钮和图标*/
@@ -25,7 +25,9 @@ select option{ padding:2px; }
 
 /*添加*/
 .ico-add{ background:url(../images/ico-add.png) no-repeat; height:24px; min-width:24px; line-height:24px; 
-          display:inline-block; cursor:pointer; padding-left:25px; color:#7faaca; font-weight:bold; }
+          display:inline-block; cursor:pointer; padding-left:28px; color:#4a98e7; font-size:13px; }
+.ico-add:hover{ background:url(../images/ico-addhover.png) no-repeat; color:#2F73B8; }
+
 /*编辑*/
 .ico-edit{ background:url(../images/ico-edit-light.png) no-repeat; height:24px; min-width:24px; line-height:24px; 
           display:inline-block; cursor:pointer;  color:#666; }
@@ -144,17 +146,16 @@ nav .action-box:hover a,nav .select a{ color:#318AE4;}
 nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px; border-right:solid 1px #fff; 
               border-bottom:solid 1px #ccc;border-top:solid 1px #ccc;}
 
-
-
 /*内容页样式*/
 .main-content { margin-left:160px; padding-top:60px; }
 
 .header-box { border-bottom:solid 1px #ddd; margin:15px; height:35px; }
 .ico-goback { background:url(../images/ico-goback.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
 .ico-gonext { background:url(../images/ico-gonext.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
-.header-title { height:28px; line-height:28px; color:#666; font-size:18px; background:url('/modules/images/ico-nav.png') no-repeat left; padding-left:25px; }
+.header-box .header-title { height:28px; line-height:28px; color:#666; font-size:18px; background:url('/modules/images/ico-nav.png') no-repeat 0px 5px; padding-left:25px; }
+.header-box .ico-add { margin:3px 0 0 20px; }
 
-/*搜索样式*/
+/*搜索条件*/
 .search-box { margin:20px; }
 
 .content-body{ padding:0 15px 50px; overflow:auto; }
@@ -178,7 +179,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-add li textarea { height:80px; line-height:20px; padding:1px 5px; border:solid 1px #ccc; width:350px; border-radius:5px;}
 .table-add span {  display:inline-block; color:#333; vertical-align:top;}
 
-/*信息层样式*/
+/*alert 弹出层样式*/
 .alert { border: 1px solid #4a98e7;  background-color: #fff; font-size: 13px; margin: auto; position: fixed; top: 30%; z-index: 10001; 
          padding: 15px; display: inline-block; min-width: 330px; text-align: center; -moz-box-shadow: 0 0 30px #ccc;
          box-shadow: 0 0 30px #ccc; -webkit-box-shadow: 0 0 30px #ccc; }

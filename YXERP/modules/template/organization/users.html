@@ -10,8 +10,8 @@
     <td class='center'>{%=(item.Role ? item.Role.Name:"--")%}</td>
     <td class='center'>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
     <td class='center'>{%=(item.CreateUser ? item.CreateUser.Name:"--")%}</td>
-    <td class="center dropdown" data-type="{%=item.IsDefault%}" data-id="{%=item.UserID%}">
-        <span data-type="{%=item.IsDefault%}" class="ico-dropdown"></span>
+    <td class="center dropdown" data-roleid="{%=item.RoleID%}"  data-id="{%=item.UserID%}">
+        <span class="ico-dropdown"></span>
     </td>
 </tr>
 {% } %}

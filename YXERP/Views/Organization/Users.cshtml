@@ -14,8 +14,8 @@
 }
 <div class="header-box">
     <span class="header-title left">员工管理</span>
-    <div class="btn mLeft20" id="addUser">添加员工</div>
-    <div class="btn mLeft20" id="addMDUser">明道用户导入</div>
+    <div class="ico-add" id="addUser">添加员工</div>
+    <div class="ico-add" id="addMDUser">明道用户导入</div>
 </div>
 <div class="content-body">
     <div class="mBottom15">
@@ -39,7 +39,8 @@
                 }
                 }
         </select>
-            </span>
+        </span>
+        <div id="ddlRole"></div>
     </div>
     <div class="right searth-module" data-text="输入姓名/手机/Email..." data-width="200"> </div>
     <div class="clear"></div>
@@ -58,7 +59,6 @@
     </table>
 </div>
 <ul class="dropdown-ul hide" style="width:90px;">
-    <li id="updateObject">编辑信息</li>
     <li id="setObjectRole">角色设置</li>
     <li id="deleteObject">注销员工</li>
 </ul>
