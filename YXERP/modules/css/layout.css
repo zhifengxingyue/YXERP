@@ -153,7 +153,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .ico-goback { background:url(../images/ico-goback.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
 .ico-gonext { background:url(../images/ico-gonext.png) no-repeat; width:32px; height:32px; cursor:pointer; display:inline-block; }
 .header-box .header-title { height:28px; line-height:28px; color:#666; font-size:18px; background:url('/modules/images/ico-nav.png') no-repeat 0px 5px; padding-left:25px; }
-.header-box .ico-add { margin:4px 0 0 20px; }
+.header-box .ico-add { margin:3px 0 0 20px; }
 
 /*搜索条件*/
 .search-box { margin:20px; }

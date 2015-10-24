@@ -30,7 +30,9 @@ seajs.config({
         //购物车
         "cart": "plug/shoppingcart/shoppingcart.js",
         //选择员工
-        "chooseuser": "plug/chooseuser/chooseuser.js"
+        "chooseuser": "plug/chooseuser/chooseuser.js",
+        //选择员工
+        "dropdown": "plug/dropdown/dropdown.js"
     }
 });
 
