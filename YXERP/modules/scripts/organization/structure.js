@@ -81,14 +81,16 @@
         //移除下级
         $("#removeObject").click(function () {
             var _this = $(this);
-            Global.post("/Organization/UpdateUserParentID", {
-                ids: _this.data("id"),
-                parentid: ""
-            }, function (data) {
-                if (data.status) {
-                    location.href = location.href;
-                }
-            });
+            if (confirm("确认移除吗?")) {
+                Global.post("/Organization/UpdateUserParentID", {
+                    ids: _this.data("id"),
+                    parentid: ""
+                }, function (data) {
+                    if (data.status) {
+                        location.href = location.href;
+                    }
+                });
+            }
         });
         //替换人员
         $("#changeObject").click(function () {
