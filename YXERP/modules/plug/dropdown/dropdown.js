@@ -1,7 +1,7 @@
 ﻿
 /* 
 作者：Allen
-日期：2014-11-15
+日期：2015-10-25
 示例:
     $(...).dropdown(options);
 */
@@ -18,6 +18,7 @@ define(function (require, exports, module) {
             })
         }
         $.fn.dropdown.defaults = {
+            prevText: "",//文本前缀
             defaultText: "",
             defaultValue: "",
             data: [],
@@ -33,7 +34,7 @@ define(function (require, exports, module) {
             if (!obj.hasClass("dropdown-module")) {
                 obj.addClass("dropdown-module").css("width", opts.width);
             }
-            var _input = $('<div class="dropdown-text">' + opts.defaultText + '</div>');
+            var _input = $('<div class="dropdown-text">' + opts.prevText + opts.defaultText + '</div>');
             _input.css("width", opts.width - 30);
             var _ico = $('<div class="dropdown-ico"><span></span></div>');
             obj.append(_input).append(_ico);
@@ -79,7 +80,7 @@ define(function (require, exports, module) {
                     _items.append("<li data-id='" + opts.data[i][opts.dataValue] + "'>" + opts.data[i][opts.dataText] + "</li>");
                 }
                 _items.find("li").click(function () {
-                    obj.find(".dropdown-text").html($(this).html());
+                    obj.find(".dropdown-text").html(opts.prevText + $(this).html());
                     obj.data("id", $(this).data("id"));
                     obj.removeClass("hover");
                     $("#" + obj.data("itemid")).hide();
@@ -88,6 +89,7 @@ define(function (require, exports, module) {
                         text: $(this).html()
                     });
                 });
+                _items.css({ "top": offset.top + 27, "left": offset.left });
                 obj.after(_items);
             }
         }

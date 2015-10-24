@@ -21,26 +21,46 @@
         var _self = this;
         _self.bindEvent();
         _self.getList();
-
-        
     }
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
 
-        //缓存角色
         Global.post("/Organization/GetRoles", {}, function (data) {
+            //缓存角色
             CacheRole = data.items;
             require.async("dropdown", function () {
                 $("#ddlRole").dropdown({
-                    defaultText: "全部角色",
+                    prevText: "角色-",
+                    defaultText: "全部",
                     defaultValue: "",
                     data: data.items,
                     dataValue: "RoleID",
                     dataText: "Name",
                     width: "180",
                     onChange: function (data) {
-                        console.log(data);
+                        ObjectJS.Params.PageIndex = 1;
+                        ObjectJS.Params.RoleID = data.value;
+                        ObjectJS.getList();
+                    }
+                });
+            });
+        });
+
+        Global.post("/Organization/GetDepartments", {}, function (data) {
+            require.async("dropdown", function () {
+                $("#ddlDepart").dropdown({
+                    prevText: "部门-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    data: data.items,
+                    dataValue: "RoleID",
+                    dataText: "Name",
+                    width: "180",
+                    onChange: function (data) {
+                        ObjectJS.Params.PageIndex = 1;
+                        ObjectJS.Params.DepartID = data.value;
+                        ObjectJS.getList();
                     }
                 });
             });
@@ -61,14 +81,12 @@
             });
         });
 
-
-
-        $("#Departments,#Roles").change(function () {
-            ObjectJS.Params.PageIndex = 1;
-            ObjectJS.Params.DepartID = $("#Departments").val();
-            ObjectJS.Params.RoleID = $("#Roles").val();
-            ObjectJS.getList();
-        });
+        //$("#Departments,#Roles").change(function () {
+        //    ObjectJS.Params.PageIndex = 1;
+        //    ObjectJS.Params.DepartID = $("#Departments").val();
+        //    ObjectJS.Params.RoleID = $("#Roles").val();
+        //    ObjectJS.getList();
+        //});
 
         //添加明道用户
         $("#addMDUser").click(function () {

@@ -156,7 +156,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .header-box .ico-add { margin:3px 0 0 20px; }
 
 /*搜索条件*/
-.search-box { margin:20px; }
+.search-box { margin:10px 0; overflow:auto;}
 
 .content-body{ padding:0 15px 50px; overflow:auto; }
 

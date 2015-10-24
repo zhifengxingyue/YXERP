@@ -18,32 +18,10 @@
     <div class="ico-add" id="addMDUser">明道用户导入</div>
 </div>
 <div class="content-body">
-    <div class="mBottom15">
-    <div class="left">
-        <span>部门：</span>
-        <select id="Departments">
-            <option value=""  selected ="selected">所有</option>
-            @{
-                foreach(var item in ViewBag.Departments){
-                <option value="@item.DepartID">@item.Name</option>
-                }
-                }
-        </select>
-        <span class="pLeft30">角色：</span>
-        <span >
-        <select id="Roles">
-            <option value=""  selected ="selected">所有</option>
-            @{
-                foreach(var item in ViewBag.Roles){
-                <option value="@item.RoleID">@item.Name</option>
-                }
-                }
-        </select>
-        </span>
-        <div id="ddlRole"></div>
-    </div>
-    <div class="right searth-module" data-text="输入姓名/手机/Email..." data-width="200"> </div>
-    <div class="clear"></div>
+    <div class="search-box">
+        <div id="ddlDepart" class="left"></div>
+        <div id="ddlRole" class="left mLeft20"></div>
+        <div class="right searth-module" data-text="输入姓名/手机/Email..." data-width="200"> </div>
     </div>
     <table class="table-list mTop20">
         <tr class="tr-header">
