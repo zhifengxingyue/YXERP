@@ -12,10 +12,10 @@
         </div>
         <ul class="user-name">
             <li class="long">
-                {%=item.Name %}{%=item.Jobs?("-"+model.Jobs):""%}
+                {%=item.Name %}
             </li>
             <li class="long">
-                {%=item.Department?item.Department.Name:""%}
+                {%=item.Jobs || item.Department?item.Department.Name:(item.Role?item.Role.Name:"")%}
             </li>
         </ul>
         <div class="ico-dropdown" data-id="{%=item.UserID%}"></div>

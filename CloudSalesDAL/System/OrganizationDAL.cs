@@ -230,6 +230,17 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool ChangeUsersParentID(string userid, string olduserid, string agentid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@OldUserID",olduserid),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+            bool bl = ExecuteNonQuery("P_ChangeUsersParentID", paras, CommandType.StoredProcedure) > 0;
+            return bl;
+        }
+
         #endregion
 
     }

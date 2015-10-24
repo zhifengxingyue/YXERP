@@ -103,7 +103,9 @@
   <ItemGroup>
     <Compile Include="Common\ExpandClass.cs" />
     <Compile Include="Common\UserAuthorize.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerRPTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfomationController.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -187,6 +190,7 @@
     <Content Include="modules\template\organization\permissions.html" />
     <Content Include="modules\template\organization\users.html" />
     <Content Include="modules\template\organization\structure.html" />
+    <Content Include="modules\template\organization\structureitem.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
@@ -200,6 +204,9 @@
     <Content Include="Views\Home\InfoPage.cshtml" />
     <Content Include="Views\Organization\RolePermission.cshtml" />
     <Content Include="Views\Organization\Structure.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Activity\MyActivity.cshtml" />
+    <Content Include="Views\System\Sources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />

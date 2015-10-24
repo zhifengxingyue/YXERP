@@ -46,7 +46,7 @@ namespace YXERP.Controllers
 
         public ActionResult Structure()
         {
-            var list = OrganizationBusiness.GetUsersByParentID("6666666666", CurrentUser.AgentID);
+            var list = OrganizationBusiness.GetStructureByParentID("6666666666", CurrentUser.AgentID);
             if (list.Count > 0)
             {
                 ViewBag.Model = list[0];
@@ -343,7 +343,7 @@ namespace YXERP.Controllers
             };
         }
         /// <summary>
-        /// 编辑组织架构
+        /// 编辑组织架构上级
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="parentid"></param>
@@ -362,6 +362,25 @@ namespace YXERP.Controllers
                     }
                 }
             }
+            JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 组织架构替换人员
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="olduserid"></param>
+        /// <returns></returns>
+        public JsonResult ChangeUsersParentID(string userid, string olduserid)
+        {
+
+            bool bl = new OrganizationBusiness().ChangeUsersParentID(userid, olduserid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP);
+           
             JsonDictionary.Add("status", bl);
             return new JsonResult()
             {

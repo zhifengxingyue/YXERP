@@ -234,12 +234,20 @@ namespace CloudSalesBusiness
         public static List<Users> GetUsersByParentID(string parentid, string agentid)
         {
             var users = GetUsers(agentid).Where(m => m.ParentID == parentid).ToList();
+            return users;
+        }
+        /// <summary>
+        /// 获取PID获取组织架构
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <param name="agentid"></param>
+        /// <returns></returns>
+        public static List<Users> GetStructureByParentID(string parentid, string agentid)
+        {
+            var users = GetUsersByParentID(parentid, agentid);
             foreach (var user in users)
             {
-                if (user.ChildUsers == null || user.ChildUsers.Count == 0)
-                {
-                    user.ChildUsers = GetUsersByParentID(user.UserID, agentid);
-                }
+                user.ChildUsers = GetStructureByParentID(user.UserID, agentid);
             }
             return users;
         }
@@ -616,6 +624,36 @@ namespace CloudSalesBusiness
             {
                 var user = GetUserByUserID(userid, agentid);
                 user.ParentID = parentid;
+            }
+            return bl;
+        }
+        /// <summary>
+        /// 替换人员
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="olduserid"></param>
+        /// <param name="agentid"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public bool ChangeUsersParentID(string userid, string olduserid, string agentid, string operateid, string ip)
+        {
+            bool bl = OrganizationDAL.BaseProvider.ChangeUsersParentID(userid, olduserid, agentid);
+            if (bl)
+            {
+                //新员工
+                var user = GetUserByUserID(userid, agentid);
+                //被替换员工
+                var oldUser = GetUserByUserID(olduserid, agentid);
+
+                user.ParentID = oldUser.ParentID;
+                oldUser.ParentID = "";
+                var list = GetUsersByParentID(olduserid, agentid);
+                foreach (var model in list)
+                {
+                    model.ParentID = userid;
+                }
+
             }
             return bl;
         }
