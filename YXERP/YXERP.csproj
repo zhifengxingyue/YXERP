@@ -158,6 +158,7 @@
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
     <Content Include="modules\images\defaultavatar.png" />
+    <Content Include="modules\images\ico-addhover.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown.png" />
@@ -191,6 +192,7 @@
     <Content Include="modules\template\organization\users.html" />
     <Content Include="modules\template\organization\structure.html" />
     <Content Include="modules\template\organization\structureitem.html" />
+    <Content Include="modules\template\organization\setuserrole.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />

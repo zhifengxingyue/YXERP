@@ -52,4 +52,10 @@
 .child-item .line{ background:url('/modules/images/ico-structure-line.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
 .child-item .null{ display:inline-block; width:65px; height:85px;}
 
+/*设置员工角色*/
+.role-items { width:336px; overflow:auto; }
+.role-items li{ width:100px; height:35px; float:left; line-height:35px; border:solid 1px #ccc; margin:10px 5px; text-align:center; box-shadow:0 0 2px #ccc; cursor:pointer; }
+.role-items li:hover{ border-color:#2F73B8; color:#2F73B8;}
+.role-items li.hover{ border-color:#2F73B8; color:#fff; background-color:#2F73B8;}
+
 
