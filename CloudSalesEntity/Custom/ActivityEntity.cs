@@ -16,6 +16,8 @@ namespace CloudSalesEntity
 
         public string ActivityCode { get; set; }
 
+        public string Remark { get; set; }
+
         public DateTime BeginTime { get; set; }
 
         public DateTime EndTime { get; set; }
@@ -29,10 +31,12 @@ namespace CloudSalesEntity
         [Property("Lower")] 
         public string OwnerID { get; set; }
 
+        public string MemberID { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         [Property("Lower")] 
-        public DateTime CreateUserID { get; set; }
+        public string  CreateUserID { get; set; }
 
         [Property("Lower")] 
         public string AgentID { get; set; }

@@ -98,7 +98,7 @@ namespace CloudSalesBusiness
         /// <param name="agentid">代理商ID</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public string CreateActivity(string name, string poster, string begintime, string endtime, string address, string ownerid, string remark, string userid, string agentid, string clientid)
+        public string CreateActivity(string name, string poster, string begintime, string endtime, string address, string ownerid,string memberid, string remark, string userid, string agentid, string clientid)
         {
             string activityid = Guid.NewGuid().ToString();
 
@@ -115,7 +115,7 @@ namespace CloudSalesBusiness
                     file.MoveTo(HttpContext.Current.Server.MapPath(poster));
                 }
             }
-            bool bl = ActivityDAL.BaseProvider.CreateActivity(activityid, name, poster, begintime, endtime, address, ownerid, remark, userid, agentid, clientid);
+            bool bl = ActivityDAL.BaseProvider.CreateActivity(activityid, name, poster, begintime, endtime, address, ownerid,memberid, remark, userid, agentid, clientid);
             if (!bl)
             {
                 return "";

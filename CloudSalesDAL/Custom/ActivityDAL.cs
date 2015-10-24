@@ -66,17 +66,17 @@ namespace CloudSalesDAL
         public string GetActivityCode()
         {
             string code = GetCode(8);
-            if (CommonDAL.Select("ActivityID", "Count(0)", "ActivityCode='" + code + "'").ToString() != "0")
+            if (CommonDAL.Select("Activity", "Count(0)", "ActivityCode='" + code + "'").ToString() != "0")
             {
                 return GetActivityCode();
             }
             return code;
         }
 
-        public bool CreateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string ownerid, string remark, string userid, string agentid, string clientid)
+        public bool CreateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string ownerid,string memberid ,string remark, string userid, string agentid, string clientid)
         {
-            string sqlText = @"insert into Activity(ActivityID,Name,ActivityCode,Poster,BeginTime,EndTime,Address,Status,OwnerID,Remark,CreateUserID,AgentID,ClientID)
-                                values(@ActivityID,@Name,@ActivityCode,@Poster,@BeginTime,@EndTime,@Address,1,@OwnerID,@Remark,@CreateUserID,@AgentID,@ClientID)";
+            string sqlText = @"insert into Activity(ActivityID,Name,ActivityCode,Poster,BeginTime,EndTime,Address,Status,OwnerID,MemberID,Remark,CreateUserID,AgentID,ClientID)
+                                values(@ActivityID,@Name,@ActivityCode,@Poster,@BeginTime,@EndTime,@Address,1,@OwnerID,@MemberID,@Remark,@CreateUserID,@AgentID,@ClientID)";
             SqlParameter[] paras = { 
                                      new SqlParameter("@ActivityID",activityid),
                                      new SqlParameter("@Name",name),
@@ -86,6 +86,7 @@ namespace CloudSalesDAL
                                      new SqlParameter("@EndTime" , endtime),
                                      new SqlParameter("@Address" , address),
                                      new SqlParameter("@OwnerID" , ownerid),
+                                     new SqlParameter("@MemberID" , memberid),
                                      new SqlParameter("@Remark" , remark),
                                      new SqlParameter("@CreateUserID" , userid),
                                      new SqlParameter("@AgentID" , agentid),

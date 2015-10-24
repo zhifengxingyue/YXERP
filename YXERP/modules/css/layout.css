@@ -202,3 +202,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .show-nav-ul .hover { position: relative; height: 35px; line-height: 35px; margin-top: -6px; margin-left: -1px; border-top: 2px solid #E4393C;
           border-left: 1px solid #DEDFDE; border-right: 1px solid #DEDFDE; background-color: #FFF; }
 
+/*上传*/
+.edit-brand { height:25px;  padding:0 15px; border-radius:13px; background-color:#BFD9EA; border:1px solid #BFD9EA;
+              cursor:pointer; color:#033d91;}
+
