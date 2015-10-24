@@ -241,6 +241,34 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool DeleteUserByID(string userid, string agentid, out int result)
+        {
+
+            result = 0;
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@Result",result),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            bool bl = ExecuteNonQuery("P_DeleteUserByID", paras, CommandType.StoredProcedure) > 0;
+            result = Convert.ToInt32(paras[0].Value);
+            return bl;
+        }
+
+        public bool UpdateUserRole(string userid, string roleid, string agentid,string operateid)
+        {
+
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID",agentid),
+                                       new SqlParameter("@OpreateID",operateid)
+                                   };
+            bool bl = ExecuteNonQuery("P_UpdateUserRole", paras, CommandType.StoredProcedure) > 0;
+            return bl;
+        }
+
         #endregion
 
     }
