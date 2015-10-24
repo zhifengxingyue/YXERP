@@ -2,4 +2,32 @@
     ViewBag.Title = "MyActivity";
 }
 
-<h2>MyActivity</h2>
+@{
+    ViewBag.Title = "活动设置";
+}
+<link href="/modules/css/products/brand.css" rel="stylesheet" />
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/activity/activity"], function (ObjectJS) {
+            ObjectJS.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">活动设置</span>
+    <a href="Detail" class="ico-add left mTop4 mLeft20">添加活动</a>
+    <div class="right searth-module"> </div> 
+</div>
+<div class="content-body">
+    <table class="table-list">
+        <tr class="tr-header" id="brand-items">
+            <td>名称</td>
+            <td class="m-len">活动地址</td>
+            <td class="m-len">备注</td>
+            <td class="s-len">编辑</td>
+            <td class="s-len">删除</td>
+        </tr>
+    </table>
+    <div id="pager" class="mTop20"></div>
+</div>
+

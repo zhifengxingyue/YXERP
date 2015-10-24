@@ -154,6 +154,7 @@
     <Content Include="Content\menuico\system.png" />
     <Content Include="Content\menuico\systemhover.png" />
     <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
+    <Content Include="modules\css\customer\activity.css" />
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
@@ -173,14 +174,33 @@
     <Content Include="modules\plug\chooseuser\chooseuser.html" />
     <Content Include="modules\plug\easydialog\ico-close-hover.png" />
     <Content Include="modules\plug\easydialog\ico-close.png" />
+    <Content Include="modules\plug\laydate\index.html" />
+    <Content Include="modules\plug\laydate\laydate.js" />
+    <Content Include="modules\plug\laydate\need\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\dahong\icon.png" />
+    <Content Include="modules\plug\laydate\skins\dahong\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\danlan\icon.png" />
+    <Content Include="modules\plug\laydate\skins\danlan\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\default\icon.png" />
+    <Content Include="modules\plug\laydate\skins\default\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\molv\icon.png" />
+    <Content Include="modules\plug\laydate\skins\molv\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\qianhuang\icon.png" />
+    <Content Include="modules\plug\laydate\skins\qianhuang\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\yahui\icon.png" />
+    <Content Include="modules\plug\laydate\skins\yahui\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\yalan\icon.png" />
+    <Content Include="modules\plug\laydate\skins\yalan\laydate.css" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
+    <Content Include="modules\scripts\activity\activity.js" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\organization\structure.js" />
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
+    <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
@@ -207,6 +227,7 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Activity\MyActivity.cshtml" />
     <Content Include="Views\System\Sources.cshtml" />
+    <Content Include="Views\Activity\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />

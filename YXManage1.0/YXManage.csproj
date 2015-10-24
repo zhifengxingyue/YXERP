@@ -144,6 +144,23 @@
     <Content Include="modules\plug\datapager\images\sprevious.png" />
     <Content Include="modules\plug\datapager\paginate.js" />
     <Content Include="modules\plug\doT.js" />
+    <Content Include="modules\plug\laydate\index.html" />
+    <Content Include="modules\plug\laydate\laydate.js" />
+    <Content Include="modules\plug\laydate\need\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\dahong\icon.png" />
+    <Content Include="modules\plug\laydate\skins\dahong\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\danlan\icon.png" />
+    <Content Include="modules\plug\laydate\skins\danlan\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\default\icon.png" />
+    <Content Include="modules\plug\laydate\skins\default\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\molv\icon.png" />
+    <Content Include="modules\plug\laydate\skins\molv\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\qianhuang\icon.png" />
+    <Content Include="modules\plug\laydate\skins\qianhuang\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\yahui\icon.png" />
+    <Content Include="modules\plug\laydate\skins\yahui\laydate.css" />
+    <Content Include="modules\plug\laydate\skins\yalan\icon.png" />
+    <Content Include="modules\plug\laydate\skins\yalan\laydate.css" />
     <Content Include="modules\plug\seach_keys\seach_keys.js" />
     <Content Include="modules\plug\seach_keys\style.css" />
     <Content Include="modules\plug\verify.js" />
@@ -162,6 +179,7 @@
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
+    <Content Include="test.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

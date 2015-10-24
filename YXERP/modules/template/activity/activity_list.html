@@ -1,0 +1,14 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="list-item">
+    <td><a href="BrandDetail/{%=item.BrandID%}">{%=item.Name%}</a></td>
+    <td>{%=item.Address%}</td>
+    <td>{%=item.Remark%}</td>
+    <td class="center"><a class="ico-edit" title="编辑" href="BrandDetail/{%=item.ActivityID%}"></a></td>
+    <td class="center">
+        <a class="ico-del" href="javascript:void(0)" title="删除" data-id="{%=item.ActivityID%}"></a>
+    </td>
+</tr>
+{% } %}

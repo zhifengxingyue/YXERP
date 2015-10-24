@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     PlugJS.prototype.init = function () {
         var _self = this, url = "", templateUrl = "/plug/chooseuser/chooseuser.html";
         if (_self.setting.type == 1) {
-            url = "/Organization/GetUsers";
+            url = "/Organization/GetUserAll";
         } else if (_self.setting.type == 2) {
             url = "/Organization/GetMDUsers";
             templateUrl = "/plug/chooseuser/choosemduser.html";

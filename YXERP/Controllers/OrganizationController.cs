@@ -342,6 +342,17 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult GetUserAll()
+        {
+            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         /// <summary>
         /// 编辑组织架构上级
         /// </summary>
