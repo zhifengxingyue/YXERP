@@ -81,7 +81,7 @@
         //移除下级
         $("#removeObject").click(function () {
             var _this = $(this);
-            if (confirm("确认移除吗?")) {
+            confirm("确认移除吗?", function () {
                 Global.post("/Organization/UpdateUserParentID", {
                     ids: _this.data("id"),
                     parentid: ""
@@ -90,7 +90,7 @@
                         location.href = location.href;
                     }
                 });
-            }
+            });
         });
         //替换人员
         $("#changeObject").click(function () {

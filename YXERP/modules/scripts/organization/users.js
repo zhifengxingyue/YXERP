@@ -108,7 +108,7 @@
         //注销员工
         $("#deleteObject").click(function () {
             var _this = $(this);
-            if (confirm("员工注销后不能再使用系统，确认注销吗?")) {
+            confirm("员工注销后不能再使用系统，确认注销吗?", function () {
                 Global.post("/Organization/DeleteUserByID", {
                     userid: _this.data("id")
                 }, function (data) {
@@ -116,7 +116,7 @@
                         _self.getList();
                     }
                 });
-            }
+            });
         });
         //设置角色
         $("#setObjectRole").click(function () {
@@ -154,7 +154,9 @@
                     }
                 });
                 //默认选中当前角色
-                $("#setUserRoleBox .role-item[data-id=" + _this.data("roleid") + "]").addClass("hover");
+                if (_this.data("roleid")) {
+                    $("#setUserRoleBox .role-item[data-id=" + _this.data("roleid") + "]").addClass("hover");
+                }
 
                 $("#setUserRoleBox .role-item").click(function () {
                     $(this).siblings().removeClass("hover");
