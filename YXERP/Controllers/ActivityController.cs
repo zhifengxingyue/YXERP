@@ -108,13 +108,13 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult DeleteActivity(string activityID)
         {
-            //bool bl = new ActivityBusiness().(activityID, EnumStatus.Delete, OperateIP, CurrentUser.UserID);
-            //JsonDictionary.Add("Status", bl);
-            //return new JsonResult
-            //{
-            //    Data = JsonDictionary,
-            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            //};
+            bool bl = new ActivityBusiness().DeleteActivity(activityID);
+            JsonDictionary.Add("Result", bl?1:0);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
 
             return new JsonResult();
         }

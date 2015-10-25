@@ -30,9 +30,7 @@
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 ObjectJS.Params.PageIndex = 1;
-                ObjectJS.Params.keyWords = keyWords;
-                ObjectJS.Params.DepartID = $("#Departments").val();
-                ObjectJS.Params.RoleID = $("#Roles").val();
+                ObjectJS.Params.KeyWords = keyWords;
                 ObjectJS.getList();
             });
         });
@@ -79,10 +77,24 @@
                 innerhtml = $(innerhtml);
 
                 $(".tr-header").after(innerhtml);
+
+                $(".table-list a.ico-del").bind("click", function () {
+                    if (confirm("确定删除?")) {
+                        Global.post("/Activity/DeleteActivity", { activityID: $(this).attr("data-id") }, function (data) {
+                            if (data.Result == 1) {
+                                location.href = "/Activity/MyActivity";
+                            }
+                            else {
+                                alert("删除失败");
+                            }
+                        });
+                    }
+                });
+
             });
         }
         else {
-            $(".tr-header").after("<tr><td colspan='5' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='BrandAdd' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
+            $(".tr-header").after("<tr><td colspan='8' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
         }
     }
 
@@ -246,7 +258,7 @@
         var _self = this;
         Global.post("/Activity/SavaActivity", { entity: JSON.stringify(model) }, function (data) {
             if (data.ID.length > 0) {
-                _self.getList();
+                location.href = "/Activity/MyActivity"
             }
         })
     }

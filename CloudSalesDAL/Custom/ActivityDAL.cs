@@ -102,7 +102,7 @@ namespace CloudSalesDAL
 
         public bool UpdateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string remark, string ownerid, string memberid)
         {
-            string sqlText = @"update Activity set Name=@Name,Poster=@Poster,BeginTime=@BeginTime,EndTime=@EndTime,Address=@Address,Remark=@Remark,OwnerID=@OwnerID,MemberID=@MemberID)
+            string sqlText = @"update Activity set Name=@Name,Poster=@Poster,BeginTime=@BeginTime,EndTime=@EndTime,Address=@Address,Remark=@Remark,OwnerID=@OwnerID,MemberID=@MemberID
                                where ActivityID=@ActivityID ";
             SqlParameter[] paras = { 
                                      new SqlParameter("@ActivityID",activityid),
@@ -119,6 +119,16 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
+        public bool DeleteActivity(string activityid)
+        {
+            string sqlText = @"update Activity set status=9
+                               where ActivityID=@ActivityID ";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ActivityID",activityid),
+                                   };
+
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+        }
         #endregion
     }
 }

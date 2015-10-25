@@ -167,6 +167,10 @@ namespace CloudSalesBusiness
             return bl;   
         }
 
+        public bool DeleteActivity(string activityid){
+            bool bl = ActivityDAL.BaseProvider.DeleteActivity(activityid);
+            return bl;   
+        }
         #endregion
     }
 }
