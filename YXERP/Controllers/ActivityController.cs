@@ -24,6 +24,11 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult Activitys()
+        {
+            return View();
+        }
+
         public ActionResult Detail(string id)
         {
             ViewBag.ActivityID = id ?? string.Empty;
@@ -33,10 +38,46 @@ namespace YXERP.Controllers
 
         #region ajax
         /// <summary>
-        /// 保存品牌
+        /// 获取活动列表
         /// </summary>
-        /// <param name="activity"></param>
         /// <returns></returns>
+        public JsonResult GetActivityList(string keyWords, int pageSize, int pageIndex,int isAll)
+        {
+            int pageCount = 0;
+            int totalCount = 0;
+            string userID=CurrentUser.UserID;
+            if (isAll == 1)
+                userID = string.Empty;
+
+            List<ActivityEntity> list = new ActivityBusiness().GetActivitys(userID, EnumActivityStage.All, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 获取活动详细信息
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetActivityDetail(string activityID)
+        {
+            ActivityEntity model = new ActivityBusiness().GetActivityByID(activityID);
+            JsonDictionary.Add("Item", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 保存活动
+        /// </summary>
         public JsonResult SavaActivity(string entity)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -67,43 +108,9 @@ namespace YXERP.Controllers
             };
         }
 
+        
         /// <summary>
-        /// 获取品牌列表
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetActivityList(string keyWords, int pageSize, int pageIndex)
-        {
-            int pageCount = 0;
-            int totalCount = 0;
-            List<ActivityEntity> list = new ActivityBusiness().GetActivitys(CurrentUser.UserID,EnumActivityStage.All,keyWords, pageSize, pageIndex, ref totalCount, ref pageCount,CurrentUser.AgentID,CurrentUser.ClientID);
-            JsonDictionary.Add("Items", list);
-            JsonDictionary.Add("TotalCount", totalCount);
-            JsonDictionary.Add("PageCount", pageCount);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        /// <summary>
-        /// 编辑品牌状态
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult UpdateActivityStatus(string activityID, int status)
-        {
-            //bool bl = new ActivityBusiness().UpdateActivityStatus(activityID, (EnumStatus)status, OperateIP, CurrentUser.UserID);
-            //JsonDictionary.Add("Status", bl);
-            //return new JsonResult
-            //{
-            //    Data = JsonDictionary,
-            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            //};
-
-          return  new JsonResult();
-        }
-        /// <summary>
-        /// 删除品牌
+        /// 删除活动
         /// </summary>
         /// <returns></returns>
         public JsonResult DeleteActivity(string activityID)
@@ -117,21 +124,6 @@ namespace YXERP.Controllers
             };
 
             return new JsonResult();
-        }
-
-        /// <summary>
-        /// 获取品牌详细信息
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetActivityDetail(string activityID)
-        {
-            ActivityEntity model = new ActivityBusiness().GetActivityByID(activityID);
-            JsonDictionary.Add("Item", model);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
         }
 
         #endregion

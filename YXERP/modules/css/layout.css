@@ -176,7 +176,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-add {  border-bottom:solid 1px #7faaca; padding-bottom:20px; }
 .table-add li{ line-height:25px; margin-top:5px;  padding: 2px 20px;}
 .table-add li input[type="text"] { height:20px; line-height:20px; padding:2px 5px; width:150px; }
-.table-add li textarea { height:80px; line-height:20px; padding:1px 5px; border:solid 1px #ccc; width:350px; border-radius:5px;}
+.table-add li textarea {resize:none; height:80px; line-height:20px; padding:1px 5px; border:solid 1px #ccc; width:350px; border-radius:2px;}
 .table-add span {  display:inline-block; color:#333; vertical-align:top;}
 
 /*alert 弹出层样式*/

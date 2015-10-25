@@ -4,13 +4,13 @@
 %}
 <tr class="list-item">
     <td><a href="Detail/{%=item.ActivityID%}">{%=item.Name%}</a></td>
-    <td>{%=item.Address%}</td>
     <td>{%=decodeURI(item.Owner.Name)%}</td>
     <td>{%=item.BeginTime.toDate("yyyy-MM-dd")%}</td>
     <td>{%=item.EndTime.toDate("yyyy-MM-dd")%}</td>
+    <td>{%=item.Address%}</td>
     <td>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
-    <td class="center"><a class="ico-edit" title="编辑" href="Detail/{%=item.ActivityID%}"></a></td>
     <td class="center">
+        <a class="ico-edit" title="编辑" href="Detail/{%=item.ActivityID%}"></a>
         <a class="ico-del" href="javascript:void(0)" title="删除" data-id="{%=item.ActivityID%}"></a>
     </td>
 </tr>

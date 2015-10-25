@@ -33,6 +33,7 @@ define(function (require, exports, module) {
         _this.setting.type["email"] = /^\w+(.\w+)+@\w+.\w+$/;
         _this.setting.type["double"] = /^\d+(.\d+)?$/;
         _this.setting.type["int"] = /^(0|([1-9]\d*))$/;
+        _this.setting.type["date"] = /^(\d{4})\-(\d{2})\-(\d{2})$/;
     }
 
     //默认参数

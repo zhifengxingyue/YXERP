@@ -236,6 +236,7 @@
     <Content Include="Views\Activity\MyActivity.cshtml" />
     <Content Include="Views\System\Sources.cshtml" />
     <Content Include="Views\Activity\Detail.cshtml" />
+    <Content Include="Views\Activity\Activitys.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\uploadFiles\2015071122152715275334.png" />
