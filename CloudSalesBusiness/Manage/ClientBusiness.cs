@@ -89,7 +89,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static string InsertClient(Clients model, string loginName, string loginPwd, string userid, out int result, string email = "", string mduserid = "", string mdprojectid = "")
         {
-            loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd);
+            loginPwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginPwd, loginName);
             string clientid = ClientDAL.BaseProvider.InsertClient(model.CompanyName, model.ContactName, model.MobilePhone, model.Industry, model.CityCode,
                                                              model.Address, model.Description, loginName, loginPwd, email, mduserid, mdprojectid, userid, out result);
             return clientid;
