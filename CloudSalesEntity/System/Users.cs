@@ -267,7 +267,10 @@ namespace CloudSalesEntity
         {
             get
             {
-                return Net.Sourceforge.Pinyin4j.PinyinHelper.ToHanyuPinyinString(this.Name, new Net.Sourceforge.Pinyin4j.Format.HanyuPinyinOutputFormat(), " ").ToCharArray()[0].ToString().ToUpper();
+                if (!string.IsNullOrEmpty(this.Name))
+                    return Net.Sourceforge.Pinyin4j.PinyinHelper.ToHanyuPinyinString(this.Name, new Net.Sourceforge.Pinyin4j.Format.HanyuPinyinOutputFormat(), " ").ToCharArray()[0].ToString().ToUpper();
+                else
+                    return string.Empty;
             }
         }
 

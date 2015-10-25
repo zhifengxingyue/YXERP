@@ -15,7 +15,7 @@
     <script type="text/javascript">
         seajs.use(["scripts/activity/activity"], function (ObjectJS) {
             var um = UM.getEditor('Remark');
-            ObjectJS.init(um);
+            ObjectJS.initDetail(um, '@ViewBag.ActivityID');
         });
 
         $(function () {
@@ -58,13 +58,6 @@
         <li>
             <span class="column-name">负责人：</span>
             <div id="OwnerIDs" class="left">
-               @*<div class="member left">
-                   <div class="left pRight5">
-                        <img src="https://dn-mdpic.qbox.me/UserAvatar/cd6d37f8-d603-4f95-a5c5-653aeae5cc31.jpg?imageView2/1/w/48/h/48/q/90" />
-                  </div>
-                   <div class="left mRight10 pLeft5"><a href="javascript:void(0);">×</a></div>
-                   <div class="clear"></div>
-                </div>*@
             </div>
             <div class="left "><a id="addOwner" href="javascript:void();" class="ico-add mTop4">添加负责人</a></div>
             <div class="clear"></div>
@@ -101,5 +94,5 @@
     </div>
 
     <input type="hidden" id="PosterImg" />
-    <input type="hidden" id="ActivityID" />
+    <input type="hidden" id="ActivityID" value="@ViewBag.ActivityID" />
 </div>

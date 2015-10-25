@@ -24,8 +24,9 @@ namespace YXERP.Controllers
             return View();
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(string id)
         {
+            ViewBag.ActivityID = id ?? string.Empty;
             return View();
         }
         #endregion
@@ -42,20 +43,22 @@ namespace YXERP.Controllers
             ActivityEntity model = serializer.Deserialize<ActivityEntity>(entity);
 
             string activityID = "";
+            model.OwnerID = model.OwnerID.Trim('|');
+            model.MemberID = model.MemberID.Trim('|');
             if (string.IsNullOrEmpty(model.ActivityID))
             {
-                model.OwnerID = model.OwnerID.Trim('|');
-                model.MemberID = model.MemberID.Trim('|');
                 activityID = new ActivityBusiness().CreateActivity(model.Name, model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.OwnerID,model.MemberID, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             }
             else
             {
-                bool bl = new ActivityBusiness().UpdateActivity(model.ActivityID, model.Name,model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                bool bl = new ActivityBusiness().UpdateActivity(model.ActivityID, model.Name,model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.Remark,model.OwnerID,model.MemberID, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+
                 if (bl)
                 {
                     activityID = model.ActivityID;
                 }
             }
+
             JsonDictionary.Add("ID", activityID);
             return new JsonResult
             {
