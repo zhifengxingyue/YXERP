@@ -101,7 +101,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static Users GetUserByUserName(string loginname, string pwd, string operateip)
         {
-            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd);
+            pwd = CloudSalesTool.Encrypt.GetEncryptPwd(pwd, loginname);
             DataSet ds = new OrganizationDAL().GetUserByUserName(loginname, pwd);
             Users model = null;
             if (ds.Tables.Contains("User") && ds.Tables["User"].Rows.Count > 0)
@@ -129,7 +129,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static Users GetUserByMDUserID(string mduserid, string mdprojectid, string operateip)
         {
-            DataSet ds = new OrganizationDAL().GetUserByMDUserID(mduserid);
+            DataSet ds = new OrganizationDAL().GetUserByMDUserID(mduserid,mdprojectid);
             Users model = null;
             if (ds.Tables.Contains("User") && ds.Tables["User"].Rows.Count > 0)
             {
@@ -160,6 +160,39 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="agentid"></param>
+        /// <returns></returns>
+        public static Users GetUserByUserID(string userid, string agentid)
+        {
+            if (!Users.ContainsKey(agentid))
+            {
+                GetUsers(agentid);
+            }
+            if (Users[agentid].Where(u => u.UserID == userid).Count() > 0)
+            {
+                return Users[agentid].Where(u => u.UserID == userid).FirstOrDefault();
+            }
+            else
+            {
+                DataTable dt = new OrganizationDAL().GetUserByUserID(userid);
+                Users model = new Users();
+                if (dt.Rows.Count > 0)
+                {
+                    model.FillData(dt.Rows[0]);
+
+                    model.Department = GetDepartmentByID(model.DepartID, agentid);
+                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
+
+                    Users[agentid].Add(model);
+                }
+                return model;
+            }
+        }
+
+        /// <summary>
         /// 获取用户列表
         /// </summary>
         /// <param name="keyWords"></param>
@@ -173,7 +206,8 @@ namespace CloudSalesBusiness
             string whereSql = "AgentID='" + agentid + "' and Status<>9";
 
             if (!string.IsNullOrEmpty(keyWords))
-                whereSql += " and ( Name like '%" + keyWords + "%')";
+                whereSql += " and ( Name like '%" + keyWords + "%' or MobilePhone like '%" + keyWords + "%' or Email like '%" + keyWords + "%')";
+
             if (!string.IsNullOrEmpty(departID))
                 whereSql += " and DepartID='" + departID + "'";
 
@@ -199,7 +233,7 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
-        /// 根据代理商ID获取员工列表（缓存）
+        /// 根据代理商ID获取员工列表（缓存,包含已注销）
         /// </summary>
         /// <param name="agentid">代理商ID</param>
         /// <returns></returns>
@@ -222,7 +256,7 @@ namespace CloudSalesBusiness
                 Users.Add(agentid, list);
                 return list;
             }
-            return Users[agentid].Where(m => m.Status == 1).ToList();
+            return Users[agentid].ToList();
         }
 
         /// <summary>
@@ -233,7 +267,7 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Users> GetUsersByParentID(string parentid, string agentid)
         {
-            var users = GetUsers(agentid).Where(m => m.ParentID == parentid).ToList();
+            var users = GetUsers(agentid).Where(m => m.ParentID == parentid && m.Status == 1).ToList();
             return users;
         }
         /// <summary>
@@ -344,38 +378,7 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 获取用户信息
-        /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="agentid"></param>
-        /// <returns></returns>
-        public static Users GetUserByUserID(string userid, string agentid)
-        {
-            if (!Users.ContainsKey(agentid))
-            {
-                GetUsers(agentid);
-            }
-            if (Users[agentid].Where(u => u.UserID == userid).Count() > 0)
-            {
-                return Users[agentid].Where(u => u.UserID == userid).FirstOrDefault();
-            }
-            else
-            {
-                DataTable dt = new OrganizationDAL().GetUserByUserID(userid);
-                Users model = new Users();
-                if (dt.Rows.Count > 0)
-                {
-                    model.FillData(dt.Rows[0]);
 
-                    model.Department = GetDepartmentByID(model.DepartID, agentid);
-                    model.Role = GetRoleByIDCache(model.RoleID, agentid);
-
-                    Users[agentid].Add(model);
-                }
-                return model;
-            }
-        }
 
         #endregion
 
@@ -477,22 +480,28 @@ namespace CloudSalesBusiness
         {
             string userid = Guid.NewGuid().ToString();
 
-            loginpwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginpwd);
+            loginpwd = CloudSalesTool.Encrypt.GetEncryptPwd(loginpwd, loginname);
 
             Users user = null;
 
-            bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
-            if (bl)
+            DataTable dt = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
+            if (dt.Rows.Count > 0)
             {
-                //处理缓存
-                if (!string.IsNullOrEmpty(agentid))
+                user = new Users();
+                user.FillData(dt.Rows[0]);
+
+                var cache = GetUsers(user.AgentID).Where(m => m.UserID == user.UserID).FirstOrDefault();
+                if (cache == null || string.IsNullOrEmpty(cache.UserID))
                 {
-                    user = GetUserByUserID(userid, agentid);
+                    user.Role = GetRoleByID(user.RoleID, user.AgentID);
+                    user.Department = GetDepartmentByID(user.DepartID, user.AgentID);
+                    Users[user.AgentID].Add(user);
                 }
-                else if (!string.IsNullOrEmpty(mduserid) && !string.IsNullOrEmpty(mdprojectid))
+                else 
                 {
-                    user = GetUserByMDUserID(mduserid, mdprojectid, "");
+                    cache.Status = 1;
                 }
+                
             }
             return user;
         }
@@ -684,7 +693,15 @@ namespace CloudSalesBusiness
             }
             return bl;
         }
-        //编辑员工角色
+        /// <summary>
+        /// 编辑员工角色
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="roleid"></param>
+        /// <param name="agentid"></param>
+        /// <param name="operateid"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
         public bool UpdateUserRole(string userid, string roleid, string agentid, string operateid, string ip)
         {
             var user = GetUserByUserID(userid, agentid);

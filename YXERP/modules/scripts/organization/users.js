@@ -17,52 +17,51 @@
     };
 
     //初始化
-    ObjectJS.init = function () {
+    ObjectJS.init = function (roles, departs) {
         var _self = this;
-        _self.bindEvent();
+        roles = JSON.parse(roles.replace(/&quot;/g, '"'));
+        departs = JSON.parse(departs.replace(/&quot;/g, '"'));
+        CacheRole = roles;
+        _self.bindEvent(roles, departs);
         _self.getList();
     }
     //绑定事件
-    ObjectJS.bindEvent = function () {
+    ObjectJS.bindEvent = function (roles, departs) {
         var _self = this;
 
-        Global.post("/Organization/GetRoles", {}, function (data) {
-            //缓存角色
-            CacheRole = data.items;
-            require.async("dropdown", function () {
-                $("#ddlRole").dropdown({
-                    prevText: "角色-",
-                    defaultText: "全部",
-                    defaultValue: "",
-                    data: data.items,
-                    dataValue: "RoleID",
-                    dataText: "Name",
-                    width: "180",
-                    onChange: function (data) {
-                        ObjectJS.Params.PageIndex = 1;
-                        ObjectJS.Params.RoleID = data.value;
-                        ObjectJS.getList();
-                    }
-                });
+        //角色搜索
+        require.async("dropdown", function () {
+            $("#ddlRole").dropdown({
+                prevText: "角色-",
+                defaultText: "全部",
+                defaultValue: "",
+                data: roles,
+                dataValue: "RoleID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    ObjectJS.Params.PageIndex = 1;
+                    ObjectJS.Params.RoleID = data.value;
+                    ObjectJS.getList();
+                }
             });
         });
 
-        Global.post("/Organization/GetDepartments", {}, function (data) {
-            require.async("dropdown", function () {
-                $("#ddlDepart").dropdown({
-                    prevText: "部门-",
-                    defaultText: "全部",
-                    defaultValue: "",
-                    data: data.items,
-                    dataValue: "RoleID",
-                    dataText: "Name",
-                    width: "180",
-                    onChange: function (data) {
-                        ObjectJS.Params.PageIndex = 1;
-                        ObjectJS.Params.DepartID = data.value;
-                        ObjectJS.getList();
-                    }
-                });
+        //部门搜索
+        require.async("dropdown", function () {
+            $("#ddlDepart").dropdown({
+                prevText: "部门-",
+                defaultText: "全部",
+                defaultValue: "",
+                data: departs,
+                dataValue: "DepartID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    ObjectJS.Params.PageIndex = 1;
+                    ObjectJS.Params.DepartID = data.value;
+                    ObjectJS.getList();
+                }
             });
         });
 
@@ -72,6 +71,7 @@
                 $(".dropdown-ul").hide();
             }
         });
+
         //搜索框
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
@@ -80,13 +80,6 @@
                 ObjectJS.getList();
             });
         });
-
-        //$("#Departments,#Roles").change(function () {
-        //    ObjectJS.Params.PageIndex = 1;
-        //    ObjectJS.Params.DepartID = $("#Departments").val();
-        //    ObjectJS.Params.RoleID = $("#Roles").val();
-        //    ObjectJS.getList();
-        //});
 
         //添加明道用户
         $("#addMDUser").click(function () {

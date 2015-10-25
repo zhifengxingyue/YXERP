@@ -345,7 +345,7 @@ namespace YXERP.Controllers
 
         public JsonResult GetUserAll()
         {
-            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID);
+            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID).Where(m => m.Status == 1);
             JsonDictionary.Add("items", list);
             return new JsonResult()
             {

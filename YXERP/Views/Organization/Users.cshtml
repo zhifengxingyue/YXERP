@@ -1,5 +1,7 @@
 ﻿@{
     ViewBag.Title = "员工管理";
+    var roles = (List<CloudSalesEntity.Role>)ViewBag.Roles;
+    var departs = (List<CloudSalesEntity.Department>)ViewBag.Departments;
 }
 
 @section css{
@@ -8,7 +10,7 @@
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/organization/users"], function (obj) {
-            obj.init();
+            obj.init('@Html.ToJSONString(roles)', '@Html.ToJSONString(departs)');
         });
     </script>
 }

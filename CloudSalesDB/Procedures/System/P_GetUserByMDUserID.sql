@@ -15,12 +15,13 @@ GO
 调试记录： exec GetUserByMDUserID ''
 ************************************************************/
 CREATE PROCEDURE [dbo].[GetUserByMDUserID]
-@MDUserID nvarchar(64)
+@MDUserID nvarchar(64),
+@MDProjectID nvarchar(64)
 AS
 
 declare @UserID nvarchar(64),@ClientID nvarchar(64),@AgentID nvarchar(64)
 
-select @UserID = UserID,@ClientID=ClientID,@AgentID=AgentID from Users where MDUserID=@MDUserID
+select @UserID = UserID,@ClientID=ClientID,@AgentID=AgentID from Users where MDUserID=@MDUserID and MDProjectID=@MDProjectID
 
 if(@UserID is not null)
 begin

@@ -24,10 +24,11 @@ namespace CloudSalesDAL
             return GetDataSet("P_GetUserToLogin", paras, CommandType.StoredProcedure, "User|Permission");//|Department|Role
         }
 
-        public DataSet GetUserByMDUserID(string userid)
+        public DataSet GetUserByMDUserID(string userid, string mdprojectid)
         {
             SqlParameter[] paras = { 
-                                    new SqlParameter("@MDUserID",userid)
+                                    new SqlParameter("@MDUserID",userid),
+                                    new SqlParameter("@MDProjectID",mdprojectid)
                                    };
             return GetDataSet("GetUserByMDUserID", paras, CommandType.StoredProcedure, "User|Permission");//|Department|Role
 
@@ -36,7 +37,7 @@ namespace CloudSalesDAL
 
         public DataTable GetUsers(string agentid)
         {
-            string sql = "select * from Users where AgentID=@AgentID and Status<>9";
+            string sql = "select * from Users where AgentID=@AgentID";
 
             SqlParameter[] paras = { 
                                     new SqlParameter("@AgentID",agentid)
@@ -130,7 +131,7 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
         }
 
-        public bool CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
+        public DataTable CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
                                string roleid, string departid, string parentid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
         {
             result = 0;
@@ -158,10 +159,10 @@ namespace CloudSalesDAL
 
             paras[0].Direction = ParameterDirection.Output;
 
-            bool bl = ExecuteNonQuery("P_InsterUser", paras, CommandType.StoredProcedure) > 0;
+            DataTable dt = GetDataTable("P_InsterUser", paras, CommandType.StoredProcedure);
             result = Convert.ToInt32(paras[0].Value);
 
-            return bl;
+            return dt;
         }
 
         #endregion

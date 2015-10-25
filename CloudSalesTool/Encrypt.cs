@@ -13,9 +13,9 @@ namespace CloudSalesTool
         /// <param name="pwd">密码</param>
         /// <param name="userName">用户名</param>
         /// <returns></returns>
-        public static string GetEncryptPwd(string pwd)
+        public static string GetEncryptPwd(string pwd, string loginname)
         {
-            var code = "Sj2yF98jUhg8874G";
+            var code = "Sj2yF98j" + loginname.ToLower() + "Uhg8874G";
             for (int i = 0; i < code.Length; i++)
             {
                 if (i % 3 == 1)
