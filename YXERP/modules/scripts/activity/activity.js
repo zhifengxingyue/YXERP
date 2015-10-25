@@ -5,27 +5,110 @@
         Upload = require("upload"), PosterIco, editor,
         Easydialog = require("easydialog"),
         ChooseUser = require("chooseuser");
-
+    require("pager");
     var Model = {};
 
     var ObjectJS = {};
 
     ObjectJS.Params = {
-        pageSize: 1,
-        pageIndex:1,
+        PageSize: 1,
+        PageIndex:1,
         KeyWords: ""
     };
 
     //初始化
-    ObjectJS.init = function (Editor) {
+    ObjectJS.init = function () {
         var _self = this;
-        editor = Editor;
         _self.bindEvent();
         _self.getList();
     }
 
     //绑定事件
     ObjectJS.bindEvent = function () {
+        var _self = this;
+
+        require.async("search", function () {
+            $(".searth-module").searchKeys(function (keyWords) {
+                ObjectJS.Params.PageIndex = 1;
+                ObjectJS.Params.KeyWords = keyWords;
+                ObjectJS.getList();
+            });
+        });
+    }
+
+    //获取列表
+    ObjectJS.getList = function () {
+        var _self = this;
+        $(".tr-header").nextAll().remove();
+        Global.post("/Activity/GetActivityList",
+            { pageSize: ObjectJS.Params.PageSize, pageIndex: ObjectJS.Params.PageIndex, KeyWords: ObjectJS.Params.KeyWords },
+            function (data) {
+                _self.bindList(data.Items);
+
+                $("#pager").paginate({
+                    total_count: data.TotalCount,
+                    count: data.PageCount,
+                    start: _self.Params.PageIndex,
+                    display: 5,
+                    border: true,
+                    border_color: '#fff',
+                    text_color: '#333',
+                    background_color: '#fff',
+                    border_hover_color: '#ccc',
+                    text_hover_color: '#000',
+                    background_hover_color: '#efefef',
+                    rotate: true,
+                    images: false,
+                    mouse: 'slide',
+                    onChange: function (page) {
+                        _self.Params.PageIndex = page;
+                        _self.getList();
+                    }
+                });
+            });
+    }
+
+    //加载列表
+    ObjectJS.bindList = function (items) {
+        if (items.length > 0) {
+            var _self = this;
+            doT.exec("template/activity/activity_list.html", function (template) {
+                var innerhtml = template(items);
+                innerhtml = $(innerhtml);
+
+                $(".tr-header").after(innerhtml);
+
+                $(".table-list a.ico-del").bind("click", function () {
+                    if (confirm("确定删除?")) {
+                        Global.post("/Activity/DeleteActivity", { activityID: $(this).attr("data-id") }, function (data) {
+                            if (data.Result == 1) {
+                                location.href = "/Activity/MyActivity";
+                            }
+                            else {
+                                alert("删除失败");
+                            }
+                        });
+                    }
+                });
+
+            });
+        }
+        else {
+            $(".tr-header").after("<tr><td colspan='8' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
+        }
+    }
+
+    //初始化
+    ObjectJS.initDetail= function (Editor, id) {
+        var _self = this;
+        editor = Editor;
+        _self.bindDetailEvent();
+        if(id)
+            _self.getDetail();
+    }
+
+    //绑定事件
+    ObjectJS.bindDetailEvent = function () {
         var _self = this;
 
         require.async("search", function () {
@@ -38,6 +121,7 @@
             });
         });
 
+        //选择海报图片
         PosterIco = Upload.createUpload({
             element: "#Poster",
             buttonText: "选择海报图片",
@@ -62,7 +146,6 @@
                     for (var i = 0; i < items.length; i++) {
                         _self.createMember(items[i], "OwnerIDs",true);
                     }
-
                 }
             });
         });
@@ -102,21 +185,48 @@
                 Address: $("#Address").val(),
                 Remark: encodeURI(editor.getContent())
             };
+
             _self.saveModel(model);
         });
         
     }
 
+    //获取详情
+    ObjectJS.getDetail = function () {
+        var _self = this;
+        Global.post("/Activity/GetActivityDetail",
+            { activityID: $("#ActivityID").val() },
+            function (data) {
+                if (data.Item) {
+                    var item = data.Item;
+                    $("#Name").val(item.Name);
+                    ObjectJS.createMember2(item.Owner, "OwnerIDs", true);
+                    for (var i = 0; i < item.Members.length; i++) {
+                        ObjectJS.createMember2(item.Members[i], "MemberIDs", false);
+                    }
+                    $("#PosterDisImg").attr("src", item.Poster);
+                    $("#PosterImg").val(item.Poster);
+                    $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
+                    $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
+                    $("#Address").val(item.Address);
+                    editor.ready(function () {
+                        editor.setContent(decodeURI(item.Remark));
+                    });
+                }
+            });
+    }
+
+    //拼接一个用户成员
     ObjectJS.createMember = function (item, id, isSingle) {
-        if ( $( "#" + id + " div[bindID='" + item.id + "']" ).html() )
+        if ($("#" + id + " div[bindID='" + item.id + "']").html())
             return false;
 
-        var html='<div class="member left" bindID="'+item.id+'">';
-        html+='    <div class="left pRight5">';
+        var html = '<div class="member left" bindID="' + item.id + '">';
+        html += '    <div class="left pRight5">';
         html += '          <img src="' + item.avatar + '" />';
-        html+='     </div>';
-        html+='      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
-        html+='      <div class="clear"></div>';
+        html += '     </div>';
+        html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
+        html += '      <div class="clear"></div>';
         html += '   </div>';
 
         if (isSingle)
@@ -125,42 +235,22 @@
             $("#" + id).append(html);
     }
 
+    //拼接一个用户成员
+    ObjectJS.createMember2 = function (item, id, isSingle) {
+        if (item.Avatar == '')
+            item.Avatar = "/modules/images/defaultavatar.png";
+        var html = '<div class="member left" bindID="' + item.UserID + '">';
+        html += '    <div class="left pRight5">';
+        html += '          <img src="' + item.Avatar + '" />';
+        html += '     </div>';
+        html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
+        html += '      <div class="clear"></div>';
+        html += '   </div>';
 
-    //获取列表
-    ObjectJS.getList = function () {
-        var _self = this;
-        $(".tr-header").nextAll().remove();
-        Global.post("/Activity/GetActivityList",
-            { pageSize: ObjectJS.Params.pageSize, pageIndex: ObjectJS.Params.pageIndex, KeyWords:ObjectJS.Params.KeyWords},
-            function (data) {
-                _self.bindList(data.Items);
-        });
-    }
-
-    //加载列表
-    ObjectJS.bindList = function (items) {
-        if (items.length > 0) {
-            var _self = this;
-            doT.exec("template/activity/activity_list.html", function (template) {
-                var innerhtml = template(items);
-                innerhtml = $(innerhtml);
-
-                //操作
-                innerhtml.find(".dropdown").click(function () {
-                    var _this = $(this);
-                    var position = _this.find(".ico-dropdown").position();
-                    $(".dropdown-ul li").data("id", _this.data("id"));
-                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
-                        $(this).hide();
-                    });
-                });
-
-                $(".tr-header").after(innerhtml);
-            });
-        }
-        else {
-            $(".tr-header").after("<tr><td colspan='5' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='BrandAdd' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
-        }
+        if (isSingle)
+            $("#" + id).html(html);
+        else
+            $("#" + id).append(html);
     }
 
     //保存实体
@@ -168,11 +258,12 @@
         var _self = this;
         Global.post("/Activity/SavaActivity", { entity: JSON.stringify(model) }, function (data) {
             if (data.ID.length > 0) {
-                _self.getList();
+                location.href = "/Activity/MyActivity"
             }
         })
     }
 
+    
     //删除
     ObjectJS.deleteModel = function (id, callback) {
         Global.post("/Activity/DeleteDepartment", { departid: id }, function (data) {

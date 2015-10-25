@@ -30,8 +30,10 @@ namespace CloudSalesEntity
 
         [Property("Lower")] 
         public string OwnerID { get; set; }
+        public Users Owner { get; set; }
 
         public string MemberID { get; set; }
+        public List<Users> Members { get; set; }
 
         public DateTime CreateTime { get; set; }
 

@@ -44,6 +44,7 @@ namespace CloudSalesBusiness
             {
                 ActivityEntity model = new ActivityEntity();
                 model.FillData(dt.Rows[0]);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
                 list.Add(model);
             }
             return list;
@@ -61,6 +62,13 @@ namespace CloudSalesBusiness
             if (dt.Rows.Count > 0)
             {
                 model.FillData(dt.Rows[0]);
+
+                model.Owner= OrganizationBusiness.GetUserByUserID(model.OwnerID,model.AgentID);
+                model.Members = new List<Users>();
+                foreach (var id in model.MemberID.Split('|')) {
+                    model.Members.Add(OrganizationBusiness.GetUserByUserID(id, model.AgentID));
+                }
+
             }
             return model;
         }
@@ -140,7 +148,7 @@ namespace CloudSalesBusiness
         /// <param name="agentid">代理商ID</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public bool UpdateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string remark, string userid, string agentid, string clientid)
+        public bool UpdateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string remark, string ownerid,string memberid,string userid, string agentid, string clientid)
         {
             if (!string.IsNullOrEmpty(poster) && poster.IndexOf(TempPath) >= 0)
             {
@@ -155,10 +163,14 @@ namespace CloudSalesBusiness
                     file.MoveTo(HttpContext.Current.Server.MapPath(poster));
                 }
             }
-            bool bl = ActivityDAL.BaseProvider.UpdateActivity(activityid, name, poster, begintime, endtime, address, remark);
+            bool bl = ActivityDAL.BaseProvider.UpdateActivity(activityid, name, poster, begintime, endtime, address, remark,ownerid,memberid);
             return bl;   
         }
 
+        public bool DeleteActivity(string activityid){
+            bool bl = ActivityDAL.BaseProvider.DeleteActivity(activityid);
+            return bl;   
+        }
         #endregion
     }
 }
