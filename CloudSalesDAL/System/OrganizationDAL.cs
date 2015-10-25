@@ -131,7 +131,7 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
         }
 
-        public bool CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
+        public DataTable CreateUser(string userid, string loginname, string loginpwd, string name, string mobile, string email, string citycode, string address, string jobs,
                                string roleid, string departid, string parentid, string agentid, string clientid, string mduserid, string mdprojectid, int isAppAdmin, string operateid, out int result)
         {
             result = 0;
@@ -159,10 +159,10 @@ namespace CloudSalesDAL
 
             paras[0].Direction = ParameterDirection.Output;
 
-            bool bl = ExecuteNonQuery("P_InsterUser", paras, CommandType.StoredProcedure) > 0;
+            DataTable dt = GetDataTable("P_InsterUser", paras, CommandType.StoredProcedure);
             result = Convert.ToInt32(paras[0].Value);
 
-            return bl;
+            return dt;
         }
 
         #endregion

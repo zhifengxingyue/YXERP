@@ -484,20 +484,24 @@ namespace CloudSalesBusiness
 
             Users user = null;
 
-            bool bl = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
-            if (bl)
+            DataTable dt = OrganizationDAL.BaseProvider.CreateUser(userid, loginname, loginpwd, name, mobile, email, citycode, address, jobs, roleid, departid, parentid, agentid, clientid, mduserid, mdprojectid, isAppAdmin, operateid, out result);
+            if (dt.Rows.Count > 0)
             {
-                //处理缓存
-                if (!string.IsNullOrEmpty(agentid))
+                user = new Users();
+                user.FillData(dt.Rows[0]);
+
+                var cache = GetUsers(user.AgentID).Where(m => m.UserID == user.UserID).FirstOrDefault();
+                if (cache == null || string.IsNullOrEmpty(cache.UserID))
                 {
-                    user = GetUserByUserID(userid, agentid);
-                    user.Status = 1;
+                    user.Role = GetRoleByID(user.RoleID, user.AgentID);
+                    user.Department = GetDepartmentByID(user.DepartID, user.AgentID);
+                    Users[user.AgentID].Add(user);
                 }
-                else if (!string.IsNullOrEmpty(mduserid) && !string.IsNullOrEmpty(mdprojectid))
+                else 
                 {
-                    user = GetUserByMDUserID(mduserid, mdprojectid, "");
-                    user.Status = 1;
+                    cache.Status = 1;
                 }
+                
             }
             return user;
         }

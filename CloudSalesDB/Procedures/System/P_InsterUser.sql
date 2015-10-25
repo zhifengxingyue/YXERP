@@ -58,7 +58,11 @@ end
 --明道账号已存在 把删除状态改为正常
 if(@MDUserID<>'' and exists(select UserID from Users where MDUserID=@MDUserID and  MDProjectID=@MDProjectID))
 begin
+
+	select * from Users where MDUserID=@MDUserID and  MDProjectID=@MDProjectID and Status=9
+
 	update Users set Status=1 where MDUserID=@MDUserID and MDProjectID=@MDProjectID and Status=9
+
 	set @Result=1
 	commit tran
 	return
@@ -99,6 +103,7 @@ begin
 end 
 else
 begin
+	select * from Users where UserID=@UserID
 	set @Result=1
 	commit tran
 end
