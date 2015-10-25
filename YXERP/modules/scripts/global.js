@@ -66,22 +66,52 @@
     /*重写alert*/
     window.alert = function (msg) {
         $("#window_alert").remove();
-        var left = 0, top = 250, alertwidth = 0,
-            alert = $("<div />").attr("id", "window_alert").addClass("alert"),
-            wrap = $("<div/>").addClass("alertwrap"),
-            close = $("<div/>").text("×").addClass("close");
-        alert.appendTo($("body"));
-        wrap.append(close);
-        wrap.append(msg);
-        alert.append(wrap);
 
-        left = $(window).width() / 2 - (alert.width() / 2);
-        top = $(window).scrollTop() + top;
-        alert.show();
-        alert.offset({ left: left });
+        var _alter = $("<div id='window_alert' class='alert'></div>");
+        var _header = $("<div class='alert-header'>提示</div>");
+        var _wrap = $("<div class='alert-wrap'></div>").html(msg);
+        var _bottom = $("<div class='alert-bottom'></div>"),
+            _close = $("<div class='confirm right'>立即关闭</div>");
+        _bottom.append(_close);
+        _alter.append(_header).append(_wrap).append(_bottom);
+        _alter.appendTo("body");
 
-        close.click(function () { alert.remove() });
-        setTimeout(function () { alert.remove(); }, 5000);
+        var left = $(window).width() / 2 - (_alter.width() / 2);
+        _alter.offset({ left: left });
+        _close.click(function () { _alter.remove() });
+        setTimeout(function () { _alter.remove(); }, 5000);
+    }
+
+    /*重写confirm*/
+    window.confirm = function (msg, confirm, cancel) {
+        $("#window_confirm").remove();
+        var _layer = $("<div class='alert-layer'><div>")
+        var window_confirm = $("<div id='window_confirm' class='alert'></div>");
+        var _header = $("<div class='alert-header'>提示</div>");
+        var _wrap = $("<div class='alert-wrap'></div>").html(msg);
+        var _bottom = $("<div class='alert-bottom'></div>"),
+            _close = $("<div class='close mLeft10'>取消</div>"),
+            _confirm = $("<div class='confirm mRight10'>确认</div>");
+
+        _bottom.append(_confirm).append(_close);
+        window_confirm.append(_header).append(_wrap).append(_bottom);
+
+        _layer.appendTo("body");
+        window_confirm.appendTo("body");
+
+        var left = $(window).width() / 2 - (window_confirm.width() / 2);
+        window_confirm.offset({ left: left });
+
+        _close.click(function () {
+            _layer.remove();
+            window_confirm.remove();
+            cancel && cancel();
+        });
+        _confirm.click(function () {
+            _layer.remove();
+            window_confirm.remove();
+            confirm && confirm();
+        });
     }
 
     /*生成GUID*/

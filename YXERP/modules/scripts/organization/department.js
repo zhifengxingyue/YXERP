@@ -34,7 +34,7 @@
         //删除
         $("#deleteObject").click(function () {
             var _this = $(this);
-            if (confirm("部门删除后不可恢复,确认删除吗？")) {
+            confirm("部门删除后不可恢复,确认删除吗？",function(){
                 _self.deleteModel(_this.data("id"), function (status) {
                     if (status == 1) {
                         _self.getList();
@@ -42,7 +42,7 @@
                         alert("此部门存在员工，请移除员工后重新操作！");
                     }
                 });
-            }
+            });
         });
         //编辑
         $("#updateObject").click(function () {
