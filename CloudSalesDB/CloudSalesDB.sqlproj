@@ -184,4 +184,7 @@
   <ItemGroup>
     <None Include="Procedures\System\P_UpdateUserRole.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_InsertCustomSource.sql" />
+  </ItemGroup>
 </Project>

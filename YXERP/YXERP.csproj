@@ -162,6 +162,7 @@
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
+    <Content Include="modules\css\system\system.css" />
     <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-addhover.png" />
     <Content Include="modules\images\ico-check.png" />
@@ -207,6 +208,7 @@
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
+    <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
@@ -223,6 +225,8 @@
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
     <Content Include="modules\template\purchase\storagedocaction.html" />
+    <Content Include="modules\template\system\sources.html" />
+    <Content Include="modules\template\system\sources-detail.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />

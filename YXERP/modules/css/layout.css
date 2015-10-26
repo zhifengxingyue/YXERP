@@ -16,12 +16,17 @@ textarea:focus { border:solid 1px #318ae4;}
 select{ border:solid 1px #ccc; border-radius:2px; height:25px; line-height:25px; padding:0 5px;}
 select option{ padding:2px; }
 
+label.check {height:25px; line-height:25px; cursor:pointer; }
+label.check input{ float:left;height:25px; line-height:25px; vertical-align:middle; margin-right:5px; }
+
 /*按钮和图标*/
 .btn {  padding:5px 10px; background-color:#4a98e7; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
 .btn:hover { background-color:#2F73B8; }
 
 .btnccc {  padding:5px 10px; background-color:#ccc; color:#333; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
 .btnccc:hover { background-color:#999; }
+
+
 
 /*添加*/
 .ico-add{ background:url(../images/ico-add.png) no-repeat; height:24px; min-width:24px; line-height:24px; 

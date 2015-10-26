@@ -167,13 +167,10 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static Users GetUserByUserID(string userid, string agentid)
         {
-            if (!Users.ContainsKey(agentid))
+            var list = GetUsers(agentid);
+            if (list.Where(u => u.UserID == userid).Count() > 0)
             {
-                GetUsers(agentid);
-            }
-            if (Users[agentid].Where(u => u.UserID == userid).Count() > 0)
-            {
-                return Users[agentid].Where(u => u.UserID == userid).FirstOrDefault();
+                return list.Where(u => u.UserID == userid).FirstOrDefault();
             }
             else
             {

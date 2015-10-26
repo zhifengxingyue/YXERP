@@ -14,12 +14,18 @@ namespace CloudSalesEntity
 
         public string SourceName { get; set; }
 
+        public int IsSystem { get; set; }
+
         public int IsChoose { get; set; }
+
+        public int Status { get; set; }
 
         public DateTime CreateTime { get; set; }
 
         [Property("Lower")]
-        public DateTime CreateUserID { get; set; }
+        public string CreateUserID { get; set; }
+
+        public Users CreateUser { get; set; }
 
         [Property("Lower")] 
         public string ClientID { get; set; }

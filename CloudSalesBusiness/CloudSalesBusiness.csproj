@@ -59,6 +59,7 @@
     <Compile Include="Manage\M_UsersBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\OrganizationBusiness.cs" />
+    <Compile Include="System\SystemBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CloudSalesDAL\CloudSalesDAL.csproj">
