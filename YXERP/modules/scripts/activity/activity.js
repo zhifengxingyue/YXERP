@@ -4,22 +4,26 @@
         Verify = require("verify"), VerifyObject,
         Upload = require("upload"), PosterIco, editor,
         Easydialog = require("easydialog"),
+        Verify = require("verify"), VerifyObject,
         ChooseUser = require("chooseuser");
+    
     require("pager");
     var Model = {};
 
     var ObjectJS = {};
 
     ObjectJS.Params = {
-        PageSize: 1,
+        PageSize: 20,
         PageIndex:1,
-        KeyWords: ""
+        KeyWords: "",
+        IsAll:0
     };
 
     //初始化
-    ObjectJS.init = function () {
+    ObjectJS.init = function (isAll) {
         var _self = this;
         _self.bindEvent();
+        _self.Params.IsAll= isAll;
         _self.getList();
     }
 
@@ -41,7 +45,12 @@
         var _self = this;
         $(".tr-header").nextAll().remove();
         Global.post("/Activity/GetActivityList",
-            { pageSize: ObjectJS.Params.PageSize, pageIndex: ObjectJS.Params.PageIndex, KeyWords: ObjectJS.Params.KeyWords },
+            {
+                pageSize: ObjectJS.Params.PageSize,
+                pageIndex: ObjectJS.Params.PageIndex,
+                keyWords: ObjectJS.Params.KeyWords,
+                isAll:ObjectJS.Params.IsAll
+            },
             function (data) {
                 _self.bindList(data.Items);
 
@@ -82,7 +91,10 @@
                     if (confirm("确定删除?")) {
                         Global.post("/Activity/DeleteActivity", { activityID: $(this).attr("data-id") }, function (data) {
                             if (data.Result == 1) {
-                                location.href = "/Activity/MyActivity";
+                                if(ObjectJS.Params.IsAll==0)
+                                    location.href = "/Activity/MyActivity";
+                                else
+                                    location.href = "/Activity/Activitys";
                             }
                             else {
                                 alert("删除失败");
@@ -94,7 +106,7 @@
             });
         }
         else {
-            $(".tr-header").after("<tr><td colspan='8' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
+            $(".tr-header").after("<tr><td colspan='7' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Activity/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
         }
     }
 
@@ -103,6 +115,14 @@
         var _self = this;
         editor = Editor;
         _self.bindDetailEvent();
+
+        VerifyObject = Verify.createVerify({
+            element: ".verify",
+            emptyAttr: "data-empty",
+            verifyType: "data-type",
+            regText: "data-text"
+        });
+
         if(id)
             _self.getDetail();
     }
@@ -166,6 +186,10 @@
         });
 
         $("#btnSaveActivity").click(function () {
+            if (!VerifyObject.isPass()) {
+                return false;
+            };
+
             var OwnerID='', MemberID='';
             $("#OwnerIDs .member").each(function () {
                 OwnerID += $(this).attr("bindID")+"|";
@@ -173,6 +197,12 @@
             $("#MemberIDs .member").each(function () {
                 MemberID += $(this).attr("bindID") + "|";
             });
+
+            if (OwnerID == '' || MemberID=='')
+            {
+                alert("请选择负责人和成员");
+                return false;
+            }
 
             var model = {
                 ActivityID: $("#ActivityID").val(),

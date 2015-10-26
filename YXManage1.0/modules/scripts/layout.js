@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     //绑定元素定位和样式
     LayoutObject.bindStyle = function () {
         var _height = Height, _width = Width - 180;
-        $(".main-content").css({ "height": _height, "width": _width });
+        //$(".main-content").css({ "height": _height, "width": _width });
     }
     //绑定事件
     LayoutObject.bindEvent = function () {

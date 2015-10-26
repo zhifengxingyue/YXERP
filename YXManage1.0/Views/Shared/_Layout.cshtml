@@ -17,16 +17,11 @@
         <div class="logo left">
             <a href="/Home/Index"><img src="/modules/images/logo.png" /></a>
         </div>
-        @*<ul class="modules left">
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>*@
         <ul id="controllerMenu" class="menu left">
                 <li class="left" >
-                    <a class="" href="/Client/index" BindController="client"> 客户</a>
-                    <a class="" href="/ModulesProduct/index" BindController="modulesproduct"> 产品</a> 
-                    <a class="" href="/ExpressCompany/index" BindController="expresscompany">快递公司</a> 
+                    <a class="" href="/Client/index" BindController="client"> 客户
+                    <a class="" href="/ModulesProduct/index" BindController="modulesproduct"> 产品
+                    <a class="" href="/ExpressCompany/index" BindController="expresscompany">快递公司
                     <a class="" href="/Industry/index" BindController="industry">公司行业</a> 
                 </li>
         </ul>
@@ -118,9 +113,10 @@
         });
 
         $(function () {
+            $("#controllerMenu li a[BindController='@controller']").addClass("select");
+
             $("nav[BindController='@controller']").addClass("block");
             $("nav[BindController='@controller'] ul[BindAction='@action']").addClass("select");
-            $("#controllerMenu li a[BindController='@controller']").addClass("select");
         }); 
     </script>
     @RenderSection("scripts", false)
