@@ -135,6 +135,8 @@ namespace CloudSalesEntity
 
         public List<Menu> ChildMenus { get; set; }
 
+        public bool IsAllow { get; set; }
+
 		#endregion Model
 
         /// <summary>

@@ -1,0 +1,30 @@
+﻿
+
+.home-body { width:100%; min-width:1200px; position:fixed; top:50px; bottom:0;  background:url('/Content/homeico/homebg.png') no-repeat right bottom; background-size:cover; padding-top:100px; }
+
+/*左侧*/
+.left-body { width:620px; float:left; }
+
+.home-body .menu-items{ width:620px; }
+.home-body .menu-items .item{ background-color:#518fc5; text-align:center; float:left; display:inline-block; position:relative; }
+.home-body .menu-items .item img{ width:40px; height:40px;  display:inline-block; position:absolute; }
+.home-body .menu-items .item h2{ color:#fff; position:absolute; bottom:5px; left:5px; font-size:14px; }
+
+
+.menu-items .custom { height:200px;width:200px;  }
+
+.menu-items .sales,.menu-items .account,.menu-items .stock { height:95px;width:95px; margin-left:10px; }
+
+.menu-items .info ,.menu-items .report,.menu-items .system { height:95px;width:95px; margin-left:10px; margin-top:10px; }
+
+.menu-items .agents { height:200px;width:95px; }
+
+.home-body .menu-items .item:hover{ background-color:#3173b7; }
+
+.right-body { border-left:dashed 1px #ccc;border-top:dashed 1px #ccc; position:fixed; top:150px; bottom:0; right:0px; background-color:#fff; opacity:0.7; }
+
+.right-body .header { height:30px; background-color:#7d7d7d; padding-left:10px; }
+.right-body .header span{ width:6px; height:6px; background-color:#fff; border-radius:3px; display:inline-block; margin-left:5px; margin-top:12px; }
+
+.right-body .without { width:500px; margin-top:10px; margin-left:15px; }
+.right-body .without .title { font-size:15px; color:#4a98e7; font-weight:bold;}

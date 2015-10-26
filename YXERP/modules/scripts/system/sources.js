@@ -114,24 +114,19 @@
             var innerhtml = template(items);
             innerhtml = $(innerhtml);
 
-
-            //系统类型不能编辑
-            innerhtml.find(".ico-dropdown,.status").each(function () {
-                if ($(this).data("type") == 1) {
-                    $(this).remove();
-                }
-            });
-
             //下拉事件
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-                if (_this.data("type") != 1) {
-                    var position = _this.find(".ico-dropdown").position();
-                    $(".dropdown-ul li").data("id", _this.data("id"));
-                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
-                        $(this).hide();
-                    });
+                if (_this.data("type") == 1) {
+                    $("#deleteObject").hide();
+                } else {
+                    $("#deleteObject").show();
                 }
+                var position = _this.find(".ico-dropdown").position();
+                $(".dropdown-ul li").data("id", _this.data("id"));
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                    $(this).hide();
+                });
             });
 
             //绑定启用插件

@@ -33,11 +33,11 @@ define(function (require, exports, module) {
         }
         //默认参数
         $.fn.switch.defaults = {
-            width: 60,
+            width: 45,
             height: 20,
-            open_color: "#44bf16",
+            open_color: "#4B98E8",
             open_title: "启用",
-            close_color: "#a3aaa2",
+            close_color: "#D7D7D7",
             close_title: "禁用",
             bar_color: "#fff",
             value_key: "value",
@@ -46,14 +46,14 @@ define(function (require, exports, module) {
         };
         $.fn.drawSwitch = function (o, obj, value) {
             obj.addClass("switch");
-            obj.css({ width: o.width, height: o.height });
-            var _bar = $("<div class='bar'></div>").css({ width: o.width / 2, height: o.height, backgroundColor: o.bar_color });
+            obj.css({ width: o.width, height: o.height, borderRadius: o.height / 2 });
+            var _bar = $("<div class='bar'></div>").css({ width: o.height, height: o.height, borderRadius: o.height / 2, backgroundColor: o.bar_color });
             if (value) {
-                obj.css({ backgroundColor: o.open_color, border: "solid 1px " + o.open_color });
+                obj.css({ backgroundColor: o.open_color });
                 obj.attr("title", o.close_title);
-                _bar.css("left", o.width / 2 + "px");
+                _bar.css("right", "0px");
             } else {
-                obj.css({ backgroundColor: o.close_color, border: "solid 1px " + o.close_color });
+                obj.css({ backgroundColor: o.close_color });
                 obj.attr("title", o.open_title);
                 _bar.css("left", "0px");
             }
@@ -67,16 +67,16 @@ define(function (require, exports, module) {
                 !!o.change && o.change(_this, function (status) {
                     if (status) {
                         if (_this.data(o.value_key)) {
-                            _this.css({ backgroundColor: o.close_color, border: "solid 1px " + o.close_color });
+                            _this.css({ backgroundColor: o.close_color });
                             _this.attr("title", o.open_title);
                             _thisBar.animate({
                                 left: "0px"
                             }, o.speed);
                         } else {
-                            _this.css({ backgroundColor: o.open_color, border: "solid 1px " + o.open_color });
+                            _this.css({ backgroundColor: o.open_color });
                             _this.attr("title", o.close_title);
                             _thisBar.animate({
-                                left: o.width / 2 + "px"
+                                left: o.width - o.height + "px"
                             }, o.speed);
                         }
                         _this.data(o.value_key, !obj.data(o.value_key));

@@ -5,6 +5,8 @@
 .create-model li .columnname{ width:60px; }
 .create-model li input[type="text"]{ width:180px; }
 .create-model li textarea{ width:300px; }
+.create-model li label{ line-height:20px; height:20px; cursor:pointer; }
+.create-model li label input{ line-height:20px; height:20px; }
 
 /*团队成员*/
 .create-first { height:120px; line-height:120px; margin:100px auto; width:400px; border:solid 1px #eee; box-shadow:0 0 10px #ccc; text-align:center;

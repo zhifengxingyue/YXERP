@@ -12,10 +12,7 @@ define(function (require, exports, module) {
         LayoutObject.bindStyle();
         LayoutObject.bindEvent();
     }
-    //绑定元素定位和样式
-    LayoutObject.bindStyle = function () {
 
-    }
     //绑定事件
     LayoutObject.bindEvent = function () {
         //调整浏览器窗体
@@ -75,7 +72,6 @@ define(function (require, exports, module) {
             $(".dropdown-userinfo").fadeIn("1000");
         });
 
-
         //二级菜单图标事件处理
         $("#controllerMenu a").mouseenter(function () {
             var _this = $(this).find("img");
@@ -93,6 +89,37 @@ define(function (require, exports, module) {
 
         //二级菜单选中名称
         $(".controller-name").html($("#controllerMenu .select span").html());
+
+       
+    }
+    //绑定元素定位和样式
+    LayoutObject.bindStyle = function () {
+
+    }
+
+    //首页JS
+    LayoutObject.initHome = function () {
+        LayoutObject.bindStyle();
+        LayoutObject.bindEvent();
+        LayoutObject.homeEvent();
+    }
+
+    LayoutObject.homeEvent = function () {
+
+        //图标居中
+        $("#menuItems img").each(function () {
+            var _this = $(this);
+            _this.css({ top: _this.parent().height() / 2 - _this.height() / 2, left: _this.parent().width() / 2 - _this.width() / 2 })
+        });
+
+        var width = document.documentElement.clientWidth;
+        if (width < 1200) {
+            width = 1200;
+        }
+        $("#leftBody").css("margin-left", (width - 1200) / 2);
+
+        $("#rightBody").css("width", width / 2 - 50);
+
     }
     module.exports = LayoutObject;
 })

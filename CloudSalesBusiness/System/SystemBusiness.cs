@@ -173,11 +173,15 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public bool DeleteCustomSource(string sourceid, string userid, string ip, string agentid, string clientid)
         {
-
+            var model = GetCustomSourcesByID(sourceid, agentid, clientid);
+            //系统默认来源不能删除
+            if (model.IsSystem == 1)
+            {
+                return false;
+            }
             bool bl = SystemDAL.BaseProvider.DeleteCustomSource(sourceid, clientid);
             if (bl)
             {
-                var model = GetCustomSourcesByID(sourceid, agentid, clientid);
                 model.Status = 9;
             }
             return bl;

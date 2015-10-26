@@ -24,6 +24,11 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult Teams()
+        {
+            return View();
+        }
+
         #region Ajax
 
         #region 客户来源
@@ -110,6 +115,7 @@ namespace YXERP.Controllers
         } 
 
         #endregion
+
         #endregion
 
     }

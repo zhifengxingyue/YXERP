@@ -1,13 +1,99 @@
 ﻿@{
     Layout = null;
-    ViewBag.Title = "上海云销系统科技有限公司";
+    var CurrentUser = (CloudSalesEntity.Users)Session["ClientManager"];
 }
-<ul>
-    @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
-    { 
-        <li class="left topMenu" data-code="@(model.MenuCode)">
-            <a href="/@(model.Controller)"> @(model.Name)</a> 
-        </li>
-    }
-</ul>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>云销系统</title>
+    <link href="/modules/css/layout.css" rel="stylesheet" />
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/home/home.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="logo left">
+            <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
+        </div>
+
+        <div id="currentUser" class="currentuser right">
+            <span>
+                <img src="@(string.IsNullOrEmpty(CurrentUser.Avatar)?"/modules/images/defaultavatar.png":CurrentUser.Avatar)" class="avatar" />
+            </span>
+            <span class="username">
+                @(CurrentUser.Name)
+            </span>
+            <span class="dropdown">
+                <span class="dropdown-top"></span>
+                <span class="dropdown-bottom"></span>
+            </span>
+        </div>
+    </header>
+    <div class="home-body">
+        <div id="leftBody" class="left left-body">
+            <div id="menuItems" class="menu-items">
+                <a href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="101000000").FirstOrDefault().IsAllow?"/Customer/Index":"javascript:void(0)")" class="custom item">
+                    <img src="/Content/homeico/custom.png" />
+                    <h2>客户</h2>
+                </a>
+                <div style="width:325px;" class="left">
+                    <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="102000000").FirstOrDefault().IsAllow?"/Order/Index":"javascript:void(0)")" class="sales item">
+                        <img src="/Content/homeico/sales.png" />
+                        <h2>销售</h2>
+                    </a>
+                    <a href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="103000000").FirstOrDefault().IsAllow?"/Products/Index":"javascript:void(0)")" class="stock item">
+                        <img src="/Content/homeico/stock.png" />
+                        <h2>库存</h2>
+                    </a>
+                    <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="104000000").FirstOrDefault().IsAllow?"/Finance/Index":"javascript:void(0)")" class="account item">
+                        <img src="/Content/homeico/account.png" />
+                        <h2>财务</h2>
+                    </a>
+                    <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="106000000").FirstOrDefault().IsAllow?"/CustomerRPT/Index":"javascript:void(0)")" class="report item">
+                        <img src="/Content/homeico/report.png" />
+                        <h2>统计</h2>
+                    </a>
+                    <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="107000000").FirstOrDefault().IsAllow?"/Infomation/Index":"javascript:void(0)")" class="info item">
+                        <img src="/Content/homeico/info.png" />
+                        <h2>信息</h2>
+                    </a>
+                    <a href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="108000000").FirstOrDefault().IsAllow?"/Organization/Index":"javascript:void(0)")" class="system item">
+                        <img src="/Content/homeico/system.png" />
+                        <h2>系统</h2>
+                    </a>
+                </div>
+                <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="105000000").FirstOrDefault().IsAllow?"/Agents/Index":"javascript:void(0)")" class="agents item">
+                    <img src="/Content/homeico/agents.png" />
+                    <h2>代理商</h2>
+               </a>
+            </div>
+        </div>
+        <div id="rightBody" class="right-body">
+            <div class="header">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="without">
+                <div class="title">待办事项</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-userinfo hide">
+        <div class="top-lump"></div>
+        <ul class="items-list">
+            <li class="item"><a href="/Home/Logout">安全退出</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="/Scripts/sea.js"></script>
+    <script type="text/javascript" src="/Scripts/sea-config.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/layout"], function (layout) {
+            layout.initHome();
+        });
+    </script>
+</body>
+</html>
+
 
