@@ -41,7 +41,7 @@ namespace YXERP.Controllers
         /// 获取活动列表
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetActivityList(string keyWords, int pageSize, int pageIndex,int isAll)
+        public JsonResult GetActivityList(string keyWords, int pageSize, int pageIndex, int isAll, string beginTime, string endTime, int stage, int filterType)
         {
             int pageCount = 0;
             int totalCount = 0;
@@ -49,7 +49,7 @@ namespace YXERP.Controllers
             if (isAll == 1)
                 userID = string.Empty;
 
-            List<ActivityEntity> list = new ActivityBusiness().GetActivitys(userID, EnumActivityStage.All, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
+            List<ActivityEntity> list = new ActivityBusiness().GetActivitys(userID, (EnumActivityStage)stage,filterType, keyWords,beginTime,endTime, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);

@@ -18,8 +18,11 @@ CREATE PROCEDURE [dbo].[P_GetActivitys]
 	@UserID nvarchar(64)='',
 	@Stage int=-1,
 	@keyWords nvarchar(4000),
+	@BeginTime nvarchar(200),
+	@EndTime nvarchar(200),
 	@pageSize int,
 	@pageIndex int,
+	@FilterType int=0,
 	@totalCount int output ,
 	@pageCount int output,
 	@AgentID nvarchar(64),
@@ -37,7 +40,12 @@ AS
 
 	if(@UserID<>'')
 	begin
-		set @condition +=' and OwnerID = '''+@UserID+''''
+		if(@FilterType=1)
+			set @condition +=' and OwnerID = '''+@UserID+''''
+		else if(@FilterType=2)
+			set @condition +=' and MemberID like ''%'+@UserID+'%'' '
+	    else
+			set @condition +=' and ( OwnerID = '''+@UserID+'''' +' or MemberID like ''%'+@UserID+'%'' )'
 	end
 
 	if(@AgentID<>'')
@@ -58,6 +66,12 @@ AS
 	begin
 		set @condition +=' and BeginTime > getdate() '
 	end
+
+	if(@BeginTime<>'')
+		set @condition +=' and BeginTime >= Convert(varchar(20), '''+@BeginTime+''',120)'
+
+	if(@EndTime<>'')
+		set @condition +=' and EndTime <=  Convert(varchar(20), '''+@EndTime+''',120)'
 
 	if(@keyWords <> '')
 	begin
