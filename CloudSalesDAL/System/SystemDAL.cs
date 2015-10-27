@@ -35,13 +35,6 @@ namespace CloudSalesDAL
             return GetDataTable(sqlText, paras, CommandType.Text);
         }
 
-        public DataTable GetWarehouseTypes(string clientid)
-        {
-            SqlParameter[] paras = { new SqlParameter("@ClientID", clientid) };
-            DataTable dt = GetDataTable("select * from WareHouseType where ClientID=@ClientID and Status<>9", paras, CommandType.Text);
-            return dt;
-        }
-
         public DataSet GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             SqlParameter[] paras = { 
@@ -139,20 +132,6 @@ namespace CloudSalesDAL
             return bl;
         }
 
-        public bool AddWarehouseType(string id, string name, string description, string operateid, string clientid)
-        {
-            string sqlText = "INSERT INTO WareHouseType([TypeID] ,[TypeName],[Description],[Status],CreateUserID,ClientID) "
-                                             + "values(@TypeID ,@TypeName,@Description,1,@CreateUserID,@ClientID) ";
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@TypeID" , id),
-                                     new SqlParameter("@TypeName" , name),
-                                     new SqlParameter("@Description" , description),
-                                     new SqlParameter("@CreateUserID" , operateid),
-                                     new SqlParameter("@ClientID" , clientid)
-                                   };
-            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
-        }
-
         public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             string sqlText = "insert into WareHouse(WareID,WareCode,Name,ShortName,CityCode,Status,Description,CreateUserID,ClientID) " +
@@ -217,18 +196,6 @@ namespace CloudSalesDAL
                                    };
             bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
             return bl;
-        }
-
-        public bool UpdateWarehouseType(string id, string name, string description)
-        {
-            string sqlText = "Update WareHouseType set [TypeName]=@TypeName,[Description]=@Description,UpdateTime=getdate() "
-                           + "where [TypeID]=@TypeID";
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@TypeID" , id),
-                                     new SqlParameter("@TypeName" , name),
-                                     new SqlParameter("@Description" , description)
-                                   };
-            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
         public bool UpdateWareHouse(string id, string code, string name, string shortname, string citycode, int status, string description)
