@@ -16,9 +16,17 @@
 <div class="header-box">
     <span class="header-title left">所有活动</span>
     <a href="Detail" class="ico-add left mTop4 mLeft20">添加活动</a>
-    <div class="right searth-module"> </div> 
 </div>
 <div class="content-body">
+    <div class="search-box">
+        <div id="ActivityStage" class="left"></div>
+        <div class="left mLeft20">
+            <span class="width80">开始时间：</span><input type="text" id="BeginTime"  class="input"  />
+            <span class="width80">结束时间：</span><input type="text" id="EndTime"  class="input"  />
+            <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
+        </div>
+        <div class="right searth-module" data-text="输入活动名称..." data-width="200"> </div>
+    </div>
     <table class="table-list">
         <tr class="tr-header" id="brand-items">
             <td class="m-len">名称</td>
@@ -32,4 +40,8 @@
     </table>
     <div id="pager" class="mTop20"></div>
 </div>
+<ul class="dropdown-ul hide" style="width:90px;">
+    <li id="setObjectRole">编辑</li>
+    <li id="deleteObject">删除</li>
+</ul>
 

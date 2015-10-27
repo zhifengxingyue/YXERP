@@ -16,7 +16,11 @@
         PageSize: 20,
         PageIndex:1,
         KeyWords: "",
-        IsAll:0
+        IsAll: 0,
+        Stage:-1,
+        BeginTime: "",
+        EndTime: "",
+        FilterType:0
     };
 
     //初始化
@@ -31,6 +35,13 @@
     ObjectJS.bindEvent = function () {
         var _self = this;
 
+        $("#SearchActivity").click(function () {
+            ObjectJS.Params.PageIndex = 1;
+            ObjectJS.Params.BeginTime = $("#BeginTime").val();
+            ObjectJS.Params.EndTime = $("#EndTime").val();
+            ObjectJS.getList();
+        });
+
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 ObjectJS.Params.PageIndex = 1;
@@ -38,6 +49,89 @@
                 ObjectJS.getList();
             });
         });
+
+        //搜索
+        require.async("dropdown", function () {
+            var Stages = [
+                {
+                    ID: "1",
+                    Name: "已结束"
+                },
+                {
+                    ID: "2",
+                    Name: "进行中"
+                },
+                {
+                    ID: "3",
+                    Name: "未开始"
+                }
+            ];
+            $("#ActivityStage").dropdown({
+                prevText: "活动阶段-",
+                defaultText: "所有",
+                defaultValue: "-1",
+                data: Stages,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "150",
+                onChange: function (data) {
+                    ObjectJS.Params.PageIndex = 1;
+                    ObjectJS.Params.Stage = data.value;
+                    ObjectJS.getList();
+                }
+            });
+            var Types = [
+                {
+                    ID: "1",
+                    Name: "我负责的"
+                },
+                {
+                    ID: "2",
+                    Name: "我参与的"
+                }
+            ];
+            $("#ActivityType").dropdown({
+                prevText: "活动过滤-",
+                defaultText: "所有",
+                defaultValue: "-1",
+                data: Types,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "150",
+                onChange: function (data) {
+                    ObjectJS.Params.PageIndex = 1;
+                    ObjectJS.Params.FilterType = data.value;
+                    ObjectJS.getList();
+                }
+            });
+
+        });
+
+        //删除活动
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            confirm("确认删除活动吗?", function () {
+                Global.post("/Activity/DeleteActivity", { activityID: _this.data("id") }, function (data) {
+                    if (data.Result == 1) {
+                        if (ObjectJS.Params.IsAll == 0)
+                            location.href = "/Activity/MyActivity";
+                        else
+                            location.href = "/Activity/Activitys";
+                    }
+                    else {
+                        alert("删除失败");
+                    }
+                });
+            });
+        });
+
+
+
+            //编辑活动
+            $("#setObjectRole").click(function () {
+                var _this = $(this);
+                location.href="/Activity/Detail/"+_this.data("id");
+            });
     }
 
     //获取列表
@@ -49,7 +143,11 @@
                 pageSize: ObjectJS.Params.PageSize,
                 pageIndex: ObjectJS.Params.PageIndex,
                 keyWords: ObjectJS.Params.KeyWords,
-                isAll:ObjectJS.Params.IsAll
+                isAll: ObjectJS.Params.IsAll,
+                beginTime: ObjectJS.Params.BeginTime,
+                endTime: ObjectJS.Params.EndTime,
+                stage: ObjectJS.Params.Stage,
+                filterType: ObjectJS.Params.FilterType
             },
             function (data) {
                 _self.bindList(data.Items);
@@ -74,7 +172,8 @@
                         _self.getList();
                     }
                 });
-            });
+            }
+        );
     }
 
     //加载列表
@@ -84,24 +183,21 @@
             doT.exec("template/activity/activity_list.html", function (template) {
                 var innerhtml = template(items);
                 innerhtml = $(innerhtml);
+                var innerhtml = template(items);
+                innerhtml = $(innerhtml);
+
+                //操作
+                innerhtml.find(".dropdown").click(function () {
+                    var _this = $(this);
+                    var position = _this.find(".ico-dropdown").position();
+                    $(".dropdown-ul li").data("id", _this.data("id"));
+
+                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
+                        $(this).hide();
+                    });
+                });
 
                 $(".tr-header").after(innerhtml);
-
-                $(".table-list a.ico-del").bind("click", function () {
-                    if (confirm("确定删除?")) {
-                        Global.post("/Activity/DeleteActivity", { activityID: $(this).attr("data-id") }, function (data) {
-                            if (data.Result == 1) {
-                                if(ObjectJS.Params.IsAll==0)
-                                    location.href = "/Activity/MyActivity";
-                                else
-                                    location.href = "/Activity/Activitys";
-                            }
-                            else {
-                                alert("删除失败");
-                            }
-                        });
-                    }
-                });
 
             });
         }
@@ -290,14 +386,6 @@
             if (data.ID.length > 0) {
                 location.href = "/Activity/MyActivity"
             }
-        })
-    }
-
-    
-    //删除
-    ObjectJS.deleteModel = function (id, callback) {
-        Global.post("/Activity/DeleteDepartment", { departid: id }, function (data) {
-            !!callback && callback(data.status);
         })
     }
 

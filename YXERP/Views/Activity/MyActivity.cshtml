@@ -5,20 +5,57 @@
 @{
     ViewBag.Title = "我的活动";
 }
+<link href="/modules/plug/laydate/need/laydate.css" rel="stylesheet" />
+<link href="/modules/plug/laydate/skins/molv/laydate.css" rel="stylesheet" />
+<link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 <link href="/modules/css/products/brand.css" rel="stylesheet" />
 @section scripts{
+<script src="/Scripts/jquery-1.11.1.js"></script>
+<script src="/modules/plug/laydate/laydate.js"></script>
     <script type="text/javascript">
         seajs.use(["scripts/activity/activity"], function (ObjectJS) {
             ObjectJS.init(0);
         });
+
+        $(function () {
+            laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        });
+        var begin = {
+            elem: '#BeginTime',
+            format: 'YYYY-MM-DD',
+            min: laydate.now(),
+            max: '2099-06-16',
+            istime: false,
+            istoday: false
+        };
+
+        var end = {
+            elem: '#EndTime',
+            format: 'YYYY-MM-DD',
+            min: laydate.now(),
+            max: '2099-06-16',
+            istime: false,
+            istoday: false
+        };
+        laydate(begin);
+        laydate(end);
     </script>
 }
 <div class="header-box">
     <span class="header-title left">我的活动</span>
     <a href="Detail" class="ico-add left mTop4 mLeft20">添加活动</a>
-    <div class="right searth-module"> </div> 
 </div>
 <div class="content-body">
+    <div class="search-box">
+        <div id="ActivityStage" class="left"></div>
+        <div id="ActivityType" class="left mLeft20"></div>
+        <div class="left mLeft20">
+            <span class="width80">开始时间：</span><input type="text" id="BeginTime"  class="input"  />
+            <span class="width80">结束时间：</span><input type="text" id="EndTime"  class="input"  />
+            <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
+        </div>
+        <div class="right searth-module" data-text="输入活动名称..." data-width="150"> </div>
+    </div>
     <table class="table-list">
         <tr class="tr-header" id="brand-items">
             <td class="m-len">名称</td>
@@ -32,4 +69,8 @@
     </table>
     <div id="pager" class="mTop20"></div>
 </div>
+<ul class="dropdown-ul hide" style="width:90px;">
+    <li id="setObjectRole">编辑</li>
+    <li id="deleteObject">删除</li>
+</ul>
 
