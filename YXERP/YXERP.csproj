@@ -115,7 +115,6 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
-    <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +236,7 @@
     <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
+    <Content Include="modules\template\system\warehouse-detail.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />
@@ -252,6 +252,8 @@
     <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Activity\Activitys.cshtml" />
     <Content Include="Views\System\Teams.cshtml" />
+    <Content Include="Views\System\Stages.cshtml" />
+    <Content Include="Views\System\Warehouse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -266,8 +268,6 @@
     <Content Include="modules\css\products\attrplug.css" />
     <Content Include="modules\css\orders\filterproducts.css" />
     <Content Include="modules\css\orders\filterdetails.css" />
-    <Content Include="modules\css\warehouse\warehouse.css" />
-    <Content Include="modules\css\warehouse\warehousetype.css" />
     <Content Include="modules\images\default.png" />
     <Content Include="modules\images\ico-add.png" />
     <Content Include="modules\images\ico-back.png" />
@@ -413,9 +413,8 @@
     <Content Include="modules\scripts\products\product.js" />
     <Content Include="modules\scripts\products\attrplug.js" />
     <Content Include="modules\scripts\orders\filterdetails.js" />
-    <Content Include="modules\scripts\warehouse\warehouse.js" />
-    <Content Include="modules\scripts\warehouse\warehousetype.js" />
-    <Content Include="modules\scripts\warehouse\depotseat.js" />
+    <Content Include="modules\scripts\system\warehouse.js" />
+    <Content Include="modules\scripts\system\depotseat.js" />
     <Content Include="modules\template\products\attr_list.html" />
     <Content Include="modules\template\products\brand_list.html" />
     <Content Include="modules\template\products\category_add.html" />
@@ -428,9 +427,9 @@
     <Content Include="modules\template\products\productdetails_list.html" />
     <Content Include="modules\template\orders\filter_attr_list.html" />
     <Content Include="modules\template\orders\filter_product_list.html" />
-    <Content Include="modules\template\warehouse\depotseat_add.html" />
-    <Content Include="modules\template\warehouse\warehouse_list.html" />
-    <Content Include="modules\template\warehouse\depotseat_list.html" />
+    <Content Include="modules\template\system\depotseat_add.html" />
+    <Content Include="modules\template\system\warehouses.html" />
+    <Content Include="modules\template\system\depotseats.html" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
@@ -518,25 +517,7 @@
     <Content Include="Views\Products\ProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Warehouse\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\WareType.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\WareHouse.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\DepotSeat.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\WareHouseAdd.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\WareHouseDetail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Warehouse\WareArea.cshtml" />
+    <Content Include="Views\System\DepotSeat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orders\Index.cshtml" />

@@ -52,7 +52,6 @@
     <Compile Include="Stock\OrdersDAL.cs" />
     <Compile Include="Manage\IndustryDAL.cs" />
     <Compile Include="Stock\ProductsDAL.cs" />
-    <Compile Include="Stock\WarehouseDAL.cs" />
     <Compile Include="Common\CommonDAL.cs" />
     <Compile Include="Manage\ClientDAL.cs" />
     <Compile Include="Manage\ModulesDAL.cs" />

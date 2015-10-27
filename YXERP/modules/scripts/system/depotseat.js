@@ -17,24 +17,22 @@ define(function (require, exports, module) {
         WareID: ""
     };
 
-    var WareCache;
-
     var ObjectJS = {};
     //列表页初始化
-    ObjectJS.initList = function (wares, wareid) {
+    ObjectJS.init = function (wareid) {
         var _self = this;
-        WareCache = JSON.parse(wares.replace(/&quot;/g, '"'));
+
         Params.wareid = wareid;
         EntityModel.WareID = wareid;
         _self.getList();
-        _self.bindListEvent();
+        _self.bindEvent();
     }
     //弹出层
-    ObjectJS.showCreate = function (wares, callback) {
+    ObjectJS.showCreate = function (callback) {
         var _self = this;
-        doT.exec("template/warehouse/depotseat_add.html", function (templateFun) {
+        doT.exec("template/system/depotseat_add.html", function (templateFun) {
 
-            var html = html = templateFun(wares);
+            var html = html = templateFun([]);
 
             Easydialog.open({
                 container: {
@@ -50,7 +48,7 @@ define(function (require, exports, module) {
                             DepotID: EntityModel.DepotID,
                             Name: $("#name").val().trim(),
                             DepotCode: $("#depotcode").val().trim(),
-                            WareID: $("#wareid").val(),
+                            WareID: EntityModel.WareID,
                             Status: $("#status").prop("checked") ? 1 : 0,
                             Description: $("#description").val()
                         };
@@ -63,15 +61,13 @@ define(function (require, exports, module) {
                 }
             });
 
-            $("#name").focus();
+            $("#depotcode").focus();
 
             //编辑填充数据
             if (EntityModel.DepotID) {
                 $("#depotcode").prop("disabled", true);
-                $("#wareid").prop("disabled", true);
                 $("#name").val(EntityModel.Name);
                 $("#depotcode").val(EntityModel.DepotCode);
-                $("#wareid").val(EntityModel.WareID);
                 $("#status").prop("checked", EntityModel.Status == 1);
                 $("#description").val(EntityModel.Description);
                
@@ -88,7 +84,7 @@ define(function (require, exports, module) {
     //保存
     ObjectJS.savaEntity = function (entity) {
         var _self = this;
-        Global.post("/Warehouse/SaveDepotSeat", { obj: JSON.stringify(entity) }, function (data) {
+        Global.post("/System/SaveDepotSeat", { obj: JSON.stringify(entity) }, function (data) {
             if (data.ID.length > 0) {
                 _self.getList();
             }
@@ -96,8 +92,16 @@ define(function (require, exports, module) {
     }
 
     //绑定列表页事件
-    ObjectJS.bindListEvent = function () {
+    ObjectJS.bindEvent = function () {
         var _self = this;
+
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        });
+
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
                 Params.keyWords = keyWords;
@@ -105,48 +109,56 @@ define(function (require, exports, module) {
                 _self.getList();
             });
         });
-
-        $("#sltWareID").val(Params.wareid);
-
-        $("#sltWareID").change(function () {
-            Params.wareid = $("#sltWareID").val();
-            _self.getList();
-        })
-
+        //添加
         $(".ico-add").on("click", function () {
             EntityModel.DepotID = "";
-            _self.showCreate(WareCache);
+            _self.showCreate();
+        });
+
+        //删除
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            confirm("货位删除后不可恢复,确认删除吗？", function () {
+                Global.post("/System/DeleteDepotSeat", { id: _this.data("id") }, function (data) {
+                    if (data.Status) {
+                        _self.getList();
+                    } else {
+                        alert("删除失败！");
+                    }
+                });
+            });
+        });
+        //编辑
+        $("#updateObject").click(function () {
+            var _this = $(this);
+            _self.wareID = _this.data("id");
+            Global.post("/System/GetDepotByID", { id: _this.data("id") }, function (data) {
+                EntityModel = data.Item;
+                _self.showCreate();
+            });
         });
     }
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
         $("#warehouse-items").nextAll().remove();
-        Global.post("/Warehouse/GetDepotSeats", Params, function (data) {
-            doT.exec("template/warehouse/depotseat_list.html", function (templateFun) {
+        Global.post("/System/GetDepotSeats", Params, function (data) {
+            doT.exec("template/system/depotseats.html", function (templateFun) {
                 var innerText = templateFun(data.Items);
                 innerText = $(innerText);
                 $("#warehouse-items").after(innerText);
 
-                //删除事件
-                $(".ico-del").click(function () {
-                    if (confirm("货位删除后不可恢复,确认删除吗？")) {
-                        Global.post("/Warehouse/DeleteDepotSeat", { id: $(this).attr("data-id") }, function (data) {
-                            if (data.Status) {
-                                _self.getList();
-                            } else {
-                                alert("删除失败！");
-                            }
-                        });
-                    }
-                });
-                //编辑事件
-                $(".ico-edit").click(function () {
-                    Global.post("/Warehouse/GetDepotByID", { id: $(this).attr("data-id") }, function (data) {
-                        EntityModel = data.Item;
-                        _self.showCreate(WareCache);
+                //下拉事件
+                innerText.find(".dropdown").click(function () {
+                    var _this = $(this);
+
+                    var position = _this.find(".ico-dropdown").position();
+                    $(".dropdown-ul li").data("id", _this.data("id"));
+                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                        $(this).hide();
                     });
                 });
+
                 //绑定启用插件
                 innerText.find(".status").switch({
                     open_title: "点击启用",
@@ -182,7 +194,7 @@ define(function (require, exports, module) {
     //更改状态
     ObjectJS.editStatus = function (obj, id, status, callback) {
         var _self = this;
-        Global.post("/Warehouse/UpdateDepotSeatStatus", {
+        Global.post("/System/UpdateDepotSeatStatus", {
             id: id,
             status: status ? 0 : 1
         }, function (data) {
