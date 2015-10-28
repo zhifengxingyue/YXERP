@@ -43,7 +43,7 @@ namespace CloudSalesBusiness
             foreach (DataRow dr in dt.Rows)
             {
                 ActivityEntity model = new ActivityEntity();
-                model.FillData(dt.Rows[0]);
+                model.FillData(dr);
                 model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
                 list.Add(model);
             }
