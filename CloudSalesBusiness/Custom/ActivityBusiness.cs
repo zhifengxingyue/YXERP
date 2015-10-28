@@ -28,7 +28,10 @@ namespace CloudSalesBusiness
         /// </summary>
         /// <param name="userid">负责人</param>
         /// <param name="status">状态</param>
+        /// <param name="filterType">过滤类型 0：所有；1：我负责的；2：我参与的</param>
         /// <param name="keyWords">关键词</param>
+        /// <param name="beginTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
         /// <param name="pageSize">页Size</param>
         /// <param name="pageIndex">页码</param>
         /// <param name="totalCount">总记录</param>
