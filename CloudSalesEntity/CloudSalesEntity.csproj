@@ -60,7 +60,7 @@
     <Compile Include="Stock\AttrValue.cs" />
     <Compile Include="Stock\Brand.cs" />
     <Compile Include="Stock\Category.cs" />
-    <Compile Include="Stock\DepotSeat.cs" />
+    <Compile Include="System\DepotSeat.cs" />
     <Compile Include="Stock\ProductAttr.cs" />
     <Compile Include="Stock\ProductDetail.cs" />
     <Compile Include="Stock\ProductImg.cs" />
@@ -71,8 +71,7 @@
     <Compile Include="Stock\StorageDetail.cs" />
     <Compile Include="Stock\StorageDoc.cs" />
     <Compile Include="Stock\WareAreaRel.cs" />
-    <Compile Include="Stock\WareHouse.cs" />
-    <Compile Include="Stock\WareHouseType.cs" />
+    <Compile Include="System\WareHouse.cs" />
     <Compile Include="Common\City.cs" />
     <Compile Include="Common\Country.cs" />
     <Compile Include="Common\Menu.cs" />

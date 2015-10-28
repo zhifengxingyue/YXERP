@@ -7,12 +7,9 @@
     <td>{%=item.Name%}</td>
     <td>{%=item.WareName%}</td>
     <td class='center'><div class="status" data-id="{%=item.DepotID%}" data-value="{%=item.Status==1%}"></div></td>
-    <td title="{%=item.Description%}">{%=item.Description%}</td>
-    <td class="center">
-        <a class="ico-edit" title="编辑" href="javascript:void(0);" data-id="{%=item.DepotID%}"></a>
-    </td>
-    <td class="center">
-        <a class="ico-del" href="javascript:void(0)" title="删除" data-id="{%=item.DepotID%}"></a>
+    <td title="{%=item.Description%}" class="width300 long">{%=item.Description%}</td>
+    <td class="center dropdown" data-id="{%=item.DepotID%}">
+        <span  class="ico-dropdown"></span>
     </td>
 </tr>
 {% } %}

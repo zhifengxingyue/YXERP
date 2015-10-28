@@ -14,14 +14,17 @@ namespace CloudSalesDAL
 
         #region 查询
 
-        public DataTable GetActivitys(string userid, int stage, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
+        public DataTable GetActivitys(string userid, int stage,int filterType, string keyWords, string beginTime, string endTime, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@totalCount",SqlDbType.Int),
                                        new SqlParameter("@pageCount",SqlDbType.Int),
                                        new SqlParameter("@UserID",userid),
                                        new SqlParameter("@Stage",stage),
+                                       new SqlParameter("@FilterType",filterType),
                                        new SqlParameter("@keyWords",keyWords),
+                                       new SqlParameter("@BeginTime",beginTime),
+                                       new SqlParameter("@EndTime",endTime),
                                        new SqlParameter("@pageSize",pageSize),
                                        new SqlParameter("@pageIndex",pageIndex),
                                        new SqlParameter("@AgentID", agentid),

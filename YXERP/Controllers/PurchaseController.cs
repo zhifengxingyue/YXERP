@@ -63,7 +63,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult AuditDetail(string id)
         {
-            ViewBag.Wares = new WarehouseBusiness().GetWareHouses(CurrentUser.ClientID); 
+            ViewBag.Wares = new SystemBusiness().GetWareHouses(CurrentUser.ClientID); 
             ViewBag.Model = OrdersBusiness.GetStorageDetail(id, CurrentUser.ClientID);
             return View();
         }

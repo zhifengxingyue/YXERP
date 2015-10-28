@@ -24,8 +24,28 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult Stages()
+        {
+            return View();
+        }
+
         public ActionResult Teams()
         {
+            return View();
+        }
+
+        public ActionResult Warehouse()
+        {
+            return View();
+        }
+
+        public ActionResult DepotSeat(string id = "")
+        {
+            if (string.IsNullOrEmpty(id)) 
+            {
+                return Redirect("/System/Warehouse");
+            }
+            ViewBag.Ware = new SystemBusiness().GetWareByID(id, CurrentUser.ClientID);
             return View();
         }
 
@@ -113,6 +133,220 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         } 
+
+        #endregion
+
+        #region 仓库货位
+
+        /// <summary>
+        /// 获取仓库列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetWareHouses(string keyWords, int pageSize, int pageIndex, int totalCount)
+        {
+            int pageCount = 0;
+            List<WareHouse> list = new SystemBusiness().GetWareHouses(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        /// <summary>
+        /// 根据ID获取仓库
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetWareHouseByID(string id)
+        {
+            WareHouse model = new SystemBusiness().GetWareByID(id, CurrentUser.ClientID);
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 保存仓库
+        /// </summary>
+        /// <param name="ware"></param>
+        /// <returns></returns>
+        public JsonResult SaveWareHouse(string ware)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            WareHouse model = serializer.Deserialize<WareHouse>(ware);
+
+            string id = string.Empty;
+            if (string.IsNullOrEmpty(model.WareID))
+            {
+                id = new SystemBusiness().AddWareHouse(model.WareCode, model.Name, model.ShortName, model.CityCode, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
+            }
+            else if (new SystemBusiness().UpdateWareHouse(model.WareID, model.WareCode, model.Name, model.ShortName, model.CityCode, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID))
+            {
+                id = model.WareID;
+            }
+
+
+            JsonDictionary.Add("ID", id);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 编辑仓库状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public JsonResult UpdateWareHouseStatus(string id, int status)
+        {
+            bool bl = new SystemBusiness().UpdateWareHouseStatus(id, (CloudSalesEnum.EnumStatus)status, CurrentUser.UserID, CurrentUser.ClientID);
+            JsonDictionary.Add("Status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        /// <summary>
+        /// 删除仓库
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult DeleteWareHouse(string id)
+        {
+            bool bl = new SystemBusiness().UpdateWareHouseStatus(id, CloudSalesEnum.EnumStatus.Delete, CurrentUser.UserID, CurrentUser.ClientID);
+            JsonDictionary.Add("Status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        /// <summary>
+        /// 保存货位
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public JsonResult SaveDepotSeat(string obj)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            DepotSeat model = serializer.Deserialize<DepotSeat>(obj);
+
+            string id = string.Empty;
+            if (string.IsNullOrEmpty(model.DepotID))
+            {
+                id = new SystemBusiness().AddDepotSeat(model.DepotCode, model.WareID, model.Name, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
+            }
+            else if (new SystemBusiness().UpdateDepotSeat(model.DepotID, model.Name, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID))
+            {
+                id = model.WareID;
+            }
+
+
+            JsonDictionary.Add("ID", id);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 获取货位列表
+        /// </summary>
+        /// <param name="keyWords"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public JsonResult GetDepotSeats(string wareid, string keyWords, int pageSize, int pageIndex, int totalCount)
+        {
+            int pageCount = 0;
+            List<DepotSeat> list = new SystemBusiness().GetDepotSeats(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID, wareid);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 根据仓库获取货位
+        /// </summary>
+        /// <param name="wareid"></param>
+        /// <returns></returns>
+        public JsonResult GetDepotSeatsByWareID(string wareid)
+        {
+            List<DepotSeat> list = new SystemBusiness().GetDepotSeatsByWareID(wareid, CurrentUser.ClientID);
+            JsonDictionary.Add("Items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 获取货位详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GetDepotByID(string id = "")
+        {
+            var model = new SystemBusiness().GetDepotByID(id);
+            JsonDictionary.Add("Item", model);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 删除货位
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult DeleteDepotSeat(string id)
+        {
+            bool bl = new SystemBusiness().UpdateDepotSeatStatus(id, CloudSalesEnum.EnumStatus.Delete, CurrentUser.UserID, CurrentUser.ClientID);
+            JsonDictionary.Add("Status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 编辑货位状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public JsonResult UpdateDepotSeatStatus(string id, int status)
+        {
+            bool bl = new SystemBusiness().UpdateDepotSeatStatus(id, (CloudSalesEnum.EnumStatus)status, CurrentUser.UserID, CurrentUser.ClientID);
+            JsonDictionary.Add("Status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         #endregion
 

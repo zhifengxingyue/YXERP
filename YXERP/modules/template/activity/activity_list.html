@@ -9,9 +9,8 @@
     <td>{%=item.EndTime.toDate("yyyy-MM-dd")%}</td>
     <td>{%=item.Address%}</td>
     <td>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
-    <td class="center">
-        <a class="ico-edit" title="编辑" href="Detail/{%=item.ActivityID%}"></a>
-        <a class="ico-del" href="javascript:void(0)" title="删除" data-id="{%=item.ActivityID%}"></a>
+    <td class="center dropdown" data-id="{%=item.ActivityID%}">
+        <span class="ico-dropdown"></span>
     </td>
 </tr>
 {% } %}

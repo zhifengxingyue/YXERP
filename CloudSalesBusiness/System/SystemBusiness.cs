@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CloudSalesEntity;
 using System.Data;
 using CloudSalesDAL;
+using CloudSalesEnum;
 
 namespace CloudSalesBusiness
 {
@@ -88,6 +89,130 @@ namespace CloudSalesBusiness
             CustomSources[clientid].Add(model);
             return model;
         }
+
+        /// <summary>
+        /// 获取仓库列表
+        /// </summary>
+        /// <param name="keyWords">关键词</param>
+        /// <param name="pageSize">每页条数</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <param name="pageCount">总页数</param>
+        /// <param name="clientID">客户端ID</param>
+        /// <returns></returns>
+        public List<WareHouse> GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        {
+            DataSet ds = SystemDAL.BaseProvider.GetWareHouses(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
+
+            List<WareHouse> list = new List<WareHouse>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                WareHouse model = new WareHouse();
+                model.FillData(dr);
+                model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
+                list.Add(model);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取所有仓库（ID和Name）
+        /// </summary>
+        /// <param name="clientID"></param>
+        /// <returns></returns>
+        public List<WareHouse> GetWareHouses(string clientID)
+        {
+            DataTable dt = SystemDAL.BaseProvider.GetWareHouses(clientID);
+
+            List<WareHouse> list = new List<WareHouse>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                WareHouse model = new WareHouse();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 根据ID获取仓库详情
+        /// </summary>
+        /// <param name="wareid"></param>
+        /// <returns></returns>
+        public WareHouse GetWareByID(string wareid, string clientid)
+        {
+            DataTable dt = SystemDAL.BaseProvider.GetWareByID(wareid);
+
+            WareHouse model = new WareHouse();
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+                model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
+            }
+            return model;
+        }
+
+        /// <summary>
+        /// 获取货位列表
+        /// </summary>
+        /// <param name="keyWords">关键词</param>
+        /// <param name="pageSize">每页条数</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="totalCount">总记录数</param>
+        /// <param name="pageCount">总页数</param>
+        /// <param name="clientID">客户端ID</param>
+        /// <returns></returns>
+        public List<DepotSeat> GetDepotSeats(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID, string wareid = "")
+        {
+            DataSet ds = SystemDAL.BaseProvider.GetDepotSeats(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientID, wareid);
+
+            List<DepotSeat> list = new List<DepotSeat>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                DepotSeat model = new DepotSeat();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+        
+        /// <summary>
+        /// 根据仓库ID获取货位
+        /// </summary>
+        /// <param name="wareid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public List<DepotSeat> GetDepotSeatsByWareID(string wareid, string clientid)
+        {
+            DataTable dt = SystemDAL.BaseProvider.GetDepotSeatsByWareID(wareid);
+
+            List<DepotSeat> list = new List<DepotSeat>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                DepotSeat model = new DepotSeat();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取货位详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DepotSeat GetDepotByID(string depotid)
+        {
+            DataTable dt = SystemDAL.BaseProvider.GetDepotByID(depotid);
+
+            DepotSeat model = new DepotSeat();
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+            }
+            return model;
+        }
+
         #endregion
 
         #region 添加
@@ -130,6 +255,48 @@ namespace CloudSalesBusiness
                 return sourceid;
             }
             return "";
+        }
+
+        /// <summary>
+        /// 添加仓库
+        /// </summary>
+        /// <param name="warecode">仓库编码</param>
+        /// <param name="name">名称</param>
+        /// <param name="shortname">简称</param>
+        /// <param name="citycode">所在地区编码</param>
+        /// <param name="status">状态</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid">操作人</param>
+        /// <param name="clientid">客户端ID</param>
+        /// <returns></returns>
+        public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
+        {
+            var id = Guid.NewGuid().ToString();
+            if (SystemDAL.BaseProvider.AddWareHouse(id, warecode, name, shortname, citycode, status, description, operateid, clientid))
+            {
+                return id.ToString();
+            }
+            return string.Empty;
+        }
+        /// <summary>
+        /// 添加货位
+        /// </summary>
+        /// <param name="depotcode">货位编码</param>
+        /// <param name="wareid">仓库ID</param>
+        /// <param name="name">名称</param>
+        /// <param name="status">状态</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public string AddDepotSeat(string depotcode, string wareid, string name, int status, string description, string operateid, string clientid)
+        {
+            var id = Guid.NewGuid().ToString();
+            if (SystemDAL.BaseProvider.AddDepotSeat(id, depotcode, wareid, name, status, description, operateid, clientid))
+            {
+                return id.ToString();
+            }
+            return string.Empty;
         }
 
         #endregion
@@ -185,6 +352,64 @@ namespace CloudSalesBusiness
                 model.Status = 9;
             }
             return bl;
+        }
+
+        /// <summary>
+        /// 编辑仓库
+        /// </summary>
+        /// <param name="id">仓库ID</param>
+        /// <param name="name">名称</param>
+        /// <param name="shortname">简称</param>
+        /// <param name="citycode">地区编码</param>
+        /// <param name="status">状态</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid">操作人</param>
+        /// <param name="clientid">客户端ID</param>
+        /// <returns></returns>
+        public bool UpdateWareHouse(string id,string code ,string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
+        {
+            return SystemDAL.BaseProvider.UpdateWareHouse(id, code, name, shortname, citycode, status, description);
+        }
+
+        /// <summary>
+        /// 编辑仓库状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <param name="operateid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public bool UpdateWareHouseStatus(string id, EnumStatus status, string operateid, string clientid)
+        {
+            return CommonBusiness.Update("WareHouse", "Status", (int)status, " WareID='" + id + "'");
+        }
+
+        /// <summary>
+        /// 编辑货位
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="name">名称</param>
+        /// <param name="status">状态</param>
+        /// <param name="description">描述</param>
+        /// <param name="operateid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public bool UpdateDepotSeat(string id, string name, int status, string description, string operateid, string clientid)
+        {
+            return SystemDAL.BaseProvider.UpdateDepotSeat(id, name, status, description);
+        }
+
+        /// <summary>
+        /// 编辑货位状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <param name="operateid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public bool UpdateDepotSeatStatus(string id, EnumStatus status, string operateid, string clientid)
+        {
+            return CommonBusiness.Update("DepotSeat", "Status", (int)status, " DepotID='" + id + "'");
         }
 
         #endregion
