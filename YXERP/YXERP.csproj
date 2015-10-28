@@ -218,6 +218,7 @@
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
     <Content Include="modules\scripts\system\sources.js" />
+    <Content Include="modules\scripts\system\stages.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />

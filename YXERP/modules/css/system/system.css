@@ -8,6 +8,20 @@
 .create-model li label{ line-height:20px; height:20px; cursor:pointer; }
 .create-model li label input{ line-height:20px; height:20px; }
 
+
+/*客户阶段*/
+.stages-box { width:100%; overflow-y:auto; white-space:nowrap; height:100%; }
+.stages-box .stages-item { width:240px; border:solid 1px #ccc; margin-right:10px; border-radius:2px; 
+                           background-color:#f6f6f6; padding:10px; position:relative; display:inline-block;}
+.stages-box .stages-item .name{ height:30px; line-height:30px;  text-indent:5px; }
+.stages-item .name span{ font-size:14px; color:#333; display:inline-block; height:30px; line-height:30px; width:200px; }
+.stages-item .name input{ height:30px; line-height:30px; width:215px; }
+.stages-box .stages-item .ico-dropdown { position:absolute; right:10px; top:20px; }
+
+.create-child { height:30px; line-height:30px; color:#999; cursor:pointer; text-indent:5px; }
+.create-child:hover { background-color:#fff; color:#333; }
+
+
 /*团队成员*/
 .create-first { height:120px; line-height:120px; margin:100px auto; width:400px; border:solid 1px #eee; box-shadow:0 0 10px #ccc; text-align:center;
                 color:#4a98e7; font-size:18px; cursor:pointer;}

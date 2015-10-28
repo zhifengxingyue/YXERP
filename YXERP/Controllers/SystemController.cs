@@ -26,6 +26,7 @@ namespace YXERP.Controllers
 
         public ActionResult Stages()
         {
+            ViewBag.Items = new SystemBusiness().GetCustomStages(CurrentUser.AgentID, CurrentUser.ClientID);
             return View();
         }
 
@@ -126,6 +127,49 @@ namespace YXERP.Controllers
         public JsonResult DeleteCustomSource(string id)
         {
             bool bl = new SystemBusiness().DeleteCustomSource(id, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        } 
+
+        #endregion
+
+        #region 客户阶段配置
+
+        public JsonResult SaveCustomStage(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            CustomStageEntity model = serializer.Deserialize<CustomStageEntity>(entity);
+
+            int result = 0;
+
+            if (string.IsNullOrEmpty(model.StageID))
+            {
+                model.StageID = new SystemBusiness().CreateCustomStage(model.StageName, model.Sort, "", CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID, out result);
+            }
+            else
+            {
+                bool bl = new SystemBusiness().UpdateCustomStage(model.StageID, model.StageName, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+                if (bl)
+                {
+                    result = 1;
+                }
+            }
+            JsonDictionary.Add("status", result);
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteCustomStage(string id)
+        {
+            bool bl = new SystemBusiness().DeleteCustomStage(id, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("status", bl);
             return new JsonResult
             {

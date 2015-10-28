@@ -187,4 +187,10 @@
   <ItemGroup>
     <None Include="Procedures\System\P_InsertCustomSource.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_InsertCustomStage.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_DeletetCustomStage.sql" />
+  </ItemGroup>
 </Project>

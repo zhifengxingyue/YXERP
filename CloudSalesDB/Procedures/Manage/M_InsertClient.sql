@@ -102,6 +102,16 @@ insert into CustomSource(SourceID,SourceCode,SourceName,IsSystem,IsChoose,Status
 insert into CustomSource(SourceID,SourceCode,SourceName,IsSystem,IsChoose,Status,CreateUserID,ClientID)
 					values(NEWID(),'Source-Manual','手动添加',1,1,1,@UserID,@ClientID)
 
+--客户阶段
+insert into CustomStage(StageID,StageName,Sort,Status,Mark,PID,CreateUserID,ClientID)
+values(NEWID(),'新客户',1,1,1,'',@UserID,@ClientID)
+
+insert into CustomStage(StageID,StageName,Sort,Status,Mark,PID,CreateUserID,ClientID)
+values(NEWID(),'机会客户',2,1,0,'',@UserID,@ClientID)
+
+insert into CustomStage(StageID,StageName,Sort,Status,Mark,PID,CreateUserID,ClientID)
+values(NEWID(),'成交客户',3,1,2,'',@UserID,@ClientID)
+
 if(@Err>0)
 begin
 	set @Result=0

@@ -1,5 +1,38 @@
 ﻿@{
-    ViewBag.Title = "Stages";
+    ViewBag.Title = "客户阶段配置";
+    var list = (List<CloudSalesEntity.CustomStageEntity>)ViewBag.Items;
 }
 
-<h2>Stages</h2>
+@section css{
+    <link rel="stylesheet" href="/modules/css/system/system.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/system/stages"], function (obj) {
+            obj.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">客户阶段配置</span>
+</div>
+<div class="content-body">
+    <ul class="stages-box">
+        @foreach (var model in list.Where(m => m.PID == "").ToList())
+        { 
+            <li class="stages-item">
+                <div class="name"><span class="long">@(model.StageName)</span><input type="text" data-sort="@(model.Sort)" maxlength="50" id="@(model.StageID)" class="hide" /></div>
+                <div class="ico-dropdown" data-type="@(model.Mark)" data-id="@(model.StageID)"></div>
+                <div class="child-items">
+
+                </div>
+                <div class="create-child" data-id="@(model.StageID)">+ 新建阶段行为</div>
+            </li>
+        }
+    </ul>
+</div>
+<ul class="dropdown-ul hide" style="width:150px;">
+    <li id="editObject">修改阶段名称</li>
+    <li id="addObject">在此后添加新阶段</li>
+    <li id="deleteObject">删除阶段</li>
+</ul>

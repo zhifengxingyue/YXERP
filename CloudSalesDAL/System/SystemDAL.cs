@@ -35,6 +35,27 @@ namespace CloudSalesDAL
             return GetDataTable(sqlText, paras, CommandType.Text);
         }
 
+        public DataTable GetCustomStages(string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            DataTable dt = GetDataTable("select * from CustomStage where ClientID=@ClientID Order by Sort", paras, CommandType.Text);
+
+            return dt;
+        }
+
+        public DataTable GetCustomStageByID(string stageid)
+        {
+            string sqlText = "select * from CustomStage where StageID=@StageID";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@StageID",stageid)
+                                   };
+
+            return GetDataTable(sqlText, paras, CommandType.Text);
+        }
+
         public DataSet GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             SqlParameter[] paras = { 
@@ -132,6 +153,24 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool CreateCustomStage(string stageid, string name, int sort, string pid, string userid, string clientid, out int result)
+        {
+            result = 0;
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@Result",result),
+                                     new SqlParameter("@StageID",stageid),
+                                     new SqlParameter("@StageName",name),
+                                     new SqlParameter("@Sort",sort),
+                                     new SqlParameter("@PID",pid),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            bool bl = ExecuteNonQuery("P_InsertCustomStage", paras, CommandType.StoredProcedure) > 0;
+            result = Convert.ToInt32(paras[0].Value);
+            return bl;
+        }
+
         public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             string sqlText = "insert into WareHouse(WareID,WareCode,Name,ShortName,CityCode,Status,Description,CreateUserID,ClientID) " +
@@ -186,6 +225,19 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool UpdateCustomStage(string stageid, string stagename, string clientid)
+        {
+            string sqltext = "update CustomStage set StageName=@StageName where StageID=@StageID and ClientID=@ClientID";
+
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@StageID",stageid),
+                                     new SqlParameter("@StageName",stagename),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
+            return bl;
+        }
+
         public bool DeleteCustomSource(string sourceid, string clientid)
         {
             string sqltext = "update CustomSource set Status=9 where SourceID=@SourceID and clientid=@ClientID";
@@ -195,6 +247,16 @@ namespace CloudSalesDAL
                                      new SqlParameter("@ClientID" , clientid)
                                    };
             bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
+            return bl;
+        }
+
+        public bool DeleteCustomStage(string stageid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@StageID",stageid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            bool bl = ExecuteNonQuery("P_DeletetCustomStage", paras, CommandType.StoredProcedure) > 0;
             return bl;
         }
 

@@ -37,7 +37,7 @@ define(function (require, exports, module) {
             Easydialog.open({
                 container: {
                     id: "depotseat-add-div",
-                    header: EntityModel.DepotID == "" ? "添加货位" : "编辑货位",
+                    header: EntityModel.DepotID == "" ? "新建货位" : "编辑货位",
                     content: html,
                     yesFn: function () {
 

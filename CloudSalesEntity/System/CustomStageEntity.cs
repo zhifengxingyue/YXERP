@@ -16,13 +16,15 @@ namespace CloudSalesEntity
 
         public int Mark { get; set; }
 
+        public int Status { get; set; }
+
         [Property("Lower")]
         public string PID { get; set; }
 
         public DateTime CreateTime { get; set; }
 
         [Property("Lower")]
-        public DateTime CreateUserID { get; set; }
+        public string CreateUserID { get; set; }
 
         [Property("Lower")]
         public string ClientID { get; set; }

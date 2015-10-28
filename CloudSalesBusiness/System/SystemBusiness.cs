@@ -16,6 +16,7 @@ namespace CloudSalesBusiness
         #region Cache
 
         private static Dictionary<string, List<CustomSourceEntity>> _source;
+        private static Dictionary<string, List<CustomStageEntity>> _stages;
 
         /// <summary>
         /// 客户来源
@@ -33,6 +34,25 @@ namespace CloudSalesBusiness
             set 
             {
                 _source = value;
+            }
+        }
+
+        /// <summary>
+        /// 客户阶段
+        /// </summary>
+        private static Dictionary<string, List<CustomStageEntity>> CustomStages
+        {
+            get
+            {
+                if (_stages == null)
+                {
+                    _stages = new Dictionary<string, List<CustomStageEntity>>();
+                }
+                return _stages;
+            }
+            set
+            {
+                _stages = value;
             }
         }
 
@@ -87,6 +107,55 @@ namespace CloudSalesBusiness
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
             }
             CustomSources[clientid].Add(model);
+            return model;
+        }
+
+        /// <summary>
+        /// 获取客户阶段列表
+        /// </summary>
+        /// <param name="agentid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public List<CustomStageEntity> GetCustomStages(string agentid, string clientid)
+        {
+            if (CustomStages.ContainsKey(clientid))
+            {
+                return CustomStages[clientid].Where(m => m.Status == 1).OrderBy(m => m.Sort).ToList();
+            }
+
+            List<CustomStageEntity> list = new List<CustomStageEntity>();
+            DataTable dt = SystemDAL.BaseProvider.GetCustomStages(clientid);
+            foreach (DataRow dr in dt.Rows)
+            {
+                CustomStageEntity model = new CustomStageEntity();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            CustomStages.Add(clientid, list);
+
+            return list;
+        }
+
+        /// <summary>
+        /// 根据ID获取客户阶段
+        /// </summary>
+        /// <param name="stageid"></param>
+        /// <returns></returns>
+        public CustomStageEntity GetCustomStageByID(string stageid, string agentid, string clientid)
+        {
+            var list = GetCustomStages(agentid, clientid);
+            if (list.Where(m => m.StageID == stageid).Count() > 0)
+            {
+                return list.Where(m => m.StageID == stageid).FirstOrDefault();
+            }
+
+            CustomStageEntity model = new CustomStageEntity();
+            DataTable dt = SystemDAL.BaseProvider.GetCustomStageByID(stageid);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+            }
+            CustomStages[clientid].Add(model);
             return model;
         }
 
@@ -258,6 +327,54 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 添加客户阶段
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="sort"></param>
+        /// <param name="pid"></param>
+        /// <param name="userid"></param>
+        /// <param name="agentid"></param>
+        /// <param name="clientid"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public string CreateCustomStage(string name, int sort, string pid, string userid, string agentid, string clientid, out int result)
+        {
+            string stageid = Guid.NewGuid().ToString();
+
+            bool bl = SystemDAL.BaseProvider.CreateCustomStage(stageid, name, sort, pid, userid, clientid, out result);
+            if (bl)
+            {
+                if (!CustomStages.ContainsKey(clientid))
+                {
+                    GetCustomStages(agentid, clientid);
+                }
+
+                var list = CustomStages[clientid].Where(m => m.Sort >= sort && m.Status == 1).ToList();
+                foreach (var model in list)
+                {
+                    model.Sort += 1;
+                }
+
+                CustomStages[clientid].Add(new CustomStageEntity()
+                {
+                    StageID = stageid.ToLower(),
+                    StageName = name,
+                    Sort = sort,
+                    PID = pid,
+                    Mark = 0,
+                    Status = 1,
+                    CreateTime = DateTime.Now,
+                    CreateUserID = userid,
+                    ClientID = clientid
+                });
+
+                return stageid;
+            }
+            return "";
+        }
+
+
+        /// <summary>
         /// 添加仓库
         /// </summary>
         /// <param name="warecode">仓库编码</param>
@@ -330,6 +447,28 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
+        /// 编辑客户阶段名称
+        /// </summary>
+        /// <param name="stageid"></param>
+        /// <param name="name"></param>
+        /// <param name="userid"></param>
+        /// <param name="ip"></param>
+        /// <param name="agentid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public bool UpdateCustomStage(string stageid, string name, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetCustomStageByID(stageid, agentid, clientid);
+
+            bool bl = SystemDAL.BaseProvider.UpdateCustomStage(stageid, name, clientid);
+            if (bl)
+            {
+                model.StageName = name;
+            }
+            return bl;
+        }
+
+        /// <summary>
         /// 删除客户来源
         /// </summary>
         /// <param name="sourceid"></param>
@@ -350,6 +489,36 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 model.Status = 9;
+            }
+            return bl;
+        }
+
+        /// <summary>
+        /// 删除客户来源
+        /// </summary>
+        /// <param name="sourceid"></param>
+        /// <param name="userid"></param>
+        /// <param name="ip"></param>
+        /// <param name="agentid"></param>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        public bool DeleteCustomStage(string stageid, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetCustomStageByID(stageid, agentid, clientid);
+            //新客户和成交客户不能删除
+            if (model.Mark != 0)
+            {
+                return false;
+            }
+            bool bl = SystemDAL.BaseProvider.DeleteCustomStage(stageid, clientid);
+            if (bl)
+            {
+                model.Status = 9;
+                var list = CustomStages[clientid].Where(m => m.Sort > model.Sort && m.Status == 1).ToList();
+                foreach (var stage in list)
+                {
+                    stage.Sort -= 1;
+                }
             }
             return bl;
         }
