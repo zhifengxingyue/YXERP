@@ -35,6 +35,11 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult OrderType()
+        {
+            return View();
+        }
+
         public ActionResult Warehouse()
         {
             return View();
