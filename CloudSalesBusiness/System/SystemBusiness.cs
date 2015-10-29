@@ -17,6 +17,7 @@ namespace CloudSalesBusiness
 
         private static Dictionary<string, List<CustomSourceEntity>> _source;
         private static Dictionary<string, List<CustomStageEntity>> _stages;
+        private static Dictionary<string, List<OrderTypeEntity>> _ordertypes;
 
         /// <summary>
         /// 客户来源
@@ -53,6 +54,25 @@ namespace CloudSalesBusiness
             set
             {
                 _stages = value;
+            }
+        }
+
+        /// <summary>
+        /// 订单类型
+        /// </summary>
+        private static Dictionary<string, List<OrderTypeEntity>> OrderTypes
+        {
+            get
+            {
+                if (_ordertypes == null)
+                {
+                    _ordertypes = new Dictionary<string, List<OrderTypeEntity>>();
+                }
+                return _ordertypes;
+            }
+            set
+            {
+                _ordertypes = value;
             }
         }
 
@@ -154,6 +174,47 @@ namespace CloudSalesBusiness
             return model;
         }
 
+        public List<OrderTypeEntity> GetOrderTypes(string agentid, string clientid)
+        {
+            if (OrderTypes.ContainsKey(clientid))
+            {
+                return OrderTypes[clientid].ToList();
+            }
+
+            List<OrderTypeEntity> list = new List<OrderTypeEntity>();
+            DataSet ds = SystemDAL.BaseProvider.GetOrderTypes(clientid);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                OrderTypeEntity model = new OrderTypeEntity();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
+                list.Add(model);
+            }
+
+            OrderTypes.Add(clientid, list);
+
+            return list;
+        }
+
+        public OrderTypeEntity GetOrderTypeByID(string typeid, string agentid, string clientid)
+        {
+            var list = GetOrderTypes(agentid, clientid);
+            if (list.Where(m => m.TypeID == typeid).Count() > 0)
+            {
+                return list.Where(m => m.TypeID == typeid).FirstOrDefault();
+            }
+
+            OrderTypeEntity model = new OrderTypeEntity();
+            DataTable dt = SystemDAL.BaseProvider.GetOrderTypeByID(typeid);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
+            }
+            OrderTypes[clientid].Add(model);
+            return model;
+        }
+
         /// <summary>
         /// 获取仓库列表
         /// </summary>
@@ -240,12 +301,7 @@ namespace CloudSalesBusiness
             return list;
         }
         
-        /// <summary>
-        /// 根据仓库ID获取货位
-        /// </summary>
-        /// <param name="wareid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
+
         public List<DepotSeat> GetDepotSeatsByWareID(string wareid, string clientid)
         {
             DataTable dt = SystemDAL.BaseProvider.GetDepotSeatsByWareID(wareid);
@@ -260,11 +316,6 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 获取货位详情
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public DepotSeat GetDepotByID(string depotid)
         {
             DataTable dt = SystemDAL.BaseProvider.GetDepotByID(depotid);
@@ -375,6 +426,35 @@ namespace CloudSalesBusiness
             return "";
         }
 
+        public string CreateOrderType(string typename, string typecode, string userid, string agentid, string clientid)
+        {
+            string typeid = Guid.NewGuid().ToString();
+
+            bool bl = SystemDAL.BaseProvider.CreateOrderType(typeid, typename, typecode, userid, clientid);
+            if (bl)
+            {
+                if (!OrderTypes.ContainsKey(clientid))
+                {
+                    GetOrderTypes(agentid, clientid);
+                }
+
+                OrderTypes[clientid].Add(new OrderTypeEntity()
+                {
+                    TypeID = typeid.ToLower(),
+                    TypeName = typename,
+                    TypeCode = typecode,
+                    Status = 1,
+                    CreateTime = DateTime.Now,
+                    CreateUserID = userid,
+                    CreateUser = OrganizationBusiness.GetUserByUserID(userid, agentid),
+                    ClientID = clientid
+                });
+
+                return typeid;
+            }
+            return "";
+        }
+
         public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             var id = Guid.NewGuid().ToString();
@@ -415,18 +495,6 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        public bool UpdateCustomStage(string stageid, string name, string userid, string ip, string agentid, string clientid)
-        {
-            var model = GetCustomStageByID(stageid, agentid, clientid);
-
-            bool bl = SystemDAL.BaseProvider.UpdateCustomStage(stageid, name, clientid);
-            if (bl)
-            {
-                model.StageName = name;
-            }
-            return bl;
-        }
-
         public bool DeleteCustomSource(string sourceid, string userid, string ip, string agentid, string clientid)
         {
             var model = GetCustomSourcesByID(sourceid, agentid, clientid);
@@ -439,6 +507,18 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 CustomSources[clientid].Remove(model);
+            }
+            return bl;
+        }
+
+        public bool UpdateCustomStage(string stageid, string name, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetCustomStageByID(stageid, agentid, clientid);
+
+            bool bl = SystemDAL.BaseProvider.UpdateCustomStage(stageid, name, clientid);
+            if (bl)
+            {
+                model.StageName = name;
             }
             return bl;
         }
@@ -487,6 +567,31 @@ namespace CloudSalesBusiness
             {
                 var item = model.StageItem.Where(m => m.ItemID == itemid).FirstOrDefault();
                 model.StageItem.Remove(item);
+            }
+            return bl;
+        }
+
+        public bool UpdateOrderType(string typeid, string typename, string typecode, string usercid, string ip, string agentid, string clientid)
+        {
+            var model = GetOrderTypeByID(typeid, agentid, clientid);
+
+            bool bl = SystemDAL.BaseProvider.UpdateOrderType(typeid, typename, typecode, clientid);
+            if (bl)
+            {
+                model.TypeName = typename;
+                model.TypeCode = typecode;
+            }
+            return bl;
+        }
+
+        public bool DeleteOrderType(string typeid, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetOrderTypeByID(typeid, agentid, clientid);
+
+            bool bl = CommonBusiness.Update("OrderType", "Status", "9", "TypeID='" + typeid + "'");
+            if (bl)
+            {
+                OrderTypes[clientid].Remove(model);
             }
             return bl;
         }
