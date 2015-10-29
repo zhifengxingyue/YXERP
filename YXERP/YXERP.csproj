@@ -255,6 +255,7 @@
     <Content Include="Views\System\Teams.cshtml" />
     <Content Include="Views\System\Stages.cshtml" />
     <Content Include="Views\System\Warehouse.cshtml" />
+    <Content Include="Views\System\OrderType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
