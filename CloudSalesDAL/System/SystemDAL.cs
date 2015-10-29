@@ -27,7 +27,7 @@ namespace CloudSalesDAL
 
         public DataTable GetCustomSourceByID(string sourceid)
         {
-            string sqlText = "select * from CustomSource where SourceID=@SourceID";
+            string sqlText = "select * from CustomSource where SourceID=@SourceID and Status=1";
             SqlParameter[] paras = { 
                                      new SqlParameter("@SourceID",sourceid)
                                    };
@@ -35,25 +35,24 @@ namespace CloudSalesDAL
             return GetDataTable(sqlText, paras, CommandType.Text);
         }
 
-        public DataTable GetCustomStages(string clientid)
+        public DataSet GetCustomStages(string clientid)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@ClientID",clientid)
                                    };
 
-            DataTable dt = GetDataTable("select * from CustomStage where ClientID=@ClientID Order by Sort", paras, CommandType.Text);
+            return GetDataSet("select * from CustomStage where ClientID=@ClientID and Status=1 Order by Sort; select * from StageItem where ClientID=@ClientID and Status=1;", paras, CommandType.Text, "Stages|Items");
 
-            return dt;
         }
 
-        public DataTable GetCustomStageByID(string stageid)
+        public DataSet GetCustomStageByID(string stageid)
         {
-            string sqlText = "select * from CustomStage where StageID=@StageID";
+            string sqlText = "select * from CustomStage where StageID=@StageID and Status=1; select * from StageItem where StageID=@StageID and Status=1;";
             SqlParameter[] paras = { 
                                      new SqlParameter("@StageID",stageid)
                                    };
 
-            return GetDataTable(sqlText, paras, CommandType.Text);
+            return GetDataSet(sqlText, paras, CommandType.Text, "Stages|Items");
         }
 
         public DataSet GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
@@ -171,6 +170,20 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool CreateStageItem(string itemid, string name, string stageid, string userid, string clientid)
+        {
+            string sqlText = "insert into StageItem(ItemID,ItemName,StageID,CreateUserID,ClientID) " +
+                                           " values(@ItemID,@ItemName,@StageID,@CreateUserID,@ClientID) ";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ItemID" , itemid),
+                                     new SqlParameter("@ItemName" , name),
+                                     new SqlParameter("@StageID" , stageid),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+        }
+
         public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             string sqlText = "insert into WareHouse(WareID,WareCode,Name,ShortName,CityCode,Status,Description,CreateUserID,ClientID) " +
@@ -250,10 +263,11 @@ namespace CloudSalesDAL
             return bl;
         }
 
-        public bool DeleteCustomStage(string stageid, string clientid)
+        public bool DeleteCustomStage(string stageid, string userid, string clientid)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@StageID",stageid),
+                                     new SqlParameter("@UserID",userid),
                                      new SqlParameter("@ClientID" , clientid)
                                    };
             bool bl = ExecuteNonQuery("P_DeletetCustomStage", paras, CommandType.StoredProcedure) > 0;

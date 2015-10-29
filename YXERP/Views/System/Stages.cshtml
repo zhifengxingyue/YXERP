@@ -22,17 +22,33 @@
         { 
             <li class="stages-item">
                 <div class="name"><span class="long">@(model.StageName)</span><input type="text" data-sort="@(model.Sort)" maxlength="50" id="@(model.StageID)" class="hide" /></div>
-                <div class="ico-dropdown" data-type="@(model.Mark)" data-id="@(model.StageID)"></div>
-                <div class="child-items">
+                <div class="ico-dropdown operatestage" data-type="@(model.Mark)" data-id="@(model.StageID)"></div>
+                <ul class="child-items">
+                    @foreach (var item in model.StageItem)
+                    {
+                        <li id="@(item.ItemID)">
+                            <span class="itemname width200 long">@(item.ItemName)</span>
+                            <span data-id="@(item.ItemID)" data-stageid="@(model.StageID)" class="ico-dropdown operateitem"></span>
+                        </li> 
+                    }
+                </ul>
+                <div class="create-action hide">
+                    <textarea class="" maxlength="200">
 
+                    </textarea>
                 </div>
                 <div class="create-child" data-id="@(model.StageID)">+ 新建阶段行为</div>
             </li>
         }
     </ul>
 </div>
-<ul class="dropdown-ul hide" style="width:150px;">
+<ul class="dropdown-ul hide ddlStage" id="ddlStage" style="width:150px;">
     <li id="editObject">修改阶段名称</li>
     <li id="addObject">在此后添加新阶段</li>
     <li id="deleteObject">删除阶段</li>
+</ul>
+
+<ul class="dropdown-ul hide ddlItem" id="ddlItem" style="width:120px;">
+    <li id="editItem">编辑阶段行为</li>
+    <li id="deleteItem">删除阶段行为</li>
 </ul>

@@ -124,11 +124,19 @@ namespace CloudSalesBusiness
             }
 
             List<CustomStageEntity> list = new List<CustomStageEntity>();
-            DataTable dt = SystemDAL.BaseProvider.GetCustomStages(clientid);
-            foreach (DataRow dr in dt.Rows)
+            DataSet ds = SystemDAL.BaseProvider.GetCustomStages(clientid);
+            foreach (DataRow dr in ds.Tables["Stages"].Rows)
             {
                 CustomStageEntity model = new CustomStageEntity();
                 model.FillData(dr);
+                model.StageItem = new List<StageItemEntity>();
+                foreach (DataRow itemdr in ds.Tables["Items"].Select("StageID='" + model.StageID + "'"))
+                {
+                    StageItemEntity item = new StageItemEntity();
+                    item.FillData(itemdr);
+                    model.StageItem.Add(item);
+                }
+
                 list.Add(model);
             }
             CustomStages.Add(clientid, list);
@@ -150,10 +158,17 @@ namespace CloudSalesBusiness
             }
 
             CustomStageEntity model = new CustomStageEntity();
-            DataTable dt = SystemDAL.BaseProvider.GetCustomStageByID(stageid);
-            if (dt.Rows.Count > 0)
+            DataSet ds = SystemDAL.BaseProvider.GetCustomStageByID(stageid);
+            if (ds.Tables["Stages"].Rows.Count > 0)
             {
-                model.FillData(dt.Rows[0]);
+                model.FillData(ds.Tables["Stages"].Rows[0]);
+                model.StageItem = new List<StageItemEntity>();
+                foreach (DataRow itemdr in ds.Tables["Items"].Rows)
+                {
+                    StageItemEntity item = new StageItemEntity();
+                    item.FillData(itemdr);
+                    model.StageItem.Add(item);
+                }
             }
             CustomStages[clientid].Add(model);
             return model;
@@ -286,15 +301,6 @@ namespace CloudSalesBusiness
 
         #region 添加
 
-        /// <summary>
-        /// 创建客户来源
-        /// </summary>
-        /// <param name="sourcecode">来源编码</param>
-        /// <param name="sourcename">名称</param>
-        /// <param name="ischoose">是否允许选择</param>
-        /// <param name="userid">创建人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public string CreateCustomSource(string sourcecode, string sourcename, int ischoose, string userid, string agentid, string clientid,out int result)
         {
             string sourceid = Guid.NewGuid().ToString();
@@ -326,17 +332,6 @@ namespace CloudSalesBusiness
             return "";
         }
 
-        /// <summary>
-        /// 添加客户阶段
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="sort"></param>
-        /// <param name="pid"></param>
-        /// <param name="userid"></param>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
         public string CreateCustomStage(string name, int sort, string pid, string userid, string agentid, string clientid, out int result)
         {
             string stageid = Guid.NewGuid().ToString();
@@ -365,7 +360,8 @@ namespace CloudSalesBusiness
                     Status = 1,
                     CreateTime = DateTime.Now,
                     CreateUserID = userid,
-                    ClientID = clientid
+                    ClientID = clientid,
+                    StageItem = new List<StageItemEntity>()
                 });
 
                 return stageid;
@@ -373,19 +369,32 @@ namespace CloudSalesBusiness
             return "";
         }
 
+        public string CreateStageItem(string name, string stageid, string userid, string agentid, string clientid)
+        {
+            string itemid = Guid.NewGuid().ToString().ToLower();
 
-        /// <summary>
-        /// 添加仓库
-        /// </summary>
-        /// <param name="warecode">仓库编码</param>
-        /// <param name="name">名称</param>
-        /// <param name="shortname">简称</param>
-        /// <param name="citycode">所在地区编码</param>
-        /// <param name="status">状态</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
+            bool bl = SystemDAL.BaseProvider.CreateStageItem(itemid, name, stageid, userid, clientid);
+            if (bl)
+            {
+                var model = GetCustomStageByID(stageid, agentid, clientid);
+                if (model.StageItem == null)
+                {
+                    model.StageItem = new List<StageItemEntity>();
+                }
+                model.StageItem.Add(new StageItemEntity()
+                {
+                    ItemID = itemid,
+                    ItemName = name,
+                    StageID = stageid,
+                    ClientID = clientid,
+                    CreateTime = DateTime.Now
+                });
+
+                return itemid;
+            }
+            return "";
+        }
+
         public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             var id = Guid.NewGuid().ToString();
@@ -395,17 +404,7 @@ namespace CloudSalesBusiness
             }
             return string.Empty;
         }
-        /// <summary>
-        /// 添加货位
-        /// </summary>
-        /// <param name="depotcode">货位编码</param>
-        /// <param name="wareid">仓库ID</param>
-        /// <param name="name">名称</param>
-        /// <param name="status">状态</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
+
         public string AddDepotSeat(string depotcode, string wareid, string name, int status, string description, string operateid, string clientid)
         {
             var id = Guid.NewGuid().ToString();
@@ -420,16 +419,6 @@ namespace CloudSalesBusiness
 
         #region 编辑/删除
 
-        /// <summary>
-        /// 编辑客户来源
-        /// </summary>
-        /// <param name="sourceid"></param>
-        /// <param name="sourcename"></param>
-        /// <param name="ischoose"></param>
-        /// <param name="userid"></param>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateCustomSource(string sourceid, string sourcename, int ischoose, string userid,string ip, string agentid, string clientid)
         {
             var model = GetCustomSourcesByID(sourceid, agentid, clientid);
@@ -446,16 +435,6 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        /// <summary>
-        /// 编辑客户阶段名称
-        /// </summary>
-        /// <param name="stageid"></param>
-        /// <param name="name"></param>
-        /// <param name="userid"></param>
-        /// <param name="ip"></param>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateCustomStage(string stageid, string name, string userid, string ip, string agentid, string clientid)
         {
             var model = GetCustomStageByID(stageid, agentid, clientid);
@@ -468,15 +447,6 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        /// <summary>
-        /// 删除客户来源
-        /// </summary>
-        /// <param name="sourceid"></param>
-        /// <param name="userid"></param>
-        /// <param name="ip"></param>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool DeleteCustomSource(string sourceid, string userid, string ip, string agentid, string clientid)
         {
             var model = GetCustomSourcesByID(sourceid, agentid, clientid);
@@ -493,15 +463,6 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        /// <summary>
-        /// 删除客户来源
-        /// </summary>
-        /// <param name="sourceid"></param>
-        /// <param name="userid"></param>
-        /// <param name="ip"></param>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool DeleteCustomStage(string stageid, string userid, string ip, string agentid, string clientid)
         {
             var model = GetCustomStageByID(stageid, agentid, clientid);
@@ -510,7 +471,7 @@ namespace CloudSalesBusiness
             {
                 return false;
             }
-            bool bl = SystemDAL.BaseProvider.DeleteCustomStage(stageid, clientid);
+            bool bl = SystemDAL.BaseProvider.DeleteCustomStage(stageid, userid, clientid);
             if (bl)
             {
                 model.Status = 9;
@@ -523,66 +484,53 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        /// <summary>
-        /// 编辑仓库
-        /// </summary>
-        /// <param name="id">仓库ID</param>
-        /// <param name="name">名称</param>
-        /// <param name="shortname">简称</param>
-        /// <param name="citycode">地区编码</param>
-        /// <param name="status">状态</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
+        public bool UpdateStageItem(string itemid, string name, string stageid, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetCustomStageByID(stageid, agentid, clientid);
+
+            bool bl = CommonBusiness.Update("StageItem", "ItemName", name, "ItemID='" + itemid + "'");
+            if (bl)
+            {
+                var item = model.StageItem.Where(m => m.ItemID == itemid).FirstOrDefault();
+                item.ItemName = name;
+            }
+            return bl;
+        }
+
+        public bool DeleteStageItem(string itemid, string stageid, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetCustomStageByID(stageid, agentid, clientid);
+
+            bool bl = CommonBusiness.Update("StageItem", "Status", "9", "ItemID='" + itemid + "'");
+            if (bl)
+            {
+                var item = model.StageItem.Where(m => m.ItemID == itemid).FirstOrDefault();
+                model.StageItem.Remove(item);
+            }
+            return bl;
+        }
+
         public bool UpdateWareHouse(string id,string code ,string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             return SystemDAL.BaseProvider.UpdateWareHouse(id, code, name, shortname, citycode, status, description);
         }
 
-        /// <summary>
-        /// 编辑仓库状态
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateWareHouseStatus(string id, EnumStatus status, string operateid, string clientid)
         {
             return CommonBusiness.Update("WareHouse", "Status", (int)status, " WareID='" + id + "'");
         }
 
-        /// <summary>
-        /// 编辑货位
-        /// </summary>
-        /// <param name="id">ID</param>
-        /// <param name="name">名称</param>
-        /// <param name="status">状态</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateDepotSeat(string id, string name, int status, string description, string operateid, string clientid)
         {
             return SystemDAL.BaseProvider.UpdateDepotSeat(id, name, status, description);
         }
 
-        /// <summary>
-        /// 编辑货位状态
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateDepotSeatStatus(string id, EnumStatus status, string operateid, string clientid)
         {
             return CommonBusiness.Update("DepotSeat", "Status", (int)status, " DepotID='" + id + "'");
         }
 
         #endregion
-
 
     }
 }

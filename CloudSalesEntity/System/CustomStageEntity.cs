@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CloudSalesEntity
 {
+    [Serializable]
     public class CustomStageEntity
     {
         [Property("Lower")]
@@ -29,6 +30,8 @@ namespace CloudSalesEntity
         [Property("Lower")]
         public string ClientID { get; set; }
 
+        public List<StageItemEntity> StageItem { get; set; }
+
         public void FillData(System.Data.DataRow dr)
         {
             dr.FillData(this);
@@ -36,6 +39,7 @@ namespace CloudSalesEntity
 
     }
 
+    [Serializable]
     public class StageItemEntity
     {
         [Property("Lower")]
@@ -49,7 +53,7 @@ namespace CloudSalesEntity
         public DateTime CreateTime { get; set; }
 
         [Property("Lower")]
-        public DateTime CreateUserID { get; set; }
+        public string CreateUserID { get; set; }
 
         [Property("Lower")]
         public string ClientID { get; set; }

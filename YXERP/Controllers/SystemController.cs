@@ -167,9 +167,45 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult SaveStageItem(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            StageItemEntity model = serializer.Deserialize<StageItemEntity>(entity);
+
+            if (string.IsNullOrEmpty(model.ItemID))
+            {
+                model.ItemID = new SystemBusiness().CreateStageItem(model.ItemName, model.StageID, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            }
+            else
+            {
+                bool bl = new SystemBusiness().UpdateStageItem(model.ItemID, model.ItemName, model.StageID, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+                if (!bl)
+                {
+                    model.ItemID = "";
+                }
+            }
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult DeleteCustomStage(string id)
         {
             bool bl = new SystemBusiness().DeleteCustomStage(id, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteStageItem(string id, string stageid)
+        {
+            bool bl = new SystemBusiness().DeleteStageItem(id, stageid, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("status", bl);
             return new JsonResult
             {

@@ -11,15 +11,24 @@
 
 /*客户阶段*/
 .stages-box { width:100%; overflow-y:auto; white-space:nowrap; height:100%; }
-.stages-box .stages-item { width:240px; border:solid 1px #ccc; margin-right:10px; border-radius:2px; 
+.stages-box .stages-item { width:240px; border:solid 1px #ccc; margin-right:10px; border-radius:2px; vertical-align:top;
                            background-color:#f6f6f6; padding:10px; position:relative; display:inline-block;}
 .stages-box .stages-item .name{ height:30px; line-height:30px;  text-indent:5px; }
 .stages-item .name span{ font-size:14px; color:#333; display:inline-block; height:30px; line-height:30px; width:200px; }
 .stages-item .name input{ height:30px; line-height:30px; width:215px; }
-.stages-box .stages-item .ico-dropdown { position:absolute; right:10px; top:20px; }
+.stages-box .stages-item .operatestage { position:absolute; right:10px; top:20px; }
 
-.create-child { height:30px; line-height:30px; color:#999; cursor:pointer; text-indent:5px; }
-.create-child:hover { background-color:#fff; color:#333; }
+.child-items { width:240px; margin-top:5px; }
+.child-items li{ height:30px; background-color:#fff; border-radius:2px; text-indent:5px; position:relative; margin-top:10px; cursor:pointer; }
+.child-items li .itemname{ height:30px; line-height:30px;display:inline-block; }
+.child-items li .operateitem{ position:absolute; right:8px; top:8px; }
+.child-items li:hover .operateitem{ display:inline-block; }
+
+.stages-box .create-action { margin-top:10px; }
+.stages-box .create-action textarea { width:240px; resize:none; line-height:25px; }
+
+.stages-box .create-child { height:30px; line-height:30px; color:#999; cursor:pointer; text-indent:5px; margin-top:5px; }
+.stages-box .create-child:hover { background-color:#fff; color:#333; }
 
 
 /*团队成员*/
