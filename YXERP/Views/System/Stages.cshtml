@@ -27,7 +27,7 @@
                     @foreach (var item in model.StageItem)
                     {
                         <li id="@(item.ItemID)">
-                            <span class="itemname width200 long">@(item.ItemName)</span>
+                            <span title="@(item.ItemName)" class="itemname width200 long">@(item.ItemName)</span>
                             <span data-id="@(item.ItemID)" data-stageid="@(model.StageID)" class="ico-dropdown operateitem"></span>
                         </li> 
                     }

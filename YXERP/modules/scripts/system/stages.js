@@ -10,11 +10,17 @@
         var _self = this;
         _self.bindEvent();
         _self.bindElement($(".stages-item"));
+        _self.bingStyle();
     }
 
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+
+        $(window).resize(function () {
+            _self.bingStyle();
+        });
+
         $(document).click(function (e) {
             //隐藏下拉
             if (!$(e.target).hasClass("operatestage")) {
@@ -226,6 +232,11 @@
         Global.post("/System/DeleteCustomStage", { id: id }, function (data) {
             !!callback && callback(data.status);
         })
+    }
+
+    ObjectJS.bingStyle = function () {
+        var height = document.documentElement.clientHeight;
+        $(".child-items").css("max-height", height - 300);
     }
 
     module.exports = ObjectJS;

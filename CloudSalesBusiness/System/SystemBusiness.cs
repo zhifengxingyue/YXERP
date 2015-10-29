@@ -60,11 +60,6 @@ namespace CloudSalesBusiness
 
         #region 查询
 
-        /// <summary>
-        /// 获取客户来源列表
-        /// </summary>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public List<CustomSourceEntity> GetCustomSources(string agentid,string clientid)
         {
             if (CustomSources.ContainsKey(clientid)) 
@@ -86,11 +81,7 @@ namespace CloudSalesBusiness
             return list;
 
         }
-        /// <summary>
-        /// 根据ID获取客户来源
-        /// </summary>
-        /// <param name="sourceid"></param>
-        /// <returns></returns>
+
         public CustomSourceEntity GetCustomSourcesByID(string sourceid, string agentid, string clientid)
         {
             var list = GetCustomSources(agentid, clientid);
@@ -110,17 +101,11 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 获取客户阶段列表
-        /// </summary>
-        /// <param name="agentid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public List<CustomStageEntity> GetCustomStages(string agentid, string clientid)
         {
             if (CustomStages.ContainsKey(clientid))
             {
-                return CustomStages[clientid].Where(m => m.Status == 1).OrderBy(m => m.Sort).ToList();
+                return CustomStages[clientid].OrderBy(m => m.Sort).ToList();
             }
 
             List<CustomStageEntity> list = new List<CustomStageEntity>();
@@ -144,11 +129,6 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 根据ID获取客户阶段
-        /// </summary>
-        /// <param name="stageid"></param>
-        /// <returns></returns>
         public CustomStageEntity GetCustomStageByID(string stageid, string agentid, string clientid)
         {
             var list = GetCustomStages(agentid, clientid);
@@ -458,7 +438,7 @@ namespace CloudSalesBusiness
             bool bl = SystemDAL.BaseProvider.DeleteCustomSource(sourceid, clientid);
             if (bl)
             {
-                model.Status = 9;
+                CustomSources[clientid].Remove(model);
             }
             return bl;
         }
@@ -474,7 +454,8 @@ namespace CloudSalesBusiness
             bool bl = SystemDAL.BaseProvider.DeleteCustomStage(stageid, userid, clientid);
             if (bl)
             {
-                model.Status = 9;
+                CustomStages[clientid].Remove(model);
+
                 var list = CustomStages[clientid].Where(m => m.Sort > model.Sort && m.Status == 1).ToList();
                 foreach (var stage in list)
                 {

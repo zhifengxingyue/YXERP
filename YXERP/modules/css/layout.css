@@ -164,7 +164,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 /*搜索条件*/
 .search-box { margin:10px 15px; overflow:auto;}
 
-.content-body{ padding:0 15px 50px; overflow:auto; }
+.content-body{ padding:0 15px 30px; overflow:auto; }
 
 /*数据验证错误*/
 .verify-fail-err { height:20px; line-height:20px; padding-left:10px; padding-top:2px;}
