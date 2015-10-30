@@ -132,7 +132,7 @@
     ObjectJS.deleteModel = function (id, callback) {
         Global.post("/System/DeleteOrderType", { id: id }, function (data) {
             !!callback && callback(data.status);
-        })
+        });
     }
 
     module.exports = ObjectJS;

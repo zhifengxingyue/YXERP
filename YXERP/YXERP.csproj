@@ -221,6 +221,7 @@
     <Content Include="modules\scripts\system\ordertype.js" />
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
+    <Content Include="modules\scripts\system\teams.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
@@ -239,9 +240,12 @@
     <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
+    <Content Include="modules\template\system\teamuser.html" />
+    <Content Include="modules\template\system\teams.html" />
     <Content Include="modules\template\system\warehouse-detail.html" />
     <Content Include="modules\template\system\ordertype-detail.html" />
     <Content Include="modules\template\system\ordertypes.html" />
+    <Content Include="modules\template\system\team-detail.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />

@@ -290,6 +290,82 @@ namespace YXERP.Controllers
 
         #endregion
 
+        #region 销售团队
+
+        public JsonResult GetTeams()
+        {
+
+            var list = new SystemBusiness().GetTeams(CurrentUser.AgentID).ToList();
+            
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SaveTeam(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            TeamEntity model = serializer.Deserialize<TeamEntity>(entity);
+
+            if (string.IsNullOrEmpty(model.TeamID))
+            {
+                model.TeamID = new SystemBusiness().CreateTeam(model.TeamName, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            }
+            else
+            {
+                bool bl = new SystemBusiness().UpdateTeam(model.TeamID, model.TeamName, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+                if (!bl)
+                {
+                    model.TeamID = "";
+                }
+            }
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteTeam(string id)
+        {
+            bool bl = new SystemBusiness().DeleteTeam(id, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult UpdateUserTeamID(string ids, string teamid)
+        {
+            bool bl = false;//
+            string[] list = ids.Split(',');
+            foreach (var userid in list)
+            {
+                if (!string.IsNullOrEmpty(userid))
+                {
+                    if (new SystemBusiness().UpdateUserTeamID(userid, teamid, CurrentUser.AgentID, CurrentUser.UserID, OperateIP, CurrentUser.ClientID))
+                    {
+                        bl = true;
+                    }
+                }
+            }
+            JsonDictionary.Add("status", bl);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
+        #endregion
+
         #region 仓库货位
 
         /// <summary>

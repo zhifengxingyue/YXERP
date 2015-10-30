@@ -18,6 +18,7 @@ namespace CloudSalesBusiness
         private static Dictionary<string, List<CustomSourceEntity>> _source;
         private static Dictionary<string, List<CustomStageEntity>> _stages;
         private static Dictionary<string, List<OrderTypeEntity>> _ordertypes;
+        private static Dictionary<string, List<TeamEntity>> _teams;
 
         /// <summary>
         /// 客户来源
@@ -73,6 +74,25 @@ namespace CloudSalesBusiness
             set
             {
                 _ordertypes = value;
+            }
+        }
+
+        /// <summary>
+        /// 销售团队
+        /// </summary>
+        private static Dictionary<string, List<TeamEntity>> Teams
+        {
+            get
+            {
+                if (_teams == null)
+                {
+                    _teams = new Dictionary<string, List<TeamEntity>>();
+                }
+                return _teams;
+            }
+            set
+            {
+                _teams = value;
             }
         }
 
@@ -212,6 +232,47 @@ namespace CloudSalesBusiness
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
             }
             OrderTypes[clientid].Add(model);
+            return model;
+        }
+
+        public List<TeamEntity> GetTeams(string agentid)
+        {
+            if (Teams.ContainsKey(agentid))
+            {
+                return Teams[agentid];
+            }
+
+            List<TeamEntity> list = new List<TeamEntity>();
+            DataTable dt = SystemDAL.BaseProvider.GetTeams(agentid);
+            foreach (DataRow dr in dt.Rows)
+            {
+                TeamEntity model = new TeamEntity();
+                model.FillData(dr);
+                model.Users = OrganizationBusiness.GetUsers(agentid).Where(m => m.TeamID == model.TeamID).ToList();
+                list.Add(model);
+            }
+            Teams.Add(agentid, list);
+
+            return list;
+
+        }
+
+        public TeamEntity GetTeamByID(string teamid, string agentid)
+        {
+            var list = GetTeams(agentid);
+            if (list.Where(m => m.TeamID == teamid).Count() > 0)
+            {
+                return list.Where(m => m.TeamID == teamid).FirstOrDefault();
+            }
+
+            TeamEntity model = new TeamEntity();
+            DataTable dt = SystemDAL.BaseProvider.GetTeamByID(teamid);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+                model.Users = OrganizationBusiness.GetUsers(agentid).Where(m => m.TeamID == model.TeamID).ToList();
+            }
+            Teams[teamid].Add(model);
             return model;
         }
 
@@ -455,6 +516,34 @@ namespace CloudSalesBusiness
             return "";
         }
 
+        public string CreateTeam(string teamname, string userid, string agentid, string clientid)
+        {
+            string teamid = Guid.NewGuid().ToString();
+
+            bool bl = SystemDAL.BaseProvider.CreateTeam(teamid, teamname, userid, agentid, clientid);
+            if (bl)
+            {
+                if (!Teams.ContainsKey(agentid))
+                {
+                    GetTeams(agentid);
+                }
+
+                Teams[agentid].Add(new TeamEntity()
+                {
+                    TeamID = teamid.ToLower(),
+                    TeamName = teamname,
+                    Status = 1,
+                    CreateTime = DateTime.Now,
+                    CreateUserID = userid,
+                    ClientID = clientid,
+                    Users = new List<Users>()
+                });
+
+                return teamid;
+            }
+            return "";
+        }
+
         public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             var id = Guid.NewGuid().ToString();
@@ -592,6 +681,60 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 OrderTypes[clientid].Remove(model);
+            }
+            return bl;
+        }
+
+        public bool UpdateTeam(string teamid, string name, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetTeamByID(teamid, agentid);
+
+            bool bl = CommonBusiness.Update("Teams", "TeamName", name, "TeamID='" + teamid + "'");
+            if (bl)
+            {
+                model.TeamName = name;
+            }
+            return bl;
+        }
+
+        public bool DeleteTeam(string teamid, string userid, string ip, string agentid, string clientid)
+        {
+            var model = GetTeamByID(teamid, agentid);
+
+            bool bl = SystemDAL.BaseProvider.DeleteTeam(teamid, userid, agentid);
+            if (bl)
+            {
+                var list = OrganizationBusiness.GetUsers(agentid).Where(m => m.TeamID == teamid).ToList();
+                foreach (var user in list)
+                {
+                    user.TeamID = "";
+                }
+                Teams[agentid].Remove(model);
+            }
+            return bl;
+        }
+
+        public bool UpdateUserTeamID(string userid, string teamid, string agentid, string operateid, string ip, string clientid)
+        {
+            var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
+            
+            bool bl = SystemDAL.BaseProvider.UpdateUserTeamID(userid, teamid, operateid, agentid);
+            if (bl)
+            {
+                
+                if (string.IsNullOrEmpty(teamid))
+                {
+                    var team = GetTeamByID(model.TeamID, agentid);
+                    var user = team.Users.Where(m => m.UserID == userid).FirstOrDefault();
+                    team.Users.Remove(user);
+                }
+                else
+                {
+                    var team = GetTeamByID(teamid, agentid);
+                    team.Users.Add(model);
+                }
+
+                model.TeamID = teamid;
             }
             return bl;
         }

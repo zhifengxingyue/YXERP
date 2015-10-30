@@ -32,30 +32,38 @@
 
 
 /*团队成员*/
-.create-first { height:120px; line-height:120px; margin:100px auto; width:400px; border:solid 1px #eee; box-shadow:0 0 10px #ccc; text-align:center;
-                color:#4a98e7; font-size:18px; cursor:pointer;}
-.create-first .plus{color:#4a98e7; font-size:30px; font-weight:bold; top:3px; position:relative; }
+
+.team-header { font-size:14px; height:20px; line-height:20px; font-weight:bold; padding-bottom:5px;}
+
+.team-list .child-item { height:85px; width:100%; }
+
+.team-list .team-item { height:30px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee;
+                             margin-top:12px; padding:10px; position:relative; cursor:pointer; float:left; margin-top:20px; }
+.team-list .team-item:hover { border:solid 1px #4a98e7; }
+.team-list .team-item .name{ height:30px; width:120px; float:left; margin-left:10px; line-height:30px;}
+.team-list .team-item .ico-dropdown { position:absolute; right:10px; top:15px; }
 
 
-.child-item { height:85px; width:100%; }
-.structure-list .user-item { height:50px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee;
+.team-list .user-item { height:50px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee;
                              margin-top:12px; padding:10px; position:relative; cursor:pointer; float:left; }
-.structure-list .user-item:hover { border:solid 1px #4a98e7; }
-.structure-list .user-avatar { height:50px; width:50px; float:left; }
-.structure-list .user-avatar img{ height:50px; width:50px; border-radius:25px;}
+.team-list .user-item:hover { border:solid 1px #4a98e7; }
+.team-list .user-item .user-name{ height:50px; width:120px; float:left; margin-left:10px; padding-top:7px; }
+.team-list .user-item .user-name li{  line-height:15px;width:120px;}
+.team-list .user-item .ico-dropdown { position:absolute; right:10px; top:10px; }
 
-.structure-list  .user-name{ height:50px; width:120px; float:left; margin-left:10px; padding-top:7px; }
-.structure-list  .user-name li{ line-height:15px;width:120px; }
 
-.structure-list .ico-dropdown { position:absolute; right:10px; top:10px; }
+.team-list .user-avatar { height:50px; width:50px; float:left; }
+.team-list .user-avatar img{ height:50px; width:50px; border-radius:25px;}
 
-.child-item .icoopen,.child-item  .icoclose { display:inline-block; width:20px; height:20px; margin-top:40px; cursor:pointer; margin-left:-46px;}
-.child-item .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat;  }
-.child-item .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat;}
-.child-item .leftline{ background:url('/modules/images/ico-structure-full.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
-.child-item .lastline{ background:url('/modules/images/ico-structure-last.png') no-repeat -5px; display:inline-block; width:65px; height:85px;}
-.child-item .line{ background:url('/modules/images/ico-structure-line.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
-.child-item .null{ display:inline-block; width:65px; height:85px;}
+
+
+.team-list .icoopen,.team-list  .icoclose { display:inline-block; width:20px; height:20px; margin-top:40px; cursor:pointer; margin-left:-46px;}
+.team-list .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat;  }
+.team-list .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat;}
+.team-list .leftline{ background:url('/modules/images/ico-structure-full.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
+.team-list .lastline{ background:url('/modules/images/ico-structure-last.png') no-repeat -5px; display:inline-block; width:65px; height:85px;}
+.team-list .line{ background:url('/modules/images/ico-structure-line.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
+.team-list .null{ display:inline-block; width:65px; height:85px;}
 
 
 /*仓库*/

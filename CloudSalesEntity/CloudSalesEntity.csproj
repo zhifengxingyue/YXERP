@@ -87,6 +87,7 @@
     <Compile Include="Common\Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\OrderTypeEntity.cs" />
+    <Compile Include="System\TeamEntity.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

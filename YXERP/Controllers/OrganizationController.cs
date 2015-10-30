@@ -353,6 +353,19 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult GetUserNoTeam() 
+        {
+            var list = OrganizationBusiness.GetUsers(CurrentUser.AgentID).Where(m => m.TeamID == "");
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
         /// <summary>
         /// 编辑组织架构上级
         /// </summary>
