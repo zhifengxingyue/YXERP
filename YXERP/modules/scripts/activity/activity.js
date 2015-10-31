@@ -326,22 +326,23 @@
                 if (data.Item) {
                     var item = data.Item;
                     $("#Name").val(item.Name);
-                    ObjectJS.createMember2(item.Owner, "OwnerIDs", true);
+                    ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
                     for (var i = 0; i < item.Members.length; i++) {
-                        ObjectJS.createMember2(item.Members[i], "MemberIDs", false);
+                        ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
                     }
                     $("#PosterDisImg").attr("src", item.Poster);
                     $("#PosterImg").val(item.Poster);
                     $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
                     $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                     $("#Address").val(item.Address);
+
                     editor.ready(function () {
                         editor.setContent(decodeURI(item.Remark));
                     });
                     
                     
                     require.async("businesscard", function () {
-                        $("#MemberIDs div.member").businessCard();
+                        $("div.member").businessCard();
                     });
                 }
             });
@@ -371,20 +372,18 @@
     }
 
     //拼接一个用户成员
-    ObjectJS.createMember2 = function (item, id, isSingle) {
+    ObjectJS.createMemberDetail = function (item, id) {
         if (item.Avatar == '')
             item.Avatar = "/modules/images/defaultavatar.png";
-        var html = '<div class="member left" bindID="' + item.UserID + '">';
+        var html = '<div class="member left" data-id="' + item.UserID + '">';
         html += '    <div class="left pRight5">';
         html += '          <img src="' + item.Avatar + '" />';
         html += '     </div>';
         html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
         html += '      <div class="clear"></div>';
         html += '   </div>';
-        if (isSingle)
-            $("#" + id).append(html);
-        else
-            $("#" + id).append(html);
+
+        $("#" + id).append(html);
 
        
     }

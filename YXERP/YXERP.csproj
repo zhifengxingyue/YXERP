@@ -185,6 +185,7 @@
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\images\ico_searchhover.png" />
     <Content Include="modules\plug\businesscard\businesscard.js" />
+    <Content Include="modules\plug\businesscard\demo.html" />
     <Content Include="modules\plug\businesscard\style.css" />
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
     <Content Include="modules\plug\chooseuser\choosemduser.html" />

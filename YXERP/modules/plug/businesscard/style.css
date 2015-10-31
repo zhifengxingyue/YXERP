@@ -5,8 +5,9 @@
         border:solid 2px #eee;
         border-radius:5px;
         z-index:1000;
-        width:300px;
-        height:100px;
+        width:220px;
+        height:130px;
+        padding:10px;
         }
 
         .businessCard ul {
@@ -17,6 +18,7 @@
 
         .businessCard ul li {
             line-height:25px;
+            height:25px;
         }
 
         .businessCard .userAvatar{
@@ -30,14 +32,13 @@
         display: inline-block;
         width: 20px;
         height: 20px;
-        top: 14px;
+        top: 0px;
         left: 15px;
         }
 
         .userArrow {
         border: 10px transparent solid;
-        border-top-color: #fff;
-        border-bottom-width: 0;
+        border-top-color: #eee;
         display: inline-block;
         vertical-align: top;
         }

@@ -75,6 +75,17 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult GetUserDetail(string id)
+        {
+            Users model = OrganizationBusiness.GetUserByUserID(id, CurrentUser.AgentID);
+            JsonDictionary.Add("Item", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         /// <summary>
         /// 保存活动
         /// </summary>
