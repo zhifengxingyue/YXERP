@@ -123,6 +123,7 @@ define(function (require, exports, module) {
                     cityCode: model.CityCode
                 });
             } else {
+                $("#warehouseStatus").prop("checked", "checked");
                 CityObj = City.createCity({
                     elementID: "warehouseCity"
                 });
