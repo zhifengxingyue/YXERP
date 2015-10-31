@@ -67,7 +67,3 @@
 .team-list .line{ background:url('/modules/images/ico-structure-line.png') no-repeat -5px;display:inline-block; width:65px; height:85px; }
 .team-list .null{ display:inline-block; width:65px; height:85px;}
 
-
-/*仓库*/
-.table-add li label{ line-height:20px; height:20px; cursor:pointer; }
-.table-add li label input{ line-height:20px; height:20px; }

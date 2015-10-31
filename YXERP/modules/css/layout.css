@@ -45,8 +45,6 @@ select option{ padding:2px; }
           display:inline-block; cursor:pointer; color:#666; }
 .ico-del:hover{ background:url(../images/ico-del-deep.png) no-repeat;}
 
-
-
 /*删除 叉*/
 .ico-delete{ background:url(../images/ico-delete.png) no-repeat; height:20px; min-width:20px; line-height:20px; 
           display:inline-block; cursor:pointer;}
@@ -99,13 +97,12 @@ header .modules.hover span { border-bottom:solid 8px #fff; border-top:none; }
 .choose-modules .modules-list .modules-item:hover{ background-color:#fff;  }
 .modules-list .modules-item:hover a span{ color:#2F73B8;}
 
-
+/*二级菜单*/
 header .menu { height:50px; margin-left:60px; }
 header .menu a{  height:50px; line-height:50px;text-align:center; width:110px; display:inline-block; }
 header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:15px; float:left; }
 header .menu a span{ margin-left:8px; float:left; color:#BFD2F2; font-size:14px;}
 header .menu .select{ background-color:#174A7F;color:#fff;}
-
 header .menu a:hover span,header .menu .select span{ color:#fff;}
 
 
@@ -164,7 +161,19 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 /*搜索条件*/
 .search-box { margin:10px 15px; overflow:auto;}
 
-.content-body{ padding:0 15px 30px; overflow:auto; }
+.content-body{ padding:0 15px 80px; overflow:auto; }
+
+/*底部样式*/
+.bottom-body { height:50px; background-color:#666; width:100%; position:fixed; bottom:0; border-bottom:solid 3px #947443;opacity:0.9; }
+.bottom-body .bottom-main { margin:0 160px;}
+.bottom-body .bottom-main  .modules { width:100px; height:50px; background-color:#333; margin-top:-10px; cursor:pointer; padding-top:10px; }
+.modules .ico-menu { background:url('/modules/images/ico-menu.png') no-repeat 13px 0; height:24px; width:50px; padding-top:25px; 
+                     line-height:25px; color:#fff; margin:0 auto; text-align:center;}
+.modules .open-modules { height:50px; line-height:40px; position:relative; color:#fff; width:80px; padding-left:20px; display:none; }
+.modules .open-modules span{ border-bottom:solid 6px #fff; border-left:solid 6px transparent ;border-right:solid 6px transparent; 
+                             top:18px; right:10px; position:absolute; }
+.modules:hover .ico-menu { display:none; }
+.modules:hover .open-modules { display:block; }
 
 /*数据验证错误*/
 .verify-fail-err { height:20px; line-height:20px; padding-left:10px; padding-top:2px;}
