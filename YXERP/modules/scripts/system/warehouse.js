@@ -58,7 +58,7 @@ define(function (require, exports, module) {
         //编辑
         $("#updateObject").click(function () {
             var _this = $(this);
-            _self.wareID = _this.data("id");
+
             Global.post("/System/GetWareHouseByID", { id: _this.data("id") }, function (data) {
                 var model = data.model;
                 _self.createModel(model);
@@ -82,7 +82,7 @@ define(function (require, exports, module) {
                             return false;
                         }
                         var entity = {
-                            WareID: _self.wareID,
+                            WareID: model ? model.WareID : "",
                             Name: $("#warehouseName").val().trim(),
                             WareCode: $("#warehouseCode").val().trim(),
                             ShortName: $("#shortName").val().trim(),

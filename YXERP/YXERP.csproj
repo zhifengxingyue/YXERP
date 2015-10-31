@@ -114,6 +114,7 @@
     <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,8 +220,10 @@
     <Content Include="modules\scripts\purchase\mypurchase.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
+    <Content Include="modules\scripts\system\ordertype.js" />
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
+    <Content Include="modules\scripts\system\teams.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
@@ -239,7 +242,12 @@
     <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
+    <Content Include="modules\template\system\teamuser.html" />
+    <Content Include="modules\template\system\teams.html" />
     <Content Include="modules\template\system\warehouse-detail.html" />
+    <Content Include="modules\template\system\ordertype-detail.html" />
+    <Content Include="modules\template\system\ordertypes.html" />
+    <Content Include="modules\template\system\team-detail.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />
@@ -258,6 +266,8 @@
     <Content Include="Views\System\Stages.cshtml" />
     <Content Include="Views\System\Warehouse.cshtml" />
     <Content Include="Views\System\OrderType.cshtml" />
+    <Content Include="Views\Security\Index.cshtml" />
+    <Content Include="Views\System\Target.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

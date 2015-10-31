@@ -193,4 +193,10 @@
   <ItemGroup>
     <None Include="Procedures\System\P_DeletetCustomStage.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_DeleteTeam.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_UpdateUserTeamID.sql" />
+  </ItemGroup>
 </Project>

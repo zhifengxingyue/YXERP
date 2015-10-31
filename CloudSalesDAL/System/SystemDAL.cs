@@ -55,6 +55,47 @@ namespace CloudSalesDAL
             return GetDataSet(sqlText, paras, CommandType.Text, "Stages|Items");
         }
 
+        public DataSet GetOrderTypes(string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            return GetDataSet("select * from OrderType where ClientID=@ClientID and Status=1 ", paras, CommandType.Text);
+
+        }
+
+        public DataTable GetOrderTypeByID(string typeid)
+        {
+            string sqlText = "select * from OrderType where TypeID=@TypeID and Status=1";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TypeID",typeid)
+                                   };
+
+            return GetDataTable(sqlText, paras, CommandType.Text);
+        }
+
+        public DataTable GetTeams(string agentid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@AgentID",agentid)
+                                   };
+
+            DataTable dt = GetDataTable("select * from Teams where AgentID=@AgentID and Status=1 ", paras, CommandType.Text);
+
+            return dt;
+        }
+
+        public DataTable GetTeamByID(string teamid)
+        {
+            string sqlText = "select * from Teams where TeamID=@TeamID and Status=1";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TeamID",teamid)
+                                   };
+
+            return GetDataTable(sqlText, paras, CommandType.Text);
+        }
+
         public DataSet GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             SqlParameter[] paras = { 
@@ -184,6 +225,34 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
+        public bool CreateOrderType(string typeid, string typename, string typecode, string userid, string clientid)
+        {
+            string sqlText = "insert into OrderType(TypeID,TypeName,TypeCode,CreateUserID,ClientID) " +
+                                           " values(@TypeID,@TypeName,@TypeCode,@CreateUserID,@ClientID) ";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TypeID" , typeid),
+                                     new SqlParameter("@TypeName" , typename),
+                                     new SqlParameter("@TypeCode" , typecode),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+        }
+
+        public bool CreateTeam(string teamid, string teamname, string userid, string agentid,string clientid)
+        {
+            string sqlText = "insert into Teams(TeamID,TeamName,AgentID,CreateUserID,ClientID) " +
+                                           " values(@TeamID,@TeamName,@AgentID,@CreateUserID,@ClientID) ";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TeamID" , teamid),
+                                     new SqlParameter("@TeamName" , teamname),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+        }
+
         public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
             string sqlText = "insert into WareHouse(WareID,WareCode,Name,ShortName,CityCode,Status,Description,CreateUserID,ClientID) " +
@@ -238,6 +307,18 @@ namespace CloudSalesDAL
             return bl;
         }
 
+        public bool DeleteCustomSource(string sourceid, string clientid)
+        {
+            string sqltext = "update CustomSource set Status=9 where SourceID=@SourceID and clientid=@ClientID";
+
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@SourceID",sourceid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
+            return bl;
+        }
+
         public bool UpdateCustomStage(string stageid, string stagename, string clientid)
         {
             string sqltext = "update CustomStage set StageName=@StageName where StageID=@StageID and ClientID=@ClientID";
@@ -245,18 +326,6 @@ namespace CloudSalesDAL
             SqlParameter[] paras = { 
                                      new SqlParameter("@StageID",stageid),
                                      new SqlParameter("@StageName",stagename),
-                                     new SqlParameter("@ClientID" , clientid)
-                                   };
-            bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
-            return bl;
-        }
-
-        public bool DeleteCustomSource(string sourceid, string clientid)
-        {
-            string sqltext = "update CustomSource set Status=9 where SourceID=@SourceID and clientid=@ClientID";
-
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@SourceID",sourceid),
                                      new SqlParameter("@ClientID" , clientid)
                                    };
             bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
@@ -271,6 +340,43 @@ namespace CloudSalesDAL
                                      new SqlParameter("@ClientID" , clientid)
                                    };
             bool bl = ExecuteNonQuery("P_DeletetCustomStage", paras, CommandType.StoredProcedure) > 0;
+            return bl;
+        }
+
+        public bool UpdateOrderType(string typeid, string typename, string typecode, string clientid)
+        {
+            string sqltext = "update OrderType set TypeName=@TypeName,TypeCode=@TypeCode where TypeID=@TypeID and ClientID=@ClientID";
+
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TypeID",typeid),
+                                     new SqlParameter("@TypeName",typename),
+                                     new SqlParameter("@TypeCode",typecode),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            bool bl = ExecuteNonQuery(sqltext, paras, CommandType.Text) > 0;
+            return bl;
+        }
+
+        public bool DeleteTeam(string teamid, string userid, string agentid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@TeamID",teamid),
+                                     new SqlParameter("@UserID",userid),
+                                     new SqlParameter("@AgentID" , agentid)
+                                   };
+            bool bl = ExecuteNonQuery("P_DeleteTeam", paras, CommandType.StoredProcedure) > 0;
+            return bl;
+        }
+
+        public bool UpdateUserTeamID(string userid, string teamid, string operateid, string agentid)
+        {
+            SqlParameter[] paras = { 
+                                         new SqlParameter("@UserID",userid),
+                                         new SqlParameter("@TeamID",teamid),
+                                         new SqlParameter("@AgentID" , agentid),
+                                         new SqlParameter("@OperateID" , operateid)
+                                   };
+            bool bl = ExecuteNonQuery("P_UpdateUserTeamID", paras, CommandType.StoredProcedure) > 0;
             return bl;
         }
 

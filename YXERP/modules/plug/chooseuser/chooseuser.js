@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     //默认参数
     PlugJS.prototype.default = {
         title:"选择员工", //标题
-        type: 1,  //类型 1：云销用户选择 2：明道用户导入 3：组织架构设置
+        type: 1,  //类型 1：云销用户选择 2：明道用户导入 3：组织架构设置 4：销售团队成员
         single: false,
         callback: null   //回调
     };
@@ -36,6 +36,8 @@ define(function (require, exports, module) {
             templateUrl = "/plug/chooseuser/choosemduser.html";
         } else if (_self.setting.type == 3) {
             url = "/Organization/GetUsersByParentID";
+        } else if (_self.setting.type == 4) {
+            url = "/Organization/GetUserNoTeam";
         }
         Global.post(url, {}, function (data) {
             //从明道获取数据失败

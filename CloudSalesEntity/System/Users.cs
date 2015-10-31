@@ -273,6 +273,8 @@ namespace CloudSalesEntity
                     return string.Empty;
             }
         }
+        [Property("Lower")]
+        public string TeamID { get; set; }
 
         public Users CreateUser { get; set; }
 

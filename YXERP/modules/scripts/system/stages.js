@@ -234,6 +234,7 @@
         })
     }
 
+    //高度控制
     ObjectJS.bingStyle = function () {
         var height = document.documentElement.clientHeight;
         $(".child-items").css("max-height", height - 300);

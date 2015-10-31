@@ -131,7 +131,6 @@ define(function (require, exports, module) {
         //编辑
         $("#updateObject").click(function () {
             var _this = $(this);
-            _self.wareID = _this.data("id");
             Global.post("/System/GetDepotByID", { id: _this.data("id") }, function (data) {
                 EntityModel = data.Item;
                 _self.showCreate();
