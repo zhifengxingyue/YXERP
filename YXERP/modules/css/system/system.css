@@ -1,12 +1,14 @@
 ﻿
 /*创建弹出层*/
-.create-model { width:300px;  }
+.create-model { min-width:300px;  }
 .create-model li{ margin-top:10px; overflow:auto; }
 .create-model li .columnname{ width:60px; }
 .create-model li input[type="text"]{ width:180px; }
 .create-model li textarea{ width:300px; }
 .create-model li label{ line-height:20px; height:20px; cursor:pointer; }
 .create-model li label input{ line-height:20px; height:20px; }
+
+.create-model span{ display:inline-block; vertical-align:top;}
 
 
 /*客户阶段*/
@@ -38,7 +40,7 @@
 .team-list .child-item { height:85px; width:100%; }
 
 .team-list .team-item { height:30px; width:180px; border:solid 1px #ccc; border-radius:2px; box-shadow:0 0 3px #eee;
-                             margin-top:12px; padding:10px; position:relative; cursor:pointer; float:left; margin-top:20px; }
+                             margin-top:12px; padding:10px; position:relative; cursor:pointer; float:left; margin-top:25px; }
 .team-list .team-item:hover { border:solid 1px #4a98e7; }
 .team-list .team-item .name{ height:30px; width:120px; float:left; margin-left:10px; line-height:30px;}
 .team-list .team-item .ico-dropdown { position:absolute; right:10px; top:15px; }
