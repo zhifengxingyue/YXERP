@@ -338,6 +338,11 @@
                     editor.ready(function () {
                         editor.setContent(decodeURI(item.Remark));
                     });
+                    
+                    
+                    require.async("businesscard", function () {
+                        $("#MemberIDs div.member").businessCard();
+                    });
                 }
             });
     }
@@ -355,10 +360,14 @@
         html += '      <div class="clear"></div>';
         html += '   </div>';
 
+        
+
         if (isSingle)
             $("#" + id).html(html);
         else
             $("#" + id).append(html);
+
+        
     }
 
     //拼接一个用户成员
@@ -372,11 +381,12 @@
         html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
         html += '      <div class="clear"></div>';
         html += '   </div>';
-
         if (isSingle)
-            $("#" + id).html(html);
+            $("#" + id).append(html);
         else
             $("#" + id).append(html);
+
+       
     }
 
     //保存实体
