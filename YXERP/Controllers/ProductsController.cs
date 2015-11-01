@@ -32,31 +32,6 @@ namespace YXERP.Controllers
         }
 
         /// <summary>
-        /// 添加品牌
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult BrandAdd() 
-        {
-            return View();
-        }
-        /// <summary>
-        /// 品牌详情
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult BrandDetail(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return View("Brand");
-            }
-            Brand model = new ProductsBusiness().GetBrandByBrandID(id);
-            ViewBag.Item = model;
-            ViewBag.ID = id;
-           
-            return View();
-        }
-
-        /// <summary>
         /// 产品单位列表
         /// </summary>
         /// <returns></returns>
@@ -157,11 +132,7 @@ namespace YXERP.Controllers
         #region Ajax
 
         #region 品牌
-        /// <summary>
-        /// 保存品牌
-        /// </summary>
-        /// <param name="brand"></param>
-        /// <returns></returns>
+
         public JsonResult SavaBrand(string brand)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -174,7 +145,7 @@ namespace YXERP.Controllers
             }
             else
             {
-                bool bl = new ProductsBusiness().UpdateBrand(model.BrandID, model.Name, model.AnotherName, model.CountryCode, model.CityCode, model.Status.Value, model.Remark, model.BrandStyle, OperateIP, CurrentUser.UserID);
+                bool bl = new ProductsBusiness().UpdateBrand(model.BrandID, model.Name, model.AnotherName, model.CountryCode, model.CityCode, model.IcoPath, model.Status.Value, model.Remark, model.BrandStyle, OperateIP, CurrentUser.UserID);
                 if (bl)
                 {
                     brandID = model.BrandID;
@@ -188,10 +159,6 @@ namespace YXERP.Controllers
             };
         }
 
-        /// <summary>
-        /// 获取品牌列表
-        /// </summary>
-        /// <returns></returns>
         public JsonResult GetBrandList(string keyWords, int pageSize, int pageIndex, int totalCount)
         {
             int pageCount = 0;
@@ -206,10 +173,6 @@ namespace YXERP.Controllers
             };
         }
 
-        /// <summary>
-        /// 编辑品牌状态
-        /// </summary>
-        /// <returns></returns>
         public JsonResult UpdateBrandStatus(string brandID, int status)
         {
             bool bl = new ProductsBusiness().UpdateBrandStatus(brandID, (EnumStatus)status, OperateIP, CurrentUser.UserID);
@@ -220,10 +183,7 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        /// <summary>
-        /// 删除品牌
-        /// </summary>
-        /// <returns></returns>
+
         public JsonResult DeleteBrand(string brandID)
         {
             bool bl = new ProductsBusiness().UpdateBrandStatus(brandID, EnumStatus.Delete, OperateIP, CurrentUser.UserID);
@@ -235,14 +195,10 @@ namespace YXERP.Controllers
             };
         }
 
-        /// <summary>
-        /// 获取品牌详细信息
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetBrandDetail(string brandID)
+        public JsonResult GetBrandDetail(string id)
         {
-            Brand model = new ProductsBusiness().GetBrandByBrandID(brandID);
-            JsonDictionary.Add("Item", model);
+            Brand model = new ProductsBusiness().GetBrandByBrandID(id);
+            JsonDictionary.Add("model", model);
             return new JsonResult
             {
                 Data = JsonDictionary,
@@ -314,7 +270,7 @@ namespace YXERP.Controllers
             List<ProductAttr> list = new List<ProductAttr>();
 
             int totalCount = 0, pageCount = 0;
-            list = new ProductsBusiness().GetAttrList("", keyWorks, PageSize, index, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            list = new ProductsBusiness().GetAttrList("", keyWorks, PageSize, index, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
 
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);

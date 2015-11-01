@@ -49,9 +49,6 @@ select option{ padding:2px; }
 .ico-delete{ background:url(../images/ico-delete.png) no-repeat; height:20px; min-width:20px; line-height:20px; 
           display:inline-block; cursor:pointer;}
 
-/*添加*/
-.ico-input-add{ background:url(../images/ico-input-add.png) no-repeat 4px ; height:20px; width:23px; line-height:20px; display:inline-block; cursor:pointer; }
-
 /*帮助*/
 .ico-help{ background:url(../images/ico-help.png) no-repeat; height:20px; min-width:20px; line-height:20px; 
           display:inline-block; cursor:pointer;}
@@ -220,7 +217,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .show-nav-ul .hover { position: relative; height: 35px; line-height: 35px; margin-top: -6px; margin-left: -1px; border-top: 2px solid #E4393C;
           border-left: 1px solid #DEDFDE; border-right: 1px solid #DEDFDE; background-color: #FFF; }
 
-/*上传*/
-.edit-brand { height:25px;  padding:0 15px; border-radius:13px; background-color:#BFD9EA; border:1px solid #BFD9EA;
-              cursor:pointer; color:#033d91;}
+/*上传按钮样式*/
+.ico-upload {  padding:5px 10px; background-color:#4a98e7; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.ico-upload:hover { background-color:#2F73B8; }
 

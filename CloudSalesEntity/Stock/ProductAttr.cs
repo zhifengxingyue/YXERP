@@ -135,6 +135,8 @@ namespace CloudSalesEntity
         [Property("Lower")] 
         public string CategoryID { get; set; }
 
+        public Users CreateUser { get; set; }
+
         public int Type { get; set; }
 
 		#endregion Model

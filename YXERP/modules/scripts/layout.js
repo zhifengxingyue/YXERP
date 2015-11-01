@@ -121,5 +121,6 @@ define(function (require, exports, module) {
         $("#rightBody").css("width", width / 2 - 50);
 
     }
+
     module.exports = LayoutObject;
 })

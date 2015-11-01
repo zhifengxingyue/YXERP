@@ -18,24 +18,10 @@
         var _self = this;
         $("#addUnit").click(function () {
             var _this = $(this);
-            var _ele = $('<li class="unit-item"><input type="text" maxlength="4" data-id="" data-value="" value="" /><span data-id="" class="ico-delete"></span></li>');
+            var _ele = $('<li class="unit-item"><input type="text" maxlength="5" data-id="" data-value="" value="" /><span data-id="" class="ico-delete"></span></li>');
             _self.bindElementEvent(_ele);
             _this.before(_ele);
             _ele.find("input").focus();
-        });
-        //搜索
-        require.async("search", function () {
-            $(".searth-module").searchKeys(function (keyWords) {
-                if (!!keyWords) {
-                    var _obj = $(".unit-list").find("input[data-value='" + keyWords + "']");
-                    _obj.focus();
-                    _obj.select();
-                    $(".unit-list li").hide();
-                    _obj.parent().show();
-                } else {
-                    $(".unit-list li").show();
-                }
-            });
         });
     }
     //附加元素事件
@@ -72,11 +58,11 @@
         elments.find(".ico-delete").click(function () {
             var _this = $(this);
             if (_this.data("id") != "") {
-                if (confirm("单位删除后不可恢复,确认删除吗？")) {
+                confirm("单位删除后不可恢复,确认删除吗？", function () {
                     _self.deleteUnit(_this.data("id"), function (status) {
                         status && _this.parent().remove();
                     });
-                }
+                })
             } else {
                 _this.parent().remove();
             }

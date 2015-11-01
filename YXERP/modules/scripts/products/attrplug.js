@@ -14,7 +14,7 @@ define(function (require, exports, module) {
         Verify = require("verify"), VerifyObject,
         doT = require("dot"),
         Easydialog = require("easydialog");
-    require("css/products/attrplug.css");
+    require("css/stock/attrplug.css");
     var Attr = {
         AttrID: "",
         AttrName: "",
@@ -63,7 +63,7 @@ define(function (require, exports, module) {
     ObjectJS.prototype.addAttr = function () {
         var _self = this;
         var html = '<ul class="create-attr">' +
-                        '<li><span class="left">名称：</span><input type="text" id="attrName" maxlength="10" value="" class="input verify " data-empty=" *必填" /></li>';
+                        '<li><span class="left">名称：</span><input type="text" id="attrName" maxlength="10" value="" class="input verify " data-empty="必填" /></li>';
         if (!!Attr.CategoryID && !Attr.AttrID) {
             html += '<li><span class="left">类型：</span>' +
                         '<label><input type="radio" name="type" checked="checked" id="parameter" value="1" />属性</label>' +
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
         Easydialog.open({
             container: {
                 id: "show-add-attr",
-                header: Attr.AttrID == "" ? "添加属性" : "编辑属性",
+                header: Attr.AttrID == "" ? "新建属性" : "编辑属性",
                 content: html,
                 yesFn: function () {
                     if (!VerifyObject.isPass()) {

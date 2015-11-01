@@ -25,12 +25,19 @@
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
+
+        $(document).click(function (e) {
+            if (!$(e.target).hasClass("attr-values") && !$(e.target).parents().hasClass("attr-values") && !$(e.target).hasClass("attr-value-box") && !$(e.target).parents().hasClass("attr-value-box")) {
+                _self.hideValues();
+            }
+        });
+
         $("#addAttr").click(function () {
             AttrPlug.init({
                 attrid: "",
                 categoryid: "",
                 callback: function (Attr) {
-                    _self.innerItems([Attr], false);
+                    _self.getList();
                 }
             });
         });
@@ -43,11 +50,30 @@
             });
         });
 
-        $(document).click(function (e) {
-            if (!$(e.target).hasClass("attr-values") && !$(e.target).hasClass("attr-value-box") && !$(e.target).parents().hasClass("attr-value-box")) {
-                _self.hideValues();
-            }
+        //删除
+        $("#deleteObject").click(function () {
+            var _this = $(this);
+            confirm("属性删除后不可恢复,确认删除吗？", function () {
+                Global.post("/Products/DeleteProductAttr", { attrid: _this.data("id") }, function (data) {
+                    if (data.Status) {
+                        _self.getList();
+                    }
+                });
+            });
         });
+
+        //编辑
+        $("#updateObject").click(function () {
+            var _this = $(this);
+
+            AttrPlug.init({
+                attrid: _this.data("id"),
+                callback: function (Attr) {
+                    _self.getList();
+                }
+            });
+        });
+
         //添加属性值
         $(".ico-input-add").click(function () {
             if ($("#valueName").val()) {
@@ -91,32 +117,22 @@
     ObjectJS.innerItems = function (items, clear) {
         var _self = this;
         if (clear) {
-            $("#attrList").empty();
+            $("#attrList").nextAll().remove();
         }
-        doT.exec("template/products/attr_list.html", function (templateFun) {
+        doT.exec("template/products/attrs.html", function (templateFun) {
             var inner = templateFun(items);
             inner = $(inner);
-            $("#attrList").prepend(inner);
-            //点击编辑
-            inner.find(".ico-edit").click(function () {
-                var _this = $(this), _prev = _this.prevAll(".attr-name");
-                AttrPlug.init({
-                    attrid: _this.data("id"),
-                    callback: function (Attr) {
-                        _prev.html(Attr.AttrName);
-                        _prev.attr("title", Attr.Description);
-                    }
-                });
-            });
-            inner.find(".ico-del").click(function () {
+            $("#attrList").after(inner);
+
+            //下拉事件
+            inner.find(".dropdown").click(function () {
                 var _this = $(this);
-                if (confirm("属性删除后不可恢复,确认删除吗？")) {
-                    Global.post("/Products/DeleteProductAttr", { attrid: _this.data("id") }, function (data) {
-                        if (data.Status) {
-                            _self.getList();
-                        }
-                    });
-                }
+
+                var position = _this.find(".ico-dropdown").position();
+                $(".dropdown-ul li").data("id", _this.data("id"));
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                    $(this).hide();
+                });
             });
 
             inner.find(".attr-values").click(function () {
@@ -127,8 +143,6 @@
     }
     //显示属性值悬浮层
     ObjectJS.showValues = function (attrID) {
-        var height = document.documentElement.clientHeight - 84;
-        $("#attrValueBox").css("height", height + "px");
         $("#attrValueBox").animate({ right: "0px" }, "fast");
         Value.AttrID = attrID;
         ObjectJS.getAttrDetail();
@@ -189,11 +203,11 @@
         elments.find(".ico-delete").click(function () {
             var _this = $(this);
             if (_this.data("id") != "") {
-                if (confirm("删除后不可恢复,确认删除吗？")) {
+                confirm("删除后不可恢复,确认删除吗？", function () {
                     _self.deleteValue(_this.data("id"), function (status) {
                         status && _this.parent().remove();
                     });
-                }
+                });
             } else {
                 _this.parent().remove();
             }
