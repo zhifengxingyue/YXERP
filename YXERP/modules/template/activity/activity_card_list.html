@@ -1,0 +1,54 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<li class="activityCardLi">
+<ul class="table-add activityCard">
+    <li>
+        <div id="OwnerIDs" class="left" >
+            <div class="member left" data-id="{%=item.Owner.UserID%}">
+                <div class="left pRight5">
+                    <img style="width:36px;height:36px;border-radius:18px;" src="{%=item.Owner.Avatar==''?'/modules/images/defaultavatar.png':item.Owner.Avatar%}" />
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="left mLeft10"> <span id="Name">{%=item.Name%}</span></div>
+        <div class="right center dropdown" data-id="{%=item.ActivityID%}"><span class="ico-dropdown"></span></div>
+        <div class="clear"></div>
+    </li>
+    <li>
+        <span class="width60 left">成员：</span>
+        <div id="MemberIDs" >
+            {%
+	            for(var k=0, l=item.Members.length; k< l; k++){
+	            var member = item.Members[k];
+            %}
+            <div class="member left" data-id="{%=member.UserID%}">
+                <div class="left mRight5">
+                    <img src="{%=member.Avatar==''?'/modules/images/defaultavatar.png':member.Avatar%}" />
+                </div>
+                <div class="clear"></div>
+            </div>
+            {% } %}
+        </div>
+        <div class="left "></div>
+        <div class="clear"></div>
+    </li>
+        
+    <li>
+        <span class="width60">开始时间：</span><span>{%=item.BeginTime.toDate("yyyy-MM-dd")%}</span>
+    </li>
+    <li>
+        <span class="width60">结束时间：</span><span>{%=item.EndTime.toDate("yyyy-MM-dd")%}</span>
+    </li>
+     <li>
+        <span class="width60">创建时间：</span><span>{%=item.CreateTime.toDate("yyyy-MM-dd")%}</span>
+    </li>
+    <li>
+        <span class="width60">活动地址：</span>{%=item.Address%}<span></span>
+    </li>
+</ul>
+</li>
+{% } %}
+<div class="clear"></div>

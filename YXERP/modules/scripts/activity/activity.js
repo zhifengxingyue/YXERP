@@ -20,10 +20,11 @@
         Stage:-1,
         BeginTime: "",
         EndTime: "",
-        FilterType:0
+        FilterType: 0,
+        DisplayType:1
     };
 
-    //初始化
+    //初始化列表
     ObjectJS.init = function (isAll) {
         var _self = this;
         _self.bindEvent();
@@ -125,13 +126,29 @@
             });
         });
 
+        //编辑活动
+        $("#setObjectRole").click(function () {
+            var _this = $(this);
+            location.href = "/Activity/Operate/" + _this.data("id");
+        });
 
+        //显示模式切换
+        $(".displayTab").click(function () {
+            var type = parseInt($(this).data("type"));
 
-            //编辑活动
-            $("#setObjectRole").click(function () {
-                var _this = $(this);
-                location.href="/Activity/Detail/"+_this.data("id");
-            });
+            ObjectJS.Params.DisplayType = type;
+            if (type == 1) {
+                $("tr.list-item").remove();
+                $(".table-list").show();
+                $(".activityCardList").hide();
+            }
+            else {
+                $(".activityCardList").html('');
+                $(".table-list").hide();
+                $(".activityCardList").show();
+            }
+            ObjectJS.getList();
+        });
     }
 
     //获取列表
@@ -180,37 +197,65 @@
     ObjectJS.bindList = function (items) {
         if (items.length > 0) {
             var _self = this;
-            doT.exec("template/activity/activity_list.html", function (template) {
-                var innerhtml = template(items);
-                innerhtml = $(innerhtml);
-                var innerhtml = template(items);
-                innerhtml = $(innerhtml);
+            if (ObjectJS.Params.DisplayType == 1) {
+                doT.exec("template/activity/activity_list.html", function (template) {
+                    var innerhtml = template(items);
+                    innerhtml = $(innerhtml);
+                    var innerhtml = template(items);
+                    innerhtml = $(innerhtml);
 
-                //操作
-                innerhtml.find(".dropdown").click(function () {
-                    var _this = $(this);
-                    var position = _this.find(".ico-dropdown").position();
-                    $(".dropdown-ul li").data("id", _this.data("id"));
+                    //操作
+                    innerhtml.find(".dropdown").click(function () {
+                        var _this = $(this);
+                        var position = _this.find(".ico-dropdown").position();
+                        $(".dropdown-ul li").data("id", _this.data("id"));
 
-                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
-                        $(this).hide();
+                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
+                            $(this).hide();
+                        });
+                    });
+
+                    $(".tr-header").after(innerhtml);
+                });
+            }
+            else
+            {
+                doT.exec("template/activity/activity_card_list.html", function (template) {
+                    var innerhtml = template(items);
+                    innerhtml = $(innerhtml);
+                    var innerhtml = template(items);
+                    innerhtml = $(innerhtml);
+
+                    //操作
+                    innerhtml.find(".dropdown").click(function () {
+                        var _this = $(this);
+                        var position = _this.find(".ico-dropdown").position();
+                        $(".dropdown-ul li").data("id", _this.data("id"));
+
+                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
+                            $(this).hide();
+                        });
+                    });
+
+                    $(".activityCardList").append(innerhtml);
+                    require.async("businesscard", function () {
+                        $("div.member").businessCard();
                     });
                 });
+            }
 
-                $(".tr-header").after(innerhtml);
-
-            });
+           
         }
         else {
             $(".tr-header").after("<tr><td colspan='7' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Activity/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
         }
     }
 
-    //初始化
-    ObjectJS.initDetail= function (Editor, id) {
+    //初始化操作
+    ObjectJS.initOperate = function (Editor, id) {
         var _self = this;
         editor = Editor;
-        _self.bindDetailEvent();
+        _self.bindOperateEvent();
 
         VerifyObject = Verify.createVerify({
             element: ".verify",
@@ -220,11 +265,11 @@
         });
 
         if(id)
-            _self.getDetail();
+            _self.getDetail(1);
     }
 
     //绑定事件
-    ObjectJS.bindDetailEvent = function () {
+    ObjectJS.bindOperateEvent = function () {
         var _self = this;
 
         require.async("search", function () {
@@ -281,6 +326,21 @@
             });
         });
 
+        //添加客户
+        $("#addCustom").click(function () {
+            ChooseUser.create({
+                title: "添加成员",
+                type: 1,
+                single: false,
+                callback: function (items) {
+                    for (var i = 0; i < items.length; i++) {
+                        _self.createMember(items[i], "Customs", false);
+                    }
+
+                }
+            });
+        });
+
         $("#btnSaveActivity").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
@@ -288,10 +348,10 @@
 
             var OwnerID='', MemberID='';
             $("#OwnerIDs .member").each(function () {
-                OwnerID += $(this).attr("bindID")+"|";
+                OwnerID += $(this).data("id")+"|";
             });
             $("#MemberIDs .member").each(function () {
-                MemberID += $(this).attr("bindID") + "|";
+                MemberID += $(this).data("id") + "|";
             });
 
             if (OwnerID == '' || MemberID=='')
@@ -318,42 +378,51 @@
     }
 
     //获取详情
-    ObjectJS.getDetail = function () {
+    ObjectJS.getDetail = function (option) {
         var _self = this;
         Global.post("/Activity/GetActivityDetail",
             { activityID: $("#ActivityID").val() },
             function (data) {
                 if (data.Item) {
                     var item = data.Item;
-                    $("#Name").val(item.Name);
+                    if (option == 1) {
+                        $("#Name").val(item.Name);
+                        $("#PosterImg").val(item.Poster);
+                        $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
+                        $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
+                        $("#Address").val(item.Address);
+
+                        editor.ready(function () {
+                            editor.setContent(decodeURI(item.Remark));
+                        });
+                    }
+                    else
+                    {
+                        $("#Name").html(item.Name);
+                        $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
+                        $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
+                        $("#Address").html(item.Address);
+                    }
+
+                    $("#PosterDisImg").attr("src", item.Poster);
                     ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
                     for (var i = 0; i < item.Members.length; i++) {
                         ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
                     }
-                    $("#PosterDisImg").attr("src", item.Poster);
-                    $("#PosterImg").val(item.Poster);
-                    $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
-                    $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
-                    $("#Address").val(item.Address);
-
-                    editor.ready(function () {
-                        editor.setContent(decodeURI(item.Remark));
-                    });
-                    
-                    
                     require.async("businesscard", function () {
                         $("div.member").businessCard();
                     });
+
                 }
             });
     }
 
     //拼接一个用户成员
     ObjectJS.createMember = function (item, id, isSingle) {
-        if ($("#" + id + " div[bindID='" + item.id + "']").html())
+        if ($("#" + id + " div[data-id='" + item.id + "']").html())
             return false;
 
-        var html = '<div class="member left" bindID="' + item.id + '">';
+        var html = '<div class="member left" data-id="' + item.id + '">';
         html += '    <div class="left pRight5">';
         html += '          <img src="' + item.avatar + '" />';
         html += '     </div>';
@@ -368,7 +437,9 @@
         else
             $("#" + id).append(html);
 
-        
+        require.async("businesscard", function () {
+            $("div.member").businessCard();
+        });
     }
 
     //拼接一个用户成员
@@ -397,6 +468,85 @@
             }
         })
     }
+
+
+    //初始化详情
+    ObjectJS.initDetail = function () {
+        var _self = this;
+        _self.bindDetailEvent();
+
+        _self.getDetail(2);
+    }
+
+    //绑定事件
+    ObjectJS.bindDetailEvent = function () {
+        var _self = this;
+       
+        $("#btn_shareTask").click(function () {
+            var OwnerID = '', MemberID = '';
+            $("#OwnerIDs .member").each(function () {
+                OwnerID += $(this).data("id") + "|";
+            });
+            $("#MemberIDs .member").each(function () {
+                MemberID += $(this).data("id") + "|";
+            });
+
+
+            if (OwnerID == '' || MemberID == '') {
+                alert("请选择负责人和成员");
+                return false;
+            }
+            var model = {
+                ActivityID: $("#ActivityID").val(),
+                Name: $("#Name").html(),
+                OwnerID: OwnerID,
+                MemberID: MemberID,
+                BeginTime: $("#BeginTime").html(),
+                EndTime: $("#EndTime").html(),
+                Address: $("#Address").html(),
+            };
+
+            Global.post("/Activity/ShareTask", { entity: JSON.stringify(model) }, function (data) {
+                if (data.Result > 0) {
+                    alert("分享成功");
+                }
+            })
+        });
+
+        $("#btn_shareCalendar").click(function () {
+            var OwnerID = '', MemberID = '';
+            $("#OwnerIDs .member").each(function () {
+                OwnerID += $(this).data("id") + "|";
+            });
+            $("#MemberIDs .member").each(function () {
+                MemberID += $(this).data("id") + "|";
+            });
+
+
+            if (OwnerID == '' || MemberID == '') {
+                alert("请选择负责人和成员");
+                return false;
+            }
+            var model = {
+                ActivityID: $("#ActivityID").val(),
+                Name: $("#Name").html(),
+                OwnerID: OwnerID,
+                MemberID: MemberID,
+                BeginTime: $("#BeginTime").html(),
+                EndTime: $("#EndTime").html(),
+                Address: $("#Address").html(),
+            };
+
+            Global.post("/Activity/ShareCalendar", { entity: JSON.stringify(model) }, function (data) {
+                if (data.Result > 0) {
+                    alert("分享成功");
+                }
+            })
+
+        });
+    }
+
+
 
     module.exports = ObjectJS;
 });

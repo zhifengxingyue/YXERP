@@ -228,6 +228,7 @@
     <Content Include="modules\scripts\system\stages.js" />
     <Content Include="modules\scripts\system\teams.js" />
     <Content Include="modules\template\activity\activity_list.html" />
+    <Content Include="modules\template\activity\activity_card_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\orders\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
@@ -264,7 +265,7 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Activity\MyActivity.cshtml" />
     <Content Include="Views\System\Sources.cshtml" />
-    <Content Include="Views\Activity\Detail.cshtml" />
+    <Content Include="Views\Activity\Operate.cshtml" />
     <Content Include="Views\Activity\Activitys.cshtml" />
     <Content Include="Views\System\Teams.cshtml" />
     <Content Include="Views\System\Stages.cshtml" />
@@ -272,6 +273,7 @@
     <Content Include="Views\System\OrderType.cshtml" />
     <Content Include="Views\Security\Index.cshtml" />
     <Content Include="Views\System\Target.cshtml" />
+    <Content Include="Views\Activity\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

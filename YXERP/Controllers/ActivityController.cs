@@ -29,6 +29,12 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult Operate(string id)
+        {
+            ViewBag.ActivityID = id ?? string.Empty;
+            return View();
+        }
+
         public ActionResult Detail(string id)
         {
             ViewBag.ActivityID = id ?? string.Empty;
@@ -137,6 +143,61 @@ namespace YXERP.Controllers
             return new JsonResult();
         }
 
+        /// <summary>
+        /// 将活动分享到明道任务
+        /// </summary>
+        public JsonResult ShareTask(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ActivityEntity model = serializer.Deserialize<ActivityEntity>(entity);
+
+            int error_code;
+            model.OwnerID = model.OwnerID.Trim('|');
+            string ownerID = OrganizationBusiness.GetUserByUserID(model.OwnerID, CurrentUser.AgentID).MDUserID;
+            model.MemberID = model.MemberID.Trim('|');
+            List<string> members=new List<string>();
+            foreach(var m in model.MemberID.Split('|')){
+            members.Add(OrganizationBusiness.GetUserByUserID(m,CurrentUser.AgentID).MDUserID);
+            }
+
+            string id = MD.SDK.TaskBusiness.AddTask(CurrentUser.MDToken, model.Name, ownerID, members, model.EndTime.Date.ToString(), string.Empty,model.Remark, out error_code);
+
+            JsonDictionary.Add("Result", !string.IsNullOrEmpty(id) ? 1 : 0);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 将活动分享到明道日程
+        /// </summary>
+        public JsonResult ShareCalendar(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ActivityEntity model = serializer.Deserialize<ActivityEntity>(entity);
+
+            string activityID = string.Empty;
+            int error_code;
+            model.OwnerID = model.OwnerID.Trim('|');
+            string ownerID = OrganizationBusiness.GetUserByUserID(model.OwnerID, CurrentUser.AgentID).MDUserID;
+            model.MemberID = model.MemberID.Trim('|');
+            List<string> members = new List<string>();
+            foreach (var m in model.MemberID.Split('|'))
+            {
+                members.Add(OrganizationBusiness.GetUserByUserID(m, CurrentUser.AgentID).MDUserID);
+            }
+
+            string id = MD.SDK.CalendarBusiness.AddCalendar(CurrentUser.MDToken, model.Name, members,model.Address,model.Remark,model.BeginTime.Date.ToString(), model.EndTime.Date.ToString(), out error_code);
+
+            JsonDictionary.Add("Result", !string.IsNullOrEmpty(id) ? 1 : 0);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
     }
