@@ -107,13 +107,7 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 获取属性列表（包括属性值列表）
         /// </summary>
-        /// <param name="keyWords"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="totalCount"></param>
-        /// <param name="pageCount"></param>
-        /// <returns></returns>
-        public List<ProductAttr> GetAttrList(string categoryid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientid)
+        public List<ProductAttr> GetAttrList(string categoryid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
         {
             var dal = new ProductsDAL();
             DataSet ds = dal.GetAttrList(categoryid, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientid);
@@ -125,39 +119,17 @@ namespace CloudSalesBusiness
                 {
                     ProductAttr model = new ProductAttr();
                     model.FillData(dr);
+                    model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
 
                     List<AttrValue> valueList = new List<AttrValue>();
-                    StringBuilder build = new StringBuilder();
                     foreach (DataRow drValue in ds.Tables["Values"].Select("AttrID='" + model.AttrID + "'"))
                     {
                         AttrValue valueModel = new AttrValue();
                         valueModel.FillData(drValue);
                         valueList.Add(valueModel);
-                        build.Append(valueModel.ValueName + ",");
                     }
                     model.AttrValues = valueList;
-                    if (string.IsNullOrEmpty(build.ToString()))
-                    {
-                        model.ValuesStr = "暂无属性值(单击添加)";
-                    }
-                    else
-                    {
-                        if (build.ToString().Length > 50)
-                        {
-                            if (build.ToString().Substring(49, 1).ToString() != ",")
-                            {
-                                model.ValuesStr = build.ToString() + "...";
-                            }
-                            else
-                            {
-                                model.ValuesStr = build.ToString().Substring(0, 49) + " ...";
-                            }
-                        }
-                        else
-                        {
-                            model.ValuesStr = build.ToString().Substring(0, build.ToString().Length - 1);
-                        }
-                    }
+
                     list.Add(model);
                 }
             }
@@ -523,21 +495,6 @@ namespace CloudSalesBusiness
 
         #region 添加
 
-        /// <summary>
-        /// 添加品牌
-        /// </summary>
-        /// <param name="name">名称</param>
-        /// <param name="anotherName">别称</param>
-        /// <param name="icoPath"></param>
-        /// <param name="countryCode">国家编码</param>
-        /// <param name="cityCode">城市编码</param>
-        /// <param name="status">状态</param>
-        /// <param name="remark">备注</param>
-        /// <param name="brandStyle">风格</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <param name="clientID">客户端ID</param>
-        /// <returns></returns>
         public string AddBrand(string name, string anotherName, string icoPath, string countryCode, string cityCode, int status, string remark, string brandStyle, string operateIP, string operateID, string clientID)
         {
             lock (SingleLock)
@@ -555,10 +512,7 @@ namespace CloudSalesBusiness
                         file.MoveTo(HttpContext.Current.Server.MapPath(icoPath));
                     }
                 }
-                else
-                {
-                    icoPath = FILEPATH + DateTime.Now.ToString("yyyyMMddHHmmssms") + new Random().Next(1000, 9999).ToString() + ".png";
-                }
+                
                 return new ProductsDAL().AddBrand(name, anotherName, icoPath, countryCode, cityCode, status, remark, brandStyle, operateIP, operateID, clientID);
             }
         }
@@ -759,14 +713,6 @@ namespace CloudSalesBusiness
 
         #region 编辑、删除
 
-        /// <summary>
-        /// 编辑品牌状态
-        /// </summary>
-        /// <param name="brandID">品牌ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
         public bool UpdateBrandStatus(string brandID, EnumStatus status, string operateIP, string operateID)
         {
             bool bl = CommonBusiness.Update("Brand", "Status", ((int)status).ToString(), " BrandID='" + brandID + "'");
@@ -780,24 +726,23 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        /// <summary>
-        /// 编辑品牌
-        /// </summary>
-        /// <param name="brandID">ID</param>
-        /// <param name="name">名称</param>
-        /// <param name="anotherName">别称</param>
-        /// <param name="countryCode">国家编码</param>
-        /// <param name="cityCode">城市编码</param>
-        /// <param name="status">状态</param>
-        /// <param name="remark">备注</param>
-        /// <param name="brandStyle"风格></param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
-        public bool UpdateBrand(string brandID, string name, string anotherName, string countryCode, string cityCode, int status, string remark, string brandStyle, string operateIP, string operateID)
+        public bool UpdateBrand(string brandID, string name, string anotherName, string countryCode, string cityCode, string icopath, int status, string remark, string brandStyle, string operateIP, string operateID)
         {
+            if (!string.IsNullOrEmpty(icopath) && icopath.IndexOf(TempPath) >= 0)
+            {
+                if (icopath.IndexOf("?") > 0)
+                {
+                    icopath = icopath.Substring(0, icopath.IndexOf("?"));
+                }
+                FileInfo file = new FileInfo(HttpContext.Current.Server.MapPath(icopath));
+                icopath = FILEPATH + file.Name;
+                if (file.Exists)
+                {
+                    file.MoveTo(HttpContext.Current.Server.MapPath(icopath));
+                }
+            }
             var dal = new ProductsDAL();
-            return dal.UpdateBrand(brandID, name, anotherName, countryCode, cityCode, status, remark, brandStyle, operateIP, operateID);
+            return dal.UpdateBrand(brandID, name, anotherName, countryCode, cityCode, status, icopath, remark, brandStyle, operateIP, operateID);
         }
 
         /// <summary>

@@ -172,6 +172,7 @@
     <Content Include="modules\css\orders\confirmcart.css" />
     <Content Include="modules\css\purchase\docdetail.css" />
     <Content Include="modules\css\base.css" />
+    <Content Include="modules\css\stock\products.css" />
     <Content Include="modules\css\system\system.css" />
     <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-addhover.png" />
@@ -232,6 +233,7 @@
     <Content Include="modules\template\organization\structureitem.html" />
     <Content Include="modules\template\organization\setuserrole.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
+    <Content Include="modules\template\products\brand-detail.html" />
     <Content Include="modules\template\purchase\mypurchase.html" />
     <Content Include="modules\template\purchase\purchaseaudit.html" />
     <Content Include="modules\template\purchase\storagedocaction.html" />
@@ -270,12 +272,9 @@
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\login.css" />
     <Content Include="modules\css\system\organization.css" />
-    <Content Include="modules\css\products\attr.css" />
-    <Content Include="modules\css\products\brand.css" />
-    <Content Include="modules\css\products\unit.css" />
     <Content Include="modules\css\products\category.css" />
     <Content Include="modules\css\products\product.css" />
-    <Content Include="modules\css\products\attrplug.css" />
+    <Content Include="modules\css\stock\attrplug.css" />
     <Content Include="modules\css\orders\filterproducts.css" />
     <Content Include="modules\css\orders\filterdetails.css" />
     <Content Include="modules\images\default.png" />
@@ -290,7 +289,6 @@
     <Content Include="modules\images\ico-gonext.png" />
     <Content Include="modules\images\ico-gouwuche.png" />
     <Content Include="modules\images\ico-home.png" />
-    <Content Include="modules\images\ico-input-add.png" />
     <Content Include="modules\images\ico-name.png" />
     <Content Include="modules\images\ico-open.png" />
     <Content Include="modules\images\ico-orderby-down-hover.png" />
@@ -425,8 +423,8 @@
     <Content Include="modules\scripts\orders\filterdetails.js" />
     <Content Include="modules\scripts\system\warehouse.js" />
     <Content Include="modules\scripts\system\depotseat.js" />
-    <Content Include="modules\template\products\attr_list.html" />
-    <Content Include="modules\template\products\brand_list.html" />
+    <Content Include="modules\template\products\attrs.html" />
+    <Content Include="modules\template\products\brands.html" />
     <Content Include="modules\template\products\category_add.html" />
     <Content Include="modules\template\products\category_list.html" />
     <Content Include="modules\template\products\choose_category.html" />
@@ -513,12 +511,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Products\ProductList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Products\BrandAdd.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Products\BrandDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Products\ChooseCategory.cshtml" />

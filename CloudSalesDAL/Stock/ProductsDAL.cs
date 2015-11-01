@@ -391,16 +391,17 @@ namespace CloudSalesDAL
 
         #region 编辑
 
-        public bool UpdateBrand(string brandID, string name, string anotherName, string countryCode, string cityCode, int status, string remark, string brandStyle, string operateIP, string operateID)
+        public bool UpdateBrand(string brandID, string name, string anotherName, string countryCode, string cityCode, int status, string icopath, string remark, string brandStyle, string operateIP, string operateID)
         {
             string sqlText = "Update Brand set [Name]=@Name,[AnotherName]=@AnotherName ,[CountryCode]=@CountryCode,[CityCode]=@CityCode," +
-                "[Status]=@Status,[Remark]=@Remark,[BrandStyle]=@BrandStyle,[UpdateTime]=getdate() where [BrandID]=@BrandID";
+                "[Status]=@Status,IcoPath=@IcoPath,[Remark]=@Remark,[BrandStyle]=@BrandStyle,[UpdateTime]=getdate() where [BrandID]=@BrandID";
             SqlParameter[] paras = { 
                                      new SqlParameter("@Name" , name),
                                      new SqlParameter("@AnotherName" , anotherName),
                                      new SqlParameter("@CountryCode" , countryCode),
                                      new SqlParameter("@CityCode" , cityCode),
                                      new SqlParameter("@Status" , status),
+                                     new SqlParameter("@IcoPath" , icopath),
                                      new SqlParameter("@Remark" , remark),
                                      new SqlParameter("@BrandStyle" , brandStyle),
                                      new SqlParameter("@BrandID" , brandID),
