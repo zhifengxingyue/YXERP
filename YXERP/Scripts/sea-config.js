@@ -32,7 +32,9 @@ seajs.config({
         //选择员工
         "chooseuser": "plug/chooseuser/chooseuser.js",
         //选择员工
-        "dropdown": "plug/dropdown/dropdown.js"
+        "dropdown": "plug/dropdown/dropdown.js",
+        //显示用户名片层
+        "businesscard": "plug/businesscard/businesscard.js"
     }
 });
 

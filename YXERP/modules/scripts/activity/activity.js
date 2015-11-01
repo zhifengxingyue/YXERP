@@ -326,17 +326,23 @@
                 if (data.Item) {
                     var item = data.Item;
                     $("#Name").val(item.Name);
-                    ObjectJS.createMember2(item.Owner, "OwnerIDs", true);
+                    ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
                     for (var i = 0; i < item.Members.length; i++) {
-                        ObjectJS.createMember2(item.Members[i], "MemberIDs", false);
+                        ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
                     }
                     $("#PosterDisImg").attr("src", item.Poster);
                     $("#PosterImg").val(item.Poster);
                     $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
                     $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                     $("#Address").val(item.Address);
+
                     editor.ready(function () {
                         editor.setContent(decodeURI(item.Remark));
+                    });
+                    
+                    
+                    require.async("businesscard", function () {
+                        $("div.member").businessCard();
                     });
                 }
             });
@@ -355,17 +361,21 @@
         html += '      <div class="clear"></div>';
         html += '   </div>';
 
+        
+
         if (isSingle)
             $("#" + id).html(html);
         else
             $("#" + id).append(html);
+
+        
     }
 
     //拼接一个用户成员
-    ObjectJS.createMember2 = function (item, id, isSingle) {
+    ObjectJS.createMemberDetail = function (item, id) {
         if (item.Avatar == '')
             item.Avatar = "/modules/images/defaultavatar.png";
-        var html = '<div class="member left" bindID="' + item.UserID + '">';
+        var html = '<div class="member left" data-id="' + item.UserID + '">';
         html += '    <div class="left pRight5">';
         html += '          <img src="' + item.Avatar + '" />';
         html += '     </div>';
@@ -373,10 +383,9 @@
         html += '      <div class="clear"></div>';
         html += '   </div>';
 
-        if (isSingle)
-            $("#" + id).html(html);
-        else
-            $("#" + id).append(html);
+        $("#" + id).append(html);
+
+       
     }
 
     //保存实体
