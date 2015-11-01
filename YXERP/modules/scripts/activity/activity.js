@@ -13,7 +13,7 @@
     var ObjectJS = {};
 
     ObjectJS.Params = {
-        PageSize: 20,
+        PageSize: 2,
         PageIndex:1,
         KeyWords: "",
         IsAll: 0,
@@ -175,12 +175,12 @@
                     start: _self.Params.PageIndex,
                     display: 5,
                     border: true,
-                    border_color: '#fff',
+                    border_color: '#4a9eee',
                     text_color: '#333',
                     background_color: '#fff',
-                    border_hover_color: '#ccc',
-                    text_hover_color: '#000',
-                    background_hover_color: '#efefef',
+                    border_hover_color: '#4a9eee',
+                    background_hover_color: '#4a98e7',
+                    text_hover_color: '#fff',
                     rotate: true,
                     images: false,
                     mouse: 'slide',

@@ -44,7 +44,7 @@ define(function (require, exports, module) {
             }
             else
                 $this.show();
-            $this.css("width", o.display * 26 + 100 + ((o.total_count).toString().length * 8) + "px");
+            $this.css("width", o.display * 29 + 100 + ((o.total_count).toString().length * 8) + "px");
             $this.empty();
             if (o.images) {
                 var spreviousclass = 'jPag-sprevious-img';
