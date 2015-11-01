@@ -30,7 +30,7 @@ define(function (require, exports, module) {
             var left = obj.offset().left-24;
             var top = obj.offset().top - 160;
 
-            obj.mouseenter(function () {
+            obj.unbind("mouseenter").mouseenter(function () {
                 clearTimeout(fadeInTimer);
                 clearTimeout(fadeOutTimer);
                 $(".businessCard").hide();
@@ -43,7 +43,10 @@ define(function (require, exports, module) {
                         var _businessCardHtml = '<div class="businessCard" id="businessCard_' + item.UserID + '">';
                         _businessCardHtml += '<ul>';
                         _businessCardHtml += '<li style="height:45px;">';
-                        _businessCardHtml += '<div class="left"><img class="userAvatar" src="https://dn-mdpic.qbox.me/UserAvatar/6f00e353-446b-4d2f-a0e1-6dc527e5ca27.jpg?imageView2/1/w/100/h/100/q/90" /></div>';
+                        var Avatar=item.Avatar;
+                        if(Avatar=='')
+                            Avatar = "/modules/images/defaultavatar.png";
+                        _businessCardHtml += '<div class="left"><img class="userAvatar" src="' + Avatar + '" /></div>';
                         _businessCardHtml += '<div class="left mLeft10">' + item.Name + '</div>';
                         _businessCardHtml += '<div class="clear"></div>';
                         _businessCardHtml += '</li>';
@@ -65,10 +68,10 @@ define(function (require, exports, module) {
                         _businessCardHtml += '</div>';
                         _businessCardHtml = $(_businessCardHtml);
 
-                        _businessCardHtml.mouseenter(function () {
+                        _businessCardHtml.unbind("mouseenter").mouseenter(function () {
                             clearTimeout(fadeOutTimer);
                         });
-                        _businessCardHtml.mouseleave(function () {
+                        _businessCardHtml.unbind("mouseleave").mouseleave(function () {
                             clearTimeout(fadeInTimer);
                             $(this).fadeOut();
                         });
@@ -87,7 +90,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            obj.mouseleave(function () {
+            obj.unbind("mouseleave").mouseleave(function () {
                 clearTimeout(fadeInTimer);
 
                 var $BusinessCardObj = $("#businessCard_" + id);

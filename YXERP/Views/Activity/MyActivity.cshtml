@@ -7,8 +7,8 @@
 }
 <link href="/modules/plug/laydate/need/laydate.css" rel="stylesheet" />
 <link href="/modules/plug/laydate/skins/molv/laydate.css" rel="stylesheet" />
-<link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 <link href="/modules/css/products/brand.css" rel="stylesheet" />
+<link href="/modules/css/customer/activity.css" rel="stylesheet" />
 @section scripts{
 <script src="/Scripts/jquery-1.11.1.js"></script>
 <script src="/modules/plug/laydate/laydate.js"></script>
@@ -43,19 +43,27 @@
 }
 <div class="header-box">
     <span class="header-title left">我的活动</span>
-    <a href="Detail" class="ico-add left mTop4 mLeft20">添加活动</a>
+    <a href="Operate" class="ico-add left mTop4 mLeft20">添加活动</a>
+</div>
+
+<div class="search-box">
+    <div id="ActivityStage" class="left"></div>
+    <div id="ActivityType" class="left mLeft20"></div>
+    <div class="left mLeft20">
+        <span class="width80">开始时间：</span><input type="text" id="BeginTime"  class="input"  />
+        <span class="width80">结束时间：</span><input type="text" id="EndTime"  class="input"  />
+        <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
+    </div>
+    <div class="right searth-module" data-text="输入活动名称..." data-width="150"> </div>
+    <div class="clear"></div>
+
+    <div class="right mTop10 mBottom5">
+        <a class="displayTab" data-type="1">列表</a>
+        <a class="displayTab" data-type="2">卡片</a>
+    </div>
+    <div class="clear "></div>
 </div>
 <div class="content-body">
-    <div class="search-box">
-        <div id="ActivityStage" class="left"></div>
-        <div id="ActivityType" class="left mLeft20"></div>
-        <div class="left mLeft20">
-            <span class="width80">开始时间：</span><input type="text" id="BeginTime"  class="input"  />
-            <span class="width80">结束时间：</span><input type="text" id="EndTime"  class="input"  />
-            <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
-        </div>
-        <div class="right searth-module" data-text="输入活动名称..." data-width="150"> </div>
-    </div>
     <table class="table-list">
         <tr class="tr-header" id="brand-items">
             <td class="m-len">名称</td>
@@ -67,6 +75,52 @@
             <td class="s-len">操作</td>
         </tr>
     </table>
+
+    <style type="text/css">
+        .activityCardList {
+        list-style:none;
+        }
+
+        .activityCardLi {
+        float:left;
+        margin-right:20px;
+        padding-top:10px;
+        }
+
+        .activityCard {
+            border:solid 1px #eee;
+            border-radius:3px;
+            width:230px;
+        }
+    </style>
+    <ul class="activityCardList">
+      @*  <li class="activityCardLi">
+                <ul class="table-add activityCard">
+                    <li>
+                        <div id="OwnerIDs" class="left" >aaaaaaaaaa</div>
+                        <div class="left mLeft10"> <span id="Name">aaaaa</span></div>
+                       <div class="clear"></div>
+                    </li>
+                    <li>
+                        <span class="column-name">成员：</span>
+                        <div id="MemberIDs" ></div>
+                        <div class="left ">
+                        <div class="clear"></div>
+                    </li>
+        
+                    <li>
+                        <span class="width80">开始时间：</span><span></span>
+                    </li>
+    
+                    <li>
+                        <span class="width80">结束时间：</span><span></span>
+                    </li>
+                    <li>
+                        <span class="width80">活动地址：</span><span></span>
+                    </li>
+                </ul>
+        </li>*@
+    </ul>
     <div id="pager" class="mTop20"></div>
 </div>
 <ul class="dropdown-ul hide" style="width:90px;">

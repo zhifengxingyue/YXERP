@@ -48,6 +48,11 @@ namespace CloudSalesBusiness
                 ActivityEntity model = new ActivityEntity();
                 model.FillData(dr);
                 model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+                model.Members = new List<Users>();
+                foreach (var id in model.MemberID.Split('|'))
+                {
+                    model.Members.Add(OrganizationBusiness.GetUserByUserID(id, model.AgentID));
+                }
                 list.Add(model);
             }
             return list;
