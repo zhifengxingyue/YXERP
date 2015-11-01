@@ -237,8 +237,8 @@
     //高度控制
     ObjectJS.bingStyle = function () {
         var height = document.documentElement.clientHeight;
-        $(".child-items").css("max-height", height - 300);
-        $(".stages-box").css("height", height - 180);
+        $(".child-items").css("max-height", height - 340);
+        $(".stages-box").css("height", height - 230);
     }
 
     module.exports = ObjectJS;

@@ -19,13 +19,6 @@
         <div class="logo left">
             <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
         </div>
-        <div class="modules left" id="choosemodules">
-            <div class="modulesname left">
-                主菜单
-            </div>
-            <span class="right">
-            </span>
-        </div>
         <ul id="controllerMenu" class="menu left">
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
             { 
@@ -68,6 +61,19 @@
         </nav>
         <div class="main-content">
             @RenderBody()
+        </div>
+    </div>
+    <div class="bottom-body">
+        <div class="bottom-main">
+            <div class="modules" id="choosemodules">
+                <div class="ico-menu">
+                    主菜单
+                </div>
+                <div class="open-modules">
+                    主菜单
+                    <span></span>
+                </div>
+            </div>
         </div>
     </div>
     @*点击头像展开下拉列表*@

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace YXERP.Controllers
 {
-    public class CustomerRPTController : Controller
+    public class CustomerRPTController : BaseController
     {
         //
         // GET: /CustomerRPT/

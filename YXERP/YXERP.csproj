@@ -178,6 +178,7 @@
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown.png" />
+    <Content Include="modules\images\ico-menu.png" />
     <Content Include="modules\images\ico-nav.png" />
     <Content Include="modules\images\ico-structure-full.png" />
     <Content Include="modules\images\ico-structure-last.png" />
