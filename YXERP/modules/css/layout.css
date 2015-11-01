@@ -69,36 +69,13 @@ select option{ padding:2px; }
 
 
 /*header样式*/
-header { height:50px; width:100%; background-color:#2F73B8; position:fixed; top:0; z-index:999;}
+header { height:50px; width:100%; background-color:#2F73B8; position:fixed; top:0; z-index:999; opacity:0.9;}
 
 header .logo { width:30px; height:30px; margin-top:10px; margin-left:15px; }
 header .logo img{ height:30px; }
 
-
-/*选择一级菜单*/
-header .modules { width:70px; margin-left:65px; margin-top:17px; cursor:pointer; }
-header .modules .modulesname { color:#BFD2F2; font-size:14px; }
-header .modules span{ border-top:solid 8px #BFD2F2; border-left:solid 8px transparent ;border-right:solid 8px transparent; margin-top:6px; }
-
-header .modules:hover .modulesname { color:#fff; }
-header .modules:hover span { border-top-color:#fff;}
-
-header .modules.hover .modulesname { color:#fff; }
-header .modules.hover span { border-bottom:solid 8px #fff; border-top:none; }
-
-.choose-modules { position:fixed; background-color:#fff; width:140px; z-index:1000; border-radius:2px; border:solid 1px #eee; 
-                  box-shadow:0 0 5px #ccc; top:50px; left:160px;}
-.choose-modules .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
-                            width:0; height:0; position:absolute; left:10px; top:-9px; }
-.choose-modules .modules-list { padding:5px 0; }
-.choose-modules .modules-list .modules-item{ height:35px; line-height:35px; }
-.modules-list .modules-item a{ padding-left:35px; display:block; font-size:14px; color:#666; line-height:35px;}
-.modules-list .modules-item a img{ height:16px; display:inline-block; margin-top:10px; float:left;}
-.choose-modules .modules-list .modules-item:hover{ background-color:#fff;  }
-.modules-list .modules-item:hover a span{ color:#2F73B8;}
-
 /*二级菜单*/
-header .menu { height:50px; margin-left:60px; }
+header .menu { height:50px; margin-left:160px; }
 header .menu a{  height:50px; line-height:50px;text-align:center; width:110px; display:inline-block; }
 header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:15px; float:left; }
 header .menu a span{ margin-left:8px; float:left; color:#BFD2F2; font-size:14px;}
@@ -164,16 +141,34 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .content-body{ padding:0 15px 80px; overflow:auto; }
 
 /*底部样式*/
-.bottom-body { height:50px; background-color:#666; width:100%; position:fixed; bottom:0; border-bottom:solid 3px #947443;opacity:0.9; }
+.bottom-body { height:50px; background-color:#666; width:100%; position:fixed; bottom:0; border-bottom:solid 3px #947443;opacity:0.9; z-index:1001; }
 .bottom-body .bottom-main { margin:0 160px;}
+
+/*主菜单切换*/
 .bottom-body .bottom-main  .modules { width:100px; height:50px; background-color:#333; margin-top:-10px; cursor:pointer; padding-top:10px; }
-.modules .ico-menu { background:url('/modules/images/ico-menu.png') no-repeat 13px 0; height:24px; width:50px; padding-top:25px; 
+.bottom-main  .modules .ico-menu { background:url('/modules/images/ico-menu.png') no-repeat 13px 0; height:24px; width:50px; padding-top:25px; 
                      line-height:25px; color:#fff; margin:0 auto; text-align:center;}
-.modules .open-modules { height:50px; line-height:40px; position:relative; color:#fff; width:80px; padding-left:20px; display:none; }
-.modules .open-modules span{ border-bottom:solid 6px #fff; border-left:solid 6px transparent ;border-right:solid 6px transparent; 
+.bottom-main  .modules .open-modules { height:50px; line-height:40px; position:relative; color:#fff; width:80px; padding-left:20px; display:none; }
+.bottom-main  .modules .open-modules span{ border-bottom:solid 6px #fff; border-left:solid 6px transparent ;border-right:solid 6px transparent; 
                              top:18px; right:10px; position:absolute; }
-.modules:hover .ico-menu { display:none; }
-.modules:hover .open-modules { display:block; }
+
+.modules:hover .ico-menu,.modules.hover .ico-menu { display:none; }
+.modules:hover .open-modules,.modules.hover .open-modules { display:block; }
+
+.modules.hover .open-modules { display:block; color:#333; line-height:50px; }
+.modules.hover .open-modules span{ border-top:solid 6px #333; border-left:solid 6px transparent ;border-right:solid 6px transparent; top:22px;}
+
+.bottom-main .hover { background-color:#fff !important; }
+
+.choose-modules { position:fixed; background-color:#fff; width:140px; z-index:1000; border-radius:2px; border:solid 1px #eee; 
+                  box-shadow:0 0 5px #ccc; bottom:53px; left:160px;}
+.choose-modules .modules-list { padding:5px 0; }
+.choose-modules .modules-list .modules-item{ height:35px; line-height:35px; }
+.modules-list .modules-item a{ padding-left:35px; display:block; font-size:14px; color:#666; line-height:35px;}
+.modules-list .modules-item a img{ height:16px; display:inline-block; margin-top:10px; float:left;}
+.choose-modules .modules-list .modules-item:hover{ background-color:#fff;  }
+.modules-list .modules-item:hover a span{ color:#2F73B8;}
+
 
 /*数据验证错误*/
 .verify-fail-err { height:20px; line-height:20px; padding-left:10px; padding-top:2px;}
