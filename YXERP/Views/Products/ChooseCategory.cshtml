@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "添加新品";
 }
-<link href="/modules/css/products/category.css" rel="stylesheet" />
+<link href="/modules/css/stock/category.css" rel="stylesheet" />
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/products/choosecategory"], function (category) {
@@ -20,7 +20,7 @@
             { 
                 <li data-id="@(model.CategoryID)" data-layer="@(model.Layers)" title="@(model.Description)">
                     <span class="category-name long @(model.Status.Value==1?"":"colorccc")">@(model.CategoryName)</span>
-                    <span style="padding-left:0;" class="add-product right">></span>
+                    <span class="add-product right">></span>
                 </li>
             }
         </ul>

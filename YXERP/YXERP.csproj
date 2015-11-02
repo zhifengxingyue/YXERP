@@ -126,7 +126,7 @@
     <Content Include="Content\homeico\account.png" />
     <Content Include="Content\homeico\agents.png" />
     <Content Include="Content\homeico\custom.png" />
-    <Content Include="Content\homeico\homebg.png" />
+    <Content Include="Content\homeico\homebg.jpg" />
     <Content Include="Content\homeico\info.png" />
     <Content Include="Content\homeico\report.png" />
     <Content Include="Content\homeico\sales.png" />
@@ -280,11 +280,10 @@
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\login.css" />
     <Content Include="modules\css\system\organization.css" />
-    <Content Include="modules\css\products\category.css" />
-    <Content Include="modules\css\products\product.css" />
+    <Content Include="modules\css\stock\category.css" />
     <Content Include="modules\css\stock\attrplug.css" />
-    <Content Include="modules\css\orders\filterproducts.css" />
-    <Content Include="modules\css\orders\filterdetails.css" />
+    <Content Include="modules\css\shoppingcart\filterproducts.css" />
+    <Content Include="modules\css\shoppingcart\filterdetails.css" />
     <Content Include="modules\images\default.png" />
     <Content Include="modules\images\ico-add.png" />
     <Content Include="modules\images\ico-back.png" />
@@ -423,22 +422,22 @@
     <Content Include="modules\scripts\products\attr.js" />
     <Content Include="modules\scripts\products\brand.js" />
     <Content Include="modules\scripts\products\category.js" />
-    <Content Include="modules\scripts\orders\filterproducts.js" />
+    <Content Include="modules\scripts\shoppingcart\filterproducts.js" />
     <Content Include="modules\scripts\products\unit.js" />
     <Content Include="modules\scripts\products\choosecategory.js" />
     <Content Include="modules\scripts\products\product.js" />
     <Content Include="modules\scripts\products\attrplug.js" />
-    <Content Include="modules\scripts\orders\filterdetails.js" />
+    <Content Include="modules\scripts\shoppingcart\filterdetails.js" />
     <Content Include="modules\scripts\system\warehouse.js" />
     <Content Include="modules\scripts\system\depotseat.js" />
     <Content Include="modules\template\products\attrs.html" />
     <Content Include="modules\template\products\brands.html" />
     <Content Include="modules\template\products\category_add.html" />
-    <Content Include="modules\template\products\category_list.html" />
+    <Content Include="modules\template\products\categorys.html" />
     <Content Include="modules\template\products\choose_category.html" />
-    <Content Include="modules\template\products\product_list.html" />
-    <Content Include="modules\template\products\category_attr_list.html" />
-    <Content Include="modules\template\products\common_attr_list.html" />
+    <Content Include="modules\template\products\products.html" />
+    <Content Include="modules\template\products\category-attrs.html" />
+    <Content Include="modules\template\products\common-attrs.html" />
     <Content Include="modules\template\products\productdetails_add.html" />
     <Content Include="modules\template\products\productdetails_list.html" />
     <Content Include="modules\template\orders\filter_attr_list.html" />
@@ -467,6 +466,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\tempfile\" />
     <Folder Include="Content\uploadFiles\" />
+    <Folder Include="modules\scripts\orders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

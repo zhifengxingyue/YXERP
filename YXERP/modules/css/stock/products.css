@@ -34,3 +34,26 @@
 .attr-value-box ul li span{ position:absolute; right:-5px; top:-9px; display:none; background-color:white; }
 .attr-value-box ul li:hover span{ display:inline-block; }
 
+
+/*产品样式*/
+.product-add { overflow:auto; }
+.product-add li { height:auto; }
+.product-add .column-name{ width:85px; float:left; }
+.product-add input[type="checkbox"] { vertical-align:middle; margin:0 2px; }
+
+/*添加产品组合规格*/
+.child-product-table { min-width:700px;  width:80%; margin-left:85px;}
+
+.edui-container { min-width:700px; width:80%; float:left; }
+
+.product-img { position:absolute; top:200px; right:50px; width:150px; }
+.product-img img{ width:150px;}
+
+.salesattr .salesattr-values span{ min-width:80px;}
+
+
+/*添加子产品*/
+.product-details-add { width:500px; min-height:200px; }
+.product-imgS { position:absolute; top:80px; right:20px; width:150px; }
+.product-imgS img{ width:150px; }
+

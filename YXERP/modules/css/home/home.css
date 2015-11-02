@@ -1,6 +1,6 @@
 ﻿
 
-.home-body { width:100%; min-width:1200px; position:fixed; top:50px; bottom:0;  background:url('/Content/homeico/homebg.png') no-repeat right bottom; background-size:cover; padding-top:100px; }
+.home-body { width:100%; min-width:1200px; position:fixed; top:50px; bottom:0;  background:url('/Content/homeico/homebg.jpg') no-repeat right bottom; background-size:cover; padding-top:100px; }
 
 /*左侧*/
 .left-body { width:620px; float:left; }

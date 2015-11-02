@@ -63,14 +63,14 @@ define(function (require, exports, module) {
     ObjectJS.prototype.addAttr = function () {
         var _self = this;
         var html = '<ul class="create-attr">' +
-                        '<li><span class="left">名称：</span><input type="text" id="attrName" maxlength="10" value="" class="input verify " data-empty="必填" /></li>';
+                        '<li><span class="width80 left">名称：</span><input type="text" id="attrName" maxlength="10" value="" class="input verify " data-empty="必填" /></li>';
         if (!!Attr.CategoryID && !Attr.AttrID) {
-            html += '<li><span class="left">类型：</span>' +
+            html += '<li><span class="width80 left">类型：</span>' +
                         '<label><input type="radio" name="type" checked="checked" id="parameter" value="1" />属性</label>' +
                         '<label class="mLeft20"><input type="radio" name="type" id="specification" value="2" />规格</label>' +
                     '</li>';
         }
-        html += '<li><span class="left">描述：</span><textarea id="attrDescription">' + Attr.Description + '</textarea></li></ul>';
+        html += '<li><span class="width80 left">描述：</span><textarea id="attrDescription">' + Attr.Description + '</textarea></li></ul>';
 
         Easydialog.open({
             container: {

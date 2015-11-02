@@ -36,6 +36,7 @@ CREATE PROCEDURE [dbo].[P_UpdateProduct]
 @IsRecommend int,
 @EffectiveDays int,
 @DiscountValue decimal(5,4),
+@ProductImg nvarchar(4000)='',
 @Description text,
 @ShapeCode nvarchar(50),
 @CreateUserID nvarchar(64),
@@ -55,7 +56,7 @@ select @Multiple=BigSmallMultiple from [Products] where ProductID=@ProductID
 Update [Products] set [ProductName]=@ProductName,[GeneralName]=@GeneralName,[IsCombineProduct]=@IsCombineProduct,[BrandID]=@BrandID,
 						[BigUnitID]=@BigUnitID,[SmallUnitID]=@SmallUnitID,[BigSmallMultiple]=@BigSmallMultiple ,
 						[CategoryIDList]=@PIDList,[SaleAttr]=@SaleAttr,[AttrList]=@AttrList,[ValueList]=@ValueList,[AttrValueList]=@AttrValueList,
-						[CommonPrice]=@CommonPrice,[Price]=@Price,[PV]=0,[Status]=@Status,
+						[CommonPrice]=@CommonPrice,[Price]=@Price,[PV]=0,[Status]=@Status,ProductImage=@ProductImg,
 						[IsNew]=@Isnew,[IsRecommend]=@IsRecommend ,[DiscountValue]=@DiscountValue,[Weight]=@Weight ,[EffectiveDays]=@EffectiveDays,
 						[ShapeCode]=@ShapeCode ,[Description]=@Description ,[UpdateTime]=getdate()
 where ProductID=@ProductID

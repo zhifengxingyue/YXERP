@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     }
     //绑定元素定位和样式
     ObjectJS.bindStyle = function () {
-        var _height = document.documentElement.clientHeight - 250;
+        var _height = document.documentElement.clientHeight - 260;
         $(".category-list").css("height", _height);
 
     }
@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         //鼠标悬浮
         element.mouseover(function () {
             var _this = $(this);
-            _this.find(".add-product").addClass("ico-add").html("");
+            _this.find(".add-product").addClass("ico-add").html("添加");
         });
         //鼠标悬浮
         element.mouseout(function () {

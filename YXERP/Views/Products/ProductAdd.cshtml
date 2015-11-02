@@ -2,7 +2,7 @@
     ViewBag.Title = "添加新品";
     var model = (CloudSalesEntity.Category)ViewBag.Model;
 }
-<link href="/modules/css/products/product.css" rel="stylesheet" />
+<link href="/modules/css/stock/products.css" rel="stylesheet" />
 <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 @section scripts{
     <script src="/Scripts/jquery-1.11.1.js"></script>
@@ -24,10 +24,10 @@
 <div class="content-body">
     <ul class="table-add product-add">
         <li>
-            <span class="column-name">产品名称：</span><input type="text" style="width:300px;" maxlength="50" id="productName" data-empty="* 必填" class="input verify" />
+            <span class="column-name">产品名称：</span><input type="text" style="width:300px;" maxlength="50" id="productName" data-empty="必填" class="input verify" />
         </li>
         <li>
-            <span class="column-name">产品编码：</span><input type="text" placeholder="保存后不能变更!" maxlength="50" id="productCode" data-empty="* 必填" class="input verify" />
+            <span class="column-name">产品编码：</span><input type="text" placeholder="保存后不能变更!" maxlength="50" id="productCode" data-empty="必填" class="input verify" />
         </li>
         <li>
             <span class="column-name">常用名：</span><input type="text" maxlength="50" id="generalName" class="input" />
@@ -47,7 +47,7 @@
         
         @foreach (CloudSalesEntity.ProductAttr attr in model.AttrLists)
         {
-            <li data-id="@attr.AttrID" class="productattr">
+            <li data-id="@attr.AttrID" class="product-attr">
                 <span class="column-name">@attr.AttrName：</span>
                 <select>
                     @foreach (CloudSalesEntity.AttrValue value in attr.AttrValues)
@@ -126,6 +126,6 @@
     </ul>
     <img class="product-img" id="productImg" alt="" src="/modules/images/default.png" />
     <div class="mTop20">
-        <input type="button" class="btn" id="btnSaveProduct" value="保存" />
+        <div  class="btn" id="btnSaveProduct">保存</div>
     </div>
 </div>

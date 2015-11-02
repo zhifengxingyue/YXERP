@@ -2,8 +2,7 @@
     ViewBag.Title = "产品列表";
 }
 
-<link href="/modules/css/products/product.css" rel="stylesheet" />
-<link rel="stylesheet" href="/modules/css/orders/filterproducts.css" />
+<link rel="stylesheet" href="/modules/css/shoppingcart/filterproducts.css" />
 
 @section scripts{
     <script src="/modules/plug/kindeditor-4.1.7/kindeditor.js"></script>
@@ -48,7 +47,9 @@
                 <li>
                     <input type="text" id="beginprice" />&nbsp;-&nbsp;
                     <input type="text" id="endprice" />
-                    <input type="button" class="btnccc" id="searchprice" value="搜索"/>
+                </li>
+                <li class="search-btn">
+                    <span class="btn" id="searchprice">搜索</span>
                 </li>
             </ul>
         </li>
@@ -56,8 +57,8 @@
 
     <div class="filter-orderby">
         <ul class="orderby">
-            <li class="orderby-new hover">新品<span class="ico"></span></li>
-            <li class="orderby-sales">销量<span class="ico"></span></li>
+            <li class="orderby-new hover">新品<span class="shang"></span><span class="xia"></span></li>
+            <li class="orderby-sales">销量<span class="shang"></span><span class="xia"></span></li>
             <li class="orderby-price">价格<span class="shang"></span><span class="xia"></span></li>
         </ul>
     </div>

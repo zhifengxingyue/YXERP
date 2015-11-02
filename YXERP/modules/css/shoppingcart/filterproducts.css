@@ -7,34 +7,38 @@
 .category-map li:hover{  color:#B10000; }
 
 /*属性筛选*/
-.attr-item { border-bottom:solid 1px #ccc; overflow:auto; background-color:#eee; }
+.attr-item { border-bottom:dashed 1px #ccc; overflow:auto; background-color:#F9F9F9;border-left:solid 1px #ccc;border-right:solid 1px #ccc; }
 .attrkey{ width:10%; float:left; line-height:35px; text-indent:20px; }
-.attrValues{ width:90%; float:left;line-height:35px; height:35px; height:auto; background-color:#fff;}
+.attrValues{ width:90%; float:left;line-height:35px; height:37px;  }
 .attrValues li { height:25px; line-height:25px; float:left; padding:0 20px; margin:5px 0; cursor:pointer; display:inline-block; }
-.attrValues li:hover { color:#B10000; }
+.attrValues li:hover { color:#4A99E8; }
 
-.attrValues li.hover { border:solid 1px #B10000; color:#B10000; }
+.attrValues li.hover { border:solid 1px #4A99E8; color:#4A99E8; }
 
-
+#attr-price { border-bottom:solid 1px #ccc;  }
 #beginprice, #endprice { width:60px; }
 
+.search-btn { line-height:18px !important; }
+
 /*排序*/
-.filter-orderby { /*height:50px;*/ width:100%; /*background-color:#FAF9F9;*/ color:#806F66; margin-top:30px; }
-.filter-orderby .orderby{ border-left:solid 1px #ccc; border-top:solid 1px #ccc;border-bottom:solid 1px #ccc; height:25px; width:183px;}
-.filter-orderby .orderby li{ border-right:solid 1px #ccc; float:left;  line-height:25px; padding:0 10px; width:40px; cursor:pointer;}
+.filter-orderby { width:100%; color:#806F66; margin-top:30px; }
+.filter-orderby .orderby{ height:25px;}
+.filter-orderby .orderby li{ border:solid 1px #ccc; margin-right:5px; float:left;  line-height:25px; 
+                             padding:0 10px; width:40px; cursor:pointer; border-radius:2px; position:relative;}
 
-.filter-orderby .orderby li:hover,.filter-orderby .orderby .hover{ background-color:#eee; color:#B10000;}
+.filter-orderby .orderby li:hover,.filter-orderby .orderby .hover{ background-color:#4A99E8; color:#fff; border-color:#4A99E8;}
 
-.orderby-new .ico,.orderby-sales .ico{ background:url(/modules/images/ico-orderby-down.png) no-repeat 2px 3px; height:12px; width:12px; display:inline-block; }
-.orderby-new:hover .ico,.orderby-sales:hover .ico,.orderby-new.hover .ico,.orderby-sales.hover .ico{ background:url(/modules/images/ico-orderby-down-hover.png) no-repeat 2px 3px; }
+.orderby-new .shang,.orderby-sales .shang { position:absolute; top:7px; right:15px; height:8px; width:4px; background-color:#999; display:inline-block;}
+.orderby-new .xia,.orderby-sales .xia { position:absolute; top:14px; right:12px;  border-top:solid 5px #999; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
 
-.orderby-price { position:relative; }
-.orderby-price .shang { position:absolute; top:5px; right:15px; background:url(/modules/images/ico-orderby-shang.png) no-repeat; height:8px; width:8px; display:inline-block;}
-.orderby-price .xia { position:absolute; top:12px; right:15px; background:url(/modules/images/ico-orderby-xia.png) no-repeat; height:8px; width:8px; display:inline-block;}
+.orderby-new.hover .shang,.orderby-sales.hover .shang { position:absolute; top:7px; right:15px; height:8px; width:4px; background-color:#fff; display:inline-block;}
+.orderby-new.hover .xia,.orderby-sales.hover .xia  { position:absolute; top:14px; right:12px;  border-top:solid 5px #fff; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
 
-.orderby-price.hover .shang-hover { position:absolute; top:5px; right:15px; background:url(/modules/images/ico-orderby-shang-hover.png) no-repeat; height:8px; width:8px; display:inline-block;}
-.orderby-price.hover .xia-hover { position:absolute; top:12px; right:15px; background:url(/modules/images/ico-orderby-xia-hover.png) no-repeat; height:8px; width:8px; display:inline-block;}
+.orderby-price .shang { position:absolute; top:7px; right:12px;  border-bottom:solid 5px #999; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
+.orderby-price .xia { position:absolute; top:14px; right:12px;  border-top:solid 5px #999; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
 
+.orderby-price .shang-hover { position:absolute; top:7px; right:12px;  border-bottom:solid 5px #fff; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
+.orderby-price .xia-hover { position:absolute; top:14px; right:12px;  border-top:solid 5px #fff; border-left:solid 5px transparent ;border-right:solid 5px transparent ; display:inline-block;}
 
 
 /*产品列表样式*/
