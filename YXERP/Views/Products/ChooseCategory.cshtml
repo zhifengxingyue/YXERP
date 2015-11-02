@@ -13,16 +13,18 @@
     <span class="header-title left">选择产品分类</span>
 </div>
 <div class="content-body">
-    <div class="category-layer">
-        <div class="category-header">全部分类</div>
-        <ul class="category-list">
-            @foreach (CloudSalesEntity.Category model in (List<CloudSalesEntity.Category>)ViewBag.Items)
-            { 
-                <li data-id="@(model.CategoryID)" data-layer="@(model.Layers)" title="@(model.Description)">
-                    <span class="category-name long @(model.Status.Value==1?"":"colorccc")">@(model.CategoryName)</span>
-                    <span class="add-product right">></span>
-                </li>
-            }
-        </ul>
-    </div>
+    <ul class="category-all ">
+        <li class="category-layer">
+            <div class="category-header">全部分类</div>
+            <ul class="category-list">
+                @foreach (CloudSalesEntity.Category model in (List<CloudSalesEntity.Category>)ViewBag.Items)
+                { 
+                    <li data-id="@(model.CategoryID)" data-layer="@(model.Layers)" title="@(model.Description)">
+                        <span class="category-name left long @(model.Status.Value==1?"":"colorccc")">@(model.CategoryName)</span>
+                        <span class="add-product right">></span>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
 </div>

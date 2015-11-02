@@ -17,9 +17,10 @@ define(function (require, exports, module) {
     }
     //绑定元素定位和样式
     ObjectJS.bindStyle = function () {
-        var _height = document.documentElement.clientHeight - 260;
-        $(".category-list").css("height", _height);
+        var _height = document.documentElement.clientHeight - 270;
 
+        $(".category-all").css("height", _height);
+        $(".category-list").css("max-height", _height);
     }
     //绑定事件
     ObjectJS.bindEvent = function () {
@@ -58,9 +59,6 @@ define(function (require, exports, module) {
             _this.addClass("hover");
             _this.parents(".category-layer").nextAll().remove();
 
-            //if (_this.data("layer") >= 3) {
-            //    return;
-            //}
             Global.post("/Products/GetChildCategorysByID", {
                 categoryid: _this.data("id")
             }, function (data) {
@@ -69,11 +67,6 @@ define(function (require, exports, module) {
                     html = $(html);
                     //绑定添加事件
                     html.find(".category-header span").html(_this.find(".category-name").html());
-                    
-                    //只有第三层可以添加产品
-                    //if (_this.data("layer") < 2) {
-                    //    html.find(".add-product").removeClass("add-product");
-                    //}
 
                     _self.bindElementEvent(html.find("li"));
 
