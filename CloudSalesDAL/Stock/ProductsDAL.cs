@@ -110,7 +110,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@PID", categoryid) ,
                                        new SqlParameter("@ClientID", clientid) 
                                    };
-            DataTable dt = GetDataTable("select * from Category where PID=@PID and ClientID=@ClientID Order by CreateTime", paras, CommandType.Text);
+            DataTable dt = GetDataTable("select * from Category where PID=@PID and ClientID=@ClientID and Status<>9 Order by CreateTime", paras, CommandType.Text);
             return dt;
         }
 
@@ -500,9 +500,23 @@ namespace CloudSalesDAL
            
         }
 
+        public bool DeleteCategory(string categoryid, string operateid, out int result)
+        {
+            result = 0;
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@Result",result),
+                                       new SqlParameter("@CategoryID",categoryid),
+                                       new SqlParameter("@OperateID",operateid)
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            bool bl = ExecuteNonQuery("P_DeleteCategory", paras, CommandType.StoredProcedure) > 0;
+            result = Convert.ToInt32(paras[0].Value);
+            return bl;
+        }
+
         public bool UpdateProduct(string productid, string productCode, string productName, string generalName, bool iscombineproduct, string brandid, string bigunitid, string smallunitid, int bigSmallMultiple,
                                  int status, string categoryid, string attrlist, string valuelist, string attrvaluelist, decimal commonprice, decimal price,
-                                 decimal weight, bool isnew, bool isRecommend, int effectiveDays, decimal discountValue, string shapeCode, string description, string operateid, string clientid)
+                                 decimal weight, bool isnew, bool isRecommend, int effectiveDays, decimal discountValue, string productImg, string shapeCode, string description, string operateid, string clientid)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@ProductID",productid),
@@ -526,6 +540,7 @@ namespace CloudSalesDAL
                                        new SqlParameter("@IsRecommend",isRecommend ? 1 : 0),
                                        new SqlParameter("@EffectiveDays",effectiveDays),
                                        new SqlParameter("@DiscountValue",discountValue),
+                                       new SqlParameter("@ProductImg",productImg),
                                        new SqlParameter("@ShapeCode",shapeCode),
                                        new SqlParameter("@Description",description),
                                        new SqlParameter("@CreateUserID",operateid),

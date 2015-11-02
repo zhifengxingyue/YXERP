@@ -3,7 +3,7 @@
     var model = (CloudSalesEntity.Products)ViewBag.Model;
 }
 @section css{
-   <link href="/modules/css/products/product.css" rel="stylesheet" />
+   <link href="/modules/css/stock/products.css" rel="stylesheet" />
    <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 }
 
@@ -24,13 +24,11 @@
 
 <div class="header-box">
     <span class="header-title left">产品详情页</span>
-    <a href="javascript:void(0)" id="addDetails" class="ico-add left mTop4 mLeft20">添加子产品</a>
-    <span class="ico-gonext right" onclick="history.go(1)" title="前进"></span>
-    <span class="ico-goback right" onclick="history.go(-1)" title="后退"></span>
+    <a href="javascript:void(0)" id="addDetails" class="ico-add left">添加子产品</a>
 </div>
 <div class="content-body">
-    <div class="show-nav">
-        <ul class="show-nav-ul">
+    <div class="tab-nav">
+        <ul class="tab-nav-ul">
             <li class="hover" data-id="productinfo">产品信息</li>
             <li class="" data-id="childproduct">子产品管理</li>
         </ul>
@@ -45,7 +43,7 @@
                 <span class="column-name">产品编码：</span><label id="productCode"></label>
             </li>
             <li>
-                <span class="column-name">产品名称：</span><input type="text" style="width:300px;"  maxlength="50" id="productName" data-empty="* 必填" class="input verify" />
+                <span class="column-name">产品名称：</span><input type="text" style="width:300px;"  maxlength="50" id="productName" data-empty="必填" class="input verify" />
             </li>
         
              <li>
@@ -66,7 +64,7 @@
         
             @foreach (CloudSalesEntity.ProductAttr attr in model.Category.AttrLists)
             {
-                <li data-id="@attr.AttrID" class="productattr">
+                <li data-id="@attr.AttrID" class="product-attr">
                     <span class="column-name">@attr.AttrName：</span>
                     <select id="@attr.AttrID">
                         @foreach (CloudSalesEntity.AttrValue value in attr.AttrValues)
@@ -132,11 +130,11 @@
         </ul>
         <img class="product-img" id="productImg" alt="" src="/modules/images/default.png" />
         <div class="mTop20">
-            <input type="button" class="btn" id="btnSaveProduct" value="保存" />
+             <div class="btn" id="btnSaveProduct">保存</div>
         </div>
     </div>
-    <div id="childproduct" class="hide">
-        <table class="table-list child-table-list mTop50 clear">
+    <div id="childproduct" class="hide mTop20">
+        <table class="table-list child-table-list clear">
             <tr class="tr-header" id="header-items">
                 <td>编码</td>
                 <td class="">规格</td>

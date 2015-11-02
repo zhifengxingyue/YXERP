@@ -199,4 +199,7 @@
   <ItemGroup>
     <None Include="Procedures\System\P_UpdateUserTeamID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Stock\P_DeleteCategory.sql" />
+  </ItemGroup>
 </Project>

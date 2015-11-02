@@ -16,7 +16,11 @@ define(function (require, exports, module) {
         _self.bindDetail(model);
         _self.bindEvent(model);
 
-        $(".content-body").createCart(ordertype);
+        if (ordertype && ordertype > 0) {
+            $(".content-body").createCart(ordertype);
+        } else {
+            $(".choose-div").hide();
+        }
         
     }
     //绑定事件

@@ -33,8 +33,8 @@ define(function (require, exports, module) {
         ProductIco = Upload.createUpload({
             element: "#productIco",
             buttonText: "选择产品图片",
-            className: "edit-Product",
-            data: { folder: '/Content/tempfile/', action: 'add', oldPath: "" },
+            className: "",
+            data: { folder: '', action: 'add', oldPath: "" },
             success: function (data, status) {
                 if (data.Items.length > 0) {
                     _self.ProductImage = data.Items[0];
@@ -154,13 +154,21 @@ define(function (require, exports, module) {
     //保存产品
     Product.savaProduct = function () {
         var _self = this, attrlist = "", valuelist = "", attrvaluelist = "";
-
-        $(".productattr").each(function () {
+        var bl = true;
+        $(".product-attr").each(function () {
             var _this = $(this);
             attrlist += _this.data("id") + ",";
             valuelist += _this.find("select").val() + ",";
             attrvaluelist += _this.data("id") + ":" + _this.find("select").val() + ",";
+            if (!_this.find("select").val()) {
+                bl = false;
+            }
         });
+
+        if (!bl) {
+            alert("属性尚未设置值!");
+            return false;
+        }
 
         var Product = {
             ProductID: _self.ProductID,
@@ -332,6 +340,8 @@ define(function (require, exports, module) {
         //按销量排序
         $(".orderby-sales").click(function () {
             var _this = $(this);
+            $(".orderby-price").find(".xia").removeClass("xia-hover");
+            $(".orderby-price").find(".shang").removeClass("shang-hover");
             if (!_this.hasClass("hover")) {
                 _this.addClass("hover");
                 _this.siblings().removeClass("hover");
@@ -371,7 +381,7 @@ define(function (require, exports, module) {
         var _self = this;
         $("#product-items").nextAll().remove();
         Global.post("/Products/GetProductList", { filter: JSON.stringify(Params) }, function (data) {
-            doT.exec("template/products/product_list.html", function (templateFun) {
+            doT.exec("template/products/products.html", function (templateFun) {
                 var innerText = templateFun(data.Items);
                 innerText = $(innerText);
                 $("#product-items").after(innerText);
@@ -502,7 +512,7 @@ define(function (require, exports, module) {
     }
     //详情页事件
     Product.bindDetailEvent = function (model) {
-        var _self = this, count = 1;
+        var _self = this;
 
         //保存产品信息
         $("#btnSaveProduct").on("click", function () {
@@ -522,17 +532,17 @@ define(function (require, exports, module) {
         ProductIco = Upload.createUpload({
             element: "#productIco",
             buttonText: "更换产品图片",
-            className: "edit-Product",
-            data: { folder: '/Content/tempfile/', action: 'add', oldPath: model.ProductImage },
+            className: "",
+            data: { folder: '', action: 'add', oldPath: model.ProductImage },
             success: function (data, status) {
                 if (data.Items.length > 0) {
                     _self.ProductImage = data.Items[0];
-                    $("#productImg").attr("src", data.Items[0] + "?" + count++);
+                    $("#productImg").attr("src", data.Items[0] + "?" + Global.guid());
                 }
             }
         });
         //切换内容
-        $(".show-nav-ul li").click(function () {
+        $(".tab-nav-ul li").click(function () {
             var _this = $(this);
             _this.addClass("hover");
             _this.siblings().removeClass("hover");
@@ -679,7 +689,7 @@ define(function (require, exports, module) {
             ImgsIco = Upload.createUpload({
                 element: "#imgSIco",
                 buttonText: "选择产品图片",
-                className: "edit-Product",
+                className: "",
                 data: { folder: '/Content/tempfile/', action: 'add', oldPath: _self.ImgS },
                 success: function (data, status) {
                     if (data.Items.length > 0) {

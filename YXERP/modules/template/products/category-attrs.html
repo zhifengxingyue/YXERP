@@ -1,5 +1,5 @@
-﻿<div class="category-attr-layer">
-    <div class="category-attr-header"><span class="long">全部分类</span> <a href="javascript:void(0);" data-id="" class="ico-add right mTop3">添加属性</a></div>
+﻿<li class="category-attr-layer">
+    <div class="category-attr-header"><span class="long left">全部分类</span> <a href="javascript:void(0);" data-id="" class="ico-add right mTop3">添加属性</a></div>
     <ul class="category-attr-list"  data-type="1">
         <li class="center header">产品属性</li>
         {%
@@ -9,8 +9,7 @@
         %}
                 <li class="attritem" data-id="{%=item.AttrID%}" data-category="{%=item.CategoryID%}" title="{%=item.Description%}">
                     <span data-id="{%=item.AttrID%}" class="category-attr-name long">{%=item.AttrName%}</span>
-                    <span data-id="{%=item.AttrID%}" data-type="{%=item.Type%}" class="ico-del right"></span>
-                    <span data-id="{%=item.AttrID%}" class="ico-edit right"></span>
+                    <span data-id="{%=item.AttrID%}" data-categoryid="{%=item.CategoryID%}" data-type="{%=item.Type%}" class="ico-dropdown ddlattr right"></span>
                 </li>
         {% }} %}
     </ul>
@@ -23,9 +22,8 @@
         %}
             <li class="attritem" data-id="{%=item.AttrID%}"  data-category="{%=item.CategoryID%}" title="{%=item.Description%}">
                 <span data-id="{%=item.AttrID%}"  class="category-attr-name long">{%=item.AttrName%}</span>
-                <span data-id="{%=item.AttrID%}" data-type="{%=item.Type%}" class="ico-del right"></span>
-                <span data-id="{%=item.AttrID%}" class="ico-edit right"></span>
+                <span data-id="{%=item.AttrID%}" data-categoryid="{%=item.CategoryID%}" data-type="{%=item.Type%}" class="ico-dropdown ddlattr right"></span>
             </li>
         {% }} %}
     </ul>
-</div>
+</li>

@@ -538,6 +538,19 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult DeleteCategory(string id)
+        {
+            int result = 0;
+            bool bl = new ProductsBusiness().DeleteCategory(id,CurrentUser.UserID,OperateIP,CurrentUser.AgentID,CurrentUser.ClientID,out result);
+            JsonDictionary.Add("status", result);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
         #region 产品
@@ -578,7 +591,7 @@ namespace YXERP.Controllers
                 bool bl = new ProductsBusiness().UpdateProduct(model.ProductID,model.ProductCode, model.ProductName, model.GeneralName, model.IsCombineProduct.Value == 1, model.BrandID, model.BigUnitID, model.SmallUnitID,
                                                         model.BigSmallMultiple.Value, model.Status.Value, model.CategoryID, model.AttrList, model.ValueList, model.AttrValueList,
                                                         model.CommonPrice.Value, model.Price, model.Weight.Value, model.IsNew.Value == 1, model.IsRecommend.Value == 1, model.EffectiveDays.Value,
-                                                        model.DiscountValue.Value,model.ShapeCode, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
+                                                        model.DiscountValue.Value, model.ProductImage, model.ShapeCode, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
                 if (bl)
                 {
                     id = model.ProductID;

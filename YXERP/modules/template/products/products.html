@@ -3,8 +3,8 @@
 	var item = $data[i];
 %}
 <tr class="list-item">
-    <td><a href="ProductDetail/{%=item.ProductID%}">{%=item.ProductCode%}</a></td>
-    <td><a href="ProductDetail/{%=item.ProductID%}">{%=item.ProductName%}</a></td>
+    <td>{%=item.ProductCode%}</td>
+    <td><a href="/Products/ChooseDetail?pid={%=item.ProductID%}" target="_blank">{%=item.ProductName%}</a></td>
     <td>{%=item.CategoryName%}</td>
     <td>{%=item.BrandName%}</td>
     <td class="tRight">{%=item.Price.toFixed(2)%}</td>
