@@ -99,6 +99,24 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
+
+        public static string CreateActivityReply(string msg, string fromReplyID, string userID, string agentID, string fromReplyUserID, string fromReplyAgentID) {
+            string replyID = Guid.NewGuid().ToString();
+
+            string sqlText = @"insert into ActivityReply(ReplyID,Msg,FromReplyID,AgentID,FromReplyUserID,FromReplyAgentID)
+                                values(@ReplyID,@Msg,@FromReplyID,@AgentID,@FromReplyUserID,@FromReplyAgentID)";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ReplyID",replyID),
+                                     new SqlParameter("@Msg",msg),
+                                     new SqlParameter("@FromReplyID",fromReplyID),
+                                     new SqlParameter("@CreateUserID" , userID),
+                                     new SqlParameter("@AgentID" , agentID),
+                                     new SqlParameter("@FromReplyUserID" , fromReplyUserID),
+                                     new SqlParameter("@FromReplyAgentID" , fromReplyAgentID),
+                                   };
+
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0?replyID:string.Empty;
+        }
         #endregion
 
         #region 编辑/删除
@@ -128,6 +146,17 @@ namespace CloudSalesDAL
                                where ActivityID=@ActivityID ";
             SqlParameter[] paras = { 
                                      new SqlParameter("@ActivityID",activityid),
+                                   };
+
+            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+        }
+
+        public bool DeleteActivityReply(string replyID)
+        {
+            string sqlText = @"update ActivityReply set status=9
+                               where ActivityID=@ActivityID ";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ReplyID",replyID),
                                    };
 
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom\ActivityEntity.cs" />
+    <Compile Include="Custom\ActivityReplyEntity.cs" />
     <Compile Include="System\CustomSourceEntity.cs" />
     <Compile Include="System\CustomStageEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />

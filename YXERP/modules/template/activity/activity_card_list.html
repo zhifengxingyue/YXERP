@@ -2,7 +2,7 @@
 	for(var i=0, j=$data.length; i < j; i++){
 	var item = $data[i];
 %}
-<li class="activityCardLi">
+<!--<li class="activityCardLi">
 <ul class="table-add activityCard">
     <li>
         <div id="OwnerIDs" class="left" >
@@ -49,6 +49,52 @@
         <span class="width60">活动地址：</span>{%=item.Address%}<span></span>
     </li>
 </ul>
-</li>
+</li>-->
+        <li class="activityCardListLi">
+            <div class="activityItem">
+                <div class="activityImg"><img src="/Content/uploadFiles/201510251248024825612.gif" /></div>
+                <div class="activityInfo">
+                    <ul>
+                        <li>
+                            <div class="left"><img class="activityOwnerImg" src="/modules/images/defaultavatar.png"/></div>
+                            <div class="left mLeft10" style="color:#444">{%=item.Name%}</div>
+                            <div class="right">
+                                <div class="dropdown" style="background-color:#4A98E7;border-radius:3px;padding:0px 6px;">
+                                    <span class="ico-dropdown-white"></span>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="/modules/images/ico-time.png" /></div>
+                            <div class="left mLeft10 colorAaa">{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</div>
+                            <div class="clear"></div>
+                        </li>
+                        <li>
+                            <table>
+                                <tr>
+                                    <td class="colorAaa" width="40px">地址：</td>
+                                    <td class="mLeft5 colorAaa" style="word-break:break-all">
+                                        {%=item.Address%}
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                <div class="activityMember">
+                    <div class="left" style="color:#4a98e7">成员：</div>
+                    <div class="left mLeft5" style="color:#4a98e7">bbbbbbb</div>
+                    <div class="right">
+                        <div class="left" ><img src="/modules/images/ico-member.png" /></div>
+                        <div class="left mLeft5 mRight5" style="color:#ddd">44</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div> 
+            <div class="activityUnderline1"></div>
+            <div class="activityUnderline2"></div>
+        </li>
 {% } %}
 <div class="clear"></div>

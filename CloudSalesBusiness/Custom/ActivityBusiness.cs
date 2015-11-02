@@ -18,8 +18,8 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 文件默认存储路径
         /// </summary>
-        public string FilePath = CloudSalesTool.AppSettings.Settings["UploadFilePath"];
-        public string TempPath = CloudSalesTool.AppSettings.Settings["UploadTempPath"];
+        public static  string FilePath = CloudSalesTool.AppSettings.Settings["UploadFilePath"];
+        public static string TempPath = CloudSalesTool.AppSettings.Settings["UploadTempPath"];
 
         #region 查询
 
@@ -39,7 +39,7 @@ namespace CloudSalesBusiness
         /// <param name="agentid">代理商ID</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public List<ActivityEntity> GetActivitys(string userid, EnumActivityStage stage,int filterType, string keyWords,string beginTime,string endTime, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
+        public static List<ActivityEntity> GetActivitys(string userid, EnumActivityStage stage,int filterType, string keyWords,string beginTime,string endTime, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
         {
             List<ActivityEntity> list = new List<ActivityEntity>();
             DataTable dt = ActivityDAL.BaseProvider.GetActivitys(userid, (int)stage,filterType, keyWords,beginTime,endTime, pageSize, pageIndex, ref totalCount, ref pageCount, agentid, clientid);
@@ -58,12 +58,13 @@ namespace CloudSalesBusiness
             return list;
 
         }
+
         /// <summary>
         /// 根据活动ID获取活动
         /// </summary>
         /// <param name="activityid"></param>
         /// <returns></returns>
-        public ActivityEntity GetActivityByID(string activityid)
+        public static ActivityEntity GetActivityByID(string activityid)
         {
             ActivityEntity model = new ActivityEntity();
             DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid);
@@ -80,12 +81,13 @@ namespace CloudSalesBusiness
             }
             return model;
         }
+
         /// <summary>
         /// 根据活动Code获取活动
         /// </summary>
         /// <param name="activitycode"></param>
         /// <returns></returns>
-        public ActivityEntity GetActivityByCode(string activitycode)
+        public static ActivityEntity GetActivityByCode(string activitycode)
         {
             ActivityEntity model = new ActivityEntity();
             DataTable dt = ActivityDAL.BaseProvider.GetActivityByCode(activitycode);
@@ -96,6 +98,35 @@ namespace CloudSalesBusiness
             return model;
         }
 
+        /// <summary>
+        /// 获取活动讨论列表
+        /// </summary>
+        /// <param name="activityID"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <param name="pageCount"></param>
+        public static List<ActivityReplyEntity> GetActivityReplys(string activityID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        {
+            List<ActivityReplyEntity> list = new List<ActivityReplyEntity>();
+            string whereSql = " status<>9 and activityID="+activityID;
+            DataTable dt = CommonBusiness.GetPagerData("ActivityReply", "*", whereSql, "ReplyID", "CreateTime", pageSize, pageIndex, out totalCount, out pageCount,false);
+            
+            foreach (DataRow dr in dt.Rows)
+            {
+                ActivityReplyEntity model = new ActivityReplyEntity();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+                if (!string.IsNullOrEmpty(model.FromReplyID))
+                {
+                    model.FromReplyUser = OrganizationBusiness.GetUserByUserID(model.FromReplyUserID, model.FromReplyAgentID);
+                }
+                list.Add(model);
+            }
+
+            return list;
+
+        }
         #endregion
 
         #region 添加
@@ -114,7 +145,7 @@ namespace CloudSalesBusiness
         /// <param name="agentid">代理商ID</param>
         /// <param name="clientid">客户端ID</param>
         /// <returns></returns>
-        public string CreateActivity(string name, string poster, string begintime, string endtime, string address, string ownerid,string memberid, string remark, string userid, string agentid, string clientid)
+        public static string CreateActivity(string name, string poster, string begintime, string endtime, string address, string ownerid, string memberid, string remark, string userid, string agentid, string clientid)
         {
             string activityid = Guid.NewGuid().ToString();
 
@@ -139,6 +170,21 @@ namespace CloudSalesBusiness
             return activityid;
         }
 
+        /// <summary>
+        /// 添加活动讨论
+        /// </summary>
+        /// <param name="msg">内容</param>
+        /// <param name="fromReplyID">来源讨论ID</param>
+        /// <param name="userID">创建者ID</param>
+        /// <param name="agentID">创建者代理商ID</param>
+        /// <param name="fromReplyUserID">来源讨论创建人ID</param>
+        /// <param name="fromReplyAgentID">来源讨论创建人代理商ID</param>
+        public static string CreateActivityReply(string msg,string fromReplyID, string userID, string agentID, string fromReplyUserID, string fromReplyAgentID) 
+        {
+            string id = string.Empty;
+
+            return id;
+        }
         #endregion
 
         #region 编辑/删除
@@ -155,8 +201,7 @@ namespace CloudSalesBusiness
         /// <param name="userid">操作人</param>
         /// <param name="agentid">代理商ID</param>
         /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
-        public bool UpdateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string remark, string ownerid,string memberid,string userid, string agentid, string clientid)
+        public static bool UpdateActivity(string activityid, string name, string poster, string begintime, string endtime, string address, string remark, string ownerid, string memberid, string userid, string agentid, string clientid)
         {
             if (!string.IsNullOrEmpty(poster) && poster.IndexOf(TempPath) >= 0)
             {
@@ -178,6 +223,17 @@ namespace CloudSalesBusiness
         public bool DeleteActivity(string activityid){
             bool bl = ActivityDAL.BaseProvider.DeleteActivity(activityid);
             return bl;   
+        }
+
+        /// <summary>
+        /// 删除活动讨论
+        /// </summary>
+        /// <param name="replyID"></param>
+        public static bool DeleteActivityReply(string replyID)
+        {
+            bool bl = ActivityDAL.BaseProvider.DeleteActivityReply(replyID);
+
+            return bl;
         }
         #endregion
     }

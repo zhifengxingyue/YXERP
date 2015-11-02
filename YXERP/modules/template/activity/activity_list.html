@@ -2,15 +2,51 @@
 	for(var i=0, j=$data.length; i < j; i++){
 	var item = $data[i];
 %}
-<tr class="list-item">
-    <td><a href="Detail/{%=item.ActivityID%}">{%=item.Name%}</a></td>
-    <td>{%=decodeURI(item.Owner.Name)%}</td>
-    <td>{%=item.BeginTime.toDate("yyyy-MM-dd")%}</td>
-    <td>{%=item.EndTime.toDate("yyyy-MM-dd")%}</td>
-    <td>{%=item.Address%}</td>
-    <td>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
-    <td class="center dropdown" data-id="{%=item.ActivityID%}">
-        <span class="ico-dropdown"></span>
-    </td>
-</tr>
+<tr class="activityListLi">
+            <td class="activityTD" style="border-right:none;" width="260"><div class="activityImg"><img src="/Content/uploadFiles/201510251248024825612.gif" /></div></td>
+            <td class="activityTD" style="border-left:none;">
+                <div class="activityInfo mLeft20">
+                    <table width="100%" class="activityInfoTB">
+                        <tr>
+                            <td width="32"><img class="activityOwnerImg" src="/modules/images/defaultavatar.png" /></td>
+                            <td width="80%" style="color:#666;">{%=item.Name%}</td>
+                            <td align="right">
+                                <div class="dropdown" style="background-color:#4A98E7;border-radius:3px;width:45px;padding:7px 10px;">
+                                    <span style="color:#fff;">操作</span>
+                                    <span class="ico-dropdown-white mLeft5"></span>
+                                </div>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td><img src="/modules/images/ico-time.png" /></td>
+                            <td>{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</td>
+                            <td></td>
+                        </tr>
+                         <tr>
+                            <td><img src="/modules/images/ico-member.png" /></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>地址:</td>
+                            <td>{%=item.Address%}</td>
+                            <td></td>
+                        </tr>
+                         <tr>
+                            <td>备注:</td>
+                            <td>{%=decodeURI( item.Remark)%}</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div class="activityMember">
+                        <div class="left" style="color:#4a98e7">成员：</div>
+                        <div class="left mLeft5" style="color:#4a98e7">bbbbbbb</div>
+                        <div class="clear"></div>
+                   </div>
+                </div>
+            </td>
+         </tr>
+        <tr><td colspan="2"><div class="activityUnderline4"></div></td></tr>
+        <tr><td colspan="2"><div class="activityUnderline4"></div></td></tr>
+        <tr><td colspan="2"><div style="height:10px;"></div></td></tr>
 {% } %}

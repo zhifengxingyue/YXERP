@@ -2,8 +2,6 @@
     ViewBag.Title = "活动详情页";
 }
 
-<link href="/modules/plug/laydate/need/laydate.css" rel="stylesheet" />
-<link href="/modules/plug/laydate/skins/molv/laydate.css" rel="stylesheet" />
 <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 <link href="/modules/css/customer/activity.css" rel="stylesheet" />
 
@@ -18,9 +16,9 @@
             ObjectJS.initOperate(um, '@ViewBag.ActivityID');
         });
 
-        $(function () {
-            laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
-        });
+        //$(function () {
+        //    laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        //});
         var begin = {
             elem: '#BeginTime',
             format: 'YYYY-MM-DD',
@@ -69,19 +67,12 @@
             <div class="left "><a id="addMember" href="javascript:void();" class="ico-add mTop4">添加成员</a></div>
             <div class="clear"></div>
         </li>
-         <li>
-            <span class="column-name">客户：</span>
-            <div id="Customs" class="left">
-            </div>
-            <div class="left "><a id="addCustom" href="javascript:void();" class="ico-add mTop4">添加客户</a></div>
-            <div class="clear"></div>
-        </li>
         <li>
-            <span class="width80">开始时间：</span><input type="text" id="BeginTime" data-type="date" data-text="格式不对" data-empty="* 必填" class="input verify"  />
+            <span class="width80">开始时间：</span><input type="text" id="BeginTime"  class="input"  />
         </li>
     
         <li>
-            <span class="width80">结束时间：</span><input type="text" id="EndTime" data-type="date" data-text="格式不对" data-empty="* 必填" class="input verify"  />
+            <span class="width80">结束时间：</span><input type="text" id="EndTime" class="input"  />
         </li>
         <li>
             <span class="width80">活动地址：</span><textarea id="Address"></textarea>
