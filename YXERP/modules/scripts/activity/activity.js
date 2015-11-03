@@ -13,7 +13,7 @@
     var ObjectJS = {};
 
     ObjectJS.Params = {
-        PageSize: 2,
+        PageSize: 10,
         PageIndex:1,
         KeyWords: "",
         IsAll: 0,
@@ -157,7 +157,14 @@
             }
 
             ObjectJS.getList();
-    });
+        });
+
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        });
 }
 
     //获取列表
@@ -219,7 +226,7 @@
                         var position = _this.find(".ico-dropdown-white").position();
                         $(".dropdown-ul li").data("id", _this.data("id"));
 
-                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
+                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 39 }).show().mouseleave(function () {
                             $(this).hide();
                         });
                     });
@@ -241,7 +248,7 @@
                         var position = _this.find(".ico-dropdown-white").position();
                         $(".dropdown-ul li").data("id", _this.data("id"));
 
-                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
+                        $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 30 }).show().mouseleave(function () {
                             $(this).hide();
                         });
                     });
@@ -391,24 +398,34 @@
                         $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").val(item.Address);
 
-                        editor.ready(function () {
-                            editor.setContent(decodeURI(item.Remark));
-                        });
+                        $("#PosterDisImg").attr("src", item.Poster);
+                        ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
+                        for (var i = 0; i < item.Members.length; i++) {
+                            ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
+                        }
                     }
                     else
                     {
+                        $("#Poster").attr("src", item.Poster);
                         $("#Name").html(item.Name);
+                        $("#Name").attr("src", "/Activity/Detail/" + item.ActivityID);
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").html(item.Address);
                         $("#Remark").html(decodeURI(item.Remark));
+
+                        $("#MemberCount").html(item.Members.length);
+                        for(var i=0;i<item.Members.length;i++)
+                        {
+                            var m = item.Members[i];
+                            $("#MemberList").append("<li>" + m.Name + "</li>");
+                        }
+
+                        ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
-                    $("#PosterDisImg").attr("src", item.Poster);
-                    ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
-                    for (var i = 0; i < item.Members.length; i++) {
-                        ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
-                    }
+                    $("#OwnerID").val(item.OwnerID);
+                    $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {
                         $("div.member").businessCard();
                     });
@@ -459,6 +476,22 @@
        
     }
 
+    //拼接一个用户成员
+    ObjectJS.GetMemberDetail = function (item, id) {
+        if (item.Avatar == '')
+            item.Avatar = "/modules/images/defaultavatar.png";
+        var html = '<div class="member left" data-id="' + item.UserID + '">';
+        html += '    <div class="left pRight5">';
+        html += '          <img src="' + item.Avatar + '" />';
+        html += '     </div>';
+        html += '      <div class="clear"></div>';
+        html += '   </div>';
+
+        $("#" + id).append(html);
+
+
+    }
+
     //保存实体
     ObjectJS.saveModel = function (model) {
         var _self = this;
@@ -476,6 +509,8 @@
         _self.bindDetailEvent();
 
         _self.getDetail(2);
+
+        ObjectJS.GetActivityReplys();
     }
 
     //绑定事件
@@ -484,26 +519,14 @@
        
         $("#btn_shareTask").click(function () {
             var OwnerID = '', MemberID = '';
-            $("#OwnerIDs .member").each(function () {
-                OwnerID += $(this).data("id") + "|";
-            });
-            $("#MemberIDs .member").each(function () {
-                MemberID += $(this).data("id") + "|";
-            });
-
-
-            if (OwnerID == '' || MemberID == '') {
-                alert("请选择负责人和成员");
-                return false;
-            }
             var model = {
                 ActivityID: $("#ActivityID").val(),
                 Name: $("#Name").html(),
-                OwnerID: OwnerID,
-                MemberID: MemberID,
+                OwnerID: $("#OwnerID").val(),
+                MemberID: $("#MemberID").val(),
                 BeginTime: $("#BeginTime").html(),
                 EndTime: $("#EndTime").html(),
-                Address: $("#Address").html(),
+                Address: $("#Address").html()
             };
 
             Global.post("/Activity/ShareTask", { entity: JSON.stringify(model) }, function (data) {
@@ -514,27 +537,14 @@
         });
 
         $("#btn_shareCalendar").click(function () {
-            var OwnerID = '', MemberID = '';
-            $("#OwnerIDs .member").each(function () {
-                OwnerID += $(this).data("id") + "|";
-            });
-            $("#MemberIDs .member").each(function () {
-                MemberID += $(this).data("id") + "|";
-            });
-
-
-            if (OwnerID == '' || MemberID == '') {
-                alert("请选择负责人和成员");
-                return false;
-            }
             var model = {
                 ActivityID: $("#ActivityID").val(),
                 Name: $("#Name").html(),
-                OwnerID: OwnerID,
-                MemberID: MemberID,
+                OwnerID: $("#OwnerID").val(),
+                MemberID: $("#MemberID").val(),
                 BeginTime: $("#BeginTime").html(),
                 EndTime: $("#EndTime").html(),
-                Address: $("#Address").html(),
+                Address: $("#Address").html()
             };
 
             Global.post("/Activity/ShareCalendar", { entity: JSON.stringify(model) }, function (data) {
@@ -544,9 +554,112 @@
             })
 
         });
+
+        $(".tab-nav .tab-nav-ul li").click(function () {
+            $(".tab-nav .tab-nav-ul li").removeClass("hover");
+
+            $(this).addClass("hover");
+        });
+
+        $("#btnSaveActivityReply").click(function () {
+            var entity =
+           {
+               ActivityID: $("#ActivityID").val(),
+                Msg: $("#Msg").val(),
+                FromReplyID: "",
+                FromReplyUserID: "",
+                FromReplyAgentID:""
+            }
+
+            ObjectJS.SaveActivityReply(entity);
+            $("#Msg").val('');
+        });
     }
 
+    ObjectJS.SaveActivityReply = function (entity) {
+        if (!entity.Msg)
+        {
+            alert("内容不能为空");
+            return false;
+        }
+        Global.post("/Activity/SavaActivityReply",
+            {
+                entity: JSON.stringify(entity)
+            },
+            function (data) {
+                if (data.Items.length > 0) {
+                    doT.exec("template/activity/activity_reply_list.html", function (template) {
+                        var innerhtml = template(data.Items);
+                        innerhtml = $(innerhtml);
+                        var innerhtml = template(data.Items);
+                        innerhtml = $(innerhtml).hide();
 
+                        $("#activityReplyList").prepend(innerhtml);
+                        innerhtml.fadeIn(1000);
+
+                        innerhtml.find("input[name='btn_replyByReply']").unbind("click").click(function () {
+                            var entity =
+                           {
+                               ActivityID: $("#ActivityID").val(),
+                               Msg: $("#Msg_" + $(this).data("replyid")).val(),
+                               FromReplyID: $(this).data("replyid"),
+                               FromReplyUserID: $(this).data("createuserid"),
+                               FromReplyAgentID: $(this).data("agentid")
+                           }
+                            ObjectJS.SaveActivityReply(entity);
+
+                            $("#Msg_" + $(this).data("replyid")).val('');
+                            $(this).parent().parent().slideUp(100);
+                        });
+
+                    });
+                }
+                else {
+                    alert("评论失败");
+                }
+            });
+    }
+
+    //获取列表
+    ObjectJS.GetActivityReplys = function () {
+        var _self = this;
+        Global.post("/Activity/GetActivityReplys",
+            {
+                activityID:$("#ActivityID").val(),
+                pageSize: ObjectJS.Params.PageSize,
+                pageIndex: ObjectJS.Params.PageIndex
+            },
+            function (data) {
+                if (data.Items.length > 0)
+                    {
+                        doT.exec("template/activity/activity_reply_list.html", function (template) {
+                        var innerhtml = template(data.Items);
+                        innerhtml = $(innerhtml);
+                        var innerhtml = template(data.Items);
+                        innerhtml = $(innerhtml);
+
+                        $("#activityReplyList").html(innerhtml);
+                        $("input[name='btn_replyByReply']").unbind("click").click(function () {
+                            var entity =
+                           {
+                               ActivityID: $("#ActivityID").val(),
+                               Msg: $("#Msg_" + $(this).data("replyid")).val(),
+                               FromReplyID: $(this).data("replyid"),
+                               FromReplyUserID: $(this).data("createuserid"),
+                               FromReplyAgentID: $(this).data("agentid")
+                           }
+
+                            ObjectJS.SaveActivityReply(entity);
+                            $("#Msg_" + $(this).data("replyid")).val('');
+                            $(this).parent().parent().slideUp(100);
+                        });
+
+                    });
+                }
+
+            }
+        );
+    }
 
     module.exports = ObjectJS;
 });

@@ -100,12 +100,14 @@ namespace CloudSalesDAL
         }
 
 
-        public static string CreateActivityReply(string msg, string fromReplyID, string userID, string agentID, string fromReplyUserID, string fromReplyAgentID) {
+        public string CreateActivityReply(string activityID, string msg, string userID, string agentID, string fromReplyID, string fromReplyUserID, string fromReplyAgentID)
+        {
             string replyID = Guid.NewGuid().ToString();
 
-            string sqlText = @"insert into ActivityReply(ReplyID,Msg,FromReplyID,AgentID,FromReplyUserID,FromReplyAgentID)
-                                values(@ReplyID,@Msg,@FromReplyID,@AgentID,@FromReplyUserID,@FromReplyAgentID)";
+            string sqlText = @"insert into ActivityReply(ReplyID,ActivityID,Msg,CreateUserID,AgentID,FromReplyID,FromReplyUserID,FromReplyAgentID)
+                                values(@ReplyID,@ActivityID,@Msg,@CreateUserID,@AgentID,@FromReplyID,@FromReplyUserID,@FromReplyAgentID)";
             SqlParameter[] paras = { 
+                                     new SqlParameter("@ActivityID",activityID),
                                      new SqlParameter("@ReplyID",replyID),
                                      new SqlParameter("@Msg",msg),
                                      new SqlParameter("@FromReplyID",fromReplyID),

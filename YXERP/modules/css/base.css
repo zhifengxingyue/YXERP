@@ -45,6 +45,9 @@
 .pLeft30 {padding-left:30px;}
 .pLeft50 {padding-left:50px;}
 
+.pTop5 {padding-top:5px;}
+.pTop20 {padding-top:20px;}
+
 /*margin*/ 
 .mTop1 {margin-top:1px;}
 .mTop2 {margin-top:2px;}
@@ -55,6 +58,7 @@
 .mTop15 {margin-top:15px;}
 .mTop20 {margin-top:20px;}
 .mTop30 {margin-top:30px;}
+.mTop40 {margin-top:40px;}
 .mTop50 {margin-top:50px;}
 
 .mLeft1 {margin-left:1px;}

@@ -109,8 +109,8 @@ namespace CloudSalesBusiness
         public static List<ActivityReplyEntity> GetActivityReplys(string activityID, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
             List<ActivityReplyEntity> list = new List<ActivityReplyEntity>();
-            string whereSql = " status<>9 and activityID="+activityID;
-            DataTable dt = CommonBusiness.GetPagerData("ActivityReply", "*", whereSql, "ReplyID", "CreateTime", pageSize, pageIndex, out totalCount, out pageCount,false);
+            string whereSql = " status<>9 and activityID='"+activityID+"' ";
+            DataTable dt = CommonBusiness.GetPagerData("ActivityReply", "*", whereSql, "AutoID", "CreateTime desc ", pageSize, pageIndex, out totalCount, out pageCount, false);
             
             foreach (DataRow dr in dt.Rows)
             {
@@ -179,11 +179,9 @@ namespace CloudSalesBusiness
         /// <param name="agentID">创建者代理商ID</param>
         /// <param name="fromReplyUserID">来源讨论创建人ID</param>
         /// <param name="fromReplyAgentID">来源讨论创建人代理商ID</param>
-        public static string CreateActivityReply(string msg,string fromReplyID, string userID, string agentID, string fromReplyUserID, string fromReplyAgentID) 
+        public static string CreateActivityReply(string activityID, string msg, string userID, string agentID, string fromReplyID, string fromReplyUserID, string fromReplyAgentID) 
         {
-            string id = string.Empty;
-
-            return id;
+            return ActivityDAL.BaseProvider.CreateActivityReply(activityID, msg, userID, agentID, fromReplyID, fromReplyUserID, fromReplyAgentID);
         }
         #endregion
 

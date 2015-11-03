@@ -11,51 +11,85 @@
         });
 </script>
     }
-
 <div class="header-box">
     <span class="header-title left">活动详情</span>
     <a href="javascript:void(0);" id="btn_shareTask" class="ico-add left mTop4 mLeft20">分享到明道任务</a>
     <a href="javascript:void(0);" id="btn_shareCalendar" class="ico-add left mTop4 mLeft20">分享到明道日程</a>
-    <a href="javascript:void(0);" class="ico-add left mTop4 mLeft20">添加客户</a>
     <span class="ico-gonext right" onclick="history.go(1)" title="前进"></span>
     <span class="ico-goback right" onclick="history.go(-1)" title="后退"></span>
 </div>
-<div class="content-body">
-    <ul class="table-add">
-        <li>
-            <span class="width80">活动名称：</span><span id="Name"></span>
-        </li>
-        <li>
-            <span class="column-name">负责人：</span>
-            <div id="OwnerIDs" ></div>
-            <div class="clear"></div>
-        </li>
-        <li>
-            <span class="column-name">成员：</span>
-            <div id="MemberIDs" ></div>
-            <div class="clear"></div>
-        </li>
-        <li>
-            <span class="width80">开始时间：</span><span  id="BeginTime"></span>
-        </li>
-    
-        <li>
-            <span class="width80">结束时间：</span><span  id="EndTime"></span>
-        </li>
-        <li>
-            <span class="width80">活动地址：</span><span id="Address"></span>
-        </li>
-        <li>
-            <span class="column-name">备注：</span>
-            
-            <span id="Remark" style="max-width:800px;max-height:600px;"></span> 
-        </li>
-    </ul>
-    <img class="brand-img" id="PosterDisImg" alt="" src="" />
 
-    <div class="mTop20">
-        <input type="button" class="btn" onclick="location.href ='/Activity/Operate/@ViewBag.ActivityID'" value="编辑" />
-        <a href="javascript:void(0);" onclick="history.go(-1)"  class="btn mLeft20">返回</a>
+<div class="content-body">
+    <table width="100%">
+        <tr class="activityListLi">
+            <td width="410"><div><img id="Poster" class="activityDetailImg" src="/modules/images/defaultactivity.jpg" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></div></td>
+            <td  valign="top">
+                <div class="activityDetailInfo mLeft30">
+                    <table width="100%" class="activityInfoTB">
+                        <tr>
+                            <td colspan="2" style="padding:0;">
+                                <a style="font-size:20px;color:#333;" href="#" id="Name"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="48">负责人:</td>
+                            <td>
+                                <div class="left" id="OwnerIDs"></div>
+                                <div class="left mLeft30 pTop5"><img src="/modules/images/ico-time.png" /></div>
+                                <div class="left mLeft10" style="padding-top:5px;"><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></div>
+                                <div class="left mLeft20"><img src="/modules/images/ico-member.png" /></div>
+                                <div class="left mLeft5" style="padding-top:3px;color:#aaa;" id="MemberCount">33</div>
+                                <div class="clear"></div>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>成员:</td>
+                            <td>
+                                <ul id="MemberList"></ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>地址:</td>
+                            <td><span id="Address"></span></td>
+                        </tr>
+                         <tr>
+                            <td>备注:</td>
+                            <td><span id="Remark"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+         </tr>
+    </table>
+
+    <div class="mTop40">
+        <div class="tab-nav">
+            <ul class="tab-nav-ul">
+                <li class="hover" data-id="productinfo">评论</li>
+                <li class="" data-id="childproduct">客户列表</li>
+            </ul>
+        </div>
+
+        <div class="mTop20">
+            <div class="left">
+                    <textarea id="Msg" style="width:600px;height:150px;border:none;background-color:#fee;"></textarea>
+            </div>
+            <div class="left mLeft10" style="padding-top:123px;">
+                <input type="button" class="btn" id="btnSaveActivityReply" value="评论" />
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="mTop15" style="border-bottom:solid 1px #06c;padding-bottom:10px;width:657px;">
+            <span style="color:#666;">全部评论</span>
+        </div>
+
+        <div class="mBottom50">
+            <table width="657" id="activityReplyList"></table>
+        </div>
     </div>
+
     <input type="hidden" id="ActivityID" value="@ViewBag.ActivityID" />
+    <input type="hidden" id="OwnerID" value="" />
+    <input type="hidden" id="MemberID" value="" />
 </div>

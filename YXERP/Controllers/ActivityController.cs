@@ -157,10 +157,23 @@ namespace YXERP.Controllers
             ActivityReplyEntity model = serializer.Deserialize<ActivityReplyEntity>(entity);
 
             string replyID = "";
-            replyID = ActivityBusiness.CreateActivityReply(model.Msg, model.FromReplyID, CurrentUser.UserID, CurrentUser.AgentID, model.FromReplyUserID, model.FromReplyAgentID);
+            replyID = ActivityBusiness.CreateActivityReply(model.ActivityID, model.Msg, CurrentUser.UserID, CurrentUser.AgentID, model.FromReplyID, model.FromReplyUserID, model.FromReplyAgentID);
 
-
-            JsonDictionary.Add("ID", replyID);
+            List<ActivityReplyEntity> list = new List<ActivityReplyEntity>();
+            if (!string.IsNullOrEmpty(replyID))
+            {
+                model.ReplyID = replyID;
+                model.CreateTime = DateTime.Now;
+                model.CreateUser = CurrentUser;
+                model.CreateUserID = CurrentUser.UserID;
+                model.AgentID = CurrentUser.AgentID;
+                if(!string.IsNullOrEmpty(model.FromReplyID))
+                {
+                    model.FromReplyUser = OrganizationBusiness.GetUserByUserID(model.FromReplyUserID, model.FromReplyAgentID);
+                }
+                list.Add(model);
+            }
+            JsonDictionary.Add("Items", list);
             return new JsonResult
             {
                 Data = JsonDictionary,
