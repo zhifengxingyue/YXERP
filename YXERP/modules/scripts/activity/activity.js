@@ -137,19 +137,28 @@
             var type = parseInt($(this).data("type"));
 
             ObjectJS.Params.DisplayType = type;
-            if (type == 1) {
-                $("tr.list-item").remove();
-                $(".table-list").show();
+            if (type == 1) 
+            {
+                $(this).find("img").attr("src", "/modules/images/ico-list-blue.png");
+                $(this).next().find("img").attr("src", "/modules/images/ico-card-gray.png");
+                $(".activityList").html('');
+
+                $(".activityList").show();
                 $(".activityCardList").hide();
             }
-            else {
+            else
+            {
+                $(this).find("img").attr("src", "/modules/images/ico-card-blue.png");
+                $(this).prev().find("img").attr("src", "/modules/images/ico-list-gray.png");
                 $(".activityCardList").html('');
-                $(".table-list").hide();
+
+                $(".activityList").hide();
                 $(".activityCardList").show();
             }
+
             ObjectJS.getList();
-        });
-    }
+    });
+}
 
     //获取列表
     ObjectJS.getList = function () {
@@ -207,7 +216,7 @@
                     //操作
                     innerhtml.find(".dropdown").click(function () {
                         var _this = $(this);
-                        var position = _this.find(".ico-dropdown").position();
+                        var position = _this.find(".ico-dropdown-white").position();
                         $(".dropdown-ul li").data("id", _this.data("id"));
 
                         $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
@@ -215,7 +224,7 @@
                         });
                     });
 
-                    $(".tr-header").after(innerhtml);
+                    $(".activityList").html(innerhtml);
                 });
             }
             else
@@ -229,7 +238,7 @@
                     //操作
                     innerhtml.find(".dropdown").click(function () {
                         var _this = $(this);
-                        var position = _this.find(".ico-dropdown").position();
+                        var position = _this.find(".ico-dropdown-white").position();
                         $(".dropdown-ul li").data("id", _this.data("id"));
 
                         $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
@@ -237,7 +246,7 @@
                         });
                     });
 
-                    $(".activityCardList").append(innerhtml);
+                    $(".activityCardList").html(innerhtml);
                     require.async("businesscard", function () {
                         $("div.member").businessCard();
                     });
@@ -264,8 +273,12 @@
             regText: "data-text"
         });
 
-        if(id)
+        if (id)
+        {
+            $(".header-title").html("编辑活动");
             _self.getDetail(1);
+        }
+            
     }
 
     //绑定事件
@@ -326,21 +339,6 @@
             });
         });
 
-        //添加客户
-        $("#addCustom").click(function () {
-            ChooseUser.create({
-                title: "添加成员",
-                type: 1,
-                single: false,
-                callback: function (items) {
-                    for (var i = 0; i < items.length; i++) {
-                        _self.createMember(items[i], "Customs", false);
-                    }
-
-                }
-            });
-        });
-
         $("#btnSaveActivity").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
@@ -385,6 +383,7 @@
             function (data) {
                 if (data.Item) {
                     var item = data.Item;
+                    //option=1 编辑页；option=2 详情页
                     if (option == 1) {
                         $("#Name").val(item.Name);
                         $("#PosterImg").val(item.Poster);
@@ -402,6 +401,7 @@
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").html(item.Address);
+                        $("#Remark").html(decodeURI(item.Remark));
                     }
 
                     $("#PosterDisImg").attr("src", item.Poster);

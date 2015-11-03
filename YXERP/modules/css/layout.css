@@ -56,6 +56,8 @@ select option{ padding:2px; }
 /*下拉*/
 .ico-dropdown{ background:url(../images/ico-dropdown.png) no-repeat; height:12px; min-width:12px; line-height:12px; 
           display:inline-block; cursor:pointer;}
+.ico-dropdown-white{ background:url(../images/ico-dropdown-white.png) no-repeat; height:11px; min-width:11px; line-height:11px; 
+          display:inline-block; cursor:pointer;}
 
 /*排序*/
 .ico-orderby-down{ background:url(../images/ico-orderby-down.png) no-repeat; height:12px; min-width:12px; line-height:12px; 

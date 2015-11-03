@@ -285,7 +285,7 @@ namespace YXERP.Controllers
                     if (model.error_code <= 0)
                     {
                         var user = model.user;
-                        int error = 0, result = 0;
+                        int result = 0;
 
                         bool isAdmin = false;//MD.SDK.Entity.App.AppBusiness.IsAppAdmin(CurrentUser.MDToken, user.id, out error);
 

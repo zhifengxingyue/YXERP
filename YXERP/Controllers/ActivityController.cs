@@ -43,6 +43,8 @@ namespace YXERP.Controllers
         #endregion
 
         #region ajax
+
+        #region 活动
         /// <summary>
         /// 获取活动列表
         /// </summary>
@@ -55,7 +57,7 @@ namespace YXERP.Controllers
             if (isAll == 1)
                 userID = string.Empty;
 
-            List<ActivityEntity> list = new ActivityBusiness().GetActivitys(userID, (EnumActivityStage)stage,filterType, keyWords,beginTime,endTime, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
+            List<ActivityEntity> list =ActivityBusiness.GetActivitys(userID, (EnumActivityStage)stage,filterType, keyWords,beginTime,endTime, pageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
@@ -72,7 +74,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetActivityDetail(string activityID)
         {
-            ActivityEntity model = new ActivityBusiness().GetActivityByID(activityID);
+            ActivityEntity model =ActivityBusiness.GetActivityByID(activityID);
             JsonDictionary.Add("Item", model);
             return new JsonResult
             {
@@ -81,6 +83,9 @@ namespace YXERP.Controllers
             };
         }
 
+        /// <summary>
+        /// 获取用户详情
+        /// </summary>
         public JsonResult GetUserDetail(string id)
         {
             Users model = OrganizationBusiness.GetUserByUserID(id, CurrentUser.AgentID);
@@ -105,11 +110,11 @@ namespace YXERP.Controllers
             model.MemberID = model.MemberID.Trim('|');
             if (string.IsNullOrEmpty(model.ActivityID))
             {
-                activityID = new ActivityBusiness().CreateActivity(model.Name, model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.OwnerID,model.MemberID, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                activityID =ActivityBusiness.CreateActivity(model.Name, model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.OwnerID,model.MemberID, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             }
             else
             {
-                bool bl = new ActivityBusiness().UpdateActivity(model.ActivityID, model.Name,model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.Remark,model.OwnerID,model.MemberID, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                bool bl =ActivityBusiness.UpdateActivity(model.ActivityID, model.Name,model.Poster, model.BeginTime.ToString(), model.EndTime.ToString(), model.Address, model.Remark,model.OwnerID,model.MemberID, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
 
                 if (bl)
                 {
@@ -139,10 +144,68 @@ namespace YXERP.Controllers
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+        #endregion
 
-            return new JsonResult();
+        #region 活动讨论
+        /// <summary>
+        /// 保存活动讨论
+        /// </summary>
+        public JsonResult SavaActivityReply(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ActivityReplyEntity model = serializer.Deserialize<ActivityReplyEntity>(entity);
+
+            string replyID = "";
+            replyID = ActivityBusiness.CreateActivityReply(model.Msg, model.FromReplyID, CurrentUser.UserID, CurrentUser.AgentID, model.FromReplyUserID, model.FromReplyAgentID);
+
+
+            JsonDictionary.Add("ID", replyID);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
+        /// <summary>
+        /// 获取活动讨论列表
+        /// </summary>
+        public JsonResult GetActivityReplys(string activityID, int pageSize, int pageIndex)
+        {
+            int pageCount = 0;
+            int totalCount = 0;
+
+            List<ActivityReplyEntity> list = ActivityBusiness.GetActivityReplys(activityID, pageSize, pageIndex, ref totalCount, ref pageCount);
+            JsonDictionary.Add("Items", list);
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 删除活动讨论
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult DeleteActivityReply(string activityID)
+        {
+            bool bl =ActivityBusiness.DeleteActivityReply(activityID);
+            JsonDictionary.Add("Result", bl ? 1 : 0);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
+        }
+
+        #endregion
+
+        #region 活动对明道打通
         /// <summary>
         /// 将活动分享到明道任务
         /// </summary>
@@ -198,6 +261,8 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        #endregion
+
         #endregion
 
     }

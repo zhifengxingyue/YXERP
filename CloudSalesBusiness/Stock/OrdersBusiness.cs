@@ -226,7 +226,7 @@ namespace CloudSalesBusiness
                     return "";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 tran.Rollback();
                 conn.Dispose();
