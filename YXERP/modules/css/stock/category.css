@@ -31,7 +31,8 @@
 .category-attr-list .header { background-color:#eee; }
 
 .category-attr-list li span{ float:left;}
-.category-attr-list li  .category-name{ width:155px;}
+.category-attr-list li  .category-attr-name{ width:155px;}
+.category-attr-list li:hover .category-attr-name{color:#2F73B8; }
 
 /*通用属性*/
 .common-attr-layer { width:230px; float:left; margin-left:5px; }
@@ -52,7 +53,7 @@
 .common-attr-list a {text-decoration:underline;}
 .common-attr-list a:hover {color:red; }
 
-.category-attr-header .ico-add { color:#fff; }
+.category-attr-header .ico-add { color:#fff; background:url(/modules/images/ico-add-fff.png) no-repeat;}
 
 
 

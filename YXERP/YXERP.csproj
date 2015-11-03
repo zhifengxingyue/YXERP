@@ -115,6 +115,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -128,6 +129,8 @@
     <Content Include="Content\homeico\custom.png" />
     <Content Include="Content\homeico\homebg.jpg" />
     <Content Include="Content\homeico\info.png" />
+    <Content Include="Content\homeico\mingdao-hover.png" />
+    <Content Include="Content\homeico\mingdao.png" />
     <Content Include="Content\homeico\report.png" />
     <Content Include="Content\homeico\sales.png" />
     <Content Include="Content\homeico\stock.png" />
@@ -169,13 +172,14 @@
     <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
     <Content Include="modules\css\customer\activity.css" />
     <Content Include="modules\css\home\home.css" />
-    <Content Include="modules\css\orders\confirmcart.css" />
-    <Content Include="modules\css\purchase\docdetail.css" />
+    <Content Include="modules\css\shoppingcart\confirmcart.css" />
+    <Content Include="modules\css\stock\purchase.css" />
     <Content Include="modules\css\base.css" />
     <Content Include="modules\css\stock\products.css" />
     <Content Include="modules\css\system\system.css" />
     <Content Include="modules\images\defaultactivity.jpg" />
     <Content Include="modules\images\defaultavatar.png" />
+    <Content Include="modules\images\ico-add-fff.png" />
     <Content Include="modules\images\ico-addhover.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
@@ -233,7 +237,7 @@
     <Content Include="modules\template\activity\activity_card_list.html" />
     <Content Include="modules\template\activity\activity_reply_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
-    <Content Include="modules\template\orders\product-detail.html" />
+    <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />
     <Content Include="modules\template\organization\roles.html" />
@@ -281,7 +285,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="modules\css\layout.css" />
-    <Content Include="modules\css\login.css" />
+    <Content Include="modules\css\home\login.css" />
     <Content Include="modules\css\system\organization.css" />
     <Content Include="modules\css\stock\category.css" />
     <Content Include="modules\css\stock\attrplug.css" />
@@ -303,10 +307,6 @@
     <Content Include="modules\images\ico-open.png" />
     <Content Include="modules\images\ico-orderby-down-hover.png" />
     <Content Include="modules\images\ico-orderby-down.png" />
-    <Content Include="modules\images\ico-orderby-shang-hover.png" />
-    <Content Include="modules\images\ico-orderby-shang.png" />
-    <Content Include="modules\images\ico-orderby-xia-hover.png" />
-    <Content Include="modules\images\ico-orderby-xia.png" />
     <Content Include="modules\images\ico-pull.png" />
     <Content Include="modules\images\ico-pwd.png" />
     <Content Include="modules\images\ico-tree-full.png" />
@@ -443,8 +443,8 @@
     <Content Include="modules\template\products\common-attrs.html" />
     <Content Include="modules\template\products\productdetails_add.html" />
     <Content Include="modules\template\products\productdetails_list.html" />
-    <Content Include="modules\template\orders\filter_attr_list.html" />
-    <Content Include="modules\template\orders\filter_product_list.html" />
+    <Content Include="modules\template\shoppingcart\filter-attrs.html" />
+    <Content Include="modules\template\shoppingcart\filter-products.html" />
     <Content Include="modules\template\system\depotseat_add.html" />
     <Content Include="modules\template\system\warehouses.html" />
     <Content Include="modules\template\system\depotseats.html" />
@@ -469,7 +469,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\tempfile\" />
     <Folder Include="Content\uploadFiles\" />
+    <Folder Include="modules\css\orders\" />
     <Folder Include="modules\scripts\orders\" />
+    <Folder Include="modules\template\orders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

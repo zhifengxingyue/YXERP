@@ -44,8 +44,8 @@ define(function (require, exports, module) {
         //删除产品
         $(".ico-del").click(function () {
             var _this = $(this);
-            if (confirm("确认从购物车移除此产品吗？")) {
-                Global.post("/Orders/DeleteCart", {
+            confirm("确认从购物车移除此产品吗？", function () {
+                Global.post("/ShoppingCart/DeleteCart", {
                     autoid: _this.data("id")
                 }, function (data) {
                     if (!data.Status) {
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
                         _self.getAmount();
                     }
                 });
-            }
+            });
         });
 
         $("#btnconfirm").click(function () {
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
     //更改数量
     ObjectJS.editQuantity = function (ele) {
         var _self = this;
-        Global.post("/Orders/UpdateCartQuantity", {
+        Global.post("/ShoppingCart/UpdateCartQuantity", {
             autoid: ele.data("id"),
             quantity: ele.val()
         }, function (data) {

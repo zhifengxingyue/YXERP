@@ -66,7 +66,7 @@
         var _self = this;
         $("#attr-price").nextAll(".attr-item").remove();
         //属性
-        doT.exec("template/orders/filter_attr_list.html", function (templateFun) {
+        doT.exec("template/shoppingcart/filter-attrs.html", function (templateFun) {
             var html = templateFun(CacheCategorys[pid].AttrLists);
             html = $(html);
 
@@ -83,7 +83,7 @@
             $("#attr-price").after(html);
         });
         //规格
-        doT.exec("template/products/filter_attr_list.html", function (templateFun) {
+        doT.exec("template/shoppingcart/filter-attrs.html", function (templateFun) {
             var html = templateFun(CacheCategorys[pid].SaleAttrs);
             html = $(html);
 
@@ -257,9 +257,9 @@
             Attrs: attrs
         }, params);
 
-        Global.post("/Orders/GetProductListForShopping", { filter: JSON.stringify(opt) }, function (data) {
+        Global.post("/ShoppingCart/GetProductListForShopping", { filter: JSON.stringify(opt) }, function (data) {
             $("#productlist").empty();
-            doT.exec("template/orders/filter_product_list.html", function (templateFun) {
+            doT.exec("template/shoppingcart/filter-products.html", function (templateFun) {
                 var html = templateFun(data.Items);
                 html = $(html);
 
@@ -298,27 +298,27 @@
                     ObjectJS.getProducts();
                 }
             });
-            $("#toppager").paginate({
-                total_count: data.TotalCount,
-                count: data.PageCount,
-                start: Params.PageIndex,
-                display: 5,
-                border: true,
-                border_color: '#fff',
-                text_color: '#333',
-                background_color: '#fff',
-                border_hover_color: '#ccc',
-                text_hover_color: '#000',
-                background_hover_color: '#efefef',
-                rotate: true,
-                images: false,
-                mouse: 'slide',
-                float: "left",
-                onChange: function (page) {
-                    Params.PageIndex = page;
-                    ObjectJS.getProducts();
-                }
-            });
+            //$("#toppager").paginate({
+            //    total_count: data.TotalCount,
+            //    count: data.PageCount,
+            //    start: Params.PageIndex,
+            //    display: 5,
+            //    border: true,
+            //    border_color: '#fff',
+            //    text_color: '#333',
+            //    background_color: '#fff',
+            //    border_hover_color: '#ccc',
+            //    text_hover_color: '#000',
+            //    background_hover_color: '#efefef',
+            //    rotate: true,
+            //    images: false,
+            //    mouse: 'slide',
+            //    float: "left",
+            //    onChange: function (page) {
+            //        Params.PageIndex = page;
+            //        ObjectJS.getProducts();
+            //    }
+            //});
         });
     }
 
@@ -329,7 +329,7 @@
         if (!CacheProduct[pid]) {
             Global.post("/Products/GetProductByIDForDetails", { productid: pid }, function (data) {
                 CacheProduct[pid] = data.Item;
-                doT.exec("template/orders/product-detail.html", function (templateFun) {
+                doT.exec("template/shoppingcart/product-detail.html", function (templateFun) {
                     var html = templateFun(CacheProduct[pid]);
                     Easydialog.open({
                         container: {
@@ -350,7 +350,7 @@
                 });
             });
         } else {
-            doT.exec("template/orders/product-detail.html", function (templateFun) {
+            doT.exec("template/shoppingcart/product-detail.html", function (templateFun) {
                 var html = templateFun(CacheProduct[pid]);
                 Easydialog.open({
                     container: {
@@ -441,7 +441,7 @@
                     var _this = $(this);
                     remark += "[" + _this.find(".cart-attrkey").html() + _this.find("li.hover").html() + "]";
                 });
-                Global.post("/Orders/AddShoppingCart", {
+                Global.post("/ShoppingCart/AddShoppingCart", {
                     productid: pid,
                     detailsid: _self.detailid,
                     quantity: $("#quantity").val(),
