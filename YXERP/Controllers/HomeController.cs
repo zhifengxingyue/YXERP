@@ -159,7 +159,7 @@ namespace YXERP.Controllers
         /// <param name="userName"></param>
         /// <param name="pwd"></param>
         /// <returns></returns>
-        public JsonResult UserLogin(string userName, string pwd, int remember)
+        public JsonResult UserLogin(string userName, string pwd, string remember)
         {
             bool bl = false;
 
@@ -169,24 +169,12 @@ namespace YXERP.Controllers
             if (model != null)
             {
                 //保持登录状态
-                if (remember == 1)
-                {
-                    HttpCookie cook = new HttpCookie("cloudsales");
-                    cook["username"] = userName;
-                    cook["pwd"] = pwd;
-                    cook["status"] = "1";
-                    cook.Expires = DateTime.Now.AddMonths(1);
-                    Response.Cookies.Add(cook);
-                }
-                else
-                {
-                    HttpCookie cook = new HttpCookie("cloudsales");
-                    cook["username"] = userName;
-                    cook["pwd"] = pwd;
-                    cook["status"] = "0";
-                    cook.Expires = DateTime.Now.AddMonths(1);
-                    Response.Cookies.Add(cook);
-                }
+                HttpCookie cook = new HttpCookie("cloudsales");
+                cook["username"] = userName;
+                cook["pwd"] = pwd;
+                cook["status"] = remember;
+                cook.Expires = DateTime.Now.AddDays(7);
+                Response.Cookies.Add(cook);
 
                 Session["ClientManager"] = model;
                 bl = true;

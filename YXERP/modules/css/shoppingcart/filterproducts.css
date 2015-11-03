@@ -59,9 +59,9 @@
 .product-item .name { height:35px; overflow:hidden; color:#333; }
 .product-item .name:hover { text-decoration:underline; color:#B10000; }
 
-.product-item .btnAddCart { height:35px; line-height:35px; width:100%; color:#fff; position:absolute; cursor:pointer; 
-                            text-align:center; bottom:0px; left:0px; font-size:16px; background-color:#B10000; display:none; }
-.productlist li:hover .btnAddCart{ display:block; }
+.product-item .btnAddCart { height:35px; line-height:35px; width:100%; color:#999; position:absolute; cursor:pointer; 
+                            text-align:center; bottom:0px; left:0px; font-size:16px; background-color:#ddd;  }
+.productlist li:hover .btnAddCart{ background-color:#B10000; color:#fff;}
 
 #pager { margin:50px auto; }
 
