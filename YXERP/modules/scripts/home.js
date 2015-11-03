@@ -69,26 +69,39 @@ define(function (require, exports, module) {
 
     Home.bindStyle = function () {
 
-        //图标居中
-        //$("#menuItems img").each(function () {
-        //    var _this = $(this);
-        //    _this.css({ top: _this.parent().height() / 2 - _this.height() / 2, left: _this.parent().width() / 2 - _this.width() / 2 })
-        //});
-
-        var width = document.documentElement.clientWidth, height = document.documentElement.clientHeight - 200;
-        console.log(document.documentElement);
+        var width = document.documentElement.clientWidth - 360, height = document.documentElement.clientHeight - 200;
 
         var unit = 40;
         if (width >= height * 3) {
             unit = height / 2;
+        } else {
+            unit = width / 6;
         }
+
+        $("#menuItems").css({
+            marginLeft: (document.documentElement.clientWidth - unit * 6 - 25) / 2,
+            marginTop: (document.documentElement.clientHeight - unit * 2) / 2
+        })
+
+        $(".middle-items").each(function () {
+            var _this = $(this), unit_w = _this.data("width"), unit_h = _this.data("height");
+            _this.css({
+                width: unit_w * unit + 25,
+                height: unit_h * unit
+            });
+        });
 
         $("#menuItems a").each(function () {
             var _this = $(this), unit_w = _this.data("width"), unit_h = _this.data("height");
             _this.css({
-                width: unit_w * unit,
-                height: unit_h * unit
+                width: unit_w * unit - unit_h % 2 * 5,
+                height: unit_h * unit - unit_h % 2 * 5
             })
+        });
+
+        $("#menuItems img").each(function () {
+            var _this = $(this);
+            _this.css({ top: _this.parent().height() / 2 - _this.height() / 2, left: _this.parent().width() / 2 - _this.width() / 2 })
         });
 
     }

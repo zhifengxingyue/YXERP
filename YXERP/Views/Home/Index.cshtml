@@ -3,7 +3,8 @@
     var CurrentUser = (CloudSalesEntity.Users)Session["ClientManager"];
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head runat="server">
     <title>云销系统</title>
     <link href="/modules/css/layout.css" rel="stylesheet" />
@@ -35,28 +36,28 @@
                 <img src="/Content/homeico/custom.png" />
                 <h2>客户</h2>
             </a>
-            <div data-width="3" data-height="2" class="left">
-                <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="102000000").FirstOrDefault().IsAllow?"/Order/Index":"javascript:void(0)")" class="sales item">
+            <div data-width="3" data-height="2" class="left middle-items">
+                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="102000000").FirstOrDefault().IsAllow?"/Order/Index":"javascript:void(0)")" class="sales item">
                     <img src="/Content/homeico/sales.png" />
                     <h2>销售</h2>
                 </a>
-                <a href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="103000000").FirstOrDefault().IsAllow?"/Products/Index":"javascript:void(0)")" class="stock item">
+                <a data-width="1" data-height="1" href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="103000000").FirstOrDefault().IsAllow?"/Products/Index":"javascript:void(0)")" class="stock item">
                     <img src="/Content/homeico/stock.png" />
                     <h2>库存</h2>
                 </a>
-                <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="104000000").FirstOrDefault().IsAllow?"/Finance/Index":"javascript:void(0)")" class="account item">
+                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="104000000").FirstOrDefault().IsAllow?"/Finance/Index":"javascript:void(0)")" class="account item">
                     <img src="/Content/homeico/account.png" />
                     <h2>财务</h2>
                 </a>
-                <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="106000000").FirstOrDefault().IsAllow?"/CustomerRPT/Index":"javascript:void(0)")" class="report item">
+                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="106000000").FirstOrDefault().IsAllow?"/CustomerRPT/Index":"javascript:void(0)")" class="report item">
                     <img src="/Content/homeico/report.png" />
                     <h2>统计</h2>
                 </a>
-                <a href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="107000000").FirstOrDefault().IsAllow?"/Infomation/Index":"javascript:void(0)")" class="info item">
+                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="107000000").FirstOrDefault().IsAllow?"/Infomation/Index":"javascript:void(0)")" class="info item">
                     <img src="/Content/homeico/info.png" />
                     <h2>信息</h2>
                 </a>
-                <a href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="108000000").FirstOrDefault().IsAllow?"/Organization/Index":"javascript:void(0)")" class="system item">
+                <a data-width="1" data-height="1" href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="108000000").FirstOrDefault().IsAllow?"/Organization/Index":"javascript:void(0)")" class="system item">
                     <img src="/Content/homeico/system.png" />
                     <h2>系统</h2>
                 </a>

@@ -1,11 +1,11 @@
 ﻿
 
-.home-body { width:100%; position:fixed; top:50px; bottom:0;  background:url('/Content/homeico/homebg.jpg') no-repeat right bottom; background-size:cover; padding-top:100px; }
+.home-body { width:100%; position:fixed; top:0; bottom:0;  background:url('/Content/homeico/homebg.jpg') no-repeat right bottom; background-size:cover; }
 
 
 .home-body .menu-items{ margin:0 auto; opacity:0.9;}
 .home-body .menu-items .item{ background-color:#518fc5; text-align:center; float:left; display:inline-block; position:relative; }
-.home-body .menu-items .item img{ width:40px; height:40px;  display:inline-block; position:absolute; }
+.home-body .menu-items .item img{ width:60px; height:60px;  display:inline-block; position:absolute; }
 .home-body .menu-items .item h2{ color:#fff; position:absolute; bottom:5px; left:5px; font-size:14px; }
 
 
