@@ -44,7 +44,7 @@ define(function (require, exports, module) {
         });
         //作废
         $("#invalid").click(function () {
-            if (confirm("采购单作废后不可恢复,确认作废吗？")) {
+            confirm("采购单作废后不可恢复,确认作废吗？", function () {
                 Global.post("/Purchase/InvalidPurchase", { docid: _self.docid }, function (data) {
                     if (data.Status) {
                         Params.pageIndex = 1;
@@ -53,7 +53,7 @@ define(function (require, exports, module) {
                         alert("作废失败！");
                     }
                 });
-            }
+            });
         });
 
     }
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 
                 //删除事件
                 $(".ico-del").click(function () {
-                    if (confirm("采购单删除后不可恢复,确认删除吗？")) {
+                    confirm("采购单删除后不可恢复,确认删除吗？", function () {
                         Global.post("/Purchase/DeletePurchase", { docid: $(this).data("id") }, function (data) {
                             if (data.Status) {
                                 Params.pageIndex = 1;
@@ -85,11 +85,17 @@ define(function (require, exports, module) {
                                 alert("删除失败！");
                             }
                         });
-                    }
+                    });
                 });
                 //下拉事件
                 $(".dropdown").click(function () {
                     var _this = $(this);
+                    if (_this.data("status") == 0) {
+                        $("#invalid").show();
+                    } else {
+                        $("#invalid").hide();
+                    }
+
                     var position = _this.find(".ico-dropdown").position();
                     $(".dropdown-ul").css({ "top": position.top + 15, "left": position.left }).show().mouseleave(function () {
                         $(this).hide();
@@ -138,7 +144,7 @@ define(function (require, exports, module) {
                 if (CacheDepot[_ware.val()]) {
                     _self.bindDepot(_ware.parent().next(), CacheDepot[_ware.val()], _ware.val(), _ware.data("id"), true);
                 } else {
-                    Global.post("/Warehouse/GetDepotSeatsByWareID", { wareid: _ware.val() }, function (data) {
+                    Global.post("/System/GetDepotSeatsByWareID", { wareid: _ware.val() }, function (data) {
                         CacheDepot[_ware.val()] = data.Items;
                         _self.bindDepot(_ware.parent().next(), CacheDepot[_ware.val()], _ware.val(), _ware.data("id"), true);
                     });
@@ -152,7 +158,7 @@ define(function (require, exports, module) {
             if (CacheDepot[warebox.data("id")]) {
                 _self.bindDepot(depotbox, CacheDepot[warebox.data("id")], warebox.data("id"), _this.data("id"),false);
             } else {
-                Global.post("/Warehouse/GetDepotSeatsByWareID", { wareid: warebox.data("id") }, function (data) {
+                Global.post("/System/GetDepotSeatsByWareID", { wareid: warebox.data("id") }, function (data) {
                     CacheDepot[warebox.data("id")] = data.Items;
                     _self.bindDepot(depotbox, data.Items, warebox.data("id"), _this.data("id"), false);
                 });

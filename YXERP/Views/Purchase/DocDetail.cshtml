@@ -3,7 +3,7 @@
     ViewBag.Title = "采购单详细信息";
 }
 
-<link href="/modules/css/purchase/docdetail.css" rel="stylesheet" />
+<link href="/modules/css/stock/purchase.css" rel="stylesheet" />
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/purchase/docdetail"], function (obj) {
@@ -66,8 +66,8 @@
             <td class="tRight">@(model.TotalMoney.ToString("f2"))</td>
         </tr>
     </table>
-    <div class="show-nav">
-        <ul class="show-nav-ul">
+    <div class="tab-nav">
+        <ul class="tab-nav-ul">
             <li class="hover">操作日志</li>
         </ul>
     </div>

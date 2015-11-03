@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         }
 
         $.fn.drawCart = function (obj, ordertype) {
-            Global.post("/Orders/GetShoppingCartCount", { ordertype: ordertype }, function (data) {
+            Global.post("/ShoppingCart/GetShoppingCartCount", { ordertype: ordertype }, function (data) {
                 doT.exec("plug/shoppingcart/shoppingcart.html", function (templateFun) {
                     var innerText = templateFun([]);
                     innerText = $(innerText);
@@ -48,7 +48,7 @@ define(function (require, exports, module) {
         $.fn.drawCartProduct = function (obj, ordertype) {
             obj.find(".cart-mainbody").show();
             obj.find(".cart-product-list").empty();
-            Global.post("/Orders/GetShoppingCart", { ordertype: ordertype }, function (data) {
+            Global.post("/ShoppingCart/GetShoppingCart", { ordertype: ordertype }, function (data) {
                 doT.exec("plug/shoppingcart/product-list.html", function (templateFun) {
                     if (data.Items.length > 0) {
                         var innerText = templateFun(data.Items);
@@ -62,8 +62,8 @@ define(function (require, exports, module) {
                         //删除产品
                         innerText.find(".ico-del").click(function () {
                             var _this = $(this);
-                            if (confirm("确认从购物车移除此产品吗？")) {
-                                Global.post("/Orders/DeleteCart", {
+                            confirm("确认从购物车移除此产品吗？", function () {
+                                Global.post("/ShoppingCart/DeleteCart", {
                                     autoid: _this.data("id")
                                 }, function (data) {
                                     if (!data.Status) {
@@ -73,7 +73,7 @@ define(function (require, exports, module) {
                                         obj.find(".totalcount").html(obj.find(".totalcount").html() - 1);
                                     }
                                 });
-                            }
+                            });
                         });
 
                         //入库单
