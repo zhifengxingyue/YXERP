@@ -1,13 +1,17 @@
 ﻿
 /*分类层级*/
-.top-div { height:30px; border-bottom:solid 1px #ccc; padding-bottom:5px;}
+.top-div { height:30px; padding-bottom:5px;}
 .category-map {  }
 .category-map li{ height:30px; line-height:30px; color:#333; cursor:pointer; float:left; padding-right:20px; }
 .category-map li span { font-family: simsun; font-style: normal; padding-left:5px; }
 .category-map li:hover{  color:#B10000; }
 
+/*筛选条件*/
+.attr-filter { border:solid 1px #ccc; }
+
 /*属性筛选*/
-.attr-item { border-bottom:dashed 1px #ccc; overflow:auto; background-color:#F9F9F9;border-left:solid 1px #ccc;border-right:solid 1px #ccc; }
+.attr-item { border-bottom:dashed 1px #ccc; overflow:auto; background-color:#F9F9F9;}
+.attr-item:last-child { border-bottom:solid 1px #ccc; }
 .attrkey{ width:10%; float:left; line-height:35px; text-indent:20px; }
 .attrValues{ width:90%; float:left;line-height:35px; height:37px;  }
 .attrValues li { height:25px; line-height:25px; float:left; padding:0 20px; margin:5px 0; cursor:pointer; display:inline-block; }
@@ -15,7 +19,6 @@
 
 .attrValues li.hover { border:solid 1px #4A99E8; color:#4A99E8; }
 
-#attr-price { border-bottom:solid 1px #ccc;  }
 #beginprice, #endprice { width:60px; }
 
 .search-btn { line-height:18px !important; }

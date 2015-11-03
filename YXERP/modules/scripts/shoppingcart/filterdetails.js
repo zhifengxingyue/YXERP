@@ -92,7 +92,7 @@ define(function (require, exports, module) {
                     var _this = $(this);
                     remark += "[" + _this.find(".attrkey").html() + _this.find("li.hover").html() + "]";
                 });
-                Global.post("/Orders/AddShoppingCart", {
+                Global.post("/ShoppingCart/AddShoppingCart", {
                     productid: _self.productid,
                     detailsid: _self.detailid,
                     quantity: $("#quantity").val(),
