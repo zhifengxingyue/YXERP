@@ -2,99 +2,60 @@
 	for(var i=0, j=$data.length; i < j; i++){
 	var item = $data[i];
 %}
-<!--<li class="activityCardLi">
-<ul class="table-add activityCard">
-    <li>
-        <div id="OwnerIDs" class="left" >
-            <div class="member left" data-id="{%=item.Owner.UserID%}">
-                <div class="left pRight5">
-                    <img style="width:36px;height:36px;border-radius:18px;" src="{%=item.Owner.Avatar==''?'/modules/images/defaultavatar.png':item.Owner.Avatar%}" />
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        <div class="left mLeft10"> <span id="Name">{%=item.Name%}</span></div>
-        <div class="right center dropdown" data-id="{%=item.ActivityID%}"><span class="ico-dropdown"></span></div>
-        <div class="clear"></div>
-    </li>
-    <li>
-        <span class="width60 left">成员：</span>
-        <div id="MemberIDs" >
-            {%
-	            for(var k=0, l=item.Members.length; k< l; k++){
-	            var member = item.Members[k];
-            %}
-            <div class="member left" data-id="{%=member.UserID%}">
-                <div class="left mRight5">
-                    <img src="{%=member.Avatar==''?'/modules/images/defaultavatar.png':member.Avatar%}" />
-                </div>
-                <div class="clear"></div>
-            </div>
-            {% } %}
-        </div>
-        <div class="left "></div>
-        <div class="clear"></div>
-    </li>
-        
-    <li>
-        <span class="width60">开始时间：</span><span>{%=item.BeginTime.toDate("yyyy-MM-dd")%}</span>
-    </li>
-    <li>
-        <span class="width60">结束时间：</span><span>{%=item.EndTime.toDate("yyyy-MM-dd")%}</span>
-    </li>
-     <li>
-        <span class="width60">创建时间：</span><span>{%=item.CreateTime.toDate("yyyy-MM-dd")%}</span>
-    </li>
-    <li>
-        <span class="width60">活动地址：</span>{%=item.Address%}<span></span>
-    </li>
-</ul>
-</li>-->
-        <li class="activityCardListLi">
-            <div class="activityItem">
-                <div class="activityImg"><img src="/Content/uploadFiles/201510251248024825612.gif" /></div>
-                <div class="activityInfo">
-                    <ul>
-                        <li>
-                            <div class="left"><img class="activityOwnerImg" src="/modules/images/defaultavatar.png"/></div>
-                            <div class="left mLeft10" style="color:#444">{%=item.Name%}</div>
-                            <div class="right">
-                                <div class="dropdown" style="background-color:#4A98E7;border-radius:3px;padding:0px 6px;">
-                                    <span class="ico-dropdown-white"></span>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <div class="left"><img src="/modules/images/ico-time.png" /></div>
-                            <div class="left mLeft10 colorAaa">{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</div>
-                            <div class="clear"></div>
-                        </li>
-                        <li>
-                            <table>
-                                <tr>
-                                    <td class="colorAaa" width="40px">地址：</td>
-                                    <td class="mLeft5 colorAaa" style="word-break:break-all">
-                                        {%=item.Address%}
-                                    </td>
-                                </tr>
-                            </table>
-                        </li>
-                    </ul>
-                </div>
-                <div class="activityMember">
-                    <div class="left" style="color:#4a98e7">成员：</div>
-                    <div class="left mLeft5" style="color:#4a98e7">bbbbbbb</div>
+<li class="activityCardListLi">
+    <div class="activityItem">
+        <div class="activityImg"><a href="/Activity/Detail/{%=item.ActivityID%}" target="_blank"><img src="{%=item.Poster%}" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></a></div>
+        <div class="activityInfo">
+            <ul>
+                <li>
+                    <div class="left"><img class="activityOwnerImg" src="{%=item.Owner.Avatar%}" onerror="javascript:this.src='/modules/images/defaultavatar.png';"/></div>
+                    <div class="left mLeft10" style="color:#444">{%=item.Name%}</div>
                     <div class="right">
-                        <div class="left" ><img src="/modules/images/ico-member.png" /></div>
-                        <div class="left mLeft5 mRight5" style="color:#ddd">44</div>
-                        <div class="clear"></div>
+                        <div class="dropdown" data-id="{%=item.ActivityID%}" style="background-color:#4A98E7;border-radius:3px;padding:0px 6px;">
+                            <span class="ico-dropdown-white"></span>
+                        </div>
                     </div>
                     <div class="clear"></div>
-                </div>
-            </div> 
-            <div class="activityUnderline1"></div>
-            <div class="activityUnderline2"></div>
-        </li>
+                </li>
+                <li>
+                    <div class="left"><img src="/modules/images/ico-time.png" /></div>
+                    <div class="left mLeft10 colorAaa">{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</div>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <table>
+                        <tr>
+                            <td class="colorAaa" width="40px">地址：</td>
+                            <td class="mLeft5 colorAaa" style="word-break:break-all">
+                                {%=item.Address%}
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+        <div class="activityMember">
+            <div class="left" style="color:#4a98e7">成员：</div>
+            <div class="left mLeft5" style="color:#4a98e7">
+                <ul id="MemberList">
+                    {%
+	                    for(var l=0; l<item.Members.length;l++){
+	                    var m = item.Members[l];
+                    %}
+                    <li>{%=m.Name%}</li>
+                    {% } %}
+                </ul>
+            </div>
+            <div class="right">
+                <div class="left" ><img src="/modules/images/ico-member.png" /></div>
+                <div class="left mLeft5 mRight5" style="color:#ddd">{%=item.Members.length%}</div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div> 
+    <div class="activityUnderline1"></div>
+    <div class="activityUnderline2"></div>
+</li>
 {% } %}
 <div class="clear"></div>

@@ -35,13 +35,14 @@ list-style:none;
 }
 
 .activityCardListLi {
-width:240px;
+width:245px;
 float:left;
-margin-right:25px;
+margin-right:35px;
+margin-bottom:25px;
 }
 
 .activityCardListLi .activityItem {
-width:240px;
+width:245px;
 border:solid 1px #ccc;
 }
 
@@ -60,7 +61,7 @@ border-top:none;
 }
 
 .activityCardListLi .activityImg img{
-width:240px;
+width:245px;
 height:123px;
 
 }
@@ -120,19 +121,45 @@ border:solid 1px #ccc;
 border-top:none;
 }
 
-.activityListLi .activityImg img{
+.activityListLi .activityImg{
 width:250px;
 height:200px;
 }
 
 .activityListLi .activityMember {
-    border-top:solid 1px #ccc;
-    padding-top:5px;
+border-top:solid 1px #ccc;
+padding-top:5px;
 }
 
 .activityListLi .activityInfo tr td{
 padding:5px 0px;
 color:#aaa;
 }
-/*.brand-img { position:absolute; top:140px; right:50px; width:200px; }
-.brand-img img{ width:200px;}*/
+
+
+.activityListLi .activityDetailImg{
+width:400px;
+height:300px;
+}
+
+.activityDetailInfo tr td{
+padding:12px 0px;
+color:#aaa;
+font-size:14px;
+}
+
+.activityDetailInfo tr td span{
+color:#aaa;
+font-size:14px;
+}
+
+#MemberList {
+list-style:none;
+}
+
+#MemberList li {
+float:left;
+color:#2f73b8;
+margin-right:10px;
+font-size:14px;
+}
