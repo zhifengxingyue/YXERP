@@ -97,30 +97,6 @@ define(function (require, exports, module) {
 
     }
 
-    //首页JS
-    LayoutObject.initHome = function () {
-        LayoutObject.bindStyle();
-        LayoutObject.bindEvent();
-        LayoutObject.homeEvent();
-    }
-
-    LayoutObject.homeEvent = function () {
-
-        //图标居中
-        $("#menuItems img").each(function () {
-            var _this = $(this);
-            _this.css({ top: _this.parent().height() / 2 - _this.height() / 2, left: _this.parent().width() / 2 - _this.width() / 2 })
-        });
-
-        var width = document.documentElement.clientWidth;
-        if (width < 1200) {
-            width = 1200;
-        }
-        $("#leftBody").css("margin-left", (width - 1200) / 2);
-
-        $("#rightBody").css("width", width / 2 - 50);
-
-    }
 
     module.exports = LayoutObject;
 })

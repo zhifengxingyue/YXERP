@@ -337,7 +337,10 @@ namespace CloudSalesBusiness
                     detail.SaleAttrValueString = "";
                     foreach (var attr in model.Category.SaleAttrs)
                     {
-                        detail.SaleAttrValueString += attr.AttrName + ":" + attr.AttrValues.Where(a => a.ValueID.ToLower() == attrs[attr.AttrID].ToLower()).FirstOrDefault().ValueName + ",";
+                        if (attrs.ContainsKey(attr.AttrID))
+                        {
+                            detail.SaleAttrValueString += attr.AttrName + ":" + attr.AttrValues.Where(a => a.ValueID.ToLower() == attrs[attr.AttrID].ToLower()).FirstOrDefault().ValueName + ",";
+                        }
                     }
 
                     if (detail.SaleAttrValueString.Length > 0)
