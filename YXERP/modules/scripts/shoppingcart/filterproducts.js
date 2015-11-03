@@ -55,6 +55,8 @@
             } else {
                 _self.bindCagegoryAttr(pid);
             }
+        } else {
+            $("#attr-price").nextAll(".attr-item").remove();
         }
 
         Params.CategoryID = pid;

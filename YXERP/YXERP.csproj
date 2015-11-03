@@ -129,6 +129,7 @@
     <Content Include="Content\homeico\custom.png" />
     <Content Include="Content\homeico\homebg.jpg" />
     <Content Include="Content\homeico\info.png" />
+    <Content Include="Content\homeico\logo-white.png" />
     <Content Include="Content\homeico\mingdao-hover.png" />
     <Content Include="Content\homeico\mingdao.png" />
     <Content Include="Content\homeico\report.png" />

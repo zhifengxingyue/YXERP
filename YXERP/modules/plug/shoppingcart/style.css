@@ -13,7 +13,7 @@
 .cart-product-list { border-collapse:collapse;border-spacing:0; }
 .cart-product-list .tr-header{ font-weight:bold; height:35px; }
 .cart-product-list .tr-header td{ color:#2a3441;}
-.cart-product-list .line td{ border-right:solid 2px #fff; background-color:#999; height:3px; }
+.cart-product-list .line td{ border-right:solid 2px #fff; background-color:#ccc; height:3px; }
 
 .cart-product-list a{ color:#333;  vertical-align:middle;}
 .cart-product-list a:hover{ color:red; text-decoration:underline; }
@@ -25,7 +25,7 @@
 
 .bottom-div { width:99%; padding:20px 0px; }
 .btnconfirm { height:36px; background-color:#B10000; line-height:35px; color:#fff; font-size:14px; font-weight:bold; padding:0 50px; border:none; cursor:pointer; }
-.btnconfirm:hover { background-color:red; }
+
 
 .btnclose { height:36px; background-color:#ccc; line-height:35px; color:#333; font-size:14px; font-weight:bold; padding:0 50px; border:none; cursor:pointer; }
 .btnclose:hover { background-color:#999;}
