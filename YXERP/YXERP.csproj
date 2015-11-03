@@ -171,6 +171,7 @@
     <Content Include="Content\menuico\systemhover.png" />
     <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
     <Content Include="modules\css\customer\activity.css" />
+    <Content Include="modules\css\customer\customer.css" />
     <Content Include="modules\css\home\home.css" />
     <Content Include="modules\css\shoppingcart\confirmcart.css" />
     <Content Include="modules\css\stock\purchase.css" />
@@ -196,7 +197,6 @@
     <Content Include="modules\images\ico-card-gray.png" />
     <Content Include="modules\images\ico-list-blue.png" />
     <Content Include="modules\images\ico-list-gray.png" />
-    <Content Include="modules\images\ico_member.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\images\ico_searchhover.png" />
     <Content Include="modules\images\ico-time.png" />
@@ -281,6 +281,7 @@
     <Content Include="Views\Security\Index.cshtml" />
     <Content Include="Views\System\Target.cshtml" />
     <Content Include="Views\Activity\Detail.cshtml" />
+    <Content Include="Views\Customer\MyCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

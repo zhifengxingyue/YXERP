@@ -16,5 +16,18 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult MyCustomer()
+        {
+            return View();
+        }
+        public ActionResult BranchCustomer()
+        {
+            return View("MyCustomer");
+        }
+        public ActionResult Customers()
+        {
+            return View("MyCustomer");
+        }
+
     }
 }
