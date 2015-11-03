@@ -6,41 +6,50 @@
 <head runat="server">
     <title>云销系统</title>
     <link href="/modules/css/layout.css" rel="stylesheet" />
-    <link href="/modules/css/login.css" rel="stylesheet" />
+    <link href="/modules/css/home/login.css" rel="stylesheet" />
     <link href="/modules/css/base.css" rel="stylesheet" />
 
     <script src="/Scripts/sea.js"></script>
     <script src="/Scripts/sea-config.js"></script>
     <script type="text/javascript">
         seajs.use(["scripts/home"], function (home) {
-            home.loginInit();
+            home.initLogin();
         });
     </script>
 </head>
 <body>
-    <div id="container">
+    <header>
+
+    </header>
+    <div class="login-body">
         <div class="main">
-        <div class="title">云销系统1.0</div>
-        <div class="content">
+            <div class="title">云销系统</div>
             <div class="login">
                 <div class="loginbar">
-                    <input type="text" id="iptUserName" placeholder="请输入账号" class="verify"  data-empty="*" maxlength="25"/>
+                    <input type="text" id="iptUserName" placeholder="请输入账号" value="@ViewBag.UserName" maxlength="25"/>
                 </div>
                 <div class="loginbar">
-                    <input type="password"  class="verify" placeholder="请输入密码"  data-empty="*" id="iptPwd"/>
+                    <input type="password"  placeholder="请输入密码" id="iptPwd"/>
+                </div>
+                <div class="remember-box">
+                    <div class="cb-remember-password ico-check ">
+                        保持登录
+                    </div>
                 </div>
                 <div id="loginBtn"> 
-                    <input class="btnLogin" id="btnLogin" type="button" value="登录"/>
+                    <div class="btnLogin" id="btnLogin">登录</div>
                 </div>
-                <div>
-                    <a class="right" href="MDLogin">明道账号登录</a>
+                <div class="other-account">
+                    <div class="other-text">使用其他账号登录</div>
+                    <div class="accounts">
+                       <a class="mingdao" href="/Home/MDLogin"></a>
+                    </div>
                 </div>
+             
             </div>
         </div>
-        </div>
         <div class="copyright">
-            <p>上海云销信息科技有限公司 (C)2013-2015<p>
-            <span>上海云销信息科技有限公司 (C)2013-2015</span>
+            上海云销信息科技有限公司 (C)2015-2016
         </div>
     </div>
 </body>

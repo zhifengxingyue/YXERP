@@ -129,6 +129,8 @@
     <Content Include="Content\homeico\custom.png" />
     <Content Include="Content\homeico\homebg.jpg" />
     <Content Include="Content\homeico\info.png" />
+    <Content Include="Content\homeico\mingdao-hover.png" />
+    <Content Include="Content\homeico\mingdao.png" />
     <Content Include="Content\homeico\report.png" />
     <Content Include="Content\homeico\sales.png" />
     <Content Include="Content\homeico\stock.png" />
@@ -280,7 +282,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="modules\css\layout.css" />
-    <Content Include="modules\css\login.css" />
+    <Content Include="modules\css\home\login.css" />
     <Content Include="modules\css\system\organization.css" />
     <Content Include="modules\css\stock\category.css" />
     <Content Include="modules\css\stock\attrplug.css" />

@@ -31,11 +31,37 @@ namespace YXERP.Controllers
             {
                 return Redirect("/Home/Index");
             }
+            HttpCookie cook = Request.Cookies["cloudsales"];
+            if (cook != null)
+            {
+                if (cook["status"] == "1")
+                {
+                    string operateip = string.IsNullOrEmpty(Request.Headers.Get("X-Real-IP")) ? Request.UserHostAddress : Request.Headers["X-Real-IP"];
+                    CloudSalesEntity.Users model = CloudSalesBusiness.OrganizationBusiness.GetUserByUserName(cook["username"], cook["pwd"], operateip);
+                    if (model != null)
+                    {
+                        Session["ClientManager"] = model;
+                        return Redirect("/Home/Index");
+                    }
+                }
+                else
+                {
+                    ViewBag.UserName = cook["username"];
+                }
+            }
             return View();
         }
 
         public ActionResult Logout()
         {
+            HttpCookie cook = Request.Cookies["cloudsales"];
+            if (cook != null)
+            {
+                cook["status"] = "0";
+                Response.Cookies.Add(cook);
+            }
+            
+
             Session["ClientManager"] = null;
             return Redirect("/Home/Login");
         }
@@ -133,7 +159,7 @@ namespace YXERP.Controllers
         /// <param name="userName"></param>
         /// <param name="pwd"></param>
         /// <returns></returns>
-        public JsonResult UserLogin(string userName, string pwd)
+        public JsonResult UserLogin(string userName, string pwd, int remember)
         {
             bool bl = false;
 
@@ -142,6 +168,26 @@ namespace YXERP.Controllers
             CloudSalesEntity.Users model = CloudSalesBusiness.OrganizationBusiness.GetUserByUserName(userName, pwd, operateip);
             if (model != null)
             {
+                //保持登录状态
+                if (remember == 1)
+                {
+                    HttpCookie cook = new HttpCookie("cloudsales");
+                    cook["username"] = userName;
+                    cook["pwd"] = pwd;
+                    cook["status"] = "1";
+                    cook.Expires = DateTime.Now.AddMonths(1);
+                    Response.Cookies.Add(cook);
+                }
+                else
+                {
+                    HttpCookie cook = new HttpCookie("cloudsales");
+                    cook["username"] = userName;
+                    cook["pwd"] = pwd;
+                    cook["status"] = "0";
+                    cook.Expires = DateTime.Now.AddMonths(1);
+                    Response.Cookies.Add(cook);
+                }
+
                 Session["ClientManager"] = model;
                 bl = true;
             }
