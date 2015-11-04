@@ -47,5 +47,23 @@ namespace CloudSalesEnum
         [DescriptionAttribute("存在数据")]
         Exists = 10002
     }
+    /// <summary>
+    /// 搜索类型
+    /// </summary>
+    public enum EnumSearchType
+    {
+        /// <summary>
+        /// 我的
+        /// </summary>
+        Myself = 1,
+        /// <summary>
+        /// 下属
+        /// </summary>
+        Branch = 2,
+        /// <summary>
+        /// 所有
+        /// </summary>
+        All = 3
+    }
 
 }

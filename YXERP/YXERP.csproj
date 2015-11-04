@@ -224,6 +224,8 @@
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\scripts\activity\activity.js" />
+    <Content Include="modules\scripts\customer\customer.js" />
+    <Content Include="modules\scripts\customer\create-customer.js" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\organization\structure.js" />
@@ -283,6 +285,7 @@
     <Content Include="Views\System\Target.cshtml" />
     <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Customer\MyCustomer.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -468,6 +471,7 @@
     <Folder Include="Content\uploadFiles\" />
     <Folder Include="modules\css\orders\" />
     <Folder Include="modules\scripts\orders\" />
+    <Folder Include="modules\template\customer\" />
     <Folder Include="modules\template\orders\" />
   </ItemGroup>
   <ItemGroup>

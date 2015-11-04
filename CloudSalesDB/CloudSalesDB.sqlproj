@@ -202,4 +202,7 @@
   <ItemGroup>
     <None Include="Procedures\Stock\P_DeleteCategory.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_CreateCustomer.sql" />
+  </ItemGroup>
 </Project>
