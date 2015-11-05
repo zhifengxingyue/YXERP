@@ -403,13 +403,10 @@
                     var item = data.Item;
                     //option=1 编辑页；option=2 详情页
                     if (option == 1) {
-                        $("#Name").val(item.Name);
-                        $("#PosterImg").val(item.Poster);
                         $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").val(item.Address);
-
-                        $("#PosterDisImg").attr("src", item.Poster);
+                       
                         ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
                         for (var i = 0; i < item.Members.length; i++) {
                             ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
@@ -417,8 +414,6 @@
                     }
                     else
                     {
-                        $("#Poster").attr("src", item.Poster);
-                        $("#Name").html(item.Name);
                         $("#Name").attr("src", "/Activity/Detail/" + item.ActivityID);
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
@@ -435,6 +430,9 @@
                         ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
+                    $("#Name").val(item.Name);
+                    $("#PosterImg").val(item.Poster);
+                    $("#PosterDisImg").attr("src", item.Poster).show();
                     $("#OwnerID").val(item.OwnerID);
                     $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {
