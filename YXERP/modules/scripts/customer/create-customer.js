@@ -14,6 +14,7 @@
     //绑定事件
     ObjectJS.bindEvent = function (activityid) {
         var _self = this;
+        //保存
         $("#btnSave").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
@@ -30,7 +31,7 @@
         CityObject = City.createCity({
             elementID: "city"
         });
-
+        //切换类型
         $(".customtype").click(function () {
             var _this = $(this);
             if (!_this.hasClass("ico-checked")) {

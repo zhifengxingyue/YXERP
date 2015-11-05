@@ -215,4 +215,7 @@
   <ItemGroup>
     <None Include="Procedures\Custom\P_UpdateCustomerAgent.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_UpdateCustomerStage.sql" />
+  </ItemGroup>
 </Project>

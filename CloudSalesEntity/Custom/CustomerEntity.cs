@@ -47,6 +47,7 @@ namespace CloudSalesEntity
 
         [Property("Lower")]
         public string SourceID { get; set; }
+        public CustomSourceEntity Source { get; set; }
 
         [Property("Lower")]
         public string ActivityID { get; set; }
@@ -54,12 +55,18 @@ namespace CloudSalesEntity
         [Property("Lower")]
         public string StageID { get; set; }
 
+        public CustomStageEntity Stage { get; set; }
+
         [Property("Lower")]
         public string OwnerID { get; set; }
 
         public Users Owner { get; set; }
 
         public int Status { get; set; }
+
+        public int Mark { get; set; }
+
+        public ContactEntity Contact { get; set; }
 
         public DateTime AllocationTime { get; set; }
 

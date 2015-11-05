@@ -13,6 +13,7 @@ namespace CloudSalesBusiness
 {
     public class SystemBusiness
     {
+        public static SystemBusiness BaseBusiness = new SystemBusiness();
         #region Cache
 
         private static Dictionary<string, List<CustomSourceEntity>> _source;

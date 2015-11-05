@@ -54,6 +54,21 @@ AS
 		set @condition +=' and OwnerID = '''+@SearchUserID+''''
 	end
 
+	if(@SourceID<>'')
+	begin
+		set @condition +=' and SourceID = '''+@SourceID+''''
+	end
+
+	if(@StageID<>'')
+	begin
+		set @condition +=' and StageID = '''+@StageID+''''
+	end
+	
+	if(@Status<>-1)
+	begin
+		set @condition +=' and Status = '+convert(nvarchar(2), @Status)
+	end
+
 	if(@BeginTime<>'')
 		set @condition +=' and CreateTime >= '''+@BeginTime+' 0:00:00'''
 

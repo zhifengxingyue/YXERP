@@ -3,15 +3,31 @@
         doT = require("dot"),
         Verify = require("verify"), VerifyObject,
         Easydialog = require("easydialog");
+    require("pager");
+    require("mark");
 
-    var Model = {};
+    var Params = {
+        SearchType: 1,
+        SourceID: "",
+        StageID: "",
+        Status: -1,
+        UserID: "",
+        AgentID: "",
+        TeamID: "",
+        Keywords: "",
+        BeginTime: "",
+        EndTime: "",
+        PageIndex: 1,
+        PageSize: 20
+    };
 
     var ObjectJS = {};
     //初始化
     ObjectJS.init = function (type) {
         var _self = this;
-        _self.bindEvent();
+        Params.SearchType = type;
         _self.getList();
+        _self.bindEvent();
     }
 
     //绑定事件
@@ -19,26 +35,69 @@
         var _self = this;
         $(document).click(function (e) {
             //隐藏下拉
-            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+            if (!$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
                 $(".dropdown-ul").hide();
             }
         });
-        //添加
-        //$("#createCustomer").click(function () {
-        //    _self.createModel();
-        //});
-        //删除
-        $("#deleteObject").click(function () {
+        //切换阶段
+        $(".search-stages li").click(function () {
             var _this = $(this);
-            confirm("部门删除后不可恢复,确认删除吗？",function(){
-                _self.deleteModel(_this.data("id"), function (status) {
-                    if (status == 1) {
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+                Params.PageIndex = 1;
+                Params.StageID = _this.data("id");
+                _self.getList();
+            }
+        });
+        //切换状态
+        $(".search-status li").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+                Params.PageIndex = 1;
+                Params.Status = _this.data("id");
+                _self.getList();
+            }
+        });
+        //关键字搜索
+        require.async("search", function () {
+            $(".searth-module").searchKeys(function (keyWords) {
+                Params.PageIndex = 1;
+                Params.Keywords = keyWords;
+                _self.getList();
+            });
+        });
+        //客户来源
+        Global.post("/Customer/GetCustomerSources", { }, function (data) {
+            require.async("dropdown", function () {
+                $("#customerSource").dropdown({
+                    prevText: "来源-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    data: data.items,
+                    dataValue: "SourceID",
+                    dataText: "SourceName",
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.SourceID = data.value;
                         _self.getList();
-                    } else if (status == 10002) {
-                        alert("此部门存在员工，请移除员工后重新操作！");
                     }
                 });
             });
+        });
+        //全部选中
+        $("#check-all").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("ico-checked")) {
+                _this.addClass("ico-checked").removeClass("ico-check");
+                $(".table-list .check").addClass("ico-checked").removeClass("ico-check");
+            } else {
+                _this.addClass("ico-check").removeClass("ico-checked");
+                $(".table-list .check").addClass("ico-check").removeClass("ico-checked");
+            }
         });
         //编辑
         $("#updateObject").click(function () {
@@ -53,89 +112,77 @@
         });
 
     }
-    //添加/编辑弹出层
-    ObjectJS.createModel = function () {
-        var _self = this;
-
-        doT.exec("template/customer/create-customer.html", function (template) {
-            var html = template([]);
-            Easydialog.open({
-                container: {
-                    id: "show-model-detail",
-                    header: !Model.DepartID ? "新建客户" : "编辑客户",
-                    content: html,
-                    yesFn: function () {
-                        if (!VerifyObject.isPass()) {
-                            return false;
-                        }
-                        Model.Name = $("#modelName").val();
-                        Model.Description = $("#modelDescription").val();
-                        Model.ParentID = "";
-                        _self.saveModel(Model);
-                    },
-                    callback: function () {
-
-                    }
-                }
-            });
-            VerifyObject = Verify.createVerify({
-                element: ".verify",
-                emptyAttr: "data-empty",
-                verifyType: "data-type",
-                regText: "data-text"
-            });
-            $("#modelName").focus();
-            $("#modelName").val(Model.Name);
-            $("#modelDescription").val(Model.Description);
-
-        }); 
-    }
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
         $(".tr-header").nextAll().remove();
-        Global.post("/Organization/GetDepartments", {}, function (data) {
-            _self.bindList(data.items);
+        Global.post("/Customer/GetCustomers", { filter: JSON.stringify(Params) }, function (data) {
+            _self.bindList(data);
         });
     }
     //加载列表
-    ObjectJS.bindList = function (items) {
+    ObjectJS.bindList = function (data) {
         var _self = this;
-        doT.exec("template/organization/departments.html", function (template) {
-            var innerhtml = template(items);
+
+        doT.exec("template/customer/customers.html", function (template) {
+            var innerhtml = template(data.items);
             innerhtml = $(innerhtml);
 
             //下拉事件
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-
                 var position = _this.find(".ico-dropdown").position();
                 $(".dropdown-ul li").data("id",_this.data("id"));
-                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
                     $(this).hide();
                 });
-                
+                return false;
+            });
+            innerhtml.find(".check").click(function () {
+                var _this = $(this);
+                if (!_this.hasClass("ico-checked")) {
+                    _this.addClass("ico-checked").removeClass("ico-check");
+                } else {
+                    _this.addClass("ico-check").removeClass("ico-checked");
+                }
+            });
+            innerhtml.click(function () {
+                var _this = $(this).find(".check");
+                if (!_this.hasClass("ico-checked")) {
+                    _this.addClass("ico-checked").removeClass("ico-check");
+                } else {
+                    _this.addClass("ico-check").removeClass("ico-checked");
+                }
             });
 
-            $(".tr-header").after(innerhtml);
-        });
-    }
+            innerhtml.find(".mark").markColor(function (value, callback) {
+                callback(true);
+            });
 
-    //保存实体
-    ObjectJS.saveModel = function (model) {
-        var _self = this;
-        Global.post("/Organization/SaveDepartment", { entity: JSON.stringify(model) }, function (data) {
-            if (data.model.DepartID.length > 0) {
+
+            $(".tr-header").after(innerhtml);
+
+        });
+        $("#pager").paginate({
+            total_count: data.totalCount,
+            count: data.pageCount,
+            start: Params.PageIndex,
+            display: 5,
+            border: true,
+            border_color: '#fff',
+            text_color: '#333',
+            background_color: '#fff',
+            border_hover_color: '#ccc',
+            text_hover_color: '#000',
+            background_hover_color: '#efefef',
+            rotate: true,
+            images: false,
+            mouse: 'slide',
+            onChange: function (page) {
+                Params.PageIndex = page;
                 _self.getList();
-                //_self.bindList([data.model]);
             }
-        })
-    }
-    //删除
-    ObjectJS.deleteModel = function (id, callback) {
-        Global.post("/Organization/DeleteDepartment", { departid: id }, function (data) {
-            !!callback && callback(data.status);
-        })
+        });
     }
 
     module.exports = ObjectJS;

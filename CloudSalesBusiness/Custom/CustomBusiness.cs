@@ -15,6 +15,8 @@ namespace CloudSalesBusiness
 {
     public class CustomBusiness
     {
+        public static CustomBusiness BaseBusiness = new CustomBusiness();
+
         #region 查询
 
         /// <summary>
@@ -34,14 +36,20 @@ namespace CloudSalesBusiness
         }
 
 
-        public static List<CustomerEntity> GetCustomers(EnumSearchType type, string sourceid, string stageid, string status, string searchuserid, string searchteamid, string searchagentid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        public List<CustomerEntity> GetCustomers(EnumSearchType type, string sourceid, string stageid, int status, string searchuserid, string searchteamid, string searchagentid,
+                                                 string begintime, string endtime, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
         {
             List<CustomerEntity> list = new List<CustomerEntity>();
-            DataSet ds = CustomDAL.BaseProvider.GetCustomers((int)type, sourceid, stageid, status, searchuserid, searchteamid, searchagentid, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
+            DataSet ds = CustomDAL.BaseProvider.GetCustomers((int)type, sourceid, stageid, status, searchuserid, searchteamid, searchagentid, begintime, endtime, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 CustomerEntity model = new CustomerEntity();
                 model.FillData(dr);
+
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+                model.Source = SystemBusiness.BaseBusiness.GetCustomSourcesByID(model.SourceID, model.AgentID, model.ClientID);
+                model.Stage = SystemBusiness.BaseBusiness.GetCustomStageByID(model.StageID, model.AgentID, model.ClientID);
+                list.Add(model);
             }
             return list;
         }
@@ -65,6 +73,12 @@ namespace CloudSalesBusiness
         #endregion
 
         #region 编辑/删除
+
+        public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CustomDAL.BaseProvider.UpdateCustomerStage(customerid, stageid, operateid, agentid, clientid);
+            return bl;
+        }
 
         public bool UpdateCustomerOwner(string customerid, string userid, string operateid, string ip, string agentid, string clientid)
         {
