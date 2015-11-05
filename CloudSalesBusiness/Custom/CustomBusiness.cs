@@ -34,6 +34,18 @@ namespace CloudSalesBusiness
         }
 
 
+        public static List<CustomerEntity> GetCustomers(EnumSearchType type, string sourceid, string stageid, string status, string searchuserid, string searchteamid, string searchagentid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        {
+            List<CustomerEntity> list = new List<CustomerEntity>();
+            DataSet ds = CustomDAL.BaseProvider.GetCustomers((int)type, sourceid, stageid, status, searchuserid, searchteamid, searchagentid, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                CustomerEntity model = new CustomerEntity();
+                model.FillData(dr);
+            }
+            return list;
+        }
+
         #endregion
 
         #region 添加
@@ -53,6 +65,30 @@ namespace CloudSalesBusiness
         #endregion
 
         #region 编辑/删除
+
+        public bool UpdateCustomerOwner(string customerid, string userid, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CustomDAL.BaseProvider.UpdateCustomerOwner(customerid, userid, operateid, agentid, clientid);
+            return bl;
+        }
+
+        public bool UpdateCustomerAgent(string customerid, string newagentid, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CustomDAL.BaseProvider.UpdateCustomerAgent(customerid, newagentid, operateid, agentid, clientid);
+            return bl;
+        }
+
+        public bool UpdateCustomerStatus(string customerid, EnumCustomStatus status, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CommonBusiness.Update("Customer", "Status", (int)status, "CustomerID='" + customerid + "'");
+            return bl;
+        }
+
+        public bool UpdateCustomerMark(string customerid, int mark, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CommonBusiness.Update("Customer", "Mark", mark, "CustomerID='" + customerid + "'");
+            return bl;
+        }
 
         #endregion
     }
