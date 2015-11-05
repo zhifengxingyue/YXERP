@@ -14,6 +14,36 @@ namespace CloudSalesDAL
 
         #region 查询
 
+        public DataSet GetCustomers(int type, string sourceid, string stageid, string status, string searchuserid, string searchteamid, string searchagentid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@totalCount",SqlDbType.Int),
+                                       new SqlParameter("@pageCount",SqlDbType.Int),
+                                       new SqlParameter("@Type",type),
+                                       new SqlParameter("@SourceID",sourceid),
+                                       new SqlParameter("@StageID",stageid),
+                                       new SqlParameter("@Status",status),
+                                       new SqlParameter("@SearchUserID",searchuserid),
+                                       new SqlParameter("@SearchTeamID",searchteamid),
+                                       new SqlParameter("@SearchAgentID",searchagentid),
+                                       new SqlParameter("@Keywords",keyWords),
+                                       new SqlParameter("@pageSize",pageSize),
+                                       new SqlParameter("@pageIndex",pageIndex),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+            paras[0].Value = totalCount;
+            paras[1].Value = pageCount;
+
+            paras[0].Direction = ParameterDirection.InputOutput;
+            paras[1].Direction = ParameterDirection.InputOutput;
+            DataSet ds = GetDataSet("P_GetCustomers", paras, CommandType.StoredProcedure);
+            totalCount = Convert.ToInt32(paras[0].Value);
+            pageCount = Convert.ToInt32(paras[1].Value);
+            return ds;
+        }
+
         #endregion
 
         #region 添加
@@ -49,6 +79,32 @@ namespace CloudSalesDAL
         #endregion
 
         #region 编辑/删除
+
+        public bool UpdateCustomerOwner(string customerid, string userid, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@UserID",userid),
+                                     new SqlParameter("@OperateID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateCustomerOwner", paras, CommandType.StoredProcedure) > 0;
+        }
+
+        public bool UpdateCustomerAgent(string customerid, string newagentid, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@NewAgentID",newagentid),
+                                     new SqlParameter("@OperateID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateCustomerAgent", paras, CommandType.StoredProcedure) > 0;
+        }
 
         #endregion
     }

@@ -62,6 +62,7 @@
     <Folder Include="Procedures\System" />
     <Folder Include="Procedures\Stock" />
     <Folder Include="Procedures\Custom" />
+    <Folder Include="Procedures\ShoppingCart" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\InitDatabase.sql" />
@@ -131,12 +132,6 @@
     <None Include="Procedures\Stock\P_GetProductByIDForDetails.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Procedures\Stock\P_AddShoppingCart.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Procedures\Stock\P_GetShoppingCart.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Procedures\Stock\P_AddStorageDoc.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -204,5 +199,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\Custom\P_CreateCustomer.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\ShoppingCart\P_AddShoppingCart.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\ShoppingCart\P_GetShoppingCart.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_GetCustomers.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_UpdateCustomerOwner.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_UpdateCustomerAgent.sql" />
   </ItemGroup>
 </Project>

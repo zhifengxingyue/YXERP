@@ -77,5 +77,11 @@ namespace CloudSalesEntity
 
         [Property("Lower")]
         public string ClientID { get; set; }
+
+
+        public void FillData(System.Data.DataRow dr)
+        {
+            dr.FillData(this);
+        }
     }
 }
