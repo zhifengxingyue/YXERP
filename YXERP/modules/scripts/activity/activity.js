@@ -426,13 +426,14 @@
                             var m = item.Members[i];
                             $("#MemberList").append("<li class='member' data-id='"+m.UserID+"'>" + m.Name + "</li>");
                         }
-
                         ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
                     $("#Name").val(item.Name);
                     $("#PosterImg").val(item.Poster);
                     $("#PosterDisImg").attr("src", item.Poster).show();
+                    if (item.Poster != '')
+                        $("#PosterDisImg").show();
                     $("#OwnerID").val(item.OwnerID);
                     $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {

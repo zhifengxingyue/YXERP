@@ -4,11 +4,11 @@
 %}
 <li class="activityCardListLi">
     <div class="activityItem">
-        <div class="activityImg"><a href="/Activity/Detail/{%=item.ActivityID%}" target="_blank"><img src="{%=item.Poster%}" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></a></div>
+        <div class="activityImg"><a href="/Activity/Detail/{%=item.ActivityID%}" target="_blank"><img src="{%=item.Poster==''?'/modules/images/defaultactivity.jpg':item.Poster%}" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></a></div>
         <div class="activityInfo">
             <ul>
                 <li>
-                    <div class="left"><img class="activityOwnerImg activitymember" data-id="{%=item.Owner.UserID%}" src="{%=item.Owner.Avatar%}" onerror="javascript:this.src='/modules/images/defaultavatar.png';"/></div>
+                    <div class="left"><img class="activityOwnerImg activitymember" data-id="{%=item.Owner.UserID%}" src="{%=item.Owner.Avatar==''?'/modules/images/defaultavatar.png':item.Owner.Avatar%}" onerror="javascript:this.src='/modules/images/defaultavatar.png';"/></div>
                     <div class="left mLeft10" style="color:#444">{%=item.Name%}</div>
                     <div class="right">
                         <div class="dropdown" data-id="{%=item.ActivityID%}" style="background-color:#4A98E7;border-radius:3px;padding:0px 6px;">
