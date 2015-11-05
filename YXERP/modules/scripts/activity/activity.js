@@ -290,11 +290,12 @@
             regText: "data-text"
         });
 
-        if (id)
-        {
+        if (id) {
             $(".header-title").html("编辑活动");
             _self.getDetail(1);
         }
+
+        setTimeout(function () { $(".edui-container").css("z-index", "600") }, 1000);
             
     }
 
@@ -403,6 +404,7 @@
                     var item = data.Item;
                     //option=1 编辑页；option=2 详情页
                     if (option == 1) {
+                        $("#Name").val(item.Name);
                         $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").val(item.Address);
@@ -414,6 +416,7 @@
                     }
                     else
                     {
+                        $("#Name").html(item.Name);
                         $("#Name").attr("src", "/Activity/Detail/" + item.ActivityID);
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
@@ -429,7 +432,7 @@
                         ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
-                    $("#Name").val(item.Name);
+                    
                     $("#PosterImg").val(item.Poster);
                     $("#PosterDisImg").attr("src", item.Poster).show();
                     if (item.Poster != '')
@@ -439,6 +442,7 @@
                     require.async("businesscard", function () {
                         $(".member").businessCard();
                     });
+
 
                 }
             });
