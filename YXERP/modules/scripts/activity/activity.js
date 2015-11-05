@@ -74,13 +74,15 @@
                 data: Stages,
                 dataValue: "ID",
                 dataText: "Name",
-                width: "150",
+                width: "120",
                 onChange: function (data) {
                     ObjectJS.Params.PageIndex = 1;
                     ObjectJS.Params.Stage = data.value;
                     ObjectJS.getList();
                 }
             });
+
+
             var Types = [
                 {
                     ID: "1",
@@ -98,7 +100,7 @@
                 data: Types,
                 dataValue: "ID",
                 dataText: "Name",
-                width: "150",
+                width: "120",
                 onChange: function (data) {
                     ObjectJS.Params.PageIndex = 1;
                     ObjectJS.Params.FilterType = data.value;
@@ -232,6 +234,11 @@
                     });
 
                     $(".activityList").html(innerhtml);
+
+                    require.async("businesscard", function () {
+                        $(".activitymember").businessCard();
+                    });
+
                 });
             }
             else
@@ -254,8 +261,9 @@
                     });
 
                     $(".activityCardList").html(innerhtml);
+
                     require.async("businesscard", function () {
-                        $("div.member").businessCard();
+                        $(".activitymember").businessCard();
                     });
                 });
             }
@@ -266,6 +274,8 @@
             $(".tr-header").after("<tr><td colspan='7' style='padding:15px 0px;'><div style='margin:0px auto; width:300px;'><div class='left' style='padding-top:4px;'>暂无数据！</div><div class='left'><a href='/Activity/Detail' class='ico-add  mTop4'>添加活动</a></div><div class='clear'></div></div></td></tr>");
         }
     }
+
+
 
     //初始化操作
     ObjectJS.initOperate = function (Editor, id) {
@@ -311,6 +321,7 @@
             success: function (data, status) {
                 if (data.Items.length > 0) {
                     _self.IcoPath = data.Items[0];
+                    $("#PosterDisImg").show();
                     $("#PosterDisImg").attr("src", data.Items[0]);
                     $("#PosterImg").val(data.Items[0]);
                 }
@@ -418,7 +429,7 @@
                         for(var i=0;i<item.Members.length;i++)
                         {
                             var m = item.Members[i];
-                            $("#MemberList").append("<li>" + m.Name + "</li>");
+                            $("#MemberList").append("<li class='member' data-id='"+m.UserID+"'>" + m.Name + "</li>");
                         }
 
                         ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
@@ -427,7 +438,7 @@
                     $("#OwnerID").val(item.OwnerID);
                     $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {
-                        $("div.member").businessCard();
+                        $(".member").businessCard();
                     });
 
                 }
@@ -503,6 +514,7 @@
     }
 
 
+
     //初始化详情
     ObjectJS.initDetail = function () {
         var _self = this;
@@ -559,6 +571,9 @@
             $(".tab-nav .tab-nav-ul li").removeClass("hover");
 
             $(this).addClass("hover");
+            $("div[name='activityDetail']").hide();
+            $("#" + $(this).data("id")).show();
+
         });
 
         $("#btnSaveActivityReply").click(function () {
@@ -576,6 +591,7 @@
         });
     }
 
+    //保存活动评论
     ObjectJS.SaveActivityReply = function (entity) {
         if (!entity.Msg)
         {
@@ -652,6 +668,11 @@
                             ObjectJS.SaveActivityReply(entity);
                             $("#Msg_" + $(this).data("replyid")).val('');
                             $(this).parent().parent().slideUp(100);
+                        });
+
+
+                        require.async("businesscard", function () {
+                            $(".activitymember").businessCard();
                         });
 
                     });

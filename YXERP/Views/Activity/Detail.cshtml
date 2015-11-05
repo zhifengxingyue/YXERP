@@ -35,27 +35,31 @@
                             <td width="48">负责人:</td>
                             <td>
                                 <div class="left" id="OwnerIDs"></div>
-                                <div class="left mLeft30 pTop5"><img src="/modules/images/ico-time.png" /></div>
-                                <div class="left mLeft10" style="padding-top:5px;"><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></div>
-                                <div class="left mLeft20"><img src="/modules/images/ico-member.png" /></div>
+                           @*     <div class="left mLeft30 pTop5"><img src="/modules/images/ico-time.png" /></div>
+                                <div class="left mLeft10" style="padding-top:5px;"><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></div>*@
+                              @*  <div class="left mLeft20"><img src="/modules/images/ico-member.png" /></div>
                                 <div class="left mLeft5" style="padding-top:3px;color:#aaa;" id="MemberCount">33</div>
-                                <div class="clear"></div>
+                                <div class="clear"></div>*@
                             </td>
                         </tr>
                          <tr>
-                            <td>成员:</td>
+                            <td><div><img src="/modules/images/ico-time.png" /></div></td>
+                            <td><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></td>
+                        </tr>
+                         <tr>
+                            <td><div><img src="/modules/images/ico-member.png" /></div></td>
                             <td>
                                 <ul id="MemberList"></ul>
                             </td>
                         </tr>
                         <tr>
-                            <td>地址:</td>
+                            <td valign="top">地址:</td>
                             <td><span id="Address"></span></td>
                         </tr>
-                         <tr>
-                            <td>备注:</td>
+                        @* <tr>
+                            <td valign="top">备注:</td>
                             <td><span id="Remark"></span></td>
-                        </tr>
+                        </tr>*@
                     </table>
                 </div>
             </td>
@@ -65,14 +69,16 @@
     <div class="mTop40">
         <div class="tab-nav">
             <ul class="tab-nav-ul">
-                <li class="hover" data-id="productinfo">评论</li>
-                <li class="" data-id="childproduct">客户列表</li>
+                <li class="hover" data-id="replyList">评论</li>
+                <li data-id="activityCustoms">客户列表</li>
+                <li data-id="activityRemark">活动详情</li>
             </ul>
         </div>
-
+        
+        <div id="replyList" name="activityDetail">
         <div class="mTop20">
             <div class="left">
-                    <textarea id="Msg" style="width:600px;height:150px;border:none;background-color:#fee;"></textarea>
+                    <textarea id="Msg" style="width:600px;height:150px;border:none;background-color:#f9f9f9;"></textarea>
             </div>
             <div class="left mLeft10" style="padding-top:123px;">
                 <input type="button" class="btn" id="btnSaveActivityReply" value="评论" />
@@ -87,7 +93,14 @@
         <div class="mBottom50">
             <table width="657" id="activityReplyList"></table>
         </div>
-    </div>
+
+        </div>
+
+        <div id="activityCustoms" class="hide" name="activityDetail"></div>
+
+        <div id="activityRemark" class="hide" name="activityDetail">
+            <div id="Remark"></div>
+        </div>
 
     <input type="hidden" id="ActivityID" value="@ViewBag.ActivityID" />
     <input type="hidden" id="OwnerID" value="" />
