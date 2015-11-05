@@ -32,11 +32,6 @@
                 <td >{%=item.Address%}</td>
                 <td></td>
             </tr>
-            <!--   <tr>
-                <td>备注:</td>
-                <td>{%=decodeURI( item.Remark)%}</td>
-                <td></td>
-            </tr>-->
         </table>
         <div class="activityMember">
             <div class="left" style="color:#4a98e7;">成员：</div>
@@ -46,7 +41,7 @@
 	                    for(var l=0; l<item.Members.length;l++){
 	                    var m = item.Members[l];
                     %}
-                    <li class="activitymember" data-id="{%=m.UserID%}">{%=m.Name%}</li>
+                    <li class="activitymember" data-id="{%=m.UserID%}">{%=m.Name%}</li><li></li>
                     {% } %}
                 </ul>
             </div>

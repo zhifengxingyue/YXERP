@@ -35,6 +35,7 @@ define(function (require, exports, module) {
                 clearTimeout(fadeOutTimer);
                 $(".businessCard").hide();
 
+                
                 var $BusinessCardObj=$("#businessCard_"+id);
                 if ($BusinessCardObj.length == 0) {
 
@@ -83,7 +84,8 @@ define(function (require, exports, module) {
                         $("body").append(_businessCardHtml);
                         $BusinessCardObj = $("#businessCard_" + id);
                     });
-                } else {
+                }
+                else {
 
                     $BusinessCardObj.css({ "left": left + "px", "top": top + "px" });
                     fadeInTimer = setTimeout(function () { $BusinessCardObj.fadeIn(); }, 50);

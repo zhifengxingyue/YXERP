@@ -33,22 +33,15 @@
                     <table width="100%" class="activityInfoTB">
                         <tr>
                             <td colspan="2" style="padding:0;">
-                                <a style="font-size:20px;color:#333;" href="#" id="Name"></a>
+                                <span style="font-size:20px;color:#333;" id="Name"></span>
                             </td>
                         </tr>
                         <tr>
                             <td width="48">负责人:</td>
-                            <td>
-                                <div class="left" id="OwnerIDs"></div>
-                           @*     <div class="left mLeft30 pTop5"><img src="/modules/images/ico-time.png" /></div>
-                                <div class="left mLeft10" style="padding-top:5px;"><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></div>*@
-                              @*  <div class="left mLeft20"><img src="/modules/images/ico-member.png" /></div>
-                                <div class="left mLeft5" style="padding-top:3px;color:#aaa;" id="MemberCount">33</div>
-                                <div class="clear"></div>*@
-                            </td>
+                            <td><div class="left" id="OwnerIDs"></div></td>
                         </tr>
                          <tr>
-                            <td><div><img src="/modules/images/ico-time.png" /></div></td>
+                            <td><div style="padding-top:3px;"><img src="/modules/images/ico-time.png" /></div></td>
                             <td><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></td>
                         </tr>
                          <tr>
@@ -61,10 +54,6 @@
                             <td valign="top">地址:</td>
                             <td><span id="Address"></span></td>
                         </tr>
-                        @* <tr>
-                            <td valign="top">备注:</td>
-                            <td><span id="Remark"></span></td>
-                        </tr>*@
                     </table>
                 </div>
             </td>
@@ -81,23 +70,23 @@
         </div>
         
         <div id="replyList" name="activityDetail">
-        <div class="mTop20">
-            <div class="left">
-                    <textarea id="Msg" style="width:600px;height:150px;border:none;background-color:#f9f9f9;"></textarea>
+            <div class="mTop20">
+                <div class="left">
+                    <textarea id="Msg" class="replyMsg"></textarea>
+                </div>
+                <div class="left mLeft10" style="padding-top:123px;">
+                    <input type="button" class="btn" id="btnSaveActivityReply" value="评论" />
+                </div>
+                <div class="clear"></div>
             </div>
-            <div class="left mLeft10" style="padding-top:123px;">
-                <input type="button" class="btn" id="btnSaveActivityReply" value="评论" />
+
+            <div class="mTop15" style="border-bottom:solid 1px #06c;padding-bottom:10px;width:657px;">
+                <span style="color:#666;">全部评论</span>
             </div>
-            <div class="clear"></div>
-        </div>
 
-        <div class="mTop15" style="border-bottom:solid 1px #06c;padding-bottom:10px;width:657px;">
-            <span style="color:#666;">全部评论</span>
-        </div>
-
-        <div class="mBottom50">
-            <table width="657" id="activityReplyList"></table>
-        </div>
+            <div class="mBottom50">
+                <table width="657" id="activityReplyList"></table>
+            </div>
 
         </div>
 
