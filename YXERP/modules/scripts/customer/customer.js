@@ -2,16 +2,34 @@
     var Global = require("global"),
         doT = require("dot"),
         Verify = require("verify"), VerifyObject,
-        Easydialog = require("easydialog");
+        Easydialog = require("easydialog"),
+        ChooseUser = require("chooseuser");;
+    require("pager");
+    require("mark");
 
-    var Model = {};
+    var Params = {
+        SearchType: 1,
+        SourceID: "",
+        StageID: "",
+        Status: -1,
+        Mark: -1,
+        UserID: "",
+        AgentID: "",
+        TeamID: "",
+        Keywords: "",
+        BeginTime: "",
+        EndTime: "",
+        PageIndex: 1,
+        PageSize: 20
+    };
 
     var ObjectJS = {};
     //初始化
     ObjectJS.init = function (type) {
         var _self = this;
-        _self.bindEvent();
+        Params.SearchType = type;
         _self.getList();
+        _self.bindEvent();
     }
 
     //绑定事件
@@ -19,123 +37,253 @@
         var _self = this;
         $(document).click(function (e) {
             //隐藏下拉
-            if (!$(e.target).parents().hasClass("dropdown-ul") && !$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+            if (!$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
                 $(".dropdown-ul").hide();
             }
         });
-        //添加
-        //$("#createCustomer").click(function () {
-        //    _self.createModel();
-        //});
-        //删除
-        $("#deleteObject").click(function () {
+        //切换阶段
+        $(".search-stages li").click(function () {
             var _this = $(this);
-            confirm("部门删除后不可恢复,确认删除吗？",function(){
-                _self.deleteModel(_this.data("id"), function (status) {
-                    if (status == 1) {
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+                Params.PageIndex = 1;
+                Params.StageID = _this.data("id");
+                _self.getList();
+            }
+        });
+        //切换状态
+        $(".search-status li").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+                Params.PageIndex = 1;
+                Params.Status = _this.data("id");
+                _self.getList();
+            }
+        });
+        //关键字搜索
+        require.async("search", function () {
+            $(".searth-module").searchKeys(function (keyWords) {
+                Params.PageIndex = 1;
+                Params.Keywords = keyWords;
+                _self.getList();
+            });
+        });
+        //客户来源
+        Global.post("/Customer/GetCustomerSources", { }, function (data) {
+            require.async("dropdown", function () {
+                $("#customerSource").dropdown({
+                    prevText: "来源-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    data: data.items,
+                    dataValue: "SourceID",
+                    dataText: "SourceName",
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.SourceID = data.value;
                         _self.getList();
-                    } else if (status == 10002) {
-                        alert("此部门存在员工，请移除员工后重新操作！");
                     }
                 });
             });
         });
-        //编辑
-        $("#updateObject").click(function () {
+        //全部选中
+        $("#check-all").click(function () {
             var _this = $(this);
-            Global.post("/Organization/GetDepartmentByID", { id: _this.data("id") }, function (data) {
-                var model = data.model;
-                Model.DepartID = model.DepartID;
-                Model.Name = model.Name;
-                Model.Description = model.Description;
-                _self.createModel();
-            });
+            if (!_this.hasClass("ico-checked")) {
+                _this.addClass("ico-checked").removeClass("ico-check");
+                $(".table-list .check").addClass("ico-checked").removeClass("ico-check");
+            } else {
+                _this.addClass("ico-check").removeClass("ico-checked");
+                $(".table-list .check").addClass("ico-check").removeClass("ico-checked");
+            }
         });
-
-    }
-    //添加/编辑弹出层
-    ObjectJS.createModel = function () {
-        var _self = this;
-
-        doT.exec("template/customer/create-customer.html", function (template) {
-            var html = template([]);
-            Easydialog.open({
-                container: {
-                    id: "show-model-detail",
-                    header: !Model.DepartID ? "新建客户" : "编辑客户",
-                    content: html,
-                    yesFn: function () {
-                        if (!VerifyObject.isPass()) {
-                            return false;
+        //转移拥有者
+        $("#changeOwner").click(function () {
+            var _this = $(this);
+            ChooseUser.create({
+                title: "更换拥有者",
+                type: 1,
+                single: true,
+                callback: function (items) {
+                    if (items.length > 0) {
+                        if (_this.data("userid") != items[0].id) {
+                            _self.ChangeOwner(_this.data("id"), items[0].id);
+                        } else {
+                            alert("请选择不同人员进行转移!");
                         }
-                        Model.Name = $("#modelName").val();
-                        Model.Description = $("#modelDescription").val();
-                        Model.ParentID = "";
-                        _self.saveModel(Model);
-                    },
-                    callback: function () {
-
                     }
                 }
             });
-            VerifyObject = Verify.createVerify({
-                element: ".verify",
-                emptyAttr: "data-empty",
-                verifyType: "data-type",
-                regText: "data-text"
-            });
-            $("#modelName").focus();
-            $("#modelName").val(Model.Name);
-            $("#modelDescription").val(Model.Description);
+        });
+        //批量转移
+        $("#batchChangeOwner").click(function () {
+            var checks = $(".table-list .ico-checked");
+            if (checks.length > 0) {
+                ChooseUser.create({
+                    title: "批量更换拥有者",
+                    type: 1,
+                    single: true,
+                    callback: function (items) {
+                        if (items.length > 0) {
+                            var ids = "", userid = items[0].id;
+                            checks.each(function () {
+                                var _this = $(this);
+                                if (_this.data("userid") != userid) {
+                                    ids += _this.data("id") + ",";
+                                }
+                            });
+                            if (ids.length > 0) {
+                                _self.ChangeOwner(ids, userid);
+                            } else {
+                                alert("请选择不同人员进行转移!");
+                            }
+                        }
+                    }
+                });
+            } else {
+                alert("您尚未选择客户!")
+            }
+        });
 
-        }); 
+        //过滤标记
+        $("#filterMark").markColor({
+            isAll: true,
+            onChange: function (obj, callback) {
+                callback && callback(true);
+                Params.PageIndex = 1;
+                Params.Mark = obj.data("value");
+                _self.getList();
+            }
+        });
+        //批量标记
+        $("#batchMark").markColor({
+            isAll: true,
+            onChange: function (obj, callback) {
+                var checks = $(".table-list .ico-checked");
+                if (checks.length > 0) {
+                    var ids = "";
+                    checks.each(function () {
+                        var _this = $(this);
+                        ids += _this.data("id") + ",";
+                    });
+                    _self.markCustomer(ids, obj.data("value"), function (status) {
+                        _self.getList();
+                        callback && callback(status);
+                    });
+                    
+                } else {
+                    alert("您尚未选择客户!")
+                }
+            }
+        });
+        
     }
+
+
+
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
         $(".tr-header").nextAll().remove();
-        Global.post("/Organization/GetDepartments", {}, function (data) {
-            _self.bindList(data.items);
+        Global.post("/Customer/GetCustomers", { filter: JSON.stringify(Params) }, function (data) {
+            _self.bindList(data);
         });
     }
     //加载列表
-    ObjectJS.bindList = function (items) {
+    ObjectJS.bindList = function (data) {
         var _self = this;
-        doT.exec("template/organization/departments.html", function (template) {
-            var innerhtml = template(items);
+
+        doT.exec("template/customer/customers.html", function (template) {
+            var innerhtml = template(data.items);
             innerhtml = $(innerhtml);
 
             //下拉事件
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-
                 var position = _this.find(".ico-dropdown").position();
-                $(".dropdown-ul li").data("id",_this.data("id"));
-                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 55 }).show().mouseleave(function () {
+                $(".dropdown-ul li").data("id", _this.data("id")).data("userid", _this.data("userid"));
+                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
                     $(this).hide();
                 });
-                
+                return false;
+            });
+            innerhtml.find(".check").click(function () {
+                var _this = $(this);
+                if (!_this.hasClass("ico-checked")) {
+                    _this.addClass("ico-checked").removeClass("ico-check");
+                } else {
+                    _this.addClass("ico-check").removeClass("ico-checked");
+                }
+                return false;
+            });
+
+            innerhtml.click(function () {
+                var _this = $(this).find(".check");
+                if (!_this.hasClass("ico-checked")) {
+                    _this.addClass("ico-checked").removeClass("ico-check");
+                } else {
+                    _this.addClass("ico-check").removeClass("ico-checked");
+                }
+            });
+
+            innerhtml.find(".mark").markColor({
+                isAll: false,
+                onChange: function (obj, callback) {
+
+                    _self.markCustomer(obj.data("id"), obj.data("value"), callback);
+                   
+                }
             });
 
             $(".tr-header").after(innerhtml);
+
+        });
+        $("#pager").paginate({
+            total_count: data.totalCount,
+            count: data.pageCount,
+            start: Params.PageIndex,
+            display: 5,
+            border: true,
+            border_color: '#fff',
+            text_color: '#333',
+            background_color: '#fff',
+            border_hover_color: '#ccc',
+            text_hover_color: '#000',
+            background_hover_color: '#efefef',
+            rotate: true,
+            images: false,
+            mouse: 'slide',
+            onChange: function (page) {
+                Params.PageIndex = page;
+                _self.getList();
+            }
         });
     }
 
-    //保存实体
-    ObjectJS.saveModel = function (model) {
-        var _self = this;
-        Global.post("/Organization/SaveDepartment", { entity: JSON.stringify(model) }, function (data) {
-            if (data.model.DepartID.length > 0) {
-                _self.getList();
-                //_self.bindList([data.model]);
-            }
-        })
+    //标记客户
+    ObjectJS.markCustomer = function (ids, mark, callback) {
+        Global.post("/Customer/UpdateCustomMark", {
+            ids: ids,
+            mark: mark
+        }, function (data) {
+            callback && callback(data.status);
+        });
     }
-    //删除
-    ObjectJS.deleteModel = function (id, callback) {
-        Global.post("/Organization/DeleteDepartment", { departid: id }, function (data) {
-            !!callback && callback(data.status);
-        })
+    //转移客户
+    ObjectJS.ChangeOwner = function (ids, userid) {
+        var _self = this;
+        Global.post("/Customer/UpdateCustomOwner", {
+            userid: userid,
+            ids: ids
+        }, function (data) {
+            if (data.status) {
+                _self.getList();
+            }
+        });
     }
 
     module.exports = ObjectJS;

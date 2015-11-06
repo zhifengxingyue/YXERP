@@ -14,18 +14,22 @@ namespace CloudSalesDAL
 
         #region 查询
 
-        public DataSet GetCustomers(int type, string sourceid, string stageid, string status, string searchuserid, string searchteamid, string searchagentid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        public DataSet GetCustomers(int searchtype, string sourceid, string stageid, int status, int mark, string searchuserid, string searchteamid, string searchagentid, 
+                                    string begintime, string endtime, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
         {
             SqlParameter[] paras = { 
                                        new SqlParameter("@totalCount",SqlDbType.Int),
                                        new SqlParameter("@pageCount",SqlDbType.Int),
-                                       new SqlParameter("@Type",type),
+                                       new SqlParameter("@SearchType",searchtype),
                                        new SqlParameter("@SourceID",sourceid),
                                        new SqlParameter("@StageID",stageid),
                                        new SqlParameter("@Status",status),
+                                       new SqlParameter("@Mark",mark),
                                        new SqlParameter("@SearchUserID",searchuserid),
                                        new SqlParameter("@SearchTeamID",searchteamid),
                                        new SqlParameter("@SearchAgentID",searchagentid),
+                                       new SqlParameter("@BeginTime",begintime),
+                                       new SqlParameter("@EndTime",endtime),
                                        new SqlParameter("@Keywords",keyWords),
                                        new SqlParameter("@pageSize",pageSize),
                                        new SqlParameter("@pageIndex",pageIndex),
@@ -79,6 +83,19 @@ namespace CloudSalesDAL
         #endregion
 
         #region 编辑/删除
+
+        public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@StageID",stageid),
+                                     new SqlParameter("@OperateID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateCustomerStage", paras, CommandType.StoredProcedure) > 0;
+        }
 
         public bool UpdateCustomerOwner(string customerid, string userid, string operateid, string agentid, string clientid)
         {

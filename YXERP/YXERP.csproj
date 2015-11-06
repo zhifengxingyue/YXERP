@@ -123,6 +123,7 @@
     <Compile Include="Models\FilterProduct.cs" />
     <None Include="modules\plug\umeditor\net\Uploader.cs" />
     <Compile Include="Models\FilterUser.cs" />
+    <Compile Include="Models\FilterCustomer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\homeico\account.png" />
     <Content Include="Content\homeico\agents.png" />
@@ -221,8 +222,11 @@
     <Content Include="modules\plug\laydate\skins\default\laydate.css" />
     <Content Include="modules\plug\laydate\skins\molv\icon.png" />
     <Content Include="modules\plug\laydate\skins\molv\laydate.css" />
+    <Content Include="modules\plug\mark\ico-ball.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
+    <Content Include="modules\plug\mark\style.css" />
+    <Content Include="modules\plug\mark\mark.js" />
     <Content Include="modules\scripts\activity\activity.js" />
     <Content Include="modules\scripts\customer\customer.js" />
     <Content Include="modules\scripts\customer\create-customer.js" />
@@ -240,6 +244,7 @@
     <Content Include="modules\template\activity\activity_card_list.html" />
     <Content Include="modules\template\activity\activity_reply_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
+    <Content Include="modules\template\customer\customers.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />
@@ -284,7 +289,7 @@
     <Content Include="Views\Security\Index.cshtml" />
     <Content Include="Views\System\Target.cshtml" />
     <Content Include="Views\Activity\Detail.cshtml" />
-    <Content Include="Views\Customer\MyCustomer.cshtml" />
+    <Content Include="Views\Customer\Customers.cshtml" />
     <Content Include="Views\Customer\CreateCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -471,7 +476,6 @@
     <Folder Include="Content\uploadFiles\" />
     <Folder Include="modules\css\orders\" />
     <Folder Include="modules\scripts\orders\" />
-    <Folder Include="modules\template\customer\" />
     <Folder Include="modules\template\orders\" />
   </ItemGroup>
   <ItemGroup>
