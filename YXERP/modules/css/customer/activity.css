@@ -191,3 +191,10 @@ margin-right:8px;
 .replyMsg {
     width:600px;height:150px;border:solid 1px #aaa;background-color:#f9f9f9;
 }
+
+.cardActivityAddress {
+width:120px;
+white-space:nowrap;
+overflow: hidden; 
+text-overflow:ellipsis;
+}

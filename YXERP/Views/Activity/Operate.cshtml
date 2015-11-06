@@ -1,14 +1,15 @@
 ﻿@{
     ViewBag.Title = "活动详情页";
 }
-
+@section css{
 <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
 <link href="/modules/css/customer/activity.css" rel="stylesheet" />
+}
 
 @section scripts{
 <script src="/Scripts/jquery-1.11.1.js"></script>
 <script src="/modules/plug/laydate/laydate.js"></script>
- <script src="/modules/plug/umeditor/umeditor.config.js"></script>
+<script src="/modules/plug/umeditor/umeditor.config.js"></script>
 <script src="/modules/plug/umeditor/umeditor.min.js"></script>
     <script type="text/javascript">
         seajs.use(["scripts/activity/activity"], function (ObjectJS) {
