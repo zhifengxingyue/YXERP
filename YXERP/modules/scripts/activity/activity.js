@@ -27,15 +27,16 @@
     //初始化列表
     ObjectJS.init = function (isAll) {
         var _self = this;
+        _self.Params.IsAll = isAll;
         _self.bindEvent();
-        _self.Params.IsAll= isAll;
+        
         _self.getList();
     }
 
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
-
+        
         $("#SearchActivity").click(function () {
             ObjectJS.Params.PageIndex = 1;
             ObjectJS.Params.BeginTime = $("#BeginTime").val();
@@ -50,65 +51,67 @@
                 ObjectJS.getList();
             });
         });
+ 
+        if (_self.Params.IsAll == 0) {
+            //搜索
+            require.async("dropdown", function () {
+                //    var Stages = [
+                //        {
+                //            ID: "1",
+                //            Name: "已结束"
+                //        },
+                //        {
+                //            ID: "2",
+                //            Name: "进行中"
+                //        },
+                //        {
+                //            ID: "3",
+                //            Name: "未开始"
+                //        }
+                //    ];
+                //    $("#ActivityStage").dropdown({
+                //        prevText: "活动阶段-",
+                //        defaultText: "所有",
+                //        defaultValue: "-1",
+                //        data: Stages,
+                //        dataValue: "ID",
+                //        dataText: "Name",
+                //        width: "120",
+                //        onChange: function (data) {
+                //            ObjectJS.Params.PageIndex = 1;
+                //            ObjectJS.Params.Stage = data.value;
+                //            ObjectJS.getList();
+                //        }
+                //    });
 
-        //搜索
-        require.async("dropdown", function () {
-            var Stages = [
-                {
-                    ID: "1",
-                    Name: "已结束"
-                },
-                {
-                    ID: "2",
-                    Name: "进行中"
-                },
-                {
-                    ID: "3",
-                    Name: "未开始"
-                }
-            ];
-            $("#ActivityStage").dropdown({
-                prevText: "活动阶段-",
-                defaultText: "所有",
-                defaultValue: "-1",
-                data: Stages,
-                dataValue: "ID",
-                dataText: "Name",
-                width: "120",
-                onChange: function (data) {
-                    ObjectJS.Params.PageIndex = 1;
-                    ObjectJS.Params.Stage = data.value;
-                    ObjectJS.getList();
-                }
+
+                var Types = [
+                    {
+                        ID: "1",
+                        Name: "我负责的"
+                    },
+                    {
+                        ID: "2",
+                        Name: "我参与的"
+                    }
+                ];
+                $("#ActivityType").dropdown({
+                    prevText: "活动过滤-",
+                    defaultText: "所有",
+                    defaultValue: "-1",
+                    data: Types,
+                    dataValue: "ID",
+                    dataText: "Name",
+                    width: "120",
+                    onChange: function (data) {
+                        ObjectJS.Params.PageIndex = 1;
+                        ObjectJS.Params.FilterType = data.value;
+                        ObjectJS.getList();
+                    }
+                });
+
             });
-
-
-            var Types = [
-                {
-                    ID: "1",
-                    Name: "我负责的"
-                },
-                {
-                    ID: "2",
-                    Name: "我参与的"
-                }
-            ];
-            $("#ActivityType").dropdown({
-                prevText: "活动过滤-",
-                defaultText: "所有",
-                defaultValue: "-1",
-                data: Types,
-                dataValue: "ID",
-                dataText: "Name",
-                width: "120",
-                onChange: function (data) {
-                    ObjectJS.Params.PageIndex = 1;
-                    ObjectJS.Params.FilterType = data.value;
-                    ObjectJS.getList();
-                }
-            });
-
-        });
+        }
 
         //删除活动
         $("#deleteObject").click(function () {
@@ -159,6 +162,19 @@
             }
 
             ObjectJS.getList();
+        });
+
+        //切换阶段
+        $(".search-stages li").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+
+                ObjectJS.Params.PageIndex = 1;
+                ObjectJS.Params.Stage = _this.data("id");
+                ObjectJS.getList();
+            }
         });
 
         $(document).click(function (e) {
@@ -410,6 +426,8 @@
                     {
                         $("#Name").html(item.Name);
                         $("#Name").attr("src", "/Activity/Detail/" + item.ActivityID);
+                        $("#OwnerName").html(item.Owner.Name);
+                        $("#OwnerName").data("id", item.Owner.UserID);
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").html(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").html(item.Address);
@@ -421,7 +439,7 @@
                             var m = item.Members[i];
                             $("#MemberList").append("<li class='member' data-id='"+m.UserID+"'>" + m.Name + "</li>");
                         }
-                        ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
+                        //ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
                     

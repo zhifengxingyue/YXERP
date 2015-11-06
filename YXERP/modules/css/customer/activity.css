@@ -1,4 +1,11 @@
-﻿.brand-img { position:absolute; top:120px; right:20px; height:220px; width:220px; }
+﻿/*客户列表-搜索*/
+.search-header { border-bottom:solid 2px #4a98e7 ; height:35px; overflow:auto;}
+.search-header .search-stages { height:35px; line-height:35px; float:left; margin-left:20px; }
+.search-header .search-stages li{ float:left; padding:0 10px; cursor:pointer; min-width:60px; text-align:center; color:#666;}
+.search-header .search-stages li:hover{ color:#4a98e7;}
+.search-header .search-stages li.hover{ background-color:#4a98e7; color:#fff;}
+
+.brand-img { position:absolute; top:120px; right:20px; height:220px; width:220px; }
 
 .displayTab {
 cursor:pointer;
@@ -39,7 +46,7 @@ list-style:none;
 .activityCardListLi {
 width:245px;
 float:left;
-margin-right:35px;
+margin-right:40px;
 margin-bottom:25px;
 }
 
@@ -55,24 +62,13 @@ height:123px;
 
 }
 
-
-.activityCardListLi .activityInfo {
-margin:10px;
-margin-top:0px;
-border-bottom:solid 1px #ccc;
-}
-
-.activityCardListLi .activityInfo li {
-padding:7px;
-}
-
-.activityCardListLi .activityInfo div,.activityInfo td{
-color:#aaa;
-}
-
-
 .activityCardListLi .activityMember {
 margin:10px;
+}
+
+.activityCardListLi .activityItem tr td{
+padding:8px 0px;
+color:#999;
 }
 
 .activityUnderline1 {
@@ -94,8 +90,6 @@ width:24px;
 height:24px;
 border-radius:12px;
 }
-
-
 
 .activityListLi {
 margin-bottom:20px;
@@ -133,13 +127,12 @@ height:200px;
 }
 
 .activityListLi .activityMember {
-border-top:solid 1px #ccc;
-padding-top:8px;
+padding-top:12px;
 }
 
 .activityListLi .activityInfo tr td{
 padding:7px 0px;
-color:#aaa;
+color:#999;
 }
 
 
@@ -165,13 +158,12 @@ width:500px;
 white-space: nowrap; 
 overflow: hidden; 
 text-overflow: ellipsis; 
-color:#4a98e7;
 }
 
 #MemberList li {
 float:left;
-color:#4a98e7;
-margin-right:8px;
+color:#666;
+margin-right:10px;
 }
 
 #CardMemberList {
@@ -179,17 +171,19 @@ width:120px;
 white-space:nowrap; 
 overflow: hidden; 
 text-overflow:ellipsis;
-color:#4a98e7;
 }
 
 #CardMemberList li {
 float:left;
-color:#4a98e7;
+color:#666;
 margin-right:8px;
 }
 
 .replyMsg {
-    width:600px;height:150px;border:solid 1px #aaa;background-color:#f9f9f9;
+width:600px;
+height:150px;
+border:solid 1px #eee;
+background-color:#f9f9f9;
 }
 
 .cardActivityAddress {

@@ -10,7 +10,7 @@
 <script src="/modules/plug/laydate/laydate.js"></script>
     <script type="text/javascript">
         seajs.use(["scripts/activity/activity"], function (ObjectJS) {
-            ObjectJS.init(0);
+            ObjectJS.init('@ViewBag.Option');
         });
         laydate.skin('default');//切换皮肤，请查看skins下面皮肤库
         $(function () {
@@ -41,21 +41,7 @@
 <div class="header-box">
     <span class="header-title left">我的活动</span>
     <a href="Operate" class="ico-add left">添加活动</a>
-    <div class="right searth-module" data-text="输入活动名称..." data-width="150"> </div>
-</div>
-
-<div class="search-box">
-    <div id="ActivityStage" class="left"></div>
-    <div id="ActivityType" class="left mLeft20"></div>
-    <div class="left mLeft20">
-        <span class="width80">活动时间：</span><input type="text" id="BeginTime"  class="input"  />
-        <span style="padding-left:3px;padding-right:5px;">至</span><input type="text" id="EndTime"  class="input"  />
-        <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
-    </div>
-   
-    <div class="clear"></div>
-
-    <div class="mTop10 mBottom5">
+    <div class="right">
         <div class="displayTab left" data-type="1">
             <img src="/modules/images/ico-list-blue.png" />
         </div>
@@ -64,10 +50,29 @@
         </div>
         <div class="clear"></div>
     </div>
-    <div class="clear "></div>
 </div>
 
-<div class="content-body">
+<div class="search-box">
+    <div class="search-header mBottom15">
+        <ul class="search-stages">
+            <li data-id="-1" class="hover">全部阶段</li>
+            <li data-id="1">已结束</li>
+            <li data-id="2">进行中</li>
+            <li data-id="3">未开始</li>
+        </ul>
+    </div>
+    <div id="ActivityType" class="left"></div>
+
+    <div class="left mLeft20">
+        <span class="width80">活动时间：</span><input type="text" id="BeginTime"  class="input"  />
+        <span style="padding:0px 5px 0px 3px;">至</span><input type="text" id="EndTime"  class="input"  />
+        <span class="width80 mLeft10"><input type="button" class="btn" id="SearchActivity" value="搜索"></span>
+    </div>
+    <div class="right searth-module" data-text="输入活动名称..." data-width="150"> </div>
+    <div class="clear"></div>
+</div>
+
+<div class="content-body mTop20">
 
     <table class="activityList" width="100%" cellspacing="0"></table>
 

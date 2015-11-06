@@ -13,12 +13,8 @@
     }
 <div class="header-box">
     <span class="header-title left">活动详情</span>
-    @*<a href="javascript:void(0);" id="" class="ico-add left mTop4 mLeft20"></a>*@
-    <span class="mLeft20">
-        <input type="button" class="btn" id="btn_shareTask" value="分享到明道任务" />
-    </span>
+    <span class="mLeft20"><input type="button" class="btn" id="btn_shareTask" value="分享到明道任务" /></span>
     <span class="mLeft10"><input type="button" class="btn" id="btn_shareCalendar" value="分享到明道日程" /></span>
-    @*<a href="javascript:void(0);" id="" class="ico-add left mTop4 mLeft20"></a>*@
     
     <span class="ico-gonext right" onclick="history.go(1)" title="前进"></span>
     <span class="ico-goback right" onclick="history.go(-1)" title="后退"></span>
@@ -27,32 +23,36 @@
 <div class="content-body">
     <table width="100%">
         <tr class="activityListLi">
-            <td width="410"><div><img id="Poster" class="activityDetailImg" src="/modules/images/defaultactivity.jpg" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></div></td>
-            <td  valign="top">
+            <td width="410">
+                <img id="Poster" class="activityDetailImg" src="/modules/images/defaultactivity.jpg" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" />
+            </td>
+            <td valign="top">
                 <div class="activityDetailInfo mLeft30">
                     <table width="100%" class="activityInfoTB">
                         <tr>
-                            <td colspan="2" style="padding:0;">
-                                <span style="font-size:20px;color:#333;" id="Name"></span>
+                            <td colspan="2">
+                                <span style="font-size:20px;color:#666;" id="Name"></span>
                             </td>
                         </tr>
                         <tr>
                             <td width="48">负责人:</td>
-                            <td><div class="left" id="OwnerIDs"></div></td>
+                            <td><span class="activitymember" id="OwnerName" style="color:#666;"></span></td>
                         </tr>
                          <tr>
-                            <td><div style="padding-top:3px;"><img src="/modules/images/ico-time.png" /></div></td>
-                            <td><span id="BeginTime"></span><span>—</span><span id="EndTime"></span></td>
+                            <td>
+                                时间:
+                            </td>
+                            <td><span id="BeginTime" style="color:#666;"></span><span style="color:#666;">—</span><span id="EndTime" style="color:#666;"></span></td>
                         </tr>
                          <tr>
-                            <td><div><img src="/modules/images/ico-member.png" /></div></td>
+                            <td>成员</td>
                             <td>
                                 <ul id="MemberList"></ul>
                             </td>
                         </tr>
                         <tr>
                             <td valign="top">地址:</td>
-                            <td><span id="Address"></span></td>
+                            <td><span id="Address" style="color:#666;"></span></td>
                         </tr>
                     </table>
                 </div>

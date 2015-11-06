@@ -21,12 +21,14 @@ namespace YXERP.Controllers
 
         public ActionResult MyActivity()
         {
+            ViewBag.Option = 0;
             return View();
         }
 
         public ActionResult Activitys()
         {
-            return View();
+            ViewBag.Option = 1;
+            return View("MyActivity");
         }
 
         public ActionResult Operate(string id)
