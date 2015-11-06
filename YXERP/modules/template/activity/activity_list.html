@@ -3,58 +3,53 @@
 	var item = $data[i];
 %}
 <tr class="activityListLi">
-            <td class="activityTD" style="border-right:none;" width="260"><div><a href="/Activity/Detail/{%=item.ActivityID%}" target="_blank"><img class="activityImg" src="{%=item.Poster%}" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></a></div></td>
-            <td class="activityTD" style="border-left:none;">
-                <div class="activityInfo mLeft20">
-                    <table width="100%" class="activityInfoTB">
-                        <tr>
-                            <td width="32"><img class="activityOwnerImg" src="{%=item.Owner.Avatar%}" onerror="javascript:this.src='/modules/images/defaultavatar.png';"  /></td>
-                            <td width="80%" style="color:#666;"><a href="/Activity/Detail/{%=item.ActivityID%}">{%=item.Name%}</a></td>
-                            <td align="right">
-                                <div class="dropdown" data-id="{%=item.ActivityID%}" style="background-color:#4A98E7;border-radius:3px;width:45px;padding:7px 10px;">
-                                    <span style="color:#fff;">操作</span>
-                                    <span class="ico-dropdown-white mLeft5"></span>
-                                </div>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td><img src="/modules/images/ico-time.png" /></td>
-                            <td>{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</td>
-                            <td></td>
-                        </tr>
-                         <tr>
-                            <td><img src="/modules/images/ico-member.png" /></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>地址:</td>
-                            <td>{%=item.Address%}</td>
-                            <td></td>
-                        </tr>
-                         <tr>
-                            <td>备注:</td>
-                            <td>{%=decodeURI( item.Remark)%}</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                    <div class="activityMember">
-                        <div class="left" style="color:#4a98e7">成员：</div>
-                        <div class="left mLeft5" style="color:#4a98e7">
-                            <ul id="MemberList">
-                                {%
-	                                for(var l=0; l<item.Members.length;l++){
-	                                var m = item.Members[l];
-                                %}
-                                <li>{%=m.Name%}</li>
-                                {% } %}
-                            </ul>
-                        </div>
-                        <div class="clear"></div>
-                   </div>
-                </div>
-            </td>
-         </tr>
+<td class="activityTD" style="border-right:none;" width="260"><div><a href="/Activity/Detail/{%=item.ActivityID%}" target="_blank"><img class="activityImg" src="{%=item.Poster==''?'/modules/images/defaultactivity.jpg':item.Poster%}" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" /></a></div></td>
+<td class="activityTD" style="border-left:none;">
+    <div class="activityInfo mLeft20">
+        <table width="100%" class="activityInfoTB">
+            <tr>
+                <td width="32"><img class="activityOwnerImg activitymember" data-id="{%=item.Owner.UserID%}" src="{%=item.Owner.Avatar==''?'/modules/images/defaultavatar.png':item.Owner.Avatar%}" onerror="javascript:this.src='/modules/images/defaultavatar.png';"  /></td>
+                <td width="80%"><a style="color:#444" href="/Activity/Detail/{%=item.ActivityID%}">{%=item.Name%}</a></td>
+                <td align="right">
+                    <div class="dropdown" data-id="{%=item.ActivityID%}" style="background-color:#4A98E7;border-radius:3px;width:45px;padding:7px 10px;">
+                        <span style="color:#fff;">操作</span>
+                        <span class="ico-dropdown-white mLeft5"></span>
+                    </div>
+                </td>
+            </tr>
+                <tr>
+                <td><img src="/modules/images/ico-time.png" /></td>
+                <td>{%=item.BeginTime.toDate("yyyy-MM-dd") %}-{%=item.BeginTime.toDate("yyyy-MM-dd") %}</td>
+                <td></td>
+            </tr>
+                <tr>
+                <td><img src="/modules/images/ico-member.png" /></td>
+                <td>{%=item.Members.length%}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>地址:</td>
+                <td >{%=item.Address%}</td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="activityMember">
+            <div class="left" style="color:#4a98e7;">成员：</div>
+            <div class="left mLeft5">
+                <ul id="MemberList">
+                    {%
+	                    for(var l=0; l<item.Members.length;l++){
+	                    var m = item.Members[l];
+                    %}
+                    <li class="activitymember" data-id="{%=m.UserID%}">{%=m.Name%}</li><li></li>
+                    {% } %}
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</td>
+</tr>
 <tr><td colspan="2"><div class="activityUnderline4"></div></td></tr>
 <tr><td colspan="2"><div class="activityUnderline4"></div></td></tr>
 <tr><td colspan="2"><div style="height:20px;"></div></td></tr>

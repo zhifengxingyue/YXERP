@@ -1,4 +1,6 @@
-﻿.displayTab {
+﻿.brand-img { position:absolute; top:120px; right:20px; height:220px; width:220px; }
+
+.displayTab {
 cursor:pointer;
 }
 
@@ -46,6 +48,33 @@ width:245px;
 border:solid 1px #ccc;
 }
 
+
+.activityCardListLi .activityImg img{
+width:245px;
+height:123px;
+
+}
+
+
+.activityCardListLi .activityInfo {
+margin:10px;
+margin-top:0px;
+border-bottom:solid 1px #ccc;
+}
+
+.activityCardListLi .activityInfo li {
+padding:7px;
+}
+
+.activityCardListLi .activityInfo div,.activityInfo td{
+color:#aaa;
+}
+
+
+.activityCardListLi .activityMember {
+margin:10px;
+}
+
 .activityUnderline1 {
 height:1px;
 margin:0px 5px;
@@ -60,36 +89,13 @@ border:solid 1px #ccc;
 border-top:none;
 }
 
-.activityCardListLi .activityImg img{
-width:245px;
-height:123px;
-
-}
-
 .activityOwnerImg {
 width:24px;
 height:24px;
 border-radius:12px;
 }
 
-.activityCardListLi .activityInfo {
-margin:10px;
-margin-top:0px;
-border-bottom:solid 1px #ccc;
-}
 
-.activityCardListLi .activityInfo li {
-padding:7px;
-}
-
-.activityCardListLi .colorAaa{
-color:#aaa;
-}
-
-
-.activityCardListLi .activityMember {
-margin:10px;
-}
 
 .activityListLi {
 margin-bottom:20px;
@@ -128,11 +134,11 @@ height:200px;
 
 .activityListLi .activityMember {
 border-top:solid 1px #ccc;
-padding-top:5px;
+padding-top:8px;
 }
 
 .activityListLi .activityInfo tr td{
-padding:5px 0px;
+padding:7px 0px;
 color:#aaa;
 }
 
@@ -155,11 +161,33 @@ font-size:14px;
 
 #MemberList {
 list-style:none;
+width:500px;
+white-space: nowrap; 
+overflow: hidden; 
+text-overflow: ellipsis; 
+color:#4a98e7;
 }
 
 #MemberList li {
 float:left;
-color:#2f73b8;
-margin-right:10px;
-font-size:14px;
+color:#4a98e7;
+margin-right:8px;
+}
+
+#CardMemberList {
+width:120px;
+white-space:nowrap; 
+overflow: hidden; 
+text-overflow:ellipsis;
+color:#4a98e7;
+}
+
+#CardMemberList li {
+float:left;
+color:#4a98e7;
+margin-right:8px;
+}
+
+.replyMsg {
+    width:600px;height:150px;border:solid 1px #aaa;background-color:#f9f9f9;
 }
