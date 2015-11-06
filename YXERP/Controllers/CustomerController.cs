@@ -100,7 +100,6 @@ namespace YXERP.Controllers
             };
         }
 
-
         public JsonResult GetCustomers(string filter)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -115,10 +114,51 @@ namespace YXERP.Controllers
                 model.AgentID = "";
             }
 
-            List<CustomerEntity> list = CustomBusiness.BaseBusiness.GetCustomers(model.SearchType, model.SourceID, model.StageID, model.Status, model.UserID, model.TeamID, model.AgentID, model.BeginTime, model.EndTime, model.Keywords, model.PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            List<CustomerEntity> list = CustomBusiness.BaseBusiness.GetCustomers(model.SearchType, model.SourceID, model.StageID, model.Status, model.Mark, model.UserID, model.TeamID, model.AgentID, model.BeginTime, model.EndTime, model.Keywords, model.PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("items", list);
             JsonDictionary.Add("totalCount", totalCount);
             JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult UpdateCustomMark(string ids, int mark)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerMark(id, mark, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult UpdateCustomOwner(string ids, string userid)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerOwner(id, userid, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+
+
+            JsonDictionary.Add("status", bl);
             return new JsonResult
             {
                 Data = JsonDictionary,

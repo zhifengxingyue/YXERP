@@ -24,10 +24,17 @@ AS
 	
 begin tran
 
-declare @Err int=0
+declare @Err int=0,@OldOwnerID nvarchar(64)
 
+select @OldOwnerID=OwnerID from Customer where CustomerID=@CustomerID  and ClientID=@ClientID
 
-update Customer set OwnerID=@UserID,AgentID=@AgentID,AllocationTime=isnull(AllocationTime,getdate()) where CustomerID=@CustomerID 
+if(@OldOwnerID=@UserID)
+begin
+	rollback tran
+	return
+end
+
+update Customer set OwnerID=@UserID,AgentID=@AgentID,AllocationTime=isnull(AllocationTime,getdate()) where CustomerID=@CustomerID and ClientID=@ClientID
 
 set @Err+=@@error
 

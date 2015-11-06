@@ -19,6 +19,8 @@ namespace YXERP.Models
 
         public int Status { get; set; }
 
+        public int Mark { get; set; }
+
         public string UserID { get; set; }
 
         public string AgentID { get; set; }

@@ -15,10 +15,11 @@ GO
 调试记录： exec P_GetCustomers 
 ************************************************************/
 CREATE PROCEDURE [dbo].[P_GetCustomers]
-	@Type int,
+	@SearchType int,
 	@SourceID nvarchar(64)='',
 	@StageID nvarchar(64)='',
 	@Status int=-1,
+	@Mark int=-1,
 	@SearchUserID nvarchar(64)='',
 	@SearchTeamID nvarchar(64)='',
 	@SearchAgentID nvarchar(64)='',
@@ -67,6 +68,11 @@ AS
 	if(@Status<>-1)
 	begin
 		set @condition +=' and Status = '+convert(nvarchar(2), @Status)
+	end
+
+	if(@Mark<>-1)
+	begin
+		set @condition +=' and Mark = '+convert(nvarchar(2), @Mark)
 	end
 
 	if(@BeginTime<>'')

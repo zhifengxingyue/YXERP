@@ -222,6 +222,7 @@
     <Content Include="modules\plug\laydate\skins\default\laydate.css" />
     <Content Include="modules\plug\laydate\skins\molv\icon.png" />
     <Content Include="modules\plug\laydate\skins\molv\laydate.css" />
+    <Content Include="modules\plug\mark\ico-ball.png" />
     <Content Include="modules\plug\shoppingcart\ico-big-close.png" />
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\plug\mark\style.css" />

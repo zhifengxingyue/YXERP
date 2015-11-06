@@ -2,7 +2,8 @@
     var Global = require("global"),
         doT = require("dot"),
         Verify = require("verify"), VerifyObject,
-        Easydialog = require("easydialog");
+        Easydialog = require("easydialog"),
+        ChooseUser = require("chooseuser");;
     require("pager");
     require("mark");
 
@@ -11,6 +12,7 @@
         SourceID: "",
         StageID: "",
         Status: -1,
+        Mark: -1,
         UserID: "",
         AgentID: "",
         TeamID: "",
@@ -99,19 +101,90 @@
                 $(".table-list .check").addClass("ico-check").removeClass("ico-checked");
             }
         });
-        //编辑
-        $("#updateObject").click(function () {
+        //转移拥有者
+        $("#changeOwner").click(function () {
             var _this = $(this);
-            Global.post("/Organization/GetDepartmentByID", { id: _this.data("id") }, function (data) {
-                var model = data.model;
-                Model.DepartID = model.DepartID;
-                Model.Name = model.Name;
-                Model.Description = model.Description;
-                _self.createModel();
+            ChooseUser.create({
+                title: "更换拥有者",
+                type: 1,
+                single: true,
+                callback: function (items) {
+                    if (items.length > 0) {
+                        if (_this.data("userid") != items[0].id) {
+                            _self.ChangeOwner(_this.data("id"), items[0].id);
+                        } else {
+                            alert("请选择不同人员进行转移!");
+                        }
+                    }
+                }
             });
         });
+        //批量转移
+        $("#batchChangeOwner").click(function () {
+            var checks = $(".table-list .ico-checked");
+            if (checks.length > 0) {
+                ChooseUser.create({
+                    title: "批量更换拥有者",
+                    type: 1,
+                    single: true,
+                    callback: function (items) {
+                        if (items.length > 0) {
+                            var ids = "", userid = items[0].id;
+                            checks.each(function () {
+                                var _this = $(this);
+                                if (_this.data("userid") != userid) {
+                                    ids += _this.data("id") + ",";
+                                }
+                            });
+                            if (ids.length > 0) {
+                                _self.ChangeOwner(ids, userid);
+                            } else {
+                                alert("请选择不同人员进行转移!");
+                            }
+                        }
+                    }
+                });
+            } else {
+                alert("您尚未选择客户!")
+            }
+        });
 
+        //过滤标记
+        $("#filterMark").markColor({
+            isAll: true,
+            onChange: function (obj, callback) {
+                callback && callback(true);
+                Params.PageIndex = 1;
+                Params.Mark = obj.data("value");
+                _self.getList();
+            }
+        });
+        //批量标记
+        $("#batchMark").markColor({
+            isAll: true,
+            onChange: function (obj, callback) {
+                var checks = $(".table-list .ico-checked");
+                if (checks.length > 0) {
+                    var ids = "";
+                    checks.each(function () {
+                        var _this = $(this);
+                        ids += _this.data("id") + ",";
+                    });
+                    _self.markCustomer(ids, obj.data("value"), function (status) {
+                        _self.getList();
+                        callback && callback(status);
+                    });
+                    
+                } else {
+                    alert("您尚未选择客户!")
+                }
+            }
+        });
+        
     }
+
+
+
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
@@ -132,7 +205,7 @@
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
                 var position = _this.find(".ico-dropdown").position();
-                $(".dropdown-ul li").data("id",_this.data("id"));
+                $(".dropdown-ul li").data("id", _this.data("id")).data("userid", _this.data("userid"));
                 $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 80 }).show().mouseleave(function () {
                     $(this).hide();
                 });
@@ -145,7 +218,9 @@
                 } else {
                     _this.addClass("ico-check").removeClass("ico-checked");
                 }
+                return false;
             });
+
             innerhtml.click(function () {
                 var _this = $(this).find(".check");
                 if (!_this.hasClass("ico-checked")) {
@@ -155,10 +230,14 @@
                 }
             });
 
-            innerhtml.find(".mark").markColor(function (value, callback) {
-                callback(true);
-            });
+            innerhtml.find(".mark").markColor({
+                isAll: false,
+                onChange: function (obj, callback) {
 
+                    _self.markCustomer(obj.data("id"), obj.data("value"), callback);
+                   
+                }
+            });
 
             $(".tr-header").after(innerhtml);
 
@@ -180,6 +259,28 @@
             mouse: 'slide',
             onChange: function (page) {
                 Params.PageIndex = page;
+                _self.getList();
+            }
+        });
+    }
+
+    //标记客户
+    ObjectJS.markCustomer = function (ids, mark, callback) {
+        Global.post("/Customer/UpdateCustomMark", {
+            ids: ids,
+            mark: mark
+        }, function (data) {
+            callback && callback(data.status);
+        });
+    }
+    //转移客户
+    ObjectJS.ChangeOwner = function (ids, userid) {
+        var _self = this;
+        Global.post("/Customer/UpdateCustomOwner", {
+            userid: userid,
+            ids: ids
+        }, function (data) {
+            if (data.status) {
                 _self.getList();
             }
         });

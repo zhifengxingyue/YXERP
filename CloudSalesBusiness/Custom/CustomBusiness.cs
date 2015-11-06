@@ -36,11 +36,11 @@ namespace CloudSalesBusiness
         }
 
 
-        public List<CustomerEntity> GetCustomers(EnumSearchType type, string sourceid, string stageid, int status, string searchuserid, string searchteamid, string searchagentid,
+        public List<CustomerEntity> GetCustomers(EnumSearchType searchtype, string sourceid, string stageid, int status, int mark,string searchuserid, string searchteamid, string searchagentid,
                                                  string begintime, string endtime, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
         {
             List<CustomerEntity> list = new List<CustomerEntity>();
-            DataSet ds = CustomDAL.BaseProvider.GetCustomers((int)type, sourceid, stageid, status, searchuserid, searchteamid, searchagentid, begintime, endtime, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
+            DataSet ds = CustomDAL.BaseProvider.GetCustomers((int)searchtype, sourceid, stageid, status, mark, searchuserid, searchteamid, searchagentid, begintime, endtime, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 CustomerEntity model = new CustomerEntity();
