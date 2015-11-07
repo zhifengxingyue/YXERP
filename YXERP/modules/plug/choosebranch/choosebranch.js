@@ -25,6 +25,7 @@ define(function (require, exports, module) {
             defaultValue: "",
             userid: "",
             agentid: "",
+            isTeam: false,
             width: "180",
             onChange: function () { }
         };
@@ -73,15 +74,17 @@ define(function (require, exports, module) {
             if ($("#" + obj.data("itemid")).length == 1) {
                 $("#" + obj.data("itemid")).css({ "top": offset.top + 27, "left": offset.left }).show();
             } else {
-                var _items = $("<div style='min-width:" + opts.width + "px;' class='choosebranch-items-modules' id='" + obj.data("itemid") + "'></div>");
+                var _branch = $("<div style='min-width:" + opts.width + "px;' class='choosebranch-items-modules' id='" + obj.data("itemid") + "'></div>");
 
-                var _search = $("<div class='search-branch'></div>");
+                var _search = $("<div data-width='" + (opts.width - 37) + "' class='search-branch'></div>");
                 
-                _items.append(_search);
+                _branch.append(_search);
 
                 if (opts.defaultText) {
-                    _items.append("<div class='default-item change-user' data-id='" + opts.defaultValue + "'>" + opts.defaultText + "</div>");
+                    _branch.append("<div class='default-item change-user' data-id='" + opts.defaultValue + "'>" + opts.defaultText + "</div>");
                 }
+
+                var _items = $("<div class='choosebranch-items'></div>");
 
                 Global.post("/Plug/GetUserBranchs", {
                     userid: opts.userid,
@@ -118,20 +121,26 @@ define(function (require, exports, module) {
                             });
                         });
 
-                        _items.find(".change-user").click(function () {
+                        _branch.append(_items);
+
+                        if (opts.isTeam) {
+                            $.fn.drawChooseAllTeams(obj, _branch, opts);
+                        }
+
+                        _branch.find(".change-user").click(function () {
                             obj.find(".choosebranch-text").html(opts.prevText + $(this).html());
                             obj.data("id", $(this).data("id"));
                             obj.removeClass("hover");
                             $("#" + obj.data("itemid")).hide();
                             opts.onChange({
+                                teamid: "",
                                 userid: $(this).data("id"),
                                 name: $(this).html()
                             });
                         });
-
                         _search.searchKeys(function (keyWords) {
                             var _ele = _items.find(".change-user[data-search*='" + keyWords + "']").first();
-                            _items.find(".change-user").css("color", "#333");
+                            _branch.find(".change-user").css("color", "#333");
                             _ele.parents().prev().each(function () {
                                 if ($(this).hasClass("branchitem")) {
                                     $(this).find(".openchild[data-state='close']").first().click();
@@ -141,15 +150,40 @@ define(function (require, exports, module) {
                         });
 
                     });
-                    _items.css({ "top": offset.top + 27, "left": offset.left });
+                    _branch.css({ "top": offset.top + 27, "left": offset.left });
+                   
+                    obj.after(_branch);
 
-                    obj.after(_items);
+                   
                 });
             }
         }
+        $.fn.drawChooseAllTeams = function (obj, ele, opts) {
+            var _teams = $(document.createElement("ul")).addClass("choosebranch-teams");
+            Global.post("/Plug/GetTeams", {
+                agentid: opts.agentid
+            }, function (data) {
+                for (var i = 0, j = data.items.length; i < j; i++) {
+                    var team = data.items[i];
+                    _teams.append("<li data-id='" + team.TeamID + "'>" + team.TeamName + "</li>")
+                }
 
+                _teams.find("li").click(function () {
+                    obj.find(".choosebranch-text").html(opts.prevText + $(this).html());
+                    obj.data("id", $(this).data("id"));
+                    obj.removeClass("hover");
+                    $("#" + obj.data("itemid")).hide();
+                    opts.onChange({
+                        teamid: $(this).data("id"),
+                        userid: "",
+                        name: $(this).html()
+                    });
+                });
+            });
+
+            ele.append(_teams);
+        }
         $.fn.drawChooseBranchChild = function (pid, provHtml, isLast, cacheChild) {
-            var _self = this;
             var _div = $(document.createElement("div")).attr("id", pid).addClass("hide").addClass("childbox");
             for (var i = 0; i < cacheChild[pid].length; i++) {
                 var _item = $(document.createElement("div")).addClass("branchitem");
