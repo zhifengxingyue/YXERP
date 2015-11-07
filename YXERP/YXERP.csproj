@@ -281,7 +281,6 @@
     <Content Include="Views\Activity\MyActivity.cshtml" />
     <Content Include="Views\System\Sources.cshtml" />
     <Content Include="Views\Activity\Operate.cshtml" />
-    <Content Include="Views\Activity\Activitys.cshtml" />
     <Content Include="Views\System\Teams.cshtml" />
     <Content Include="Views\System\Stages.cshtml" />
     <Content Include="Views\System\Warehouse.cshtml" />

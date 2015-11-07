@@ -23,11 +23,11 @@ define(function (require, exports, module) {
             start: 12,
             display: 5,
             border: true,
-            border_color: '#fff',
-            text_color: '#8cc59d',
-            background_color: 'black',
-            border_hover_color: '#fff',
-            text_hover_color: '#fff',
+            border_color: '#4a9eee',
+            text_color: '#333',
+            background_color: '#fff',
+            border_hover_color: '#4a9eee',
+            text_hover_color: '#4a98e7',
             background_hover_color: '#fff',
             rotate: true,
             images: true,
@@ -36,6 +36,13 @@ define(function (require, exports, module) {
             onChange: function () { return false; }
         };
         $.fn.draw = function (o, obj, selectedpage) {
+            o.border_color = "#4a9eee";
+            o.text_color = "#333";
+            o.background_color = "#fff";
+            o.border_hover_color = "#4a9eee";
+            o.text_hover_color = "#4a98e7";
+            o.background_hover_color = "#fff";
+
             if (o.display > o.count)
                 o.display = o.count;
             if (o.count < 1) {
@@ -44,7 +51,7 @@ define(function (require, exports, module) {
             }
             else
                 $this.show();
-            $this.css("width", o.display * 29 + 100 + ((o.total_count).toString().length * 8) + "px");
+            $this.css("width", o.display * 29 + 115 + ((o.total_count).toString().length * 8) + "px");
             $this.empty();
             if (o.images) {
                 var spreviousclass = 'jPag-sprevious-img';
