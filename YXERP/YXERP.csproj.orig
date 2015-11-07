@@ -302,7 +302,11 @@
     <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Customer\Customers.cshtml" />
     <Content Include="Views\Customer\CreateCustomer.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Auction\BuyNow.cshtml" />
+=======
+    <Content Include="Views\Customer\CustomerDetail.cshtml" />
+>>>>>>> 378b40d495ec6f6aa48ffc8abfac54b5f70abc64
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

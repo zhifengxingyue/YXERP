@@ -13,9 +13,7 @@
     }
 <div class="header-box">
     <span class="header-title left">活动详情</span>
-    <span class="mLeft20"><input type="button" class="btn" id="btn_shareTask" value="分享到明道任务" /></span>
-    <span class="mLeft10"><input type="button" class="btn" id="btn_shareCalendar" value="分享到明道日程" /></span>
-    
+    <span class="ico-add"><a href="/Customer/CreateCustomer/@ViewBag.ActivityID" target="_blank">新建客户</a></span>
     <span class="ico-gonext right" onclick="history.go(1)" title="前进"></span>
     <span class="ico-goback right" onclick="history.go(-1)" title="后退"></span>
 </div>
@@ -24,7 +22,10 @@
     <table width="100%">
         <tr class="activityListLi">
             <td width="410">
-                <img id="Poster" class="activityDetailImg" src="/modules/images/defaultactivity.jpg" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" />
+                <div>
+                    <img id="Poster" class="activityDetailImg" src="/modules/images/defaultactivity.jpg" onerror="javascript:this.src='/modules/images/defaultactivity.jpg';" />
+                </div>
+                
             </td>
             <td valign="top">
                 <div class="activityDetailInfo mLeft30">
@@ -35,24 +36,31 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="48">负责人:</td>
+                            <td width="60">负责人：</td>
                             <td><span class="activitymember" id="OwnerName" style="color:#666;"></span></td>
                         </tr>
                          <tr>
                             <td>
-                                时间:
+                                时间：
                             </td>
                             <td><span id="BeginTime" style="color:#666;"></span><span style="color:#666;"> - </span><span id="EndTime" style="color:#666;"></span></td>
                         </tr>
                          <tr>
-                            <td>成员</td>
+                            <td>成员：</td>
                             <td>
                                 <ul id="MemberList"></ul>
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top">地址:</td>
+                            <td valign="top">地址：</td>
                             <td><span id="Address" style="color:#666;"></span></td>
+                        </tr>
+                         <tr>
+                            <td colspan="2">
+                                <div class="left"><input type="button" class="btn" id="btn_shareTask" value="分享到明道任务" /></div>
+                                <div class="mLeft10 left"><input type="button" class="btn" id="btn_shareCalendar" value="分享到明道日程" /></div>
+                                <div class="clear"></div>
+                            </td>
                         </tr>
                     </table>
                 </div>
