@@ -117,6 +117,7 @@
                     defaultText: "全部",
                     defaultValue: "",
                     userid: "",
+                    isTeam: false,
                     width: "180",
                     onChange: function (data) {
                         Params.PageIndex = 1;
@@ -144,7 +145,6 @@
                 });
             });
         }
-
         //全部选中
         $("#checkAll").click(function () {
             var _this = $(this);
