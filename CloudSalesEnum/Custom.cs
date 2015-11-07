@@ -46,9 +46,9 @@ namespace CloudSalesEnum
         All = -1,
         [DescriptionAttribute("正常")]
         Normal = 1,
-        [DescriptionAttribute("已关闭")]
+        [DescriptionAttribute("关闭")]
         Close = 2,
-        [DescriptionAttribute("已丢失")]
+        [DescriptionAttribute("丢失")]
         Loses = 3,
         [DescriptionAttribute("删除")]
         Delete = 9

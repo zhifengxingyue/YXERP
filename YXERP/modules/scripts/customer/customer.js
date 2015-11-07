@@ -9,9 +9,10 @@
 
     var Params = {
         SearchType: 1,
+        Type: -1,
         SourceID: "",
         StageID: "",
-        Status: -1,
+        Status: 1,
         Mark: -1,
         UserID: "",
         AgentID: "",
@@ -29,11 +30,11 @@
         var _self = this;
         Params.SearchType = type;
         _self.getList();
-        _self.bindEvent();
+        _self.bindEvent(type);
     }
 
     //绑定事件
-    ObjectJS.bindEvent = function () {
+    ObjectJS.bindEvent = function (type) {
         var _self = this;
         $(document).click(function (e) {
             //隐藏下拉
@@ -90,8 +91,45 @@
                 });
             });
         });
+        //客户类型
+        require.async("dropdown", function () {
+            var items = [{ ID: 1, Name: "企业客户" }, { ID: 0, Name: "个人客户" }];
+            $("#customerType").dropdown({
+                prevText: "类型-",
+                defaultText: "全部",
+                defaultValue: "-1",
+                data: items,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    Params.PageIndex = 1;
+                    Params.Type = data.value;
+                    _self.getList();
+                }
+            });
+        });
+
+        if (type == 2) {
+            //客户类型
+            require.async("choosebranch", function () {
+                $("#chooseBranch").chooseBranch({
+                    prevText: "下属-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    userid: "",
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.UserID = data.userid;
+                        _self.getList();
+                    }
+                });
+            });
+        }
+
         //全部选中
-        $("#check-all").click(function () {
+        $("#checkAll").click(function () {
             var _this = $(this);
             if (!_this.hasClass("ico-checked")) {
                 _this.addClass("ico-checked").removeClass("ico-check");
@@ -183,11 +221,10 @@
         
     }
 
-
-
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
+        $("#checkAll").addClass("ico-check").removeClass("ico-checked");
         $(".tr-header").nextAll().remove();
         Global.post("/Customer/GetCustomers", { filter: JSON.stringify(Params) }, function (data) {
             _self.bindList(data);
@@ -266,6 +303,10 @@
 
     //标记客户
     ObjectJS.markCustomer = function (ids, mark, callback) {
+        if (mark < 0) {
+            alert("不能标记此选项!");
+            return false;
+        }
         Global.post("/Customer/UpdateCustomMark", {
             ids: ids,
             mark: mark

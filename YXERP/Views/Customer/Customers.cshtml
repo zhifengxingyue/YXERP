@@ -26,14 +26,16 @@
             }
         </ul>
         <ul class="search-status">
-            <li data-id="-1" class="hover">全部</li>
-            <li data-id="1">正常</li>
+            <li data-id="-1">全部</li>
+            <li data-id="1" class="hover">正常</li>
             <li data-id="2">关闭</li>
             <li data-id="3">丢失</li>
         </ul>
     </div>
     <div class="search-body mTop20">
-        <div class="left" id="customerSource"></div>
+        <div class="left mRight20" id="chooseBranch"></div>
+        <div class="left" id="customerType"></div>
+        <div class="left mLeft20" id="customerSource"></div>
         <div class="right searth-module" data-text="关键字搜索..." data-width="160"> </div>
     </div>
 </div>
@@ -41,23 +43,21 @@
     <table class="table-list mTop10">
         <tr class="tr-header">
             <td class="width30"></td>
-            <td>客户名称</td>
+            <td class="tLeft">客户名称</td>
             <td class="width50">类型</td>
             <td class="width150">来源</td>
             <td class="width100">阶段</td>
             <td class="width100">联系人</td>
             <td class="width100">联系电话</td>
-            <td>Email</td>
-            <td class="width120">职位</td>   
             <td class="width50"><span id="filterMark"></span></td>          
             <td class="width100">拥有者</td>
             <td class="width150">创建时间</td>
-            <td class="width80">操作</td>
+            <td class="width50">操作</td>
         </tr>
     </table>
     <ul class="left batch-operate mTop20">
         <li class="width80">
-            <span class="ico-check" id="check-all">批量操作</span>
+            <span class="ico-check" id="checkAll">批量操作</span>
         </li>
         <li>
             <a href="javascript:void(0);" id="batchChangeOwner">更换拥有者</a>

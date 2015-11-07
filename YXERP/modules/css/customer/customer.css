@@ -14,5 +14,5 @@
 .search-body { overflow:auto; }
 
 /*批量操作*/
-.batch-operate { padding-left:10px; height:20px; line-height:20px; }
+.batch-operate { padding-left:5px; height:20px; line-height:20px; }
 .batch-operate li{ float:left;}

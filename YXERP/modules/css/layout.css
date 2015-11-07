@@ -108,11 +108,11 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-list { width: 100%; border-bottom:solid 2px #eee; border-spacing: 0px;}
 
 .table-list .tr-header{ text-align:center; font-weight:bold; height:35px;  color:#333;}
-.table-list .tr-header td{  font-weight:bold; height:35px; border-bottom:solid 2px #eee; color:#333;}
+.table-list .tr-header td{  font-weight:bold; height:35px; border-bottom:solid 2px #eee; color:#333; padding:0 5px;}
 
-.table-list tr:not(:first-child){ height:25px; cursor:pointer; }
+.table-list tr:not(:first-child){ height:30px; cursor:pointer; }
 .table-list tr:not(:first-child):hover { background-color: #f6f6f6; }
-.table-list tr:not(:first-child) td{ padding:5px 10px; line-height:35px; border-bottom:dashed 1px #ddd;  }
+.table-list tr:not(:first-child) td{ padding:5px; line-height:30px; border-bottom:dashed 1px #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
 .table-list tr:not(:first-child):last-child td{ border-bottom:none;  }
 
 .table-list td a{ color:#4a98e7;  vertical-align:middle;}
@@ -120,6 +120,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 
 .table-list .ico-check { vertical-align:middle; }
 .table-list .ico-checked { vertical-align:middle; }
+
 /*新建样式*/
 .table-add {  border-bottom:solid 1px #ccc; padding-bottom:20px; }
 .table-add li{ line-height:25px; margin-top:5px;  padding: 2px 20px;}
