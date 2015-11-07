@@ -416,7 +416,11 @@
                         $("#EndTime").val(item.EndTime.toDate("yyyy-MM-dd"));
                         $("#BeginTime").val(item.BeginTime.toDate("yyyy-MM-dd"));
                         $("#Address").val(item.Address);
-                       
+                        $("#PosterImg").val(item.Poster);
+                        $("#PosterDisImg").attr("src", item.Poster).show();
+                        if (item.Poster != '')
+                            $("#PosterDisImg").show();
+
                         ObjectJS.createMemberDetail(item.Owner, "OwnerIDs");
                         for (var i = 0; i < item.Members.length; i++) {
                             ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
@@ -434,6 +438,8 @@
                         $("#Remark").html(decodeURI(item.Remark));
 
                         $("#MemberCount").html(item.Members.length);
+                        if (item.Poster != '')
+                            $("#Poster").attr("src", item.Poster);
                         for(var i=0;i<item.Members.length;i++)
                         {
                             var m = item.Members[i];
@@ -443,10 +449,7 @@
                     }
 
                     
-                    $("#PosterImg").val(item.Poster);
-                    $("#PosterDisImg").attr("src", item.Poster).show();
-                    if (item.Poster != '')
-                        $("#PosterDisImg").show();
+                    
                     $("#OwnerID").val(item.OwnerID);
                     $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {

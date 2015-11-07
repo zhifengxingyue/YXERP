@@ -13,7 +13,7 @@
                     <span style="color:#2f73b8;">{%=item.CreateUser.Name%}{%=item.FromReplyUser!=null?" 回复 "+item.FromReplyUser.Name:""%}:</span>
                     <span style="color:#777;">{%=item.Msg%}</span>
                 </div>
-                <div class="pTop5" style="color:#777;">{%=item.CreateTime.toDate("yyyy-MM-dd hh-mm-ss") %}</div>
+                <div class="pTop5" style="color:#777;">{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss") %}</div>
             </div>
             <div class="right mTop15 hand" onclick=" $(this).next().next().slideToggle(500);">
                 <div class="left" style="padding-top:3px;"><img  src="/modules/images/ico-reply-gray.png"/></div>
