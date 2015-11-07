@@ -111,7 +111,6 @@
         });
 
         if (type == 2) {
-            //客户类型
             require.async("choosebranch", function () {
                 $("#chooseBranch").chooseBranch({
                     prevText: "下属-",
@@ -122,6 +121,24 @@
                     onChange: function (data) {
                         Params.PageIndex = 1;
                         Params.UserID = data.userid;
+                        Params.TeamID = data.teamid;
+                        _self.getList();
+                    }
+                });
+            });
+        } else if (type == 3) {
+            require.async("choosebranch", function () {
+                $("#chooseBranch").chooseBranch({
+                    prevText: "人员-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    userid: "-1",
+                    isTeam: true,
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.UserID = data.userid;
+                        Params.TeamID = data.teamid;
                         _self.getList();
                     }
                 });

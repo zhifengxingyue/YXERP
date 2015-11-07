@@ -67,9 +67,9 @@ AS
 			with TempUser(UserID)
 			as
 			(
-				select UserID from Users where ParentID=@UserID
+				select UserID from Users where ParentID=@UserID and Status<>9
 				union all
-				select u.UserID from Users u join TempUser t on u.ParentID=t.UserID
+				select u.UserID from Users u join TempUser t on u.ParentID=t.UserID and Status<>9
 			)
 			insert into #UserID select UserID from TempUser
 
@@ -78,7 +78,16 @@ AS
 	end
 	else --全部
 	begin
-		if(@SearchAgentID<>'')
+		if(@SearchUserID<>'')
+		begin
+			set @condition +=' and cus.OwnerID = '''+@SearchUserID+''''
+		end
+		else if(@SearchTeamID<>'')
+		begin
+			insert into #UserID select UserID from TeamUser where TeamID=@SearchTeamID and status=1
+			set @condition +=' and cus.OwnerID in (select UserID from #UserID) '
+		end
+		else if(@SearchAgentID<>'')
 		begin
 			set @condition +=' and cus.AgentID = '''+@SearchAgentID+''''
 		end

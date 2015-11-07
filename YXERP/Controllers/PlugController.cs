@@ -109,7 +109,26 @@ namespace YXERP.Controllers
             {
                 userid = CurrentUser.UserID;
             }
+            else if (userid == "-1")
+            {
+                userid = "6666666666";
+            }
             var list = OrganizationBusiness.GetStructureByParentID(userid, agentid);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetTeams(string agentid)
+        {
+            if (string.IsNullOrEmpty(agentid))
+            {
+                agentid = CurrentUser.AgentID;
+            }
+            var list = SystemBusiness.BaseBusiness.GetTeams(agentid);
             JsonDictionary.Add("items", list);
             return new JsonResult()
             {
