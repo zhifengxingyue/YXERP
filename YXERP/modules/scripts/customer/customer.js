@@ -91,7 +91,7 @@
             });
         });
         //全部选中
-        $("#check-all").click(function () {
+        $("#checkAll").click(function () {
             var _this = $(this);
             if (!_this.hasClass("ico-checked")) {
                 _this.addClass("ico-checked").removeClass("ico-check");
@@ -188,6 +188,7 @@
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
+        $("#checkAll").addClass("ico-check").removeClass("ico-checked");
         $(".tr-header").nextAll().remove();
         Global.post("/Customer/GetCustomers", { filter: JSON.stringify(Params) }, function (data) {
             _self.bindList(data);
@@ -266,6 +267,10 @@
 
     //标记客户
     ObjectJS.markCustomer = function (ids, mark, callback) {
+        if (mark < 0) {
+            alert("不能标记此选项!");
+            return false;
+        }
         Global.post("/Customer/UpdateCustomMark", {
             ids: ids,
             mark: mark

@@ -74,15 +74,27 @@ namespace CloudSalesBusiness
 
         #region 编辑/删除
 
-        public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string ip, string agentid, string clientid)
+        public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string ip,string agentid, string clientid)
         {
             bool bl = CustomDAL.BaseProvider.UpdateCustomerStage(customerid, stageid, operateid, agentid, clientid);
+            if (bl)
+            {
+                var model = SystemBusiness.BaseBusiness.GetCustomStageByID(stageid, agentid, clientid);
+                string msg = "客户阶段更换为：" + model.StageName;
+                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, stageid, agentid, clientid);
+            }
             return bl;
         }
 
         public bool UpdateCustomerOwner(string customerid, string userid, string operateid, string ip, string agentid, string clientid)
         {
             bool bl = CustomDAL.BaseProvider.UpdateCustomerOwner(customerid, userid, operateid, agentid, clientid);
+            if (bl)
+            {
+                var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
+                string msg = "客户拥有者更换为：" + model.Name;
+                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, userid, agentid, clientid);
+            }
             return bl;
         }
 
@@ -94,13 +106,25 @@ namespace CloudSalesBusiness
 
         public bool UpdateCustomerStatus(string customerid, EnumCustomStatus status, string operateid, string ip, string agentid, string clientid)
         {
+
             bool bl = CommonBusiness.Update("Customer", "Status", (int)status, "CustomerID='" + customerid + "'");
+            if (bl)
+            {
+                var model = CommonBusiness.GetEnumDesc(status);
+                string msg = "客户状态更换为：" + model;
+                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, status.ToString(), agentid, clientid);
+            }
             return bl;
         }
 
         public bool UpdateCustomerMark(string customerid, int mark, string operateid, string ip, string agentid, string clientid)
         {
             bool bl = CommonBusiness.Update("Customer", "Mark", mark, "CustomerID='" + customerid + "'");
+            if (bl)
+            {
+                string msg = "标记客户颜色";
+                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, mark.ToString(), agentid, clientid);
+            }
             return bl;
         }
 

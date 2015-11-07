@@ -41,49 +41,53 @@ AS
 	@orderColumn nvarchar(4000),
 	@isAsc int
 
-	select @tableName='Customer',@columns='*',@key='AutoID',@orderColumn='CreateTime desc',@isAsc=0
-	set @condition=' ClientID='''+@ClientID+''' and Status<>9 '
+	select @tableName='Customer cus left join Contact con on cus.CustomerID=con.CustomerID and con.Status<>9 and con.Type=1 and cus.Type=1 ',
+	@columns='cus.CustomerID,cus.Name,cus.Type,cus.SourceID,cus.StageID,con.Name ContactName,isnull(con.MobilePhone,cus.MobilePhone) MobilePhone,isnull(con.Jobs,cus.Jobs) Jobs,cus.OwnerID,cus.CreateTime,cus.Mark,con.ContactID,cus.AgentID,cus.ClientID ',
+	@key='cus.AutoID',
+	@orderColumn='cus.CreateTime desc',
+	@isAsc=0
 
+	set @condition='cus.ClientID='''+@ClientID+''' and cus.Status<>9 '
 
 	if(@SearchAgentID<>'')
 	begin
-		set @condition +=' and AgentID = '''+@SearchAgentID+''''
+		set @condition +=' and cus.AgentID = '''+@SearchAgentID+''''
 	end
 
 	if(@SearchUserID<>'')
 	begin
-		set @condition +=' and OwnerID = '''+@SearchUserID+''''
+		set @condition +=' and cus.OwnerID = '''+@SearchUserID+''''
 	end
 
 	if(@SourceID<>'')
 	begin
-		set @condition +=' and SourceID = '''+@SourceID+''''
+		set @condition +=' and cus.SourceID = '''+@SourceID+''''
 	end
 
 	if(@StageID<>'')
 	begin
-		set @condition +=' and StageID = '''+@StageID+''''
+		set @condition +=' and cus.StageID = '''+@StageID+''''
 	end
 	
 	if(@Status<>-1)
 	begin
-		set @condition +=' and Status = '+convert(nvarchar(2), @Status)
+		set @condition +=' and cus.Status = '+convert(nvarchar(2), @Status)
 	end
 
 	if(@Mark<>-1)
 	begin
-		set @condition +=' and Mark = '+convert(nvarchar(2), @Mark)
+		set @condition +=' and cus.Mark = '+convert(nvarchar(2), @Mark)
 	end
 
 	if(@BeginTime<>'')
-		set @condition +=' and CreateTime >= '''+@BeginTime+' 0:00:00'''
+		set @condition +=' and cus.CreateTime >= '''+@BeginTime+' 0:00:00'''
 
 	if(@EndTime<>'')
-		set @condition +=' and CreateTime <=  '''+@EndTime+' 23:59:59'''
+		set @condition +=' and cus.CreateTime <=  '''+@EndTime+' 23:59:59'''
 
 	if(@keyWords <> '')
 	begin
-		set @condition +=' and Name like ''%'+@keyWords+'%'''
+		set @condition +=' and (cus.Name like ''%'+@keyWords+'%'' or cus.MobilePhone like ''%'+@keyWords+'%'' or cus.Jobs like ''%'+@keyWords+'%'' or con.Name like ''%'+@keyWords+'%'' or con.MobilePhone like ''%'+@keyWords+'%'' or con.Jobs like ''%'+@keyWords+'%'')'
 	end
 
 	declare @total int,@page int

@@ -50,5 +50,13 @@ namespace CloudSalesBusiness
         {
             await LogDAL.AddErrorLog(userid, message, (int)systemtype, operateip);
         }
+
+        /// <summary>
+        /// 客户日志
+        /// </summary>
+        public static async void AddCustomerLog(string customerid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
+        {
+            await LogDAL.AddCustomerLog(customerid, remark, userid, operateip, guid, agentid, clientid);
+        }
     }
 }
