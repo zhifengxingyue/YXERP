@@ -20,6 +20,7 @@
         BeginTime: "",
         EndTime: "",
         FilterType: 0,
+        UserID:'',
         DisplayType:1
     };
 
@@ -51,39 +52,10 @@
             });
         });
  
+
         if (_self.Params.IsAll == 0) {
             //搜索
             require.async("dropdown", function () {
-                //    var Stages = [
-                //        {
-                //            ID: "1",
-                //            Name: "已结束"
-                //        },
-                //        {
-                //            ID: "2",
-                //            Name: "进行中"
-                //        },
-                //        {
-                //            ID: "3",
-                //            Name: "未开始"
-                //        }
-                //    ];
-                //    $("#ActivityStage").dropdown({
-                //        prevText: "活动阶段-",
-                //        defaultText: "所有",
-                //        defaultValue: "-1",
-                //        data: Stages,
-                //        dataValue: "ID",
-                //        dataText: "Name",
-                //        width: "120",
-                //        onChange: function (data) {
-                //            ObjectJS.Params.PageIndex = 1;
-                //            ObjectJS.Params.Stage = data.value;
-                //            ObjectJS.getList();
-                //        }
-                //    });
-
-
                 var Types = [
                     {
                         ID: "1",
@@ -109,6 +81,60 @@
                     }
                 });
 
+            });
+        }
+        else {
+            require.async("choosebranch", function () {
+                $("#chooseBranch").chooseBranch({
+                    prevText: "人员-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    userid: "-1",
+                    isTeam: false,
+                    width: "180",
+                    onChange: function (data) {
+
+
+                        ObjectJS.Params.PageIndex = 1;
+                        ObjectJS.Params.UserID = data.userid;
+                        ObjectJS.getList();
+
+                        if (!$("#ActivityType").is(":visible")) {
+                            //搜索
+                            require.async("dropdown", function () {
+                                var Types = [
+                                    {
+                                        ID: "1",
+                                        Name: "我负责的"
+                                    },
+                                    {
+                                        ID: "2",
+                                        Name: "我参与的"
+                                    }
+                                ];
+                                $("#ActivityType").dropdown({
+                                    prevText: "活动过滤-",
+                                    defaultText: "所有",
+                                    defaultValue: "-1",
+                                    data: Types,
+                                    dataValue: "ID",
+                                    dataText: "Name",
+                                    width: "120",
+                                    onChange: function (data) {
+                                        ObjectJS.Params.PageIndex = 1;
+                                        ObjectJS.Params.FilterType = data.value;
+                                        ObjectJS.getList();
+                                    }
+                                });
+
+                                $("#ActivityType").addClass("mLeft20");
+
+                            });
+                        }
+
+
+                    }
+                });
             });
         }
 
@@ -197,7 +223,8 @@
                 beginTime: ObjectJS.Params.BeginTime,
                 endTime: ObjectJS.Params.EndTime,
                 stage: ObjectJS.Params.Stage,
-                filterType: ObjectJS.Params.FilterType
+                filterType: ObjectJS.Params.FilterType,
+                userID: ObjectJS.Params.UserID
             },
             function (data) {
                 _self.bindList(data.Items);
