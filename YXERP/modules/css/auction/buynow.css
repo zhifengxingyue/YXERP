@@ -1,0 +1,149 @@
+﻿.productList {
+width:858px;
+margin:0px auto;
+padding:20px;
+border:solid 1px #eee;
+border-radius:2px;
+}
+
+table td 
+{
+width:143px;
+color:#999;
+font-size:12px;
+padding:8px 0px;
+text-align:center;
+border-bottom:solid 1px #eee;
+}
+
+
+.trBG {
+background-color:#eee;
+}
+
+.trBG td{
+padding:0px;
+border-bottom:solid 2px #cee;
+}
+
+.tdBG {
+background-color:#eee;
+}
+
+.tdBG1 {
+background-color:#4a98e7;
+color:#fff;
+}
+
+.tdBG2 {
+background-color:#2F73B8;
+color:#fff;
+}
+
+.tdBG3 {
+background-color:rgb(134, 186, 236);
+color:#fff;
+}
+
+.trLast td{
+border-bottom:solid 2px #cee;
+}
+
+.productListTB td[name='productItem'] {
+cursor:pointer;
+}
+
+.step {
+width:900px;
+margin:30px auto;
+}
+
+.selectProduct {
+background:url('/modules/images/auction/bg-select-product-active.png') center center;
+width:290px;
+height:60px;
+background-color:#fff;
+}
+
+.sureOrder {
+background:url('/modules/images/auction/bg-sure-order.png') center center;
+width:290px;
+height:60px;
+background-color:#fff;
+}
+
+.payOrder {
+background:url('/modules/images/auction/bg-pay-order.png') center center;
+width:290px;
+height:60px;
+background-color:#fff;
+}
+
+.stepIco {
+width:22px;
+height:22px;
+border-radius:11px;
+color:#fff;
+background-color:#666;
+line-height:22px;
+text-align:center;
+margin-top:20px;
+margin-left:20px;
+}
+
+.stepIcoActive {
+color:#4a98e7;
+background-color:#fff;
+}
+
+.stepDes {
+margin-top:21px;
+margin-left:20px;
+font-size:16px;
+color:#666;
+}
+
+.stepDesActive {
+color:#fff;
+}
+
+.selectPrpduct ul {
+list-style:none;
+}
+
+.selectPrpduct ul li{
+line-height:48px;
+}
+
+.diagonalDiv {
+    width:16px;height:16px;
+}
+
+.diagonalDiv2 {
+    width:16px;height:16px;position:absolute;left:0px;top:1px;
+}
+
+.diagonalLine {
+    border:8px transparent solid;border-left-color: #999;border-bottom-color: #999;
+}
+
+.diagonalLine2 {
+    border:8px transparent solid;border-left-color: #eee;border-bottom-color: #eee;
+}
+
+
+.productOrder {
+width:858px;
+margin:0px auto;
+padding:20px;
+border:solid 1px #eee;
+border-radius:2px;
+}
+
+.payProductOrder {
+width:858px;
+margin:0px auto;
+padding:20px;
+border:solid 1px #eee;
+border-radius:2px;
+}

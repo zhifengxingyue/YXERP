@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "BuyNow";
+    Layout = null;
+}
+
+<script src="/Scripts/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/Scripts/sea.js"></script>
+<script type="text/javascript" src="/Scripts/sea-config.js"></script>
+<script type="text/javascript">
+   
+    $(function () {
+        seajs.use(["scripts/auction/buynow"], function (ObjectJS) {
+            ObjectJS.init();
+        });
+    });
+</script>
+
+<link href="/modules/css/base.css" rel="stylesheet" />
+<link href="/modules/css/auction/buynow.css" rel="stylesheet" />
+
+<script src="/Scripts/jquery-1.11.1.js"></script>
+<script src="/modules/scripts/auction/buynow.js"></script>
+
+<div class="step">
+    <div class="mBottom20">
+        <div class="left selectProduct">
+            <div class="stepIco stepIcoActive left">1</div>
+            <div class="left stepDes stepDesActive">选择产品</div>
+            <div class="clear"></div>
+        </div>
+        <div class="left  sureOrder">
+            <div class="stepIco left" style="margin-left:46px;">2</div>
+            <div class="left stepDes">确认订单</div>
+            <div class="clear"></div>
+        </div>
+        <div class="left mLeft15 payOrder">
+            <div class="stepIco left" style="margin-left:46px;">3</div>
+            <div class="left stepDes">支付订单</div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear "></div>
+    </div>
+</div>
+
+<div class="productList">
+    <table class="productListTB" border="0"  cellpadding="0" cellspacing="0" >
+        <tr class="trBG">
+            <td>
+                <div style="padding:8px 45px;">
+                    <div class="left" style="position:relative;width:16px;">
+                        <div class="diagonalDiv">
+                            <div class="diagonalLine"></div>
+                        </div>
+                        <div class="diagonalDiv2">
+                            <div class="diagonalLine2"></div>
+                        </div>      
+                   </div>
+                    <div class="left" style="color:#999;">时间</div>
+                    <div class="clear"></div>
+
+               
+                    <div style="position:relative;width:16px;margin-left:16px;">
+                        <div class="diagonalDiv">
+                            <div class="diagonalLine"></div>
+                        </div>
+                        <div class="diagonalDiv2">
+                            <div class="diagonalLine2"></div>
+                        </div>
+                        <div style="position:absolute;width:24px;left:-23px;top:-3px;color:#999;">人数</div>
+                   </div>
+                </div>
+            </td> 
+            <td>1年</td> 
+            <td>2年</td> 
+            <td>3年</td> 
+            <td>2年</td> 
+            <td>3年</td> 
+        </tr>
+        <tr> 
+            <td class="tdBG">5人</td> 
+            <td  name="productItem">￥500</td> 
+            <td  name="productItem">￥1,000</td> 
+            <td  name="productItem">￥1,500</td> 
+            <td name="productItem">1000</td> 
+            <td name="productItem">1500</td> 
+        </tr>
+        <tr> 
+            <td class="tdBG">10人</td> 
+           <td  name="productItem">￥500</td> 
+            <td  name="productItem">￥1,000</td> 
+            <td  name="productItem">￥1,500</td> 
+            <td name="productItem">1000</td> 
+            <td name="productItem">1500</td> 
+        </tr>
+        <tr> 
+            <td class="tdBG">15人</td> 
+            <td  name="productItem">￥500</td> 
+            <td  name="productItem">￥1,000</td> 
+            <td  name="productItem">￥1,500</td> 
+            <td name="productItem">1000</td> 
+            <td name="productItem">1500</td> 
+        </tr>
+        <tr class="trLast"> 
+            <td class="tdBG" style="border-bottom:none;">15人</td> 
+            <td  name="productItem">￥500</td> 
+            <td  name="productItem">￥1,000</td> 
+            <td  name="productItem">￥1,500</td> 
+            <td name="productItem">1000</td> 
+            <td name="productItem">1500</td> 
+        </tr> 
+    </table> 
+
+<div class="mTop20 mBottom20" style="color:#666;font-size:18px;">选择产品</div>
+
+<div class="selectPrpduct">
+    <ul>
+        <li>
+            <span>人数</span>
+            <span class="mLeft10">
+                <input type="text" style="width:65px;" id="UserCount" data-empty="* 必填" class="input verify" data-type="int" data-text="格式不正确!"/>
+            </span>
+        </li>
+        <li>
+            <span>时间</span>
+            <span class="mLeft10">
+                <select>
+                    <option>1年</option>
+                    <option>2年</option>
+                    <option>3年</option>
+                </select>
+            </span>
+        </li>
+    </ul>
+</div>
+
+<div class="mTop20">
+    <div style="border-top:solid 1px #4a98e7;width:160px;padding-top:15px;">
+        <span style="color:#4a98e7;font-size:14px;">价位</span>
+        <span class="mLeft10" style="color:#4a98e7;font-size:14px;">10,000￥</span>
+    </div>
+    <div class="mTop20"><input type="button" id="btn_step1" value="下一步" class="btn" /></div>
+</div>
+
+</div>
+
+<div class="productOrder hide">
+     <div class="mTop20"><input type="button" id="btn_step2" value="下一步" class="btn" /></div>
+</div>
+
+<div class="payProductOrder hide">
+     aaaaaaaaaaaaaaa
+</div>
+
+
+
+

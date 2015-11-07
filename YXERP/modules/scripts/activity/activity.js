@@ -4,7 +4,6 @@
         Verify = require("verify"), VerifyObject,
         Upload = require("upload"), PosterIco, editor,
         Easydialog = require("easydialog"),
-        Verify = require("verify"), VerifyObject,
         ChooseUser = require("chooseuser");
     
     require("pager");
