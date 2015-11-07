@@ -60,6 +60,11 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult CustomerDetail(string id)
+        {
+            return View();
+        }
+
         #region Ajax
 
 

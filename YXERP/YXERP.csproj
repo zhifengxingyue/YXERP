@@ -293,6 +293,7 @@
     <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Customer\Customers.cshtml" />
     <Content Include="Views\Customer\CreateCustomer.cshtml" />
+    <Content Include="Views\Customer\CustomerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

@@ -12,7 +12,7 @@
         Type: -1,
         SourceID: "",
         StageID: "",
-        Status: -1,
+        Status: 1,
         Mark: -1,
         UserID: "",
         AgentID: "",
@@ -114,8 +114,8 @@
             //客户类型
             require.async("choosebranch", function () {
                 $("#chooseBranch").chooseBranch({
-                    prevText: "",
-                    defaultText: "全部下属",
+                    prevText: "下属-",
+                    defaultText: "全部",
                     defaultValue: "",
                     userid: "",
                     width: "180",

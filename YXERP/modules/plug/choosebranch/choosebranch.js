@@ -29,7 +29,7 @@ define(function (require, exports, module) {
         };
         $.fn.drawChooseBranch = function (obj, opts) {
 
-            obj.data("itemid", Global.guid());
+            obj.data("itemid", "choosebranch" + opts.agentid + opts.userid);
 
             if (!obj.hasClass("choosebranch-module")) {
                 obj.addClass("choosebranch-module").css("width", opts.width);
@@ -72,7 +72,7 @@ define(function (require, exports, module) {
             if ($("#" + obj.data("itemid")).length == 1) {
                 $("#" + obj.data("itemid")).css({ "top": offset.top + 27, "left": offset.left }).show();
             } else {
-                var _items = $("<div class='choosebranch-items-modules' id='" + obj.data("itemid") + "'></div>").css("width", opts.width);
+                var _items = $("<div style='min-width:" + opts.width + "px;' class='choosebranch-items-modules' id='" + obj.data("itemid") + "'></div>");
 
                 if (opts.defaultText) {
                     _items.append("<div class='default-item change-user' data-id='" + opts.defaultValue + "'>" + opts.defaultText + "</div>");
