@@ -11,6 +11,9 @@ namespace CloudSalesBusiness
 {
     public class LogBusiness
     {
+
+        #region 添加
+
         /// <summary>
         /// 记录登录日志
         /// </summary>
@@ -58,5 +61,7 @@ namespace CloudSalesBusiness
         {
             await LogDAL.AddCustomerLog(customerid, remark, userid, operateip, guid, agentid, clientid);
         }
+
+        #endregion
     }
 }

@@ -9,6 +9,7 @@
 
     var Params = {
         SearchType: 1,
+        Type: -1,
         SourceID: "",
         StageID: "",
         Status: -1,
@@ -29,11 +30,11 @@
         var _self = this;
         Params.SearchType = type;
         _self.getList();
-        _self.bindEvent();
+        _self.bindEvent(type);
     }
 
     //绑定事件
-    ObjectJS.bindEvent = function () {
+    ObjectJS.bindEvent = function (type) {
         var _self = this;
         $(document).click(function (e) {
             //隐藏下拉
@@ -90,6 +91,43 @@
                 });
             });
         });
+        //客户类型
+        require.async("dropdown", function () {
+            var items = [{ ID: 1, Name: "企业客户" }, { ID: 0, Name: "个人客户" }];
+            $("#customerType").dropdown({
+                prevText: "类型-",
+                defaultText: "全部",
+                defaultValue: "-1",
+                data: items,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    Params.PageIndex = 1;
+                    Params.Type = data.value;
+                    _self.getList();
+                }
+            });
+        });
+
+        if (type == 2) {
+            //客户类型
+            require.async("choosebranch", function () {
+                $("#chooseBranch").chooseBranch({
+                    prevText: "",
+                    defaultText: "全部下属",
+                    defaultValue: "",
+                    userid: "",
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.UserID = data.userid;
+                        _self.getList();
+                    }
+                });
+            });
+        }
+
         //全部选中
         $("#checkAll").click(function () {
             var _this = $(this);
@@ -182,8 +220,6 @@
         });
         
     }
-
-
 
     //获取列表
     ObjectJS.getList = function () {

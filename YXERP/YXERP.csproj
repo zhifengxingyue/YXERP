@@ -205,6 +205,7 @@
     <Content Include="modules\plug\businesscard\businesscard.js" />
     <Content Include="modules\plug\businesscard\demo.html" />
     <Content Include="modules\plug\businesscard\style.css" />
+    <Content Include="modules\plug\choosebranch\users.html" />
     <Content Include="modules\plug\chooseuser\chooseuser.js" />
     <Content Include="modules\plug\chooseuser\choosemduser.html" />
     <Content Include="modules\plug\chooseuser\style.css" />
@@ -227,6 +228,8 @@
     <Content Include="modules\plug\shoppingcart\product-list.html" />
     <Content Include="modules\plug\mark\style.css" />
     <Content Include="modules\plug\mark\mark.js" />
+    <Content Include="modules\plug\choosebranch\choosebranch.js" />
+    <Content Include="modules\plug\choosebranch\style.css" />
     <Content Include="modules\scripts\activity\activity.js" />
     <Content Include="modules\scripts\customer\customer.js" />
     <Content Include="modules\scripts\customer\create-customer.js" />

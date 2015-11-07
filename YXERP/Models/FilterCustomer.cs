@@ -13,6 +13,8 @@ namespace YXERP.Models
     {
         public EnumSearchType SearchType { get; set; }
 
+        public int Type { get; set; }
+
         public string SourceID { get; set; }
 
         public string StageID { get; set; }

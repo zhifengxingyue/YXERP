@@ -93,7 +93,30 @@ namespace YXERP.Controllers
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        } 
+        }
+
+        /// <summary>
+        /// 获取下属列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetUserBranchs(string userid, string agentid)
+        {
+            if (string.IsNullOrEmpty(agentid))
+            {
+                agentid = CurrentUser.AgentID;
+            }
+            if (string.IsNullOrEmpty(userid))
+            {
+                userid = CurrentUser.UserID;
+            }
+            var list = OrganizationBusiness.GetStructureByParentID(userid, agentid);
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
     }
 }

@@ -16,6 +16,7 @@ GO
 ************************************************************/
 CREATE PROCEDURE [dbo].[P_GetCustomers]
 	@SearchType int,
+	@Type int=-1,
 	@SourceID nvarchar(64)='',
 	@StageID nvarchar(64)='',
 	@Status int=-1,
@@ -49,14 +50,43 @@ AS
 
 	set @condition='cus.ClientID='''+@ClientID+''' and cus.Status<>9 '
 
-	if(@SearchAgentID<>'')
+	create table #UserID(UserID nvarchar(64))
+
+	if(@SearchType=1) --我的
 	begin
-		set @condition +=' and cus.AgentID = '''+@SearchAgentID+''''
+		set @condition +=' and cus.OwnerID = '''+@UserID+''''
+	end
+	else if(@SearchType=2) --下属
+	begin
+		if(@SearchUserID<>'')
+		begin
+			set @condition +=' and cus.OwnerID = '''+@SearchUserID+''''
+		end
+		else
+		begin
+			with TempUser(UserID)
+			as
+			(
+				select UserID from Users where ParentID=@UserID
+				union all
+				select u.UserID from Users u join TempUser t on u.ParentID=t.UserID
+			)
+			insert into #UserID select UserID from TempUser
+
+			set @condition +=' and cus.OwnerID in (select UserID from #UserID) '
+		end
+	end
+	else --全部
+	begin
+		if(@SearchAgentID<>'')
+		begin
+			set @condition +=' and cus.AgentID = '''+@SearchAgentID+''''
+		end
 	end
 
-	if(@SearchUserID<>'')
+	if(@Type<>-1)
 	begin
-		set @condition +=' and cus.OwnerID = '''+@SearchUserID+''''
+		set @condition +=' and cus.Type = '+convert(nvarchar(2), @Type)
 	end
 
 	if(@SourceID<>'')
