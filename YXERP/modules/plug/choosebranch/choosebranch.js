@@ -1,15 +1,16 @@
 ﻿
 /* 
 作者：Allen
-日期：2015-10-25
+日期：2015-11-6
 示例:
-    $(...).choosebranch(options);
+    $(...).chooseBranch(options);
 */
 
 define(function (require, exports, module) {
     require("plug/choosebranch/style.css");
     var Global = require("global"),
         doT = require("dot");
+    require("search");
     (function ($) {
         $.fn.chooseBranch = function (options) {
             var opts = $.extend({}, $.fn.chooseBranch.defaults, options);
@@ -74,28 +75,13 @@ define(function (require, exports, module) {
             } else {
                 var _items = $("<div style='min-width:" + opts.width + "px;' class='choosebranch-items-modules' id='" + obj.data("itemid") + "'></div>");
 
+                var _search = $("<div class='search-branch'></div>");
+                
+                _items.append(_search);
+
                 if (opts.defaultText) {
                     _items.append("<div class='default-item change-user' data-id='" + opts.defaultValue + "'>" + opts.defaultText + "</div>");
                 }
-
-                //搜索下属
-                //$(".btnSearchBranch").click(function () {
-                //    var _ele = innerText.find("a[data-search*='" + $(".searchInputBranch").val() + "']").first();
-                //    innerText.find("a").css("color", "#333");
-                //    _ele.parents().prev().each(function () {
-                //        if ($(this).attr("class") == "branchItem") {
-                //            $(this).find(".openBranch[data-state='close']").first().click();
-                //        }
-                //    })
-                //    _ele.css("color", "#06c");
-                //    $(".searchInputBranch").focus();
-                //})
-
-                //$(".searchInputBranch").keypress(function (event) {
-                //    if (event.keyCode == 13) {
-                //        $(".btnSearchBranch").click();
-                //    }
-                //})
 
                 Global.post("/Plug/GetUserBranchs", {
                     userid: opts.userid,
@@ -142,6 +128,18 @@ define(function (require, exports, module) {
                                 name: $(this).html()
                             });
                         });
+
+                        _search.searchKeys(function (keyWords) {
+                            var _ele = _items.find(".change-user[data-search*='" + keyWords + "']").first();
+                            _items.find(".change-user").css("color", "#333");
+                            _ele.parents().prev().each(function () {
+                                if ($(this).hasClass("branchitem")) {
+                                    $(this).find(".openchild[data-state='close']").first().click();
+                                }
+                            })
+                            _ele.css("color", "#4a98e7");
+                        });
+
                     });
                     _items.css({ "top": offset.top + 27, "left": offset.left });
 
@@ -189,7 +187,7 @@ define(function (require, exports, module) {
                     }
                 }
 
-                _item.append("<span data-id='" + cacheChild[pid][i].UserID + "' class='left name change-user'>" + cacheChild[pid][i].Name + "</span>")
+                _item.append("<span data-id='" + cacheChild[pid][i].UserID + "' data-search='" + cacheChild[pid][i].Name + "' class='left name change-user'>" + cacheChild[pid][i].Name + "</span>")
 
                 _div.append(_item);
 
