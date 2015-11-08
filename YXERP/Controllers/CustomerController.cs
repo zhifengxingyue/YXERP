@@ -44,7 +44,7 @@ namespace YXERP.Controllers
             return View("Customers");
         }
 
-        public ActionResult CreateCustomer(string id)
+        public ActionResult Create(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -60,7 +60,7 @@ namespace YXERP.Controllers
             return View();
         }
 
-        public ActionResult CustomerDetail(string id)
+        public ActionResult Detail(string id)
         {
             return View();
         }

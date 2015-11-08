@@ -301,8 +301,9 @@
     <Content Include="Views\System\Target.cshtml" />
     <Content Include="Views\Activity\Detail.cshtml" />
     <Content Include="Views\Customer\Customers.cshtml" />
-    <Content Include="Views\Customer\CreateCustomer.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Auction\BuyNow.cshtml" />
+    <Content Include="Views\Customer\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
