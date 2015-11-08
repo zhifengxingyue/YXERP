@@ -71,6 +71,10 @@ begin
 	values(NEWID(),@ContactName,1,@MobilePhone,@OfficePhone,@Email,@Jobs,1,@OwnerID,@CustomerID,@CreateUserID,@ClientID)
 end
 
+if(@ActivityID<>'')
+begin
+	update Activity set CustomerQuantity=CustomerQuantity+1 where ActivityID=@ActivityID
+end
 
 if(@Err>0)
 begin

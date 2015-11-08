@@ -35,6 +35,9 @@ namespace CloudSalesEntity
         public string MemberID { get; set; }
         public List<Users> Members { get; set; }
 
+
+        public int CustomerQuantity { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         [Property("Lower")] 
