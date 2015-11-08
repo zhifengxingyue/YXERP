@@ -45,7 +45,7 @@
 <div class="productList">
     <table class="productListTB" border="0"  cellpadding="0" cellspacing="0" >
         <tr class="trBG">
-            <td>
+            <td style="border:none;">
                 <div style="padding:8px 45px;">
                     <div class="left" style="position:relative;width:16px;">
                         <div class="diagonalDiv">
@@ -74,24 +74,6 @@
             <td>2年</td> 
             <td>3年</td>  
         </tr>
-       @* <tr> 
-            <td class="tdBG" id="">10人</td> 
-            <td  name="productItem" data-id="1" data-usercount="5" data-price="500" data-year="1">￥500</td> 
-            <td  name="productItem" data-id="1" data-usercount="5" data-price="500" data-year="2">￥1,000</td> 
-            <td  name="productItem" data-id="1" data-usercount="5" data-price="500" data-year="3">￥1,500</td> 
-        </tr>
-        <tr> 
-            <td class="tdBG">20人</td>
-            <td  name="productItem" data-id="2" data-usercount="10" data-price="500" data-year="1">￥500</td> 
-            <td  name="productItem" data-id="2" data-usercount="10" data-price="500" data-year="2">￥1,000</td> 
-            <td  name="productItem" data-id="2" data-usercount="10" data-price="500" data-year="3">￥1,500</td> 
-        </tr>
-        <tr class="trLast"> 
-            <td class="tdBG" style="border-bottom:none;">50人</td> 
-            <td  name="productItem" data-id="3" data-usercount="15" data-price="500" data-year="1">￥500</td> 
-            <td  name="productItem" data-id="3" data-usercount="15" data-price="500" data-year="2">￥1,000</td> 
-            <td  name="productItem" data-id="3" data-usercount="15" data-price="500" data-year="3">￥1,500</td> 
-        </tr> *@
     </table> 
 
 <div class="mTop20 mBottom20" style="color:#666;font-size:18px;">选择产品</div>
@@ -111,8 +93,6 @@
                     <option value="1">1年</option>
                     <option value="2">2年</option>
                     <option value="3">3年</option>
-                    <option value="4">4年</option>
-                    <option value="5">5年</option>
                 </select>
             </span>
         </li>
@@ -122,7 +102,7 @@
 <div class="mTop20">
     <div class="totalPrice">
         <span>价位</span>
-        <span class="mLeft10" id="Price">10,000</span><span>￥</span>
+        <span class="mLeft10" id="Price">0,000</span><span>￥</span>
     </div>
     <div class="mTop20"><input type="button" id="btn_sureOrder" value="下一步" class="btn" /></div>
 </div>
@@ -139,6 +119,7 @@
 
 <input type="hidden" id="productID"/>
 <input type="hidden" id="yearCount"/>
+<input type="hidden" id="userCount"/>
 
 
 

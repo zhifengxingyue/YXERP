@@ -72,9 +72,52 @@
             $(".payOrder").children().eq(1).addClass("stepDesActive");
         });
 
+        //选择人数
+        $("#UserCount").blur(function(){
+
+        });
+
+        //选择年份
+        $("#UserYear").change(function () {
+                var yearCount = $(this).val();
+                $("#yearCount").val(yearCount);
+
+                $(".productListTB td.tdBG2").each(function () {
+                    var id = $(this).data("id");
+                    var year = $(this).data("year");
+
+                    var productID = $("#productID").val();
+                    var yearCount = $("#yearCount").val();
+
+                    if (year != yearCount)
+                    {
+                        $(this).removeClass("tdBG2");
+                        $(".productListTB td[data-id='" + id + "'][data-year='" + yearCount + "']").addClass("tdBG2");
+                    }
+
+                });
+
+                //统计产品的人数、年数、金额
+                var $arr = $(".productListTB td.tdBG2");
+                var len = $arr.length;
+                var userCount = 0;
+                var yearCount = 0;
+                var totalPrice = 0;
+                for (var i = 0; i < len; i++) {
+                    userCount += parseInt($arr.eq(i).data("usercount"));
+                    totalPrice += parseInt($arr.eq(i).data("price"));
+                    yearCount = parseInt($arr.eq(i).data("year"));
+                }
+                $("#UserCount").val(userCount);
+                $("#Price").html(totalPrice);
+
+
+            });
+
+
     }
 
-    //获取列表
+    //获取产品列表
     ObjectJS.getList = function () {
         var _self = this;
         Global.post("/Auction/GetProductList",
@@ -84,7 +127,7 @@
                 var html = '<tr><td class="tdBG">10人</td>';
                 var html2 = '<tr><td class="tdBG">20人</td>';
                 var html3 = '<tr><td class="tdBG">50人</td>';
-                var html4 = '<tr><td class="tdBG">100人</td>';
+                var html4 = '<tr class="trLast"><td class="tdBG">100人</td>';
 
                 for (var i = 0; i < len; i++) {
                     var item = data.Items[i];
@@ -92,13 +135,16 @@
                     {
                         html += '<td  name="productItem" data-id="1" data-usercount="10" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
                     }
-                    else if (item.UserQuantity == 20) {
+                    else if (item.UserQuantity == 20)
+                    {
                         html2 += '<td  name="productItem" data-id="2" data-usercount="20" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
                     }
-                    else if (item.UserQuantity == 50) {
+                    else if (item.UserQuantity == 50)
+                    {
                         html3 += '<td  name="productItem" data-id="3" data-usercount="50" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
                     }
-                    else if (item.UserQuantity == 100) {
+                    else if (item.UserQuantity == 100)
+                    {
                         html4 += '<td  name="productItem" data-id="4" data-usercount="100" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
                     }
                 }
@@ -112,7 +158,8 @@
 
                     if ($(this).hasClass("tdBG2"))
                         $(this).removeClass("tdBG2");
-                    else {
+                    else
+                    {
                         var productID = $(this).data("id");
                         var yearCount = $(this).data("year");
                         $("#productID").val(productID);
