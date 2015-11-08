@@ -32,23 +32,16 @@
 
         _self.bindEvent();
 
-        
-
-        //_self.getList();
+        _self.getList();
     }
 
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
-        $(".productListTB td[name='productItem']").click(function () {
-            if ($(this).hasClass("tdBG2"))
-                $(this).removeClass("tdBG2");
-            else
-                $(this).addClass("tdBG2");
-        });
+        
 
         //进入确认订单
-        $("#btn_step1").click(function () {
+        $("#btn_sureOrder").click(function () {
             if (!VerifyObject.isPass()) {
                 return false;
             };
@@ -66,7 +59,7 @@
         });
 
         //进入支付订单
-        $("#btn_step2").click(function () {
+        $("#btn_payOrder").click(function () {
             $(".productOrder").hide();
             $(".payProductOrder").show();
 
@@ -79,38 +72,134 @@
             $(".payOrder").children().eq(1).addClass("stepDesActive");
         });
 
+        //选择人数
+        $("#UserCount").blur(function(){
+
+        });
+
+        //选择年份
+        $("#UserYear").change(function () {
+                var yearCount = $(this).val();
+                $("#yearCount").val(yearCount);
+
+                $(".productListTB td.tdBG2").each(function () {
+                    var id = $(this).data("id");
+                    var year = $(this).data("year");
+
+                    var productID = $("#productID").val();
+                    var yearCount = $("#yearCount").val();
+
+                    if (year != yearCount)
+                    {
+                        $(this).removeClass("tdBG2");
+                        $(".productListTB td[data-id='" + id + "'][data-year='" + yearCount + "']").addClass("tdBG2");
+                    }
+
+                });
+
+                //统计产品的人数、年数、金额
+                var $arr = $(".productListTB td.tdBG2");
+                var len = $arr.length;
+                var userCount = 0;
+                var yearCount = 0;
+                var totalPrice = 0;
+                for (var i = 0; i < len; i++) {
+                    userCount += parseInt($arr.eq(i).data("usercount"));
+                    totalPrice += parseInt($arr.eq(i).data("price"));
+                    yearCount = parseInt($arr.eq(i).data("year"));
+                }
+                $("#UserCount").val(userCount);
+                $("#Price").html(totalPrice);
+
+
+            });
+
+
     }
 
-    //获取列表
+    //获取产品列表
     ObjectJS.getList = function () {
         var _self = this;
-        $(".tr-header").nextAll().remove();
-        Global.post("/Activity/GetActivityList",
-            {
-                pageSize: ObjectJS.Params.PageSize,
-                pageIndex: ObjectJS.Params.PageIndex,
-                keyWords: ObjectJS.Params.KeyWords,
-                isAll: ObjectJS.Params.IsAll,
-                beginTime: ObjectJS.Params.BeginTime,
-                endTime: ObjectJS.Params.EndTime,
-                stage: ObjectJS.Params.Stage,
-                filterType: ObjectJS.Params.FilterType
-            },
+        Global.post("/Auction/GetProductList",
+            null,
             function (data) {
-                _self.bindList(data.Items);
+                var len = data.Items.length;
+                var html = '<tr><td class="tdBG">10人</td>';
+                var html2 = '<tr><td class="tdBG">20人</td>';
+                var html3 = '<tr><td class="tdBG">50人</td>';
+                var html4 = '<tr class="trLast"><td class="tdBG">100人</td>';
 
-                $("#pager").paginate({
-                    total_count: data.TotalCount,
-                    count: data.PageCount,
-                    start: _self.Params.PageIndex,
-                    display: 5,
-                    images: false,
-                    mouse: 'slide',
-                    onChange: function (page) {
-                        _self.Params.PageIndex = page;
-                        _self.getList();
+                for (var i = 0; i < len; i++) {
+                    var item = data.Items[i];
+                    if (item.UserQuantity == 10)
+                    {
+                        html += '<td  name="productItem" data-id="1" data-usercount="10" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
                     }
+                    else if (item.UserQuantity == 20)
+                    {
+                        html2 += '<td  name="productItem" data-id="2" data-usercount="20" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
+                    }
+                    else if (item.UserQuantity == 50)
+                    {
+                        html3 += '<td  name="productItem" data-id="3" data-usercount="50" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
+                    }
+                    else if (item.UserQuantity == 100)
+                    {
+                        html4 += '<td  name="productItem" data-id="4" data-usercount="100" data-price="' + item.Price + '" data-year="' + item.PeriodQuantity + '">' + item.Price + '</td>';
+                    }
+                }
+                html += '</tr>';
+                html2 += '</tr>';
+                html3 += '</tr>';
+                html4 += '</tr>';
+                $(".productListTB").append(html).append(html2).append(html3).append(html4);
+
+                $(".productListTB td[name='productItem']").click(function () {
+
+                    if ($(this).hasClass("tdBG2"))
+                        $(this).removeClass("tdBG2");
+                    else
+                    {
+                        var productID = $(this).data("id");
+                        var yearCount = $(this).data("year");
+                        $("#productID").val(productID);
+                        $("#yearCount").val(yearCount);
+
+                        $(".productListTB td.tdBG2").each(function () {
+                            var id = $(this).data("id");
+                            var year = $(this).data("year");
+
+                            var productID = $("#productID").val();
+                            var yearCount = $("#yearCount").val();
+
+                            if (year != yearCount) {
+                                $(this).removeClass("tdBG2");
+                                $(".productListTB td[data-id='" + id + "'][data-year='" + yearCount + "']").addClass("tdBG2");
+                            }
+
+                        });
+
+                        $(this).addClass("tdBG2");
+                    }
+
+                    //统计产品的人数、年数、金额
+                    var $arr = $(".productListTB td.tdBG2");
+                    var len = $arr.length;
+                    var userCount = 0;
+                    var yearCount = 0;
+                    var totalPrice = 0;
+                    for (var i = 0; i < len; i++) {
+                        userCount += parseInt($arr.eq(i).data("usercount"));
+                        totalPrice += parseInt($arr.eq(i).data("price"));
+                        yearCount = parseInt($arr.eq(i).data("year"));
+                    }
+                    $("#UserCount").val(userCount);
+                    $("#Price").html(totalPrice);
+                    $("#UserYear").val(yearCount);
+
+
                 });
+
             }
         );
     }
