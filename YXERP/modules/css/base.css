@@ -14,6 +14,7 @@
 /*超过长度显示...*/
 .long { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+
 .red { color:red !important;}
 .bRed { border-color:red !important; }
 
@@ -130,7 +131,10 @@ select option{ padding:2px; }
 .btn:hover { background-color:#2F73B8; }
 
 .btnccc {  padding:5px 10px; background-color:#ccc; color:#333; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
-.btnccc:hover { background-color:#999; }
+.btnccc:hover { background-color:#999; color:#fff; }
+
+.btn999 {  padding:5px 10px; background-color:#999; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.btn999:hover { background-color:#666; color:#fff; }
 
 
 
@@ -142,7 +146,7 @@ select option{ padding:2px; }
 /*返回*/
 .ico-back{ background:url(../images/ico-back.png) no-repeat 0px -1px; height:24px; min-width:24px; line-height:24px; 
           display:inline-block; cursor:pointer; color:#4a98e7; padding-left:28px; font-size:13px;  }
-.ico-back:hover{ background:url(../images/ico-back.png) no-repeat;color:#2F73B8;}
+.ico-back:hover{ color:#2F73B8; }
 
 /*编辑*/
 .ico-edit{ background:url(../images/ico-edit-light.png) no-repeat; height:24px; min-width:24px; line-height:24px; 

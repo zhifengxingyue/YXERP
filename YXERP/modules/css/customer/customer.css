@@ -16,3 +16,15 @@
 /*批量操作*/
 .batch-operate { padding-left:5px; height:20px; line-height:20px; }
 .batch-operate li{ float:left;}
+
+/*客户详情页*/
+.normal { color:#4a98e7; }
+
+.title-body { border-bottom:solid 1px #4a98e7 ; height:35px; }
+.title-body .title { font-size:18px; padding-left:10px; }
+
+.customerinfo { margin-top:20px; overflow:auto;}
+.customerinfo .baseinfo{ width:60%; float:left;}
+.customerinfo .baseinfo li{ width:50%; float:left; height:35px; line-height:35px;}
+.baseinfo li span{ width:100px; float:left; height:35px; line-height:35px; color:#666;}
+.baseinfo li label{ color:#333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  max-width:300px;}

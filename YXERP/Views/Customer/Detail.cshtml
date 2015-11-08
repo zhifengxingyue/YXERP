@@ -7,8 +7,8 @@
 
 @section scripts{
     <script type="text/javascript">
-        seajs.use(["scripts/customer/customer"], function (ObjectJS) {
-            ObjectJS.initDetail();
+        seajs.use(["scripts/customer/detail"], function (ObjectJS) {
+            ObjectJS.init('@ViewBag.ID');
         });
     </script>
 }
@@ -17,4 +17,55 @@
     <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")" class="ico-back left">
         返回客户列表
     </a>
+
+    <a class="">
+
+    </a>
+</div>
+<div class="content-body">
+    <div class="title-body">
+        <div id="spCustomerName" class="left title"></div>
+        <div class="btn999 right" id="loseCustomer">丢失</div>
+        <div class="btnccc right mRight10" id="closeCustomer">关闭</div>
+        <div class="btn right" id="recoveryCustomer">恢复</div>
+        <span class="right lineHeight25 mRight20" id="lblStatus"></span>
+        <span class="right lineHeight25">客户状态：</span>
+        
+    </div>
+    <div class="customerinfo">
+        <ul class="baseinfo">
+            <li>
+                <span>联系电话：</span>
+                <label id="lblMobile"></label>
+            </li>
+            <li>
+                <span>Email：</span>
+                <label id="lblEmail"></label>
+            </li>
+            <li class="companyinfo hide">
+                <span>行业：</span>
+                <label id="lblIndustry"></label>
+            </li>
+            <li  class="companyinfo hide">
+                <span>规模：</span>
+                <label id="lblExtent"></label>
+            </li>
+            <li>
+                <span>城市：</span>
+                <label id="lblCity"></label>
+            </li>
+            <li>
+                <span>详细地址：</span>
+                <label id="lblAddress"></label>
+            </li>
+            <li>
+                <span>创建时间：</span>
+                <label id="lblTime"></label>
+            </li>
+            <li>
+                <span>创建人：</span>
+                <label id="lblUser"></label>
+            </li>
+        </ul>
+    </div>
 </div>

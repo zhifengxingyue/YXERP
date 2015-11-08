@@ -17,7 +17,10 @@ namespace CloudSalesEntity
         [Property("Lower")]
         public string IndustryID { get; set; }
 
+        public Industry Industry { get; set; }
+
         public int Extent { get; set; }
+        public string ExtentStr { get; set; }
 
         public string CityCode { get; set; }
 
@@ -52,6 +55,8 @@ namespace CloudSalesEntity
         [Property("Lower")]
         public string ActivityID { get; set; }
 
+        public ActivityEntity Activity { get; set; }
+
         [Property("Lower")]
         public string StageID { get; set; }
 
@@ -66,7 +71,7 @@ namespace CloudSalesEntity
 
         public int Mark { get; set; }
 
-        public ContactEntity Contact { get; set; }
+        public List<ContactEntity> Contacts { get; set; }
 
         public DateTime AllocationTime { get; set; }
 

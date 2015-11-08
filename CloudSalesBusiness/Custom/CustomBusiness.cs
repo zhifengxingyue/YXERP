@@ -54,6 +54,49 @@ namespace CloudSalesBusiness
             return list;
         }
 
+        public CustomerEntity GetCustomerByID(string customerid, string agentid, string clientid)
+        {
+            DataSet ds = CustomDAL.BaseProvider.GetCustomerByID(customerid, agentid, clientid);
+            CustomerEntity model = new CustomerEntity();
+            if (ds.Tables["Customer"].Rows.Count > 0)
+            {
+                model.FillData(ds.Tables["Customer"].Rows[0]);
+                model.Source = SystemBusiness.BaseBusiness.GetCustomSourcesByID(model.SourceID, model.AgentID, model.ClientID);
+                model.Stage = SystemBusiness.BaseBusiness.GetCustomStageByID(model.StageID, model.AgentID, model.ClientID);
+                if (model.Extent > 0)
+                {
+                    model.ExtentStr = GetExtents().Where(m => m.ExtentID == model.Extent.ToString()).FirstOrDefault().ExtentName;
+                }
+
+                model.City = CommonBusiness.Citys.Where(m => m.CityCode == model.CityCode).FirstOrDefault();
+
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+
+                if (!string.IsNullOrEmpty(model.IndustryID))
+                {
+                    model.Industry = Manage.IndustryBusiness.GetIndustryDetail(model.IndustryID);
+                }
+                if (ds.Tables["Activity"].Rows.Count > 0)
+                {
+                    model.Activity = new ActivityEntity();
+                    model.Activity.FillData(ds.Tables["Activity"].Rows[0]);
+                }
+
+                if (ds.Tables["Contact"].Rows.Count > 0)
+                {
+                    model.Contacts = new List<ContactEntity>();
+                    foreach (DataRow dr in ds.Tables["Contact"].Rows)
+                    {
+                        ContactEntity con = new ContactEntity();
+                        con.FillData(dr);
+                        model.Contacts.Add(con);
+                    }
+                    
+                }
+            }
+            return model;
+        }
+
         #endregion
 
         #region 添加

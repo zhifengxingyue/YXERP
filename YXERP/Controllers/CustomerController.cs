@@ -62,6 +62,7 @@ namespace YXERP.Controllers
 
         public ActionResult Detail(string id)
         {
+            ViewBag.ID = id;
             return View();
         }
 
@@ -123,6 +124,17 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult GetCustomerByID(string customerid)
+        {
+            var model = CustomBusiness.BaseBusiness.GetCustomerByID(customerid, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult GetActivityBaseInfoByID(string activityid)
         {
             var model = ActivityBusiness.GetActivityBaseInfoByID(activityid);
@@ -167,6 +179,61 @@ namespace YXERP.Controllers
             }
 
 
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult LoseCustomer(string ids)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerStatus(id, EnumCustomStatus.Loses, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult CloseCustomer(string ids)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerStatus(id, EnumCustomStatus.Close, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult RecoveryCustomer(string ids)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerStatus(id, EnumCustomStatus.Normal, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
             JsonDictionary.Add("status", bl);
             return new JsonResult
             {

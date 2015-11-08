@@ -34,7 +34,7 @@ define(function (require, exports, module) {
             if (!obj.hasClass("dropdown-module")) {
                 obj.addClass("dropdown-module").css("width", opts.width);
             }
-            var _input = $('<div class="dropdown-text">' + opts.prevText + opts.defaultText + '</div>');
+            var _input = $('<div class="dropdown-text long">' + opts.prevText + opts.defaultText + '</div>');
             _input.css("width", opts.width - 30);
             var _ico = $('<div class="dropdown-ico"><span></span></div>');
             obj.append(_input).append(_ico);

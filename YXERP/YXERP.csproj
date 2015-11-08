@@ -241,7 +241,8 @@
     <Content Include="modules\scripts\activity\activity.js" />
     <Content Include="modules\scripts\auction\buynow.js" />
     <Content Include="modules\scripts\customer\customer.js" />
-    <Content Include="modules\scripts\customer\create-customer.js" />
+    <Content Include="modules\scripts\customer\create.js" />
+    <Content Include="modules\scripts\customer\detail.js" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\organization\structure.js" />

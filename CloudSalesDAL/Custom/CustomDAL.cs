@@ -50,6 +50,16 @@ namespace CloudSalesDAL
             return ds;
         }
 
+        public DataSet GetCustomerByID(string customerid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@CustomerID",customerid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+            return GetDataSet("P_GetCustomerByID", paras, CommandType.StoredProcedure, "Customer|Contact|Activity");
+        }
+
         #endregion
 
         #region 添加
