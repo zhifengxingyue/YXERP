@@ -82,6 +82,17 @@ namespace CloudSalesBusiness
             return model;
         }
 
+        public static ActivityEntity GetActivityBaseInfoByID(string activityid)
+        {
+            ActivityEntity model = new ActivityEntity();
+            DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+            }
+            return model;
+        }
+
         /// <summary>
         /// 根据活动Code获取活动
         /// </summary>

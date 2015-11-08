@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "客户详情";
+}
+@section css{
+<link href="/modules/css/customer/customer.css" rel="stylesheet" />
+ }
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/customer/customer"], function (ObjectJS) {
+            ObjectJS.initDetail();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">客户详情</span>
+    <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")" class="ico-back left">
+        返回客户列表
+    </a>
+</div>
