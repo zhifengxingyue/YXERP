@@ -147,3 +147,11 @@ padding:20px;
 border:solid 1px #eee;
 border-radius:2px;
 }
+
+.totalPrice {
+border-top:solid 1px #4a98e7;width:160px;padding-top:15px;
+}
+
+.totalPrice span {
+    color:#4a98e7;font-size:14px;
+}

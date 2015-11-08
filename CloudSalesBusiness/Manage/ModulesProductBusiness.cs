@@ -29,7 +29,7 @@ namespace CloudSalesBusiness.Manage
         #region  查
         public static List<ModulesProduct> GetModulesProducts(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
-            DataTable dt = CommonBusiness.GetPagerData("ModulesProduct as p,Modules as m ", " p.*,m.name ", " p.ModulesID=m.ModulesID and p.Status<>9 ", "p.AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+            DataTable dt = CommonBusiness.GetPagerData("ModulesProduct as p,Modules as m ", " p.*,m.name ", " p.ModulesID=m.ModulesID and p.Status<>9 ", "p.AutoID", " p.UserQuantity asc,PeriodQuantity asc ", pageSize, pageIndex, out totalCount, out pageCount);
             List<ModulesProduct> list = new List<ModulesProduct>();
             ModulesProduct model;
             foreach (DataRow item in dt.Rows)
