@@ -22,6 +22,17 @@
             _self.saveModel(activityid);
         });
 
+        if (activityid) {
+            $("#source option[data-code='Source-Activity']").prop("selected", true);
+            $("#source").prop("disabled", true);
+
+            Global.post("/Customer/GetActivityBaseInfoByID", { activityid: activityid }, function (data) {
+                if (data.model.Name) {
+                    $("#activityName").text("活动：" + data.model.Name);
+                }
+            })
+        }
+
         VerifyObject = Verify.createVerify({
             element: ".verify",
             emptyAttr: "data-empty",
@@ -69,9 +80,16 @@
         };
         Global.post("/Customer/SaveCustomer", { entity: JSON.stringify(model) }, function (data) {
             if (data.model.CustomerID) {
-                location.href = "/Customer/MyCustomer";
+                confirm("客户保存成功,是否继续添加客户?", function () {
+                    location.href = location.href;
+                }, function () {
+                    location.href = "/Customer/MyCustomer";
+                })
+                
+            } else {
+                alert("网络异常,请稍后重试!");
             }
-        })
+        });
     }
 
     module.exports = ObjectJS;

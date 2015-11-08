@@ -26,9 +26,10 @@
             <select id="source">
             @foreach (CloudSalesEntity.CustomSourceEntity model in (List<CloudSalesEntity.CustomSourceEntity>)ViewBag.Sources)
             {
-                <option value="@(model.SourceID)">@(model.SourceName)</option> 
+                <option value="@(model.SourceID)" data-code="@(model.SourceCode)">@(model.SourceName)</option> 
             }
             </select>
+            <label class="mLeft20" id="activityName"></label>
         </li>
         <li>
             <span class="width80">客户类型：</span> 

@@ -19,6 +19,7 @@ CREATE PROCEDURE [dbo].[P_GetCustomers]
 	@Type int=-1,
 	@SourceID nvarchar(64)='',
 	@StageID nvarchar(64)='',
+	@ActivityID nvarchar(64)='',
 	@Status int=-1,
 	@Mark int=-1,
 	@SearchUserID nvarchar(64)='',
@@ -106,6 +107,10 @@ AS
 	if(@StageID<>'')
 	begin
 		set @condition +=' and cus.StageID = '''+@StageID+''''
+	end
+	if(@ActivityID<>'')
+	begin
+		set @condition +=' and cus.ActivityID = '''+@ActivityID+''''
 	end
 	
 	if(@Status<>-1)
