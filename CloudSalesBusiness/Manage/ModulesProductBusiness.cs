@@ -51,6 +51,66 @@ namespace CloudSalesBusiness.Manage
 
             return model;
         }
+
+
+        public static Way GetBestWay(int quantity, List<ModulesProduct> list)
+        {
+            List<Way> ways = new List<Way>();
+
+            foreach (var p in list)
+            {
+                Way model = new Way();
+                model.TotalQuantity = p.UserQuantity;
+                model.TotalMoney = p.Price;
+                model.Products = new Dictionary<string, int>();
+                model.Products.Add(p.ProductID, 1);
+
+                if (model.TotalQuantity >= quantity)
+                {
+                    ways.Add(model);
+                }
+                else
+                {
+                    ways.AddRange(GetWays(quantity, model, list.Where(m => m.UserQuantity < quantity).ToList()));
+                    break;
+                }
+            }
+
+            return ways.OrderBy(m => m.TotalMoney).First();
+        }
+
+        public static List<Way> GetWays(int quantity, Way way, List<ModulesProduct> list)
+        {
+            List<Way> ways = new List<Way>();
+
+            foreach (var p in list)
+            {
+                Way model = new Way() { TotalMoney = way.TotalMoney, TotalQuantity = way.TotalQuantity, Products = new Dictionary<string, int>(way.Products) };
+
+                model.TotalQuantity += p.UserQuantity;
+                model.TotalMoney += p.Price;
+                if (model.Products.ContainsKey(p.ProductID))
+                {
+                    model.Products[p.ProductID] += 1;
+                }
+                else
+                {
+                    model.Products.Add(p.ProductID, 1);
+                }
+
+                if (model.TotalQuantity >= quantity)
+                {
+                    ways.Add(model);
+                }
+                else
+                {
+                    ways.AddRange(GetWays(quantity, model, list));
+                    break;
+                }
+            }
+
+            return ways;
+        }
         #endregion
 
         #region  改
@@ -63,4 +123,13 @@ namespace CloudSalesBusiness.Manage
 
 
     }
+
+    public class Way
+    {
+        public int TotalQuantity { get; set; }
+        public decimal TotalMoney { get; set; }
+        public Dictionary<string, int> Products { get; set; }
+    }
+
+
 }

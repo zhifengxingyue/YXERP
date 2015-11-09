@@ -5,33 +5,27 @@ using System.Text;
 
 namespace CloudSalesEntity.Manage
 {
-    public class ModulesProduct
+    public class ClientOrder
     {
         public int AutoID { get; set; }
 
-        public string ProductID { get; set; }
-
-        public string ModulesID { get; set; }
-
-        public string  Name { get; set; }
-
-        public int Period { get; set; }
+        public string OrderID { get; set; }
 
         public int UserQuantity { get; set; }
 
-        public int PeriodQuantity { get; set; }
+        public int Years { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
 
-        public string Description { get; set; }
+        public int Status { get; set; }
+
+        public string AgentID { get; set; }
+
+        public string ClientID { get; set; }
 
         public DateTime CreateTime { get; set; }
 
         public string CreateUserID { get; set; }
-
-        public int Type { get; set; }
-
-        public int IsChild { get; set; }
 
         /// <summary>
         /// 填充数据

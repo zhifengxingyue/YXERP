@@ -96,6 +96,11 @@ color:#4a98e7;
 background-color:#fff;
 }
 
+.stepIcoFinish {
+color:#fff;
+background-color:#4a98e7;
+}
+
 .stepDes {
 margin-top:21px;
 margin-left:20px;
@@ -107,6 +112,10 @@ color:#666;
 color:#fff;
 }
 
+.stepDesFinish {
+color:#4a98e7;
+}
+
 .selectPrpduct ul {
 list-style:none;
 }
@@ -116,19 +125,19 @@ line-height:48px;
 }
 
 .diagonalDiv {
-    width:16px;height:16px;
+width:16px;height:16px;
 }
 
 .diagonalDiv2 {
-    width:16px;height:16px;position:absolute;left:0px;top:1px;
+width:16px;height:16px;position:absolute;left:0px;top:1px;
 }
 
 .diagonalLine {
-    border:8px transparent solid;border-left-color: #999;border-bottom-color: #999;
+border:8px transparent solid;border-left-color: #999;border-bottom-color: #999;
 }
 
 .diagonalLine2 {
-    border:8px transparent solid;border-left-color: #eee;border-bottom-color: #eee;
+border:8px transparent solid;border-left-color: #eee;border-bottom-color: #eee;
 }
 
 
@@ -153,5 +162,23 @@ border-top:solid 1px #4a98e7;width:160px;padding-top:15px;
 }
 
 .totalPrice span {
-    color:#4a98e7;font-size:18px;
+color:#4a98e7;font-size:18px;
 }
+
+.orderInfo span {
+color:#333;
+font-size:12px;
+}
+
+.orderInfoTitle {
+color:#666;font-size:18px;
+}
+
+.orderInfoDetail {
+border-bottom:dashed 1px #eee;padding:15px 0px;
+}
+
+.orderInfoPrice {
+color:#4a98e7;font-size:18px;
+}
+

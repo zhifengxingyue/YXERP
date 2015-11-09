@@ -48,6 +48,7 @@
     <Compile Include="Custom\CustomerEntity.cs" />
     <Compile Include="Custom\ExtentEntity.cs" />
     <Compile Include="Log\CustomerLogEntity.cs" />
+    <Compile Include="Manage\ClientOrder.cs" />
     <Compile Include="System\CustomSourceEntity.cs" />
     <Compile Include="System\CustomStageEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
@@ -94,7 +95,9 @@
     <Compile Include="System\OrderTypeEntity.cs" />
     <Compile Include="System\TeamEntity.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Manage\ClientOrderDetail.cs" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CloudSalesEnum\CloudSalesEnum.csproj">
       <Project>{b86924c1-ec31-449f-97f3-258dfa43a44f}</Project>

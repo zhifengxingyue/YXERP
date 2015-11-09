@@ -442,6 +442,7 @@
             function (data) {
                 if (data.Item) {
                     var item = data.Item;
+
                     //option=1 编辑页；option=2 详情页
                     if (option == 1) {
                         $("#Name").val(item.Name);
@@ -457,11 +458,14 @@
                         for (var i = 0; i < item.Members.length; i++) {
                             ObjectJS.createMemberDetail(item.Members[i], "MemberIDs");
                         }
+
+                        editor.setContent(decodeURI(item.Remark));
                     }
                     else
                     {
                         $("#Name").html(item.Name);
                         $("#Name").attr("src", "/Activity/Detail/" + item.ActivityID);
+
                         $("#OwnerName").html(item.Owner.Name);
                         $("#OwnerName").data("id", item.Owner.UserID);
                         $("#EndTime").html(item.EndTime.toDate("yyyy-MM-dd"));
@@ -477,11 +481,8 @@
                             var m = item.Members[i];
                             $("#MemberList").append("<li class='member' data-id='"+m.UserID+"'>" + m.Name + "</li>");
                         }
-                        //ObjectJS.GetMemberDetail(item.Owner, "OwnerIDs");
                     }
 
-                    
-                    
                     $("#OwnerID").val(item.OwnerID);
                     $("#MemberID").val(item.MemberID);
                     require.async("businesscard", function () {
@@ -500,7 +501,8 @@
 
         var html = '<div class="member left" data-id="' + item.id + '">';
         html += '    <div class="left pRight5">';
-        html += '          <img src="' + item.avatar + '" />';
+        //html += '          <img src="' + item.avatar + '" />';
+        html += '          <span>' + item.name + '</span>';
         html += '     </div>';
         html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
         html += '      <div class="clear"></div>';
@@ -524,7 +526,8 @@
             item.Avatar = "/modules/images/defaultavatar.png";
         var html = '<div class="member left" data-id="' + item.UserID + '">';
         html += '    <div class="left pRight5">';
-        html += '          <img src="' + item.Avatar + '" />';
+        //html += '          <img src="' + item.Avatar + '" />';
+        html += '          <span>' + item.Name + '</span>';
         html += '     </div>';
         html += '      <div class="left mRight10 pLeft5"><a href="javascript:void(0);" onclick="$(this).parents(\'.member\').remove();">×</a></div>';
         html += '      <div class="clear"></div>';

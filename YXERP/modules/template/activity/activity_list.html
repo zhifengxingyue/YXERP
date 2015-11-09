@@ -32,14 +32,14 @@
             <tr>
                 <td>成员：</td>
                 <td>
-                    <ul id="MemberList">
+                    <div id="MemberList">
                     {%
 	                    for(var l=0; l<item.Members.length;l++){
 	                    var m = item.Members[l];
                     %}
-                    <li class="activitymember" data-id="{%=m.UserID%}">{%=m.Name%}</li><li></li>
+                    {%=m.Name%}
                     {% } %}
-                    </ul>
+                    </div>
                 </td>
                 <td></td>
             </tr>

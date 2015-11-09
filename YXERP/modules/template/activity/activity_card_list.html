@@ -13,7 +13,11 @@
         <div style="margin:8px;">
             <table width="100%" cellspacing="0">
                 <tr>
-                    <td colspan="2"><a style="color:#666;font-size:18px;" href="/Activity/Detail/{%=item.ActivityID%}" target="_blank">{%=item.Name%}</a></td>
+                    <td colspan="2">
+                        <div class="cardActivityName" title="{%=item.Name%}">
+                            <a  style="color:#666;font-size:18px;" href="/Activity/Detail/{%=item.ActivityID%}" target="_blank">{%=item.Name%}</a>
+                        </div>
+                    </td>
                     <td align="right">
                         <div class="dropdown" data-id="{%=item.ActivityID%}" style="background-color:#4A98E7;border-radius:3px;padding:1px 6px 1px 4px;">
                             <span class="ico-dropdown-white"></span>
@@ -28,14 +32,16 @@
                  <tr>
                     <td>成员：</td>
                     <td>
-                        <ul id="CardMemberList">
+                        <div id="CardMemberList">
                         {%
 	                        for(var l=0; l<item.Members.length;l++){
 	                        var m = item.Members[l];
                         %}
-                        <li class="activitymember" data-id="{%=m.UserID%}">{%=m.Name%}</li><li></li>
+
+                        {%=m.Name%}
+
                         {% } %}
-                        </ul>
+                        </div>
                     </td>
                     <td></td>
                 </tr>
