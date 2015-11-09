@@ -24,10 +24,15 @@ AS
 	
 begin tran
 
-declare @Err int=0
+declare @Err int=0,@OldStages nvarchar(64)
 
 
-update Customer set StageID=StageID where CustomerID=@CustomerID 
+select @OldStages=StageID from Customer where CustomerID=@CustomerID 
+
+if(@OldStages<>@StageID)
+begin
+	update Customer set StageID=@StageID where CustomerID=@CustomerID and Status=1
+end
 
 set @Err+=@@error
 

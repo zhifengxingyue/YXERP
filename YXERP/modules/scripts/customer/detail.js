@@ -5,22 +5,39 @@
         doT = require("dot"),
         ChooseUser = require("chooseuser"),
         Easydialog = require("easydialog");
+    require("pager");
 
-
-    var ObjectJS = {};
+    var ObjectJS = {}, CacheIems = [];
     //初始化
     ObjectJS.init = function (customerid) {
         var _self = this;
+
+        _self.bindStyle();
         Global.post("/Customer/GetCustomerByID", { customerid: customerid }, function (data) {
             if (data.model.CustomerID) {
                 _self.bindCustomerInfo(data.model);
                 _self.bindEvent(data.model);
             }
         });
-        
-    }
 
+        //$(window).resize(function () {
+        //    _self.bindStyle();
+        //});
+    }
+    //样式
+    ObjectJS.bindStyle = function () {
+
+        var stages = $(".stage-items"), width = stages.width();
+
+        stages.find("li .leftbg").first().removeClass("leftbg");
+        stages.find("li .rightbg").last().removeClass("rightbg");
+        stages.find("li").width(width / stages.find("li").length - 20);
+    }
+    //基本信息
     ObjectJS.bindCustomerInfo = function (model) {
+
+        var _self = this;
+
         $("#spCustomerName").html(model.Name);
         $("#lblMobile").text(model.MobilePhone || "--");
         $("#lblEmail").text(model.Email || "--");
@@ -45,11 +62,25 @@
             $("#lblType").html("企")
             $(".companyinfo").show();
         }
+
+        //处理阶段
+        var stage = $(".stage-items li[data-id='" + model.StageID + "']");
+        stage.addClass("hover");
+        CacheIems[model.StageID] = model.Stage.StageItem;
+        _self.bindStageItems(model.Stage.StageItem);
+
     }
+    //阶段行为项
+    ObjectJS.bindStageItems = function (items) {
+        $("#stageItems").empty();
+        for (var i = 0; i < items.length; i++) {
+            $("#stageItems").append("<li>" + items[i].ItemName + "</li>");
+        }
+    };
     //绑定事件
     ObjectJS.bindEvent = function (model) {
         var _self = this;
-
+        //编辑客户信息
         $("#updateCustomer").click(function () {
             _self.editCustomer(model);
         });
@@ -59,6 +90,7 @@
 
             $("#recoveryCustomer").hide();
 
+            //丢失客户
             $("#loseCustomer").click(function () {
                 confirm("确认更换客户状态为丢失吗?", function () {
                     Global.post("/Customer/LoseCustomer", { ids: model.CustomerID }, function (data) {
@@ -68,12 +100,37 @@
                     });
                 });
             });
-
+            //关闭客户
             $("#closeCustomer").click(function () {
                 confirm("确认关闭此客户吗?", function () {
                     Global.post("/Customer/CloseCustomer", { ids: model.CustomerID }, function (data) {
                         if (data.status) {
                             location.href = location.href;
+                        }
+                    });
+                });
+            });
+            //切换阶段
+            $(".stage-items li").click(function () {
+                var _this = $(this);
+                !_this.hasClass("hover") && confirm("确认客户切换到此阶段吗?", function () {
+                    Global.post("/Customer/UpdateCustomStage", {
+                        ids: model.CustomerID,
+                        stageid: _this.data("id")
+                    }, function (data) {
+                        if (data.status) {
+                            _this.siblings().removeClass("hover");
+                            _this.addClass("hover");
+                            if (CacheIems[_this.data("id")]) {
+                                _self.bindStageItems(CacheIems[_this.data("id")]);
+                            } else {
+                                Global.post("/Customer/GetStageItems", {
+                                    stageid: _this.data("id")
+                                }, function (data) {
+                                    CacheIems[_this.data("id")] = data.items;
+                                    _self.bindStageItems(CacheIems[_this.data("id")]);
+                                });
+                            }
                         }
                     });
                 });
@@ -84,7 +141,7 @@
 
             $("#loseCustomer").hide();
             $("#closeCustomer").hide();
-
+            //恢复客户
             $("#recoveryCustomer").click(function () {
                 confirm("确认恢复此客户吗?", function () {
                     Global.post("/Customer/RecoveryCustomer", { ids: model.CustomerID }, function (data) {
@@ -102,7 +159,7 @@
             $("#closeCustomer").hide();
             $("#recoveryCustomer").hide();
         }
-
+        //更换拥有者
         $("#changeOwner").click(function () {
             var _this = $(this);
             ChooseUser.create({
@@ -129,8 +186,58 @@
             });
         });
 
-    }
+        //切换模块
+        $(".tab-nav-ul li").click(function () {
+            var _this = $(this);
+            _this.siblings().removeClass("hover");
+            _this.addClass("hover");
+            $(".nav-partdiv").hide();
+            $("#" + _this.data("id")).show();
 
+            if (_this.data("id") == "navLog" && (!_this.data("first") || _this.data("first") == 0)) {
+                _this.data("first", "1");
+                _self.getLogs(model.CustomerID, 1);
+            }
+        });
+
+    }
+    //获取日志
+    ObjectJS.getLogs = function (customerid, page) {
+        var _self = this;
+        $("#customerLog").empty();
+        Global.post("/Customer/GetCustomerLogs", {
+            customerid: customerid,
+            pageindex: page
+        }, function (data) {
+           
+            doT.exec("template/customer/customerlogs.html", function (template) {
+                var innerhtml = template(data.items);
+                innerhtml = $(innerhtml);
+                $("#customerLog").append(innerhtml);
+            });
+            $("#pagerLogs").paginate({
+                total_count: data.totalCount,
+                count: data.pageCount,
+                start: page,
+                display: 5,
+                border: true,
+                border_color: '#fff',
+                text_color: '#333',
+                background_color: '#fff',
+                border_hover_color: '#ccc',
+                text_hover_color: '#000',
+                background_hover_color: '#efefef',
+                rotate: true,
+                images: false,
+                mouse: 'slide',
+                float: "left",
+                onChange: function (page) {
+                    _self.getLogs(customerid, page);
+                }
+            });
+        });
+    }
+    //编辑信息
     ObjectJS.editCustomer = function (model) {
         var _self = this;
         doT.exec("template/customer/customer-detail.html", function (template) {
@@ -197,7 +304,6 @@
             });
         });
     }
-
     //保存实体
     ObjectJS.saveModel = function (model) {
         var _self = this;

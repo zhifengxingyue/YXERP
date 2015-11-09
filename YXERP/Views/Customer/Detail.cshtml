@@ -31,55 +31,37 @@
     </div>
     <div class="customerinfo">
         <ul class="baseinfo">
-            <li>
-                <span>来源：</span>
-                <label id="lblSource"></label>
-            </li>
-            <li>
-                <span class="left">拥有者：</span>
-                <label class="left" id="lblOwner"></label>
+            <li><span>来源：</span><label id="lblSource"></label></li>
+            <li><span class="left">拥有者：</span> <label class="left" id="lblOwner"></label>
                 <span title="更换拥有者" class="ico-change left" id="changeOwner"></span>
             </li>
-            <li>
-                <span>联系电话：</span>
-                <label id="lblMobile"></label>
-            </li>
-            <li>
-                <span>Email：</span>
-                <label id="lblEmail"></label>
-            </li>
-            <li class="companyinfo hide">
-                <span>行业：</span>
-                <label id="lblIndustry"></label>
-            </li>
-            <li  class="companyinfo hide">
-                <span>规模：</span>
-                <label id="lblExtent"></label>
-            </li>
-            <li>
-                <span>城市：</span>
-                <label id="lblCity"></label>
-            </li>
-            <li>
-                <span>详细地址：</span>
-                <label id="lblAddress"></label>
-            </li>
-            <li>
-                <span>创建时间：</span>
-                <label id="lblTime"></label>
-            </li>
-            <li>
-                <span>创建人：</span>
-                <label id="lblUser"></label>
-            </li>
-            <li style="width:100%;">
-                <span>备注：</span>
-                <label id="lblReamrk"></label>
-            </li>
+            <li><span>联系电话：</span><label id="lblMobile"></label></li>
+            <li><span>Email：</span><label id="lblEmail"></label> </li>
+            <li class="companyinfo hide"><span>行业：</span><label id="lblIndustry"></label></li>
+            <li  class="companyinfo hide"><span>规模：</span><label id="lblExtent"></label></li>
+            <li><span>城市：</span><label id="lblCity"></label></li>
+            <li><span>详细地址：</span><label id="lblAddress"></label></li>
+            <li><span>创建时间：</span><label id="lblTime"></label></li>
+            <li><span>创建人：</span><label id="lblUser"></label></li>
+            <li style="width:100%;"><span>备注：</span> <label id="lblReamrk"></label></li>
         </ul>
     </div>
 
-    <div class="tab-nav mTop20">
+    <ul class="stage-items mTop30">
+        @foreach (var stage in (List<CloudSalesEntity.CustomStageEntity>)ViewBag.Stages)
+        { 
+            <li data-id="@(stage.StageID)" data-sort="@(stage.Sort)">
+                <span class="leftbg bg"></span>
+                <span class="name">@(stage.StageName)</span>
+                <span class="rightbg bg"></span>
+            </li>
+        }
+    </ul>
+    <div class="color666 lineHeight25 mTop20">当前阶段下，销售行为建议：</div>
+    <ul class="stageitems mTop10" id="stageItems">
+       
+    </ul>
+    <div class="tab-nav mTop30">
         <ul class="tab-nav-ul">
             <li class="hover" data-id="navRemark">备忘</li>
             <li data-id="navContact">联系人</li>
@@ -87,5 +69,12 @@
             <li data-id="navLog">日志</li>
         </ul>
     </div>
+    <div class="nav-partdiv" id="navLog">
+        <div class="log-body" id="customerLog">
 
+        </div>
+        <div id="pagerLogs" class="mTop10">
+
+        </div>
+    </div>
 </div>

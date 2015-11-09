@@ -39,11 +39,43 @@
 
 
 .customerinfo { margin-top:20px; overflow:auto;}
-.customerinfo .baseinfo{ width:800px; float:left;}
+.customerinfo .baseinfo{ width:80%; min-width:600px; float:left;}
 .customerinfo .baseinfo li{ width:50%; float:left; height:35px; line-height:35px; }
 .baseinfo li span{ width:100px; float:left; height:35px; line-height:35px; color:#999; }
 .baseinfo li label{ color:#666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  max-width:300px;}
 
 .baseinfo .ico-change { margin:6px 0 0 10px; }
+
+/*阶段*/
+.stage-items { height:40px; width:80%; }
+.stage-items  li{ float:left; height:40px; position:relative; cursor:pointer;  margin-right:5px;}
+.stage-items  li { background-color:#4a98e7;}
+.stage-items  li.hover{ background-color:#174A7F;}
+.stage-items  li span{ float:left; display:inline-block;}
+
+.stage-items  li .bg { position:absolute;border-bottom:solid 20px transparent; border-top:solid 20px transparent; }
+.stage-items  li .leftbg{ left:0px; z-index:101; border-left:solid 15px #fff;}
+.stage-items  li .name{ height:40px; line-height:40px; text-align:center; color:#eee; width:100%;}
+.stage-items  li .rightbg{ right:-15px; z-index:102; border-left:solid 15px #4a98e7;}
+
+.stage-items  li:hover .name{ color:#fff; }
+.stage-items  .hover .rightbg{ border-left:solid 15px #174A7F; }
+.stage-items  .hover .name{ color:#fff; }
+
+/*阶段行为项*/
+.stageitems { width:100%; overflow:auto; }
+.stageitems li{ width:33%; height:25px; min-width:200px; line-height:25px; float:left; color:#666; text-indent:5px; }
+
+
+/*日志样式*/
+.log-body { width:99%; }
+.log-body .log-item {width:99%; line-height:30px; overflow:auto; border-bottom:dashed 1px #eee; margin-top:10px; }
+.log-body .createuser { vertical-align:middle; }
+.createuser img { float:left; height:30px; width:30px; border-radius:15px; margin-top:15px; }
+.createuser h2 { float:left; vertical-align:middle; line-height:60px; width:60px; margin-left:10px; }
+.log-body .createtime { color:#999; }
+#pager { margin:20px auto; }
+
+
 
 

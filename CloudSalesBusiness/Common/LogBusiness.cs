@@ -6,11 +6,37 @@ using System.Text;
 using CloudSalesDAL;
 using System.Threading.Tasks;
 using CloudSalesEnum;
+using CloudSalesEntity;
+using System.Data;
 
 namespace CloudSalesBusiness
 {
     public class LogBusiness
     {
+
+        #region
+
+        /// <summary>
+        /// 客户日志
+        /// </summary>
+        /// <returns></returns>
+        public static List<CustomerLogEntity> GetCustomerLogs(string customerid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid)
+        {
+            DataTable dt = CommonBusiness.GetPagerData("CustomerLog", "*", "CustomerID='" + customerid + "'", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+
+            List<CustomerLogEntity> list = new List<CustomerLogEntity>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                CustomerLogEntity model = new CustomerLogEntity();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+
+                list.Add(model);
+            }
+            return list;
+        }
+
+        #endregion
 
         #region 添加
 

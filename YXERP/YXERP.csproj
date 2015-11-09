@@ -261,6 +261,7 @@
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\customer\customers.html" />
     <Content Include="modules\template\customer\customer-detail.html" />
+    <Content Include="modules\template\customer\customerlogs.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />

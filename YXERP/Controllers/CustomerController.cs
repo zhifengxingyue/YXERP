@@ -62,6 +62,7 @@ namespace YXERP.Controllers
 
         public ActionResult Detail(string id)
         {
+            ViewBag.Stages = SystemBusiness.BaseBusiness.GetCustomStages(CurrentUser.AgentID, CurrentUser.ClientID).OrderBy(m => m.Sort).ToList();
             ViewBag.ID = id;
             return View();
         }
@@ -183,6 +184,56 @@ namespace YXERP.Controllers
 
 
             JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult UpdateCustomStage(string ids, string stageid)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && CustomBusiness.BaseBusiness.UpdateCustomerStage(id, stageid, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetStageItems(string stageid)
+        {
+            var list = new SystemBusiness().GetCustomStageByID(stageid, CurrentUser.AgentID, CurrentUser.ClientID).StageItem;
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetCustomerLogs(string customerid, int pageindex)
+        {
+            int totalCount = 0;
+            int pageCount = 0;
+
+            var list = LogBusiness.GetCustomerLogs(customerid, 10, pageindex, ref totalCount, ref pageCount, CurrentUser.AgentID);
+
+            JsonDictionary.Add("items", list);
+            JsonDictionary.Add("totalCount", totalCount);
+            JsonDictionary.Add("pageCount", pageCount);
+
             return new JsonResult
             {
                 Data = JsonDictionary,

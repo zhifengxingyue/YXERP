@@ -47,6 +47,7 @@
     <Compile Include="Custom\ContactEntity.cs" />
     <Compile Include="Custom\CustomerEntity.cs" />
     <Compile Include="Custom\ExtentEntity.cs" />
+    <Compile Include="Log\CustomerLogEntity.cs" />
     <Compile Include="System\CustomSourceEntity.cs" />
     <Compile Include="System\CustomStageEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />
