@@ -64,7 +64,7 @@ namespace YXManage.Controllers
         public JsonResult SaveModulesProduct(string modulesProduct)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            ClientOrderDetail model = serializer.Deserialize<ClientOrderDetail>(modulesProduct);
+            ModulesProduct model = serializer.Deserialize<ModulesProduct>(modulesProduct);
 
             bool flag = false;
             if (model.AutoID==0)
