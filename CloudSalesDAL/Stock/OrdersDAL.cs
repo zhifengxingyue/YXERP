@@ -13,15 +13,6 @@ namespace CloudSalesDAL
 
         #region 查询
 
-        public static DataTable GetShoppingCart(int ordertype, string userid)
-        {
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@OrderType",ordertype),
-                                     new SqlParameter("@UserID" , userid),
-                                   };
-            return GetDataTable("P_GetShoppingCart", paras, CommandType.StoredProcedure);
-        }
-
         public static DataSet GetStorageDocList(string userid, int type, int status, string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientid)
         {
             SqlParameter[] paras = { 
@@ -60,22 +51,6 @@ namespace CloudSalesDAL
         #endregion
 
         #region 添加
-
-        public static bool AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, int ordertype, string remark, string userid, string operateip)
-        {
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@OrderType",ordertype),
-                                     new SqlParameter("@ProductDetailID",detailsid),
-                                     new SqlParameter("@ProductID" , productid),
-                                     new SqlParameter("@Quantity" , quantity),
-                                     new SqlParameter("@UnitID" , unitid),
-                                     new SqlParameter("@IsBigUnit" , isBigUnit),
-                                     new SqlParameter("@Remark" , remark),
-                                     new SqlParameter("@UserID" , userid),
-                                     new SqlParameter("@OperateIP" , operateip)
-                                   };
-            return ExecuteNonQuery("P_AddShoppingCart", paras, CommandType.StoredProcedure) > 0;
-        }
 
         public static bool AddStorageDoc(string docid, int doctype, decimal totalmoney, string cityCode, string address, string remark, string userid, string operateip, string clientid, SqlTransaction tran)
         {

@@ -18,36 +18,6 @@ namespace CloudSalesBusiness
         #region 查询
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ordertype">订单类型</param>
-        /// <param name="userid">操作员</param>
-        /// <returns></returns>
-        public static int GetShoppingCartCount(EnumDocType ordertype, string userid)
-        {
-            object obj = CommonBusiness.Select("ShoppingCart", "count(0)", "ordertype=" + (int)ordertype + " and UserID='" + userid + "'");
-            return Convert.ToInt32(obj);
-        }
-        /// <summary>
-        /// 获取购物车列表
-        /// </summary>
-        /// <param name="ordertype"></param>
-        /// <param name="userid"></param>
-        /// <returns></returns>
-        public static List<ProductDetail> GetShoppingCart(EnumDocType ordertype, string userid)
-        {
-            DataTable dt = OrdersDAL.GetShoppingCart((int)ordertype, userid);
-            List<ProductDetail> list = new List<ProductDetail>();
-            foreach (DataRow dr in dt.Rows)
-            {
-                ProductDetail model = new ProductDetail();
-                model.FillData(dr);
-                list.Add(model);
-            }
-            return list;
-        }
-
-        /// <summary>
         /// 获取单据列表
         /// </summary>
         /// <param name="userid">创建人（拥有者）</param>
@@ -104,6 +74,7 @@ namespace CloudSalesBusiness
 
             return model;
         }
+
         /// <summary>
         /// 单据状态
         /// </summary>
@@ -170,24 +141,6 @@ namespace CloudSalesBusiness
         #region 添加
 
         /// <summary>
-        /// 加入购物车
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="detailsid">产品详情ID</param>
-        /// <param name="quantity">数量</param>
-        /// <param name="unitid">单位</param>
-        /// <param name="isBigUnit">是否大单位</param>
-        /// <param name="ordertype">订单类型</param>
-        /// <param name="remark">备注</param>
-        /// <param name="userid">操作员</param>
-        /// <param name="operateip">操作IP</param>
-        /// <returns></returns>
-        public static bool AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, EnumDocType ordertype, string remark, string userid, string operateip)
-        {
-            return OrdersDAL.AddShoppingCart(productid, detailsid, quantity, unitid, isBigUnit, (int)ordertype, remark, userid, operateip);
-        }
-
-        /// <summary>
         /// 创建单据
         /// </summary>
         /// <param name="model"></param>
@@ -201,7 +154,6 @@ namespace CloudSalesBusiness
 
             try
             {
-
                 bool bl = OrdersDAL.AddStorageDoc(docid, model.DocType, model.TotalMoney, model.CityCode, model.Address, model.Remark, userid, operateip, clientid, tran);
                 if (bl)
                 {
@@ -238,28 +190,7 @@ namespace CloudSalesBusiness
 
         #region 编辑、删除
 
-        /// <summary>
-        /// 编辑购物车产品数量
-        /// </summary>
-        /// <param name="autoid"></param>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-        public static bool UpdateCartQuantity(string autoid, int quantity, string userid, string clientid)
-        {
-            return CommonBusiness.Update("ShoppingCart", "Quantity", quantity, "AutoID=" + autoid);
-        }
-
-        /// <summary>
-        /// 删除购物车记录
-        /// </summary>
-        /// <param name="autoid"></param>
-        /// <param name="userid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
-        public static bool DeleteCart(string autoid, string userid, string clientid)
-        {
-            return CommonBusiness.Delete("ShoppingCart", "AutoID=" + autoid);
-        }
+        
         /// <summary>
         /// 删除单据
         /// </summary>
