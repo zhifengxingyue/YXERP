@@ -110,16 +110,24 @@
 </div>
 
 <div class="productOrder hide">
-     <div class="mTop20"><input type="button" id="btn_payOrder" value="下一步" class="btn" /></div>
+    <div class="orderInfo">
+        <div class="orderInfoTitle">产品信息</div>
+        <div class="orderInfoDetail">
+            <span>人数 :</span><span class="mLeft5" id="orderUserCount">1</span><span>人</span>
+            <span class="mLeft20">时间 :</span><span class="mLeft5" id="orderYear">1</span><span>年</span>
+            <span class="mLeft20" style="color:#4a98e7;font-size:18px;">价格 :</span><span class="mLeft5" style="color:#4a98e7;font-size:18px;" id="orderPrice">1</span><span class="mLeft5" style="color:#4a98e7;font-size:18px;">￥</span>
+        </div>
+    </div>
+     <div class="mTop20">
+         <input type="button" id="btn_backSelectPrpduct" style="background-color:#aaa;" value="上一步" class="btn" />
+         <input type="button"  id="btn_payOrder" value="下一步" class="btn mLeft20" />
+
+     </div>
 </div>
 
 <div class="payProductOrder hide">
      aaaaaaaaaaaaaaa
 </div>
-
-<input type="hidden" id="productID"/>
-<input type="hidden" id="yearCount"/>
-<input type="hidden" id="userCount"/>
 
 
 

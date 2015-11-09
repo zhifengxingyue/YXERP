@@ -173,6 +173,13 @@ overflow: hidden;
 text-overflow:ellipsis;
 }
 
+.cardActivityName {
+width:200px;
+white-space:nowrap; 
+overflow: hidden; 
+text-overflow:ellipsis;
+}
+
 #CardMemberList li {
 float:left;
 color:#666;
