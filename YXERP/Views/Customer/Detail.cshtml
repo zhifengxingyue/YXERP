@@ -17,23 +17,29 @@
     <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")" class="ico-back left">
         返回客户列表
     </a>
-
-    <a class="">
-
-    </a>
 </div>
 <div class="content-body">
     <div class="title-body">
-        <div id="spCustomerName" class="left title"></div>
+        <div id="lblType" class="left customer-type mTop2"></div>
+        <div id="spCustomerName" class="left title mLeft10"></div>
+        <div id="updateCustomer" class="left ico-edit mLeft50 mTop2"></div>
         <div class="btn999 right" id="loseCustomer">丢失</div>
         <div class="btnccc right mRight10" id="closeCustomer">关闭</div>
         <div class="btn right" id="recoveryCustomer">恢复</div>
         <span class="right lineHeight25 mRight20" id="lblStatus"></span>
         <span class="right lineHeight25">客户状态：</span>
-        
     </div>
     <div class="customerinfo">
         <ul class="baseinfo">
+            <li>
+                <span>来源：</span>
+                <label id="lblSource"></label>
+            </li>
+            <li>
+                <span class="left">拥有者：</span>
+                <label class="left" id="lblOwner"></label>
+                <span title="更换拥有者" class="ico-change left" id="changeOwner"></span>
+            </li>
             <li>
                 <span>联系电话：</span>
                 <label id="lblMobile"></label>
@@ -66,6 +72,20 @@
                 <span>创建人：</span>
                 <label id="lblUser"></label>
             </li>
+            <li style="width:100%;">
+                <span>备注：</span>
+                <label id="lblReamrk"></label>
+            </li>
         </ul>
     </div>
+
+    <div class="tab-nav mTop20">
+        <ul class="tab-nav-ul">
+            <li class="hover" data-id="navRemark">备忘</li>
+            <li data-id="navContact">联系人</li>
+            <li data-id="navOrder">订单</li>
+            <li data-id="navLog">日志</li>
+        </ul>
+    </div>
+
 </div>

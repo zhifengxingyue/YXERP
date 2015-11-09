@@ -192,6 +192,8 @@
     <Content Include="modules\images\defaultavatar.png" />
     <Content Include="modules\images\ico-add-fff.png" />
     <Content Include="modules\images\ico-addhover.png" />
+    <Content Include="modules\images\ico-change.png" />
+    <Content Include="modules\images\ico-changehover.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
     <Content Include="modules\images\ico-dropdown-white.png" />
@@ -258,6 +260,7 @@
     <Content Include="modules\template\activity\activity_reply_list.html" />
     <Content Include="modules\template\common\choosemodules.html" />
     <Content Include="modules\template\customer\customers.html" />
+    <Content Include="modules\template\customer\customer-detail.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />

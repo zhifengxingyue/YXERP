@@ -92,7 +92,8 @@ namespace YXERP.Controllers
             }
             else
             {
-                bool bl = false; //new OrganizationBusiness().UpdateDepartment(model.DepartID, model.Name, model.Description, CurrentUser.UserID, OperateIP, CurrentUser.AgentID);
+                bool bl = new CustomBusiness().UpdateCustomer(model.CustomerID, model.Name, model.Type, model.IndustryID, model.Extent, model.CityCode, model.Address, model.MobilePhone, model.OfficePhone,
+                                                model.Email, model.Jobs, model.Description, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
                 if (!bl)
                 {
                     model.CustomerID = "";
@@ -127,6 +128,8 @@ namespace YXERP.Controllers
         public JsonResult GetCustomerByID(string customerid)
         {
             var model = CustomBusiness.BaseBusiness.GetCustomerByID(customerid, CurrentUser.AgentID, CurrentUser.ClientID);
+            model.Industrys = CloudSalesBusiness.Manage.IndustryBusiness.GetIndustrys();
+            model.Extents = CustomBusiness.GetExtents();
             JsonDictionary.Add("model", model);
             return new JsonResult
             {

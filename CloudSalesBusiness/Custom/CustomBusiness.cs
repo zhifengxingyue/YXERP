@@ -61,6 +61,7 @@ namespace CloudSalesBusiness
             if (ds.Tables["Customer"].Rows.Count > 0)
             {
                 model.FillData(ds.Tables["Customer"].Rows[0]);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
                 model.Source = SystemBusiness.BaseBusiness.GetCustomSourcesByID(model.SourceID, model.AgentID, model.ClientID);
                 model.Stage = SystemBusiness.BaseBusiness.GetCustomStageByID(model.StageID, model.AgentID, model.ClientID);
                 if (model.Extent > 0)
@@ -116,6 +117,17 @@ namespace CloudSalesBusiness
         #endregion
 
         #region 编辑/删除
+
+        public bool UpdateCustomer(string customerid, string name, int type, string industryid, int extent, string citycode, string address, string mobile, string officephone, string email, string jobs, string desc, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = CustomDAL.BaseProvider.UpdateCustomer(customerid, name, type, industryid, extent, citycode, address, mobile, officephone, email, jobs, desc, operateid, agentid, clientid);
+            if (!bl)
+            {
+                string msg = "编辑客户信息";
+                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, "", agentid, clientid);
+            }
+            return bl;
+        }
 
         public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string ip,string agentid, string clientid)
         {

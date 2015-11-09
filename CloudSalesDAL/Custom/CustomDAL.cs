@@ -96,6 +96,30 @@ namespace CloudSalesDAL
 
         #region 编辑/删除
 
+        public bool UpdateCustomer(string customerid, string name, int type, string industryid, int extent, string citycode, string address,
+                                   string mobile, string officephone, string email, string jobs, string desc, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@Name",name),
+                                     new SqlParameter("@Type",type),
+                                     new SqlParameter("@IndustryID" , industryid),
+                                     new SqlParameter("@Extent" , extent),
+                                     new SqlParameter("@CityCode" , citycode),
+                                     new SqlParameter("@Address" , address),
+                                     new SqlParameter("@MobilePhone" , mobile),
+                                     new SqlParameter("@OfficePhone" , officephone),
+                                     new SqlParameter("@Email" , email),
+                                     new SqlParameter("@Jobs" , jobs),
+                                     new SqlParameter("@Description" , desc),
+                                     new SqlParameter("@CreateUserID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateCustomer", paras, CommandType.StoredProcedure) > 0;
+        }
+
         public bool UpdateCustomerStage(string customerid, string stageid, string operateid, string agentid, string clientid)
         {
             SqlParameter[] paras = { 

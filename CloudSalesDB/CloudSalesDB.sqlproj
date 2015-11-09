@@ -221,4 +221,7 @@
   <ItemGroup>
     <None Include="Procedures\Custom\P_GetCustomerByID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_UpdateCustomer.sql" />
+  </ItemGroup>
 </Project>
