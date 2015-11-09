@@ -222,6 +222,10 @@
     <None Include="Procedures\Custom\P_GetCustomerByID.sql" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <None Include="Procedures\Manage\M_AddClientOrder.sql" />
+=======
     <None Include="Procedures\Custom\P_UpdateCustomer.sql" />
+>>>>>>> 3db904b3f7bea14703d366053c1e6781ad37a203
   </ItemGroup>
 </Project>

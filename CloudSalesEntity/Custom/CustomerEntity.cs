@@ -90,6 +90,14 @@ namespace CloudSalesEntity
         [Property("Lower")]
         public string ClientID { get; set; }
 
+        /// <summary>
+        /// 编辑加载列表用
+        /// </summary>
+        public List<Industry> Industrys { get; set; }
+        /// <summary>
+        /// 编辑加载列表用
+        /// </summary>
+        public List<ExtentEntity> Extents { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {

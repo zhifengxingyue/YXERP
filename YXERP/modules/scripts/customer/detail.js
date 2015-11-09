@@ -1,7 +1,10 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
         City = require("city"), CityObject,
-        Verify = require("verify"), VerifyObject;
+        Verify = require("verify"), VerifyObject,
+        doT = require("dot"),
+        ChooseUser = require("chooseuser"),
+        Easydialog = require("easydialog");
 
 
     var ObjectJS = {};
@@ -16,6 +19,7 @@
         });
         
     }
+
     ObjectJS.bindCustomerInfo = function (model) {
         $("#spCustomerName").html(model.Name);
         $("#lblMobile").text(model.MobilePhone || "--");
@@ -27,15 +31,28 @@
         $("#lblTime").text(model.CreateTime.toDate("yyyy-MM-dd hh:mm:ss"));
         $("#lblUser").text(model.CreateUser ? model.CreateUser.Name : "--");
 
+        $("#lblSource").text(model.Source ? model.Source.SourceName : "--");
+
+        $("#lblOwner").text(model.Owner ? model.Owner.Name : "--");
+        $("#changeOwner").data("userid", model.OwnerID);
+
+        $("#lblReamrk").text(model.Description);
+
         if (model.Type == 0) {
+            $("#lblType").html("个")
             $(".companyinfo").hide();
         } else {
+            $("#lblType").html("企")
             $(".companyinfo").show();
         }
     }
     //绑定事件
     ObjectJS.bindEvent = function (model) {
         var _self = this;
+
+        $("#updateCustomer").click(function () {
+            _self.editCustomer(model);
+        });
 
         if (model.Status == 1) {
             $("#lblStatus").text("正常").addClass("normal");
@@ -86,58 +103,108 @@
             $("#recoveryCustomer").hide();
         }
 
-        VerifyObject = Verify.createVerify({
-            element: ".verify",
-            emptyAttr: "data-empty",
-            verifyType: "data-type",
-            regText: "data-text"
-        });
-        CityObject = City.createCity({
-            elementID: "city"
-        });
-        //切换类型
-        $(".customtype").click(function () {
+        $("#changeOwner").click(function () {
             var _this = $(this);
-            if (!_this.hasClass("ico-checked")) {
-                $(".customtype").removeClass("ico-checked").addClass("ico-check");
-                _this.addClass("ico-checked").removeClass("ico-check");
-                if (_this.data("type") == 1) {
-                    $(".company").show();
-                } else {
-                    $(".company").hide();
+            ChooseUser.create({
+                title: "更换拥有者",
+                type: 1,
+                single: true,
+                callback: function (items) {
+                    if (items.length > 0) {
+                        if (_this.data("userid") != items[0].id) {
+                            Global.post("/Customer/UpdateCustomOwner", {
+                                userid: items[0].id,
+                                ids: model.CustomerID
+                            }, function (data) {
+                                if (data.status) {
+                                    _this.data("userid", items[0].id);
+                                    $("#lblOwner").text(items[0].name);
+                                }
+                            });
+                        } else {
+                            alert("请选择不同人员进行转移!");
+                        }
+                    }
                 }
-            }
+            });
         });
 
-        $("#name").focus();
+    }
+
+    ObjectJS.editCustomer = function (model) {
+        var _self = this;
+        doT.exec("template/customer/customer-detail.html", function (template) {
+            var innerText = template(model);
+            Easydialog.open({
+                container: {
+                    id: "show-model-detail",
+                    header: "编辑客户信息",
+                    content: innerText,
+                    yesFn: function () {
+                        if (!VerifyObject.isPass()) {
+                            return false;
+                        }
+                        var entity = {
+                            CustomerID: model.CustomerID,
+                            Name: $("#name").val().trim(),
+                            Type: $("#companyCustom").hasClass("ico-checked") ? 1 : 0,
+                            IndustryID: $("#industry").val().trim(),
+                            Extent: $("#extent").val().trim(),
+                            CityCode: CityObject.getCityCode(),
+                            Address: $("#address").val().trim(),
+                            MobilePhone: $("#contactMobile").val().trim(),
+                            Email: $("#email").val().trim(),
+                            Description: $("#remark").val().trim()
+                        };
+                        _self.saveModel(entity);
+                    },
+                    callback: function () {
+
+                    }
+                }
+            });
+
+            CityObject = City.createCity({
+                cityCode: model.CityCode,
+                elementID: "city"
+            });
+            VerifyObject = Verify.createVerify({
+                element: ".verify",
+                emptyAttr: "data-empty",
+                verifyType: "data-type",
+                regText: "data-text"
+            });
+
+            $("#extent").val(model.Extent);
+
+            $("#industry").val(model.IndustryID);
+
+            if (model.Type == 0) {
+                $(".edit-company").hide();
+            }
+            //切换类型
+            $(".customtype").click(function () {
+                var _this = $(this);
+                if (!_this.hasClass("ico-checked")) {
+                    $(".customtype").removeClass("ico-checked").addClass("ico-check");
+                    _this.addClass("ico-checked").removeClass("ico-check");
+                    if (_this.data("type") == 1) {
+                        $(".edit-company").show();
+                    } else {
+                        $(".edit-company").hide();
+                    }
+                }
+            });
+        });
     }
 
     //保存实体
-    ObjectJS.saveModel = function (activityid) {
+    ObjectJS.saveModel = function (model) {
         var _self = this;
 
-        var model = {
-            Name: $("#name").val().trim(),
-            Type: $("#companyCustom").hasClass("ico-checked") ? 1 : 0,
-            IndustryID: $("#industry").val().trim(),
-            ActivityID: activityid,
-            SourceID: $("#source").val().trim(),
-            Extent: $("#extent").val().trim(),
-            CityCode: CityObject.getCityCode(),
-            Address: $("#address").val().trim(),
-            ContactName: $("#contactName").val().trim(),
-            MobilePhone: $("#contactMobile").val().trim(),
-            Email: $("#email").val().trim(),
-            Jobs: $("#jobs").val().trim(),
-            Description: $("#remark").val().trim()
-        };
         Global.post("/Customer/SaveCustomer", { entity: JSON.stringify(model) }, function (data) {
             if (data.model.CustomerID) {
-                confirm("客户保存成功,是否继续添加客户?", function () {
-                    location.href = location.href;
-                }, function () {
-                    location.href = "/Customer/MyCustomer";
-                })
+                location.href = location.href;
                 
             } else {
                 alert("网络异常,请稍后重试!");

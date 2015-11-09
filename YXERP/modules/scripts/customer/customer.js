@@ -3,7 +3,7 @@
         doT = require("dot"),
         Verify = require("verify"), VerifyObject,
         Easydialog = require("easydialog"),
-        ChooseUser = require("chooseuser");;
+        ChooseUser = require("chooseuser");
     require("pager");
     require("mark");
 
@@ -275,14 +275,14 @@
                 return false;
             });
 
-            innerhtml.click(function () {
-                var _this = $(this).find(".check");
-                if (!_this.hasClass("ico-checked")) {
-                    _this.addClass("ico-checked").removeClass("ico-check");
-                } else {
-                    _this.addClass("ico-check").removeClass("ico-checked");
-                }
-            });
+            //innerhtml.click(function () {
+            //    var _this = $(this).find(".check");
+            //    if (!_this.hasClass("ico-checked")) {
+            //        _this.addClass("ico-checked").removeClass("ico-check");
+            //    } else {
+            //        _this.addClass("ico-check").removeClass("ico-checked");
+            //    }
+            //});
 
             innerhtml.find(".mark").markColor({
                 isAll: false,
@@ -317,7 +317,6 @@
             }
         });
     }
-
     //标记客户
     ObjectJS.markCustomer = function (ids, mark, callback) {
         if (mark < 0) {
