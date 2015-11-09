@@ -119,7 +119,7 @@ namespace CloudSalesBusiness
         /// <param name="pageCount"></param>
         /// <param name="clientID"></param>
         /// <returns></returns>
-        public static List<StorageDocAction> GetStorageDocAction(string docid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        public static List<StorageDocAction> GetStorageDocAction(string docid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid)
         {
             DataTable dt = CommonBusiness.GetPagerData("StorageDocAction", "*", "DocID='" + docid + "'", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
 
@@ -128,7 +128,7 @@ namespace CloudSalesBusiness
             {
                 StorageDocAction model = new StorageDocAction();
                 model.FillData(dr);
-                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, clientID);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
 
                 list.Add(model);
             }

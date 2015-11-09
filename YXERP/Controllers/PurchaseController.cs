@@ -53,7 +53,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult ConfirmPurchase()
         {
-            ViewBag.Items = OrdersBusiness.GetShoppingCart(EnumDocType.RK, CurrentUser.UserID);
+            ViewBag.Items = ShoppingCartBusiness.GetShoppingCart(EnumDocType.RK, CurrentUser.UserID);
             return View();
         }
         /// <summary>
@@ -193,7 +193,7 @@ namespace YXERP.Controllers
         public JsonResult GetStorageDocLog(string docid, int pageIndex, int totalCount)
         {
             int pageCount = 0;
-            List<StorageDocAction> list = OrdersBusiness.GetStorageDocAction(docid, 10, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            List<StorageDocAction> list = OrdersBusiness.GetStorageDocAction(docid, 10, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);

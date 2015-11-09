@@ -56,7 +56,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, EnumDocType ordertype, string remark)
         {
-            var bl = OrdersBusiness.AddShoppingCart(productid, detailsid, quantity, unitid, isBigUnit, ordertype, remark, CurrentUser.UserID, OperateIP);
+            var bl = ShoppingCartBusiness.AddShoppingCart(productid, detailsid, quantity, unitid, isBigUnit, ordertype, remark, CurrentUser.UserID, OperateIP);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
@@ -71,7 +71,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetShoppingCartCount(EnumDocType ordertype)
         {
-            var count = OrdersBusiness.GetShoppingCartCount(ordertype, CurrentUser.UserID);
+            var count = ShoppingCartBusiness.GetShoppingCartCount(ordertype, CurrentUser.UserID);
             JsonDictionary.Add("Quantity", count);
             return new JsonResult
             {
@@ -86,7 +86,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetShoppingCart(EnumDocType ordertype)
         {
-            var list = OrdersBusiness.GetShoppingCart(ordertype, CurrentUser.UserID);
+            var list = ShoppingCartBusiness.GetShoppingCart(ordertype, CurrentUser.UserID);
             JsonDictionary.Add("Items", list);
             return new JsonResult
             {
@@ -103,7 +103,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult UpdateCartQuantity(string autoid, int quantity)
         {
-            var bl = OrdersBusiness.UpdateCartQuantity(autoid, quantity, CurrentUser.UserID, CurrentUser.ClientID);
+            var bl = ShoppingCartBusiness.UpdateCartQuantity(autoid, quantity, CurrentUser.UserID);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
@@ -118,7 +118,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult DeleteCart(string autoid)
         {
-            var bl = OrdersBusiness.DeleteCart(autoid, CurrentUser.UserID, CurrentUser.ClientID);
+            var bl = ShoppingCartBusiness.DeleteCart(autoid, CurrentUser.UserID);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
@@ -126,8 +126,6 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
-
 
         #endregion
 

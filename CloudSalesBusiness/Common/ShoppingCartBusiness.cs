@@ -49,7 +49,7 @@ namespace CloudSalesBusiness
         /// <param name="autoid"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public static bool UpdateCartQuantity(string autoid, int quantity, string userid, string clientid)
+        public static bool UpdateCartQuantity(string autoid, int quantity, string userid)
         {
             return CommonBusiness.Update("ShoppingCart", "Quantity", quantity, "AutoID=" + autoid);
         }
@@ -61,7 +61,7 @@ namespace CloudSalesBusiness
         /// <param name="userid"></param>
         /// <param name="clientid"></param>
         /// <returns></returns>
-        public static bool DeleteCart(string autoid, string userid, string clientid)
+        public static bool DeleteCart(string autoid, string userid)
         {
             return CommonBusiness.Delete("ShoppingCart", "AutoID=" + autoid);
         }
