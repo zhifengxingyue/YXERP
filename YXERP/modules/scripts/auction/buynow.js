@@ -143,7 +143,7 @@
             $(".payOrder").children().eq(0).addClass("stepIcoActive");
             $(".payOrder").children().eq(1).addClass("stepDesActive");
 
-            
+            ObjectJS.addClientOrder();
         });
     }
 
@@ -268,5 +268,23 @@
         );
     }
 
+    //根据人数、年数生成客户订单
+    ObjectJS.addClientOrder = function () {
+        var _self = this;
+        Global.post("/Auction/AddClientOrder",
+            {
+                quantity: $("#UserCount").val(),
+                periodQuantity: $("#UserYear").val()
+            },
+            function (data) {
+                if (data.ID)
+                {
+                    
+                }
+
+
+            }
+        );
+    }
     module.exports = ObjectJS;
 });

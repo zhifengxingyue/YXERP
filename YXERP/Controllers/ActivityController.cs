@@ -245,7 +245,9 @@ namespace YXERP.Controllers
             members.Add(OrganizationBusiness.GetUserByUserID(m,CurrentUser.AgentID).MDUserID);
             }
 
-            string id = MD.SDK.TaskBusiness.AddTask(CurrentUser.MDToken, model.Name, ownerID, members, model.EndTime.Date.ToString(), string.Empty,model.Remark, out error_code);
+
+            string des = "点击前往：<a href='" + Request.Url.Authority + "/Activity/Detail/" + model.ActivityID + "' target='_blank'>活动详情</a>";
+            string id = MD.SDK.TaskBusiness.AddTask(CurrentUser.MDToken, model.Name, ownerID, members, model.EndTime.Date.ToString(), string.Empty,des, out error_code);
 
             JsonDictionary.Add("Result", !string.IsNullOrEmpty(id) ? 1 : 0);
             return new JsonResult
@@ -274,7 +276,9 @@ namespace YXERP.Controllers
                 members.Add(OrganizationBusiness.GetUserByUserID(m, CurrentUser.AgentID).MDUserID);
             }
 
-            string id = MD.SDK.CalendarBusiness.AddCalendar(CurrentUser.MDToken, model.Name, members,model.Address,model.Remark,model.BeginTime.Date.ToString(), model.EndTime.Date.ToString(), out error_code);
+            //string des = "点击前往：<a href='" + Request.Url.Authority + "/Activity/Detail/" + model.ActivityID + "' target='_blank'>活动详情</a>";
+            string des = "活动详情地址：" + Request.Url.Authority + "/Activity/Detail/" + model.ActivityID;
+            string id = MD.SDK.CalendarBusiness.AddCalendar(CurrentUser.MDToken, model.Name, members, des, model.Address, model.BeginTime.Date.ToString(), model.EndTime.Date.ToString(), out error_code);
 
             JsonDictionary.Add("Result", !string.IsNullOrEmpty(id) ? 1 : 0);
             return new JsonResult

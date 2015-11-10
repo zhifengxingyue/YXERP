@@ -17,6 +17,8 @@ namespace CloudSalesEntity.Manage
 
         public decimal Amount { get; set; }
 
+        public decimal RealAmount { get; set; }
+
         public int Status { get; set; }
 
         public string AgentID { get; set; }
@@ -27,6 +29,7 @@ namespace CloudSalesEntity.Manage
 
         public string CreateUserID { get; set; }
 
+        public List<ClientOrderDetail> Details { get; set; }
         /// <summary>
         /// 填充数据
         /// </summary>
