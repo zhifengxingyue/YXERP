@@ -357,7 +357,7 @@
         PosterIco = Upload.createUpload({
             element: "#Poster",
             buttonText: "选择海报图片",
-            className: "edit-brand",
+            className: "",
             data: { folder: '/Content/tempfile/', action: 'add', oldPath: "" },
             success: function (data, status) {
                 if (data.Items.length > 0) {
