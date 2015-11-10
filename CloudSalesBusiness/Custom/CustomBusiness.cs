@@ -98,6 +98,28 @@ namespace CloudSalesBusiness
             return model;
         }
 
+        public static List<ReplyEntity> GetReplys(string guid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        {
+            List<ReplyEntity> list = new List<ReplyEntity>();
+            string whereSql = " Status<>9 and GUID='" + guid + "' ";
+            DataTable dt = CommonBusiness.GetPagerData("CustomerReply", "*", whereSql, "AutoID", "CreateTime desc ", pageSize, pageIndex, out totalCount, out pageCount, false);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                ReplyEntity model = new ReplyEntity();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+                if (!string.IsNullOrEmpty(model.FromReplyID))
+                {
+                    model.FromReplyUser = OrganizationBusiness.GetUserByUserID(model.FromReplyUserID, model.FromReplyAgentID);
+                }
+                list.Add(model);
+            }
+
+            return list;
+
+        }
+
         #endregion
 
         #region 添加
@@ -112,6 +134,11 @@ namespace CloudSalesBusiness
                 id = "";
             }
             return id;
+        }
+
+        public static string CreateReply(string guid, string content, string userID, string agentID, string fromReplyID, string fromReplyUserID, string fromReplyAgentID)
+        {
+            return CustomDAL.BaseProvider.CreateReply(guid, content, userID, agentID, fromReplyID, fromReplyUserID, fromReplyAgentID);
         }
 
         #endregion
@@ -180,6 +207,12 @@ namespace CloudSalesBusiness
                 string msg = "标记客户颜色";
                 LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, mark.ToString(), agentid, clientid);
             }
+            return bl;
+        }
+
+        public bool DeleteReply(string replyid)
+        {
+            bool bl = CommonBusiness.Update("CustomerReply", "Status", 9, "ReplyID='" + replyid + "'");
             return bl;
         }
 

@@ -702,8 +702,6 @@
                         doT.exec("template/activity/activity_reply_list.html", function (template) {
                         var innerhtml = template(data.Items);
                         innerhtml = $(innerhtml);
-                        var innerhtml = template(data.Items);
-                        innerhtml = $(innerhtml);
 
                         $("#activityReplyList").html(innerhtml);
                         $("input[name='btn_replyByReply']").unbind("click").click(function () {
