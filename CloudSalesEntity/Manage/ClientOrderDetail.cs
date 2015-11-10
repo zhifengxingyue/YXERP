@@ -15,6 +15,8 @@ namespace CloudSalesEntity.Manage
 
         public decimal Price { get; set; }
 
+        public int Qunatity { get; set; }
+
         public int Status { get; set; }
 
         public DateTime CreateTime { get; set; }

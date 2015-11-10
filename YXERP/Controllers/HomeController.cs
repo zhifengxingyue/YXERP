@@ -25,7 +25,7 @@ namespace YXERP.Controllers
             return View();
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string ReturnUrl)
         {
             if (Session["ClientManager"] != null)
             {
@@ -49,6 +49,8 @@ namespace YXERP.Controllers
                     ViewBag.UserName = cook["username"];
                 }
             }
+
+            ViewBag.ReturnUrl = ReturnUrl??string.Empty;
             return View();
         }
 
@@ -75,13 +77,16 @@ namespace YXERP.Controllers
         /// 明道登录
         /// </summary>
         /// <returns></returns>
-        public ActionResult MDLogin()
+        public ActionResult MDLogin(string ReturnUrl)
         {
+            if(string.IsNullOrEmpty(ReturnUrl))
             return Redirect(OauthBusiness.GetAuthorizeUrl());
+            else
+                return Redirect(OauthBusiness.GetAuthorizeUrl() + "&state=" + ReturnUrl);
         }
 
         //明道登录回掉
-        public ActionResult MDCallBack(string code)
+        public ActionResult MDCallBack(string code, string state)
         {
             string operateip = string.IsNullOrEmpty(Request.Headers.Get("X-Real-IP")) ? Request.UserHostAddress : Request.Headers["X-Real-IP"];
             var user = OauthBusiness.GetMDUser(code);
@@ -98,7 +103,10 @@ namespace YXERP.Controllers
                         if (string.IsNullOrEmpty(model.Avatar)) model.Avatar = user.user.avatar;
 
                         Session["ClientManager"] = model;
-                        return Redirect("/Home/Index");
+                        if (string.IsNullOrEmpty(state))
+                            return Redirect("/Home/Index");
+                        else
+                            return Redirect(state);
                     }
                 }
                 else
@@ -125,7 +133,10 @@ namespace YXERP.Controllers
                                 if (string.IsNullOrEmpty(current.Avatar)) current.Avatar = user.user.avatar;
                                 Session["ClientManager"] = current;
 
+                                if(string.IsNullOrEmpty(state))
                                 return Redirect("/Home/Index");
+                                else
+                                    return Redirect(state);
                             }
 
                         }
@@ -140,7 +151,10 @@ namespace YXERP.Controllers
 
                                 Session["ClientManager"] = current;
 
-                                return Redirect("/Home/Index");
+                                if (string.IsNullOrEmpty(state))
+                                    return Redirect("/Home/Index");
+                                else
+                                    return Redirect(state);
                             }
                         }
                     }

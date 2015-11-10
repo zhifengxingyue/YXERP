@@ -14,6 +14,8 @@
     <script type="text/javascript">
         seajs.use(["scripts/home"], function (home) {
             home.initLogin();
+
+
         });
     </script>
 </head>
@@ -42,7 +44,7 @@
                 <div class="other-account">
                     <div class="other-text">使用其他账号登录</div>
                     <div class="accounts">
-                       <a class="mingdao" href="/Home/MDLogin"></a>
+                       <a class="mingdao" href="/Home/MDLogin?ReturnUrl=@ViewBag.ReturnUrl"></a>
                     </div>
                 </div>
              

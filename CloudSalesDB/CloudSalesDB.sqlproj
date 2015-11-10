@@ -224,4 +224,10 @@
   <ItemGroup>
     <None Include="Procedures\Custom\P_UpdateCustomer.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Manage\M_AddClientOrder.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Manage\M_AddClientOrderDetail.sql" />
+  </ItemGroup>
 </Project>

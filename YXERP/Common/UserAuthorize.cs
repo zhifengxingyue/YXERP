@@ -22,7 +22,7 @@ namespace YXERP.Common
             base.OnAuthorization(filterContext);
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
-                filterContext.Result = new RedirectResult("/Home/Login");
+                filterContext.Result = new RedirectResult("/Home/Login?ReturnUrl="+HttpContext.Current.Request.Url);
             }
         }
     }
