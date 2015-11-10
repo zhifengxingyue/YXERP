@@ -26,7 +26,7 @@ select @ActivityID=ActivityID from Customer where CustomerID=@CustomerID
 
 select * from Customer where CustomerID=@CustomerID
 
-select * from Contact where CustomerID=@CustomerID and Status<>9
+select * from Contact where 1<>1 and CustomerID=@CustomerID and Status<>9
 
 select * from Activity where ActivityID=@ActivityID
  

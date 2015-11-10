@@ -68,6 +68,7 @@
 .stageitems { width:100%; overflow:auto; }
 .stageitems li{ width:33%; height:25px; min-width:200px; line-height:25px; float:left; color:#666; text-indent:5px; }
 
+.nav-partdiv { margin-bottom:100px; }
 
 /*日志样式*/
 .log-body { width:99%; }

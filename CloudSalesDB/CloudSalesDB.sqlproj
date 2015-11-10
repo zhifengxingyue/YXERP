@@ -230,4 +230,10 @@
   <ItemGroup>
     <None Include="Procedures\Manage\M_AddClientOrderDetail.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_CreateContact.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_UpdateContact.sql" />
+  </ItemGroup>
 </Project>

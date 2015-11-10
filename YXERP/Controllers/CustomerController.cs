@@ -297,6 +297,64 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult GetContacts(string customerid)
+        {
+            var list = CustomBusiness.BaseBusiness.GetContactsByCustomerID(customerid, CurrentUser.AgentID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SaveContact(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ContactEntity model = serializer.Deserialize<ContactEntity>(entity);
+
+            if (string.IsNullOrEmpty(model.ContactID))
+            {
+                model.ContactID = new CustomBusiness().CreateContact(model.CustomerID, model.Name, model.CityCode, model.Address, model.MobilePhone, model.OfficePhone, model.Email, model.Jobs, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            }
+            else
+            {
+                bool bl = new CustomBusiness().UpdateContact(model.ContactID, model.CustomerID, model.Name, model.CityCode, model.Address, model.MobilePhone, model.OfficePhone, model.Email, model.Jobs, model.Description, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+                if (!bl)
+                {
+                    model.ContactID = "";
+                }
+            }
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetContactByID(string id)
+        {
+            var model = CustomBusiness.BaseBusiness.GetContactByID(id);
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteContact(string id)
+        {
+            bool bl = CustomBusiness.BaseBusiness.DeleteContact(id, OperateIP, CurrentUser.UserID, CurrentUser.AgentID);
+            JsonDictionary.Add("status", bl );
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #region 讨论
 
         public JsonResult SavaReply(string entity)

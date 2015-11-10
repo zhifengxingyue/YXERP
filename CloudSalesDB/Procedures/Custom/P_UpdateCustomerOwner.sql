@@ -35,6 +35,7 @@ begin
 end
 
 update Customer set OwnerID=@UserID,AgentID=@AgentID,AllocationTime=isnull(AllocationTime,getdate()) where CustomerID=@CustomerID and ClientID=@ClientID
+update Contact set OwnerID=@UserID,AgentID=@AgentID where CustomerID=@CustomerID and ClientID=@ClientID
 
 set @Err+=@@error
 

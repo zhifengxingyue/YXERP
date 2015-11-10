@@ -60,6 +60,22 @@ namespace CloudSalesDAL
             return GetDataSet("P_GetCustomerByID", paras, CommandType.StoredProcedure, "Customer|Contact|Activity");
         }
 
+        public DataTable GetContactsByCustomerID(string customerid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@CustomerID",customerid),
+                                   };
+            return GetDataTable("select * from Contact where CustomerID=@CustomerID and Status<>9 ", paras, CommandType.Text);
+        }
+
+        public DataTable GetContactByID(string id)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@ContactID",id),
+                                   };
+            return GetDataTable("select * from Contact where ContactID=@ContactID", paras, CommandType.Text);
+        }
+
         #endregion
 
         #region 添加
@@ -111,6 +127,28 @@ namespace CloudSalesDAL
 
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0 ? replyID : string.Empty;
         }
+
+        public bool CreateContact(string contactid, string customerid, string name, string citycode, string address, string mobile, string officephone, string email, string jobs, string desc, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ContactID",contactid),
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@Name",name),
+                                     new SqlParameter("@CityCode" , citycode),
+                                     new SqlParameter("@Address" , address),
+                                     new SqlParameter("@MobilePhone" , mobile),
+                                     new SqlParameter("@OfficePhone" , officephone),
+                                     new SqlParameter("@Email" , email),
+                                     new SqlParameter("@Jobs" , jobs),
+                                     new SqlParameter("@Description" , desc),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_CreateContact", paras, CommandType.StoredProcedure) > 0;
+        }
+
 
         #endregion
 
@@ -177,6 +215,27 @@ namespace CloudSalesDAL
                                    };
 
             return ExecuteNonQuery("P_UpdateCustomerAgent", paras, CommandType.StoredProcedure) > 0;
+        }
+
+        public bool UpdateContact(string contactid, string customerid, string name, string citycode, string address, string mobile, string officephone, string email, string jobs, string desc, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@ContactID",contactid),
+                                     new SqlParameter("@CustomerID",customerid),
+                                     new SqlParameter("@Name",name),
+                                     new SqlParameter("@CityCode" , citycode),
+                                     new SqlParameter("@Address" , address),
+                                     new SqlParameter("@MobilePhone" , mobile),
+                                     new SqlParameter("@OfficePhone" , officephone),
+                                     new SqlParameter("@Email" , email),
+                                     new SqlParameter("@Jobs" , jobs),
+                                     new SqlParameter("@Description" , desc),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateContact", paras, CommandType.StoredProcedure) > 0;
         }
 
         #endregion

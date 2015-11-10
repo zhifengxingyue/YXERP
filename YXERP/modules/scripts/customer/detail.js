@@ -1,7 +1,7 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
-        City = require("city"), CityObject,
-        Verify = require("verify"), VerifyObject,
+        City = require("city"), CityObject, CityContact,
+        Verify = require("verify"), VerifyObject, VerifyContact,
         doT = require("dot"),
         ChooseUser = require("chooseuser"),
         Easydialog = require("easydialog");
@@ -11,7 +11,7 @@
     //初始化
     ObjectJS.init = function (customerid) {
         var _self = this;
-
+        _self.customerid = customerid;
         _self.bindStyle();
 
         Global.post("/Customer/GetCustomerByID", { customerid: customerid }, function (data) {
@@ -22,6 +22,8 @@
         });
 
         _self.initTalk(customerid);
+
+        $("#addContact").hide();
         //$(window).resize(function () {
         //    _self.bindStyle();
         //});
@@ -82,6 +84,14 @@
     //绑定事件
     ObjectJS.bindEvent = function (model) {
         var _self = this;
+
+        $(document).click(function (e) {
+            //隐藏下拉
+            if (!$(e.target).parents().hasClass("dropdown") && !$(e.target).hasClass("dropdown")) {
+                $(".dropdown-ul").hide();
+            }
+        })
+
         //编辑客户信息
         $("#updateCustomer").click(function () {
             _self.editCustomer(model);
@@ -188,6 +198,15 @@
             });
         });
 
+        //企业客户
+        if (model.Type == 1) {
+            $("#addContact").click(function () {
+                _self.addContact();
+            });
+        } else {
+            $(".tab-nav-ul li[data-id='navContact']").remove();
+        }
+
         //切换模块
         $(".tab-nav-ul li").click(function () {
             var _this = $(this);
@@ -196,10 +215,41 @@
             $(".nav-partdiv").hide();
             $("#" + _this.data("id")).show();
 
+            $("#addContact").hide();
+
             if (_this.data("id") == "navLog" && (!_this.data("first") || _this.data("first") == 0)) {
                 _this.data("first", "1");
                 _self.getLogs(model.CustomerID, 1);
             }
+            else if (_this.data("id") == "navContact" ) {
+                $("#addContact").show();
+                if ((!_this.data("first") || _this.data("first") == 0)) {
+                    _this.data("first", "1");
+                    _self.getContacts(model.CustomerID);
+                }
+            }
+        });
+
+
+        $("#editContact").click(function () {
+            var _this = $(this);
+            Global.post("/Customer/GetContactByID", { id: _this.data("id") }, function (data) {
+                _self.addContact(data.model);
+            });
+        });
+
+        //删除联系人
+        $("#deleteContact").click(function () {
+            var _this = $(this);
+            confirm("确认删除此联系人吗？", function () {
+                Global.post("/Customer/DeleteContact", { id: _this.data("id") }, function (data) {
+                    if (data.status) {
+                        _self.getContacts(_self.customerid);
+                    } else {
+                        alert("网络异常,请稍后重试!");
+                    }
+                });
+            });
         });
 
     }
@@ -237,6 +287,98 @@
                     _self.getLogs(customerid, page);
                 }
             });
+        });
+    }
+
+    ObjectJS.getContacts = function (customerid) {
+        var _self = this;
+        $("#navContact .tr-header").nextAll().remove();
+        Global.post("/Customer/GetContacts", {
+            customerid: customerid
+        }, function (data) {
+            doT.exec("template/customer/contacts.html", function (template) {
+                var innerhtml = template(data.items);
+                innerhtml = $(innerhtml);
+
+                innerhtml.find(".dropdown").click(function () {
+                    var _this = $(this);
+                    var position = _this.find(".ico-dropdown").position();
+                    $(".dropdown-ul li").data("id", _this.data("id"));
+                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 40 }).show().mouseleave(function () {
+                        $(this).hide();
+                    });
+                    return false;
+                });
+
+                $("#navContact .tr-header").after(innerhtml);
+            });
+        });
+    }
+
+    ObjectJS.addContact = function (model) {
+        var _self = this;
+        doT.exec("template/customer/contact-detail.html", function (template) {
+            var innerText = template();
+            Easydialog.open({
+                container: {
+                    id: "show-contact-detail",
+                    header: !model ? "添加联系人" : "编辑联系人",
+                    content: innerText,
+                    yesFn: function () {
+                        if (!VerifyContact.isPass()) {
+                            return false;
+                        }
+                        var entity = {
+                            ContactID: model ? model.ContactID : "",
+                            CustomerID: _self.customerid,
+                            Name: $("#name").val().trim(),
+                            CityCode: CityContact.getCityCode(),
+                            Address: $("#address").val().trim(),
+                            MobilePhone: $("#contactMobile").val().trim(),
+                            Email: $("#email").val().trim(),
+                            Jobs: $("#jobs").val().trim(),
+                            Description: $("#remark").val().trim()
+                        };
+                        _self.saveContact(entity);
+                    },
+                    callback: function () {
+
+                    }
+                }
+            });
+
+            $("#name").focus();
+
+            if (model) {
+                $("#name").val(model.Name);
+                $("#jobs").val(model.Jobs);
+                $("#contactMobile").val(model.MobilePhone);
+                $("#email").val(model.Email);
+                $("#address").val(model.Address);
+                $("#remark").val(model.Description);
+            }
+
+            CityContact = City.createCity({
+                cityCode: model ? model.CityCode : "",
+                elementID: "city"
+            });
+            VerifyContact = Verify.createVerify({
+                element: ".verify",
+                emptyAttr: "data-empty",
+                verifyType: "data-type",
+                regText: "data-text"
+            });
+        });
+    }
+    ObjectJS.saveContact = function (model) {
+        var _self = this;
+
+        Global.post("/Customer/SaveContact", { entity: JSON.stringify(model) }, function (data) {
+            if (data.model.ContactID) {
+                _self.getContacts(model.CustomerID);
+            } else {
+                alert("网络异常,请稍后重试!");
+            }
         });
     }
     //编辑信息

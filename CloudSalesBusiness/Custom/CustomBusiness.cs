@@ -83,17 +83,45 @@ namespace CloudSalesBusiness
                     model.Activity.FillData(ds.Tables["Activity"].Rows[0]);
                 }
 
-                if (ds.Tables["Contact"].Rows.Count > 0)
-                {
-                    model.Contacts = new List<ContactEntity>();
-                    foreach (DataRow dr in ds.Tables["Contact"].Rows)
-                    {
-                        ContactEntity con = new ContactEntity();
-                        con.FillData(dr);
-                        model.Contacts.Add(con);
-                    }
+                //if (ds.Tables["Contact"].Rows.Count > 0)
+                //{
+                //    model.Contacts = new List<ContactEntity>();
+                //    foreach (DataRow dr in ds.Tables["Contact"].Rows)
+                //    {
+                //        ContactEntity con = new ContactEntity();
+                //        con.FillData(dr);
+                //        model.Contacts.Add(con);
+                //    }
                     
-                }
+                //}
+            }
+            return model;
+        }
+
+        public List<ContactEntity> GetContactsByCustomerID(string customerid, string agentid)
+        {
+            List<ContactEntity> list = new List<ContactEntity>();
+
+            DataTable dt = CustomDAL.BaseProvider.GetContactsByCustomerID(customerid);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ContactEntity model = new ContactEntity();
+                model.FillData(dr);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+                model.City = CommonBusiness.Citys.Where(m => m.CityCode == model.CityCode).FirstOrDefault();
+                list.Add(model);
+            }
+
+            return list;
+        }
+
+        public ContactEntity GetContactByID(string contactid)
+        {
+            ContactEntity model = new ContactEntity();
+            DataTable dt = CustomDAL.BaseProvider.GetContactByID(contactid);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
             }
             return model;
         }
@@ -139,6 +167,17 @@ namespace CloudSalesBusiness
         public static string CreateReply(string guid, string content, string userID, string agentID, string fromReplyID, string fromReplyUserID, string fromReplyAgentID)
         {
             return CustomDAL.BaseProvider.CreateReply(guid, content, userID, agentID, fromReplyID, fromReplyUserID, fromReplyAgentID);
+        }
+
+        public string CreateContact(string customerid,string name, string citycode, string address, string mobile, string officephone, string email, string jobs, string desc, string operateid, string agentid, string clientid)
+        {
+            string id = Guid.NewGuid().ToString();
+            bool bl = CustomDAL.BaseProvider.CreateContact(id, customerid, name, citycode, address, mobile, officephone, email, jobs, desc, operateid, agentid, clientid);
+            if (!bl)
+            {
+                id = "";
+            }
+            return id;
         }
 
         #endregion
@@ -207,6 +246,19 @@ namespace CloudSalesBusiness
                 string msg = "标记客户颜色";
                 LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, mark.ToString(), agentid, clientid);
             }
+            return bl;
+        }
+
+        public bool UpdateContact(string contactid, string customerid, string name, string citycode, string address, string mobile, string officephone, string email, string jobs, string desc, string operateid, string agentid, string clientid)
+        {
+            bool bl = CustomDAL.BaseProvider.UpdateContact(contactid, customerid, name, citycode, address, mobile, officephone, email, jobs, desc, operateid, agentid, clientid);
+
+            return bl;
+        }
+
+        public bool DeleteContact(string contactid, string ip, string userid, string agentid)
+        {
+            bool bl = CommonBusiness.Update("Contact", "Status", 9, "ContactID='" + contactid + "'");
             return bl;
         }
 
