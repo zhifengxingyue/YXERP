@@ -545,10 +545,10 @@ namespace CloudSalesBusiness
             return "";
         }
 
-        public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
+        public string AddWareHouse(string warecode, string name, string shortname, string citycode, int status, string depotcode, string depotname, string description, string operateid, string clientid)
         {
             var id = Guid.NewGuid().ToString();
-            if (SystemDAL.BaseProvider.AddWareHouse(id, warecode, name, shortname, citycode, status, description, operateid, clientid))
+            if (SystemDAL.BaseProvider.AddWareHouse(id, warecode, name, shortname, citycode, status, depotcode, depotname, description, operateid, clientid))
             {
                 return id.ToString();
             }

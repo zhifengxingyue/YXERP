@@ -236,4 +236,7 @@
   <ItemGroup>
     <None Include="Procedures\Custom\P_UpdateContact.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\System\P_CreateWareHouse.sql" />
+  </ItemGroup>
 </Project>

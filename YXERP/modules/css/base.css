@@ -130,10 +130,10 @@ select option{ padding:2px; }
 .btn {  padding:5px 10px; background-color:#4a98e7; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; line-height:18px; }
 .btn:hover { background-color:#2F73B8; }
 
-.btnccc {  padding:5px 10px; background-color:#ccc; color:#333; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.btnccc {  padding:5px 10px; background-color:#ccc; color:#333; border:none; cursor:pointer; display:inline-block; border-radius:2px; line-height:18px; }
 .btnccc:hover { background-color:#999; color:#fff; }
 
-.btn999 {  padding:5px 10px; background-color:#999; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; }
+.btn999 {  padding:5px 10px; background-color:#999; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:2px; line-height:18px; }
 .btn999:hover { background-color:#666; color:#fff; }
 
 

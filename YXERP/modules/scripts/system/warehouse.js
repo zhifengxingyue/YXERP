@@ -88,7 +88,9 @@ define(function (require, exports, module) {
                             ShortName: $("#shortName").val().trim(),
                             CityCode: CityObj.getCityCode(),
                             Status: $("#warehouseStatus").prop("checked") ? 1 : 0,
-                            Description: $("#description").val()
+                            DepotCode: $("#depotCode").val().trim(),
+                            DepotName: $("#depotName").val().trim(),
+                            Description: $("#description").val().trim()
                         };
                         _self.saveModel(entity);
                     },
@@ -97,6 +99,11 @@ define(function (require, exports, module) {
                     }
                 }
             });
+
+            if (model) {
+                $(".depot").remove();
+            }
+
             VerifyObject = Verify.createVerify({
                 element: ".verify",
                 emptyAttr: "data-empty",

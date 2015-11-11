@@ -253,10 +253,8 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
-        public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
+        public bool AddWareHouse(string id, string warecode, string name, string shortname, string citycode, int status, string depotcode, string depotname, string description, string operateid, string clientid)
         {
-            string sqlText = "insert into WareHouse(WareID,WareCode,Name,ShortName,CityCode,Status,Description,CreateUserID,ClientID) " +
-                                            " values(@WareID,@WareCode,@Name,@ShortName,@CityCode,@Status,@Description,@CreateUserID,@ClientID) ";
             SqlParameter[] paras = { 
                                      new SqlParameter("@WareID" , id),
                                      new SqlParameter("@WareCode" , warecode),
@@ -264,11 +262,13 @@ namespace CloudSalesDAL
                                      new SqlParameter("@ShortName" , shortname),
                                      new SqlParameter("@CityCode" , citycode),
                                      new SqlParameter("@Status" , status),
+                                     new SqlParameter("@DepotCode" , depotcode),
+                                     new SqlParameter("@DepotName" , depotname),
                                      new SqlParameter("@Description" , description),
                                      new SqlParameter("@CreateUserID" , operateid),
                                      new SqlParameter("@ClientID" , clientid)
                                    };
-            return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
+            return ExecuteNonQuery("P_CreateWareHouse", paras, CommandType.StoredProcedure) > 0;
         }
 
         public bool AddDepotSeat(string id, string depotcode, string wareid, string name, int status, string description, string operateid, string clientid)

@@ -4,6 +4,7 @@
         Verify = require("verify"), VerifyObject,
         Easydialog = require("easydialog"),
         ChooseUser = require("chooseuser");
+    require("pager");
 
     var Model = {}, CacheRole = [];
 
@@ -172,6 +173,28 @@
         $(".tr-header").nextAll().remove();
         Global.post("/Organization/GetUsers", { filter: JSON.stringify(ObjectJS.Params) }, function (data) {
             _self.bindList(data.items);
+
+            $("#pager").paginate({
+                total_count: data.totalCount,
+                count: data.pageCount,
+                start: ObjectJS.Params.PageIndex,
+                display: 5,
+                border: true,
+                border_color: '#fff',
+                text_color: '#333',
+                background_color: '#fff',
+                border_hover_color: '#ccc',
+                text_hover_color: '#000',
+                background_hover_color: '#efefef',
+                rotate: true,
+                images: false,
+                mouse: 'slide',
+                onChange: function (page) {
+                    ObjectJS.Params.PageIndex = page;
+                    _self.getList();
+                }
+            });
+
         });
     }
     //加载列表

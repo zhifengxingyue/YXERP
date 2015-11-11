@@ -162,6 +162,10 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        public string DepotCode { get; set; }
+
+        public string DepotName { get; set; }
+
         public CityEntity City { get; set; }
 
         public void FillData(System.Data.DataRow dr)
