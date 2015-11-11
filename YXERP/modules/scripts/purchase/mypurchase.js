@@ -97,7 +97,7 @@ define(function (require, exports, module) {
                     }
 
                     var position = _this.find(".ico-dropdown").position();
-                    $(".dropdown-ul").css({ "top": position.top + 15, "left": position.left }).show().mouseleave(function () {
+                    $(".dropdown-ul").css({ "top": position.top + 15, "left": position.left-40 }).show().mouseleave(function () {
                         $(this).hide();
                     });
                     _self.docid = _this.data("id");

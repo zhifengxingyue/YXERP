@@ -14,36 +14,26 @@
     <span class="header-title left">采购入库-确认订单信息</span>
 </div>
 <div class="content-body">
-    <table class="confirm-list">
+    <table class="table-list">
         <tr class="tr-header">
-            <td>产品名称</td>
-            <td>规格</td>
-            <td style="width:80px;" class="center">单位</td>
-            <td>批次</td>
-            <td>采购价</td>
+            <td class="tLeft">产品名称</td>
+            <td class="tLeft">规格</td>
+            <td class="center width80">单位</td>
+            <td class="tLeft">批次</td>
+            <td class="tLeft">采购价</td>
             <td class="center">数量</td>
             <td class="tRight">小计</td>
-            <td style="width:80px;" class="center">删除</td>
-        </tr>
-        <tr class="line">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="center width80">删除</td>
         </tr>
         @foreach (var model in (List<CloudSalesEntity.ProductDetail>)ViewBag.Items)
         { 
             <tr class="item cart-item" data-autoid="@(model.AutoID)" data-id="@(model.ProductDetailID)" >
-                <td><a href="/Products/ChooseDetail?pid=@(model.ProductID)&did=@(model.ProductDetailID)&type=1" target="_blank"><img src="@(model.ImgS)" /> @(model.ProductName)</a></td>
+                <td><a href="/Products/ChooseDetail?pid=@(model.ProductID)&did=@(model.ProductDetailID)&type=1" target="_blank"><img class="width30 middle" src="@(model.ImgS)" /> @(model.ProductName)</a></td>
                 <td>@(model.Description)</td>
                 <td class="center">@(model.UnitName)</td>
                 <td><input  type="text" class="batch" value="@(DateTime.Now.ToString("yyyyMMdd"))" /></td>
-                <td class="tr-price"><input type="text" data-value="@(model.Price.ToString("f2"))" class="price" value="@(model.Price.ToString("f2"))" /></td>
-                <td class="center tr-quantity"><input  type="text" data-id="@(model.AutoID)" data-value="@(model.Quantity)" class="quantity" value="@(model.Quantity)" /></td>
+                <td class="tr-price"><input type="text" data-value="@(model.Price.ToString("f2"))" class="price width80" value="@(model.Price.ToString("f2"))" /></td>
+                <td class="center tr-quantity"><input  type="text" data-id="@(model.AutoID)" data-value="@(model.Quantity)" class="quantity width50" value="@(model.Quantity)" /></td>
                 <td class="tRight amount">@((model.Price*model.Quantity).ToString("f2"))</td>
                 <td class="center">
                     <a class="ico-del" href="javascript:void(0)" title="删除" data-id="@(model.AutoID)"></a>
@@ -63,7 +53,7 @@
     </table>
     <div class="bottom-div">
         <span class="left">备注：</span>
-        <textarea id="remark"></textarea>
+        <textarea id="remark" class="width300"></textarea>
         <input type="button" class="btnconfirm right" id="btnconfirm" value="提交采购单" />
         <a href="Purchase" class="goback right">返回选择产品</a>
     </div>

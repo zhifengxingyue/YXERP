@@ -22,32 +22,23 @@
         <li>总金额：@(model.TotalMoney.ToString("f2"))</li>
         <li>状态：@(model.StatusStr)</li>
     </ul>
-    <div class="remark clear">
+    <div class="clear pTop10">
         备注：@(model.Remark)
     </div>
-    <table class="item-list">
+    <table class="table-list mTop50">
         <tr class="tr-header">
-            <td>产品名称</td>
-            <td>规格</td>
-            <td style="width:80px;" class="center">单位</td>
-            <td>批次</td>
+            <td class="tLeft">产品名称</td>
+            <td class="tLeft">规格</td>
+            <td class="center width80">单位</td>
+            <td class="tLeft">批次</td>
             <td class="tRight">采购价</td>
             <td class="center">数量</td>
             <td class="tRight">小计</td>
         </tr>
-        <tr class="line">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
         @foreach (var item in model.Details)
         { 
             <tr class="item" >
-                <td><a href="/Products/ChooseDetail?pid=@(item.ProductID)&did=@(item.ProductDetailID)&type=1" target="_blank"><img src="@(item.Imgs)" /> @(item.ProductName)</a></td>
+                <td><a href="/Products/ChooseDetail?pid=@(item.ProductID)&did=@(item.ProductDetailID)" target="_blank"> @(item.ProductName)</a></td>
                 <td>@(item.Remark)</td>
                 <td class="center">@(item.UnitName)</td>
                 <td>@(item.BatchCode)</td>
@@ -66,7 +57,7 @@
             <td class="tRight">@(model.TotalMoney.ToString("f2"))</td>
         </tr>
     </table>
-    <div class="tab-nav">
+    <div class="tab-nav mTop30">
         <ul class="tab-nav-ul">
             <li class="hover">操作日志</li>
         </ul>

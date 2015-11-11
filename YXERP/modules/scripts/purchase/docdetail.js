@@ -52,7 +52,7 @@ define(function (require, exports, module) {
                 rotate: true,
                 images: false,
                 mouse: 'slide',
-                float: "normal",
+                float: "left",
                 onChange: function (page) {
                     Params.pageIndex = page;
                     _self.getList();
