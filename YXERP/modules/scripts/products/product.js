@@ -190,6 +190,8 @@ define(function (require, exports, module) {
             Weight: $("#weight").val(),
             IsNew: $("#isNew").prop("checked") ? 1 : 0,
             IsRecommend: $("#isRecommend").prop("checked") ? 1 : 0,
+            IsAllow: $("#isAllow").prop("checked") ? 1 : 0,
+            IsAutoSend: $("#isAutoSend").prop("checked") ? 1 : 0,
             EffectiveDays: $("#effectiveDays").val(),
             DiscountValue:1,
             ProductImage: _self.ProductImage,
@@ -478,7 +480,7 @@ define(function (require, exports, module) {
         var _self = this;
         _self.ProductID = model.ProductID;
         $("#productName").val(model.ProductName);
-        $("#productCode").text(model.ProductCode);
+        $("#productCode").val(model.ProductCode);
         $("#generalName").val(model.GeneralName);
         $("#shapeCode").val(model.ShapeCode);
 
@@ -501,7 +503,8 @@ define(function (require, exports, module) {
         $("#status").prop("checked", model.Status == 1);
         $("#isNew").prop("checked", model.IsNew == 1);
         $("#isRecommend").prop("checked", model.IsRecommend == 1);
-
+        $("#isAllow").prop("checked", model.IsAllow == 1);
+        $("#isAutoSend").prop("checked", model.IsAutoSend == 1);
         $("#productImg").attr("src", model.ProductImage);
         
         _self.ProductImage = model.ProductImage;

@@ -230,15 +230,15 @@ define(function (require, exports, module) {
     ObjectJS.bindElementEvent = function (element) {
         var _self = this;
 
-        element.mouseover(function () {
-            var _this = $(this);
-            _this.find(".ddlcategory").addClass("ico-dropdown").html("");
-        });
-        //鼠标悬浮
-        element.mouseout(function () {
-            var _this = $(this);
-            _this.find(".ddlcategory").removeClass("ico-dropdown").html(">");
-        });
+        //element.mouseover(function () {
+        //    var _this = $(this);
+        //    _this.find(".ddlcategory").addClass("ico-dropdown").html("");
+        //});
+        ////鼠标悬浮
+        //element.mouseout(function () {
+        //    var _this = $(this);
+        //    _this.find(".ddlcategory").removeClass("ico-dropdown").html("");
+        //});
 
         //下拉事件
         element.find(".ddlcategory").click(function () {
@@ -249,7 +249,7 @@ define(function (require, exports, module) {
             $("#ddlCategory").css({ "top": position.top + 20, "left": position.left }).show().mouseleave(function () {
                 $(this).hide();
             });
-
+            return false;
         });
 
         //点击分类名称事件（展开下级和属性）

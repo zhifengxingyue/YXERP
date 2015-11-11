@@ -302,6 +302,12 @@ namespace CloudSalesEntity
 			set{ _discountvalue=value;}
 			get{return _discountvalue;}
 		}
+
+
+        public int IsAllow { get; set; }
+
+        public int IsAutoSend { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>

@@ -35,16 +35,16 @@ define(function (require, exports, module) {
     //元素绑定事件
     ObjectJS.bindElementEvent = function (element) {
         var _self = this;
-        //鼠标悬浮
-        element.mouseover(function () {
-            var _this = $(this);
-            _this.find(".add-product").addClass("ico-add").html("添加");
-        });
-        //鼠标悬浮
-        element.mouseout(function () {
-            var _this = $(this);
-            _this.find(".add-product").removeClass("ico-add").html(">");
-        });
+        ////鼠标悬浮
+        //element.mouseover(function () {
+        //    var _this = $(this);
+        //    _this.find(".add-product").addClass("ico-add").html("");
+        //});
+        ////鼠标悬浮
+        //element.mouseout(function () {
+        //    var _this = $(this);
+        //    _this.find(".add-product").removeClass("ico-add").html("");
+        //});
         //编辑
         element.find(".add-product").click(function () {
             var _this = $(this);

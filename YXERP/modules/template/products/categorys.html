@@ -7,7 +7,7 @@
         %}
         <li data-id="{%=item.CategoryID%}" title="{%=item.Description%}" data-layer="{%=item.Layers%}">
             <span class="category-name long left width150 {%=item.Status==1?'':'color999'%}">{%=item.CategoryName%}</span>
-            <span data-id="{%=item.CategoryID%}" class="ddlcategory right">></span>
+            <span data-id="{%=item.CategoryID%}" class="ddlcategory ico-dropdown right"></span>
         </li>
         {% } %}
     </ul>

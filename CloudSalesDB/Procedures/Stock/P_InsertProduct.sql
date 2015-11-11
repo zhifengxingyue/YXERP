@@ -33,6 +33,8 @@ CREATE PROCEDURE [dbo].[P_InsertProduct]
 @Weight decimal(18,2),
 @Isnew int,
 @IsRecommend int,
+@IsAllow int=0,
+@IsAutoSend int=0,
 @EffectiveDays int,
 @DiscountValue decimal(5,4),
 @ProductImg nvarchar(4000),
@@ -57,11 +59,11 @@ BEGIN
 		INSERT INTO [Products]([ProductID],[ProductCode],[ProductName],[GeneralName],[IsCombineProduct],[BrandID],[BigUnitID],[SmallUnitID],[BigSmallMultiple] ,
 						[CategoryID],[CategoryIDList],[SaleAttr],[AttrList],[ValueList],[AttrValueList],[CommonPrice],[Price],[PV],[TaxRate],[Status],
 						[OnlineTime],[UseType],[IsNew],[IsRecommend] ,[IsDiscount],[DiscountValue],[SaleCount],[Weight] ,[ProductImage],[EffectiveDays],
-						[ShapeCode] ,[ProdiverID],[Description],[CreateUserID],[CreateTime] ,[UpdateTime],[OperateIP] ,[ClientID])
+						[ShapeCode] ,[ProdiverID],[Description],[CreateUserID],[CreateTime] ,[UpdateTime],[OperateIP] ,[ClientID],IsAllow,IsAutoSend)
 				 VALUES(@ProductID,@ProductCode,@ProductName,@GeneralName,@IsCombineProduct,@BrandID,@BigUnitID,@SmallUnitID,@BigSmallMultiple,
 						@CategoryID,@PIDList,@SaleAttr,@AttrList,@ValueList,@AttrValueList,@CommonPrice,@Price,@Price,0,@Status,
 						getdate(),0,@Isnew,@IsRecommend,1,@DiscountValue,0,@Weight,@ProductImg,@EffectiveDays,@ShapeCode,'',@Description,@CreateUserID,
-						getdate(),getdate(),'',@ClientID);
+						getdate(),getdate(),'',@ClientID,@IsAllow,@IsAutoSend);
 
 						set @Err+=@@Error
 

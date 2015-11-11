@@ -39,13 +39,13 @@
                 <span class="column-name">分类名称：</span><label>@(model.Category.CategoryName)</label>
                 <input type="hidden" id="categoryID" value="@(model.CategoryID)" />
             </li>
-            <li>
-                <span class="column-name">产品编码：</span><label id="productCode"></label>
-            </li>
+            
             <li>
                 <span class="column-name">产品名称：</span><input type="text" style="width:300px;"  maxlength="50" id="productName" data-empty="必填" class="input verify" />
             </li>
-        
+            <li>
+                <span class="column-name">产品编码：</span><input maxlength="50" type="text" id="productCode" data-empty="必填" class="input verify" />
+            </li>
              <li>
                 <span class="column-name">常用名：</span><input type="text" maxlength="50" id="generalName" class="input" />
             </li>
@@ -123,6 +123,12 @@
             <li>
                 <span class="column-name">是否推荐：</span><label><input type="checkbox" id="isRecommend" />是</label> 
             </li>
+             <li>
+                <span class="column-name">限制：</span><label><input type="checkbox" id="isAllow" />库存不足允许下单</label> 
+            </li>
+            <li>
+                <span class="column-name">自动发货：</span><label><input type="checkbox" id="isAutoSend" />订单生效自动出库发货（例：虚拟产品）</label> 
+            </li>
             <li>
                 <span class="column-name">产品说明：</span><div id="remark"></div>
             </li>
@@ -136,10 +142,10 @@
     <div id="childproduct" class="hide mTop20">
         <table class="table-list child-table-list clear">
             <tr class="tr-header" id="header-items">
-                <td>编码</td>
-                <td class="">规格</td>
-                <td class="m-len">价格/@(model.SmallUnit.UnitName)</td>
-                <td class="s-len">价格/@(model.BigUnit.UnitName)</td>
+                <td class="tLeft">编码</td>
+                <td class="tLeft">规格</td>
+                <td class="m-len tRight">价格/@(model.SmallUnit.UnitName)</td>
+                <td class="s-len tRight">价格/@(model.BigUnit.UnitName)</td>
                 <td class="m-len">启用/禁用</td>
                 <td class="s-len">编辑</td>
             </tr>

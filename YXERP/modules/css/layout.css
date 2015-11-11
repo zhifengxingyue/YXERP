@@ -112,7 +112,7 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 
 .table-list tr:not(:first-child){ height:30px; cursor:pointer; }
 .table-list tr:not(:first-child):hover { background-color: #f6f6f6; }
-.table-list tr:not(:first-child) td{ padding:5px; line-height:30px; border-bottom:dashed 1px #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  }
+.table-list tr:not(:first-child) td{ padding:5px; line-height:30px; border-bottom:dashed 1px #ddd; max-width:500px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;  }
 .table-list tr:not(:first-child):last-child td{ border-bottom:none;  }
 
 .table-list td a{ color:#4a98e7;  vertical-align:middle;}
