@@ -162,6 +162,8 @@
     <Content Include="Content\menuico\reporthover.png" />
     <Content Include="Content\menuico\sales.png" />
     <Content Include="Content\menuico\saleshover.png" />
+    <Content Include="Content\menuico\salesOrder.png" />
+    <Content Include="Content\menuico\salesOrderhover.png" />
     <Content Include="Content\menuico\stock.png" />
     <Content Include="Content\menuico\stockhover.png" />
     <Content Include="Content\menuico\stockManage.png" />
