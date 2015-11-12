@@ -5,6 +5,8 @@
 .search-header .search-stages li:hover{ color:#4a98e7;}
 .search-header .search-stages li.hover{ background-color:#4a98e7; color:#fff;}
 
+.search-body { overflow:auto; }
+
 .brand-img { position:absolute; top:120px; right:20px; height:220px; width:220px; }
 
 .displayTab {

@@ -21,12 +21,16 @@
 
     var ObjectJS = {};
     //初始化
-    ObjectJS.init = function (type) {
+    ObjectJS.init = function (type, guid) {
         var _self = this;
         _self.type = type;
+        _self.guid = guid;
         _self.getChildCategory("");
         _self.bindEvent();
-        $(".content-body").createCart(type);
+        $(".content-body").createCart({
+            ordertype: type,
+            guid: guid
+        });
     }
 
     //获取分类信息和下级分类
