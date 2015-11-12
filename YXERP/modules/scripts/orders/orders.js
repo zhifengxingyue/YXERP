@@ -1,9 +1,10 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
         doT = require("dot"),
+        Easydialog = require("easydialog"),
+        ChooseCustomer = require("choosecustomer"),
         ChooseUser = require("chooseuser");
     require("pager");
-    require("mark");
 
     var Params = {
         SearchType: 1,
@@ -30,6 +31,7 @@
         _self.getList();
         _self.bindEvent(type);
     }
+
     //绑定事件
     ObjectJS.bindEvent = function (type) {
         var _self = this;
@@ -39,17 +41,24 @@
                 $(".dropdown-ul").hide();
             }
         });
-        //切换阶段
-        $(".search-stages li").click(function () {
-            var _this = $(this);
-            if (!_this.hasClass("hover")) {
-                _this.siblings().removeClass("hover");
-                _this.addClass("hover");
-                Params.PageIndex = 1;
-                Params.StageID = _this.data("id");
-                _self.getList();
-            }
+        $("#createOrder").click(function () {
+            ChooseCustomer.create({
+                title: "选择客户",
+                isAll: true,
+                callback: function (items) {
+                    if (items.length > 0) {
+                        Global.post("/Orders/CreateOrder", {
+                            customerid: items[0].id
+                        }, function (data) {
+                            if (data.id) {
+                                location.href = "/Orders/ChooseProducts/" + data.id;
+                            }
+                        });
+                    }
+                }
+            });
         });
+
         //切换状态
         $(".search-status li").click(function () {
             var _this = $(this);
@@ -199,41 +208,9 @@
             } else {
                 alert("您尚未选择客户!")
             }
-        });
-
-        //过滤标记
-        $("#filterMark").markColor({
-            isAll: true,
-            onChange: function (obj, callback) {
-                callback && callback(true);
-                Params.PageIndex = 1;
-                Params.Mark = obj.data("value");
-                _self.getList();
-            }
-        });
-        //批量标记
-        $("#batchMark").markColor({
-            isAll: true,
-            onChange: function (obj, callback) {
-                var checks = $(".table-list .ico-checked");
-                if (checks.length > 0) {
-                    var ids = "";
-                    checks.each(function () {
-                        var _this = $(this);
-                        ids += _this.data("id") + ",";
-                    });
-                    _self.markCustomer(ids, obj.data("value"), function (status) {
-                        _self.getList();
-                        callback && callback(status);
-                    });
-                    
-                } else {
-                    alert("您尚未选择客户!")
-                }
-            }
-        });
-        
+        });        
     }
+
     //获取列表
     ObjectJS.getList = function () {
         var _self = this;
@@ -279,15 +256,6 @@
             //        _this.addClass("ico-check").removeClass("ico-checked");
             //    }
             //});
-
-            innerhtml.find(".mark").markColor({
-                isAll: false,
-                onChange: function (obj, callback) {
-
-                    _self.markCustomer(obj.data("id"), obj.data("value"), callback);
-                   
-                }
-            });
 
             $(".tr-header").after(innerhtml);
 

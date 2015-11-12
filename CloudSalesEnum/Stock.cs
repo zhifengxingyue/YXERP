@@ -42,7 +42,9 @@ namespace CloudSalesEnum
         [DescriptionAttribute("报溢单")]
         BY = 4,
         [DescriptionAttribute("调拨单")]
-        DB = 5
+        DB = 5,
+        [DescriptionAttribute("销售订单")]
+        Order = 11
     }
     /// <summary>
     /// 单据状态

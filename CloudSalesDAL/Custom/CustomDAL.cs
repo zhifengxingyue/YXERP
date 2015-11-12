@@ -50,6 +50,18 @@ namespace CloudSalesDAL
             return ds;
         }
 
+        public DataSet GetCustomersByKeywords(string keyWords, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@Keywords",keyWords),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+            DataSet ds = GetDataSet("P_GetCustomersByKeywords", paras, CommandType.StoredProcedure);
+            return ds;
+        }
+
         public DataSet GetCustomerByID(string customerid, string agentid, string clientid)
         {
             SqlParameter[] paras = { 

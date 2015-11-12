@@ -54,9 +54,9 @@ namespace YXERP.Controllers
         /// <param name="quantity"></param>
         /// <param name="ordertype"></param>
         /// <returns></returns>
-        public JsonResult AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, EnumDocType ordertype, string remark)
+        public JsonResult AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, EnumDocType ordertype, string remark = "", string guid = "")
         {
-            var bl = ShoppingCartBusiness.AddShoppingCart(productid, detailsid, quantity, unitid, isBigUnit, ordertype, remark, CurrentUser.UserID, OperateIP);
+            var bl = ShoppingCartBusiness.AddShoppingCart(productid, detailsid, quantity, unitid, isBigUnit, ordertype, remark, guid, CurrentUser.UserID, OperateIP);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
@@ -69,9 +69,13 @@ namespace YXERP.Controllers
         /// </summary>
         /// <param name="ordertype"></param>
         /// <returns></returns>
-        public JsonResult GetShoppingCartCount(EnumDocType ordertype)
+        public JsonResult GetShoppingCartCount(EnumDocType ordertype, string guid = "")
         {
-            var count = ShoppingCartBusiness.GetShoppingCartCount(ordertype, CurrentUser.UserID);
+            if (string.IsNullOrEmpty(guid))
+            {
+                guid = CurrentUser.UserID;
+            }
+            var count = ShoppingCartBusiness.GetShoppingCartCount(ordertype, guid);
             JsonDictionary.Add("Quantity", count);
             return new JsonResult
             {
@@ -84,9 +88,14 @@ namespace YXERP.Controllers
         /// </summary>
         /// <param name="ordertype"></param>
         /// <returns></returns>
-        public JsonResult GetShoppingCart(EnumDocType ordertype)
+        public JsonResult GetShoppingCart(EnumDocType ordertype, string guid = "")
         {
-            var list = ShoppingCartBusiness.GetShoppingCart(ordertype, CurrentUser.UserID);
+            if (string.IsNullOrEmpty(guid))
+            {
+                guid = CurrentUser.UserID;
+            }
+
+            var list = ShoppingCartBusiness.GetShoppingCart(ordertype, guid);
             JsonDictionary.Add("Items", list);
             return new JsonResult
             {

@@ -16,7 +16,7 @@ GO
 ************************************************************/
 CREATE PROCEDURE [dbo].[P_GetShoppingCart]
 	@OrderType int,
-	@UserID nvarchar(64)
+	@GUID nvarchar(64)
 AS
 
 select s.AutoID,s.ProductDetailID,s.ProductID,s.Quantity,s.Remark Description,p.ProductName,u.UnitID,u.UnitName,case s.IsBigUnit when 0 then d.Price else d.BigPrice end Price,d.Imgs 
@@ -24,7 +24,7 @@ from ShoppingCart s
 join ProductDetail d on d.ProductDetailID=s.ProductDetailID
 join Products p  on s.ProductID=p.ProductID
 join ProductUnit u on s.UnitID=u.UnitID
-where s.UserID=@UserID and s.OrderType=@OrderType
+where s.[GUID]=@GUID and s.OrderType=@OrderType
 
 
  

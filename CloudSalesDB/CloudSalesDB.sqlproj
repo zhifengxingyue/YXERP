@@ -63,6 +63,7 @@
     <Folder Include="Procedures\Stock" />
     <Folder Include="Procedures\Custom" />
     <Folder Include="Procedures\ShoppingCart" />
+    <Folder Include="Procedures\Sales" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\InitDatabase.sql" />
@@ -238,5 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\System\P_CreateWareHouse.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Custom\P_GetCustomersByKeywords.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_CreateOrder.sql" />
   </ItemGroup>
 </Project>

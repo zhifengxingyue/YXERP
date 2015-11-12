@@ -10,7 +10,7 @@ namespace CloudSalesDAL
 {
     public class OrdersDAL : BaseDAL
     {
-
+        public static OrdersDAL BaseProvider = new OrdersDAL();
         #region 查询
 
         public static DataSet GetStorageDocList(string userid, int type, int status, string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientid)
@@ -51,6 +51,19 @@ namespace CloudSalesDAL
         #endregion
 
         #region 添加
+
+        public bool CreateOrder(string orderid, string ordercode, string customerid, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@OrderID",orderid),
+                                     new SqlParameter("@OrderCode",ordercode),
+                                     new SqlParameter("@CustomerID" , customerid),
+                                     new SqlParameter("@UserID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            return ExecuteNonQuery("P_CreateOrder", paras, CommandType.StoredProcedure) > 0;
+        }
 
         public static bool AddStorageDoc(string docid, int doctype, decimal totalmoney, string cityCode, string address, string remark, string userid, string operateip, string clientid, SqlTransaction tran)
         {
