@@ -11,15 +11,21 @@ define(function (require, exports, module) {
         doT = require("dot");
     require("plug/shoppingcart/style.css");
     (function ($) {
-        $.fn.createCart = function (ordertype) {
+        $.fn.createCart = function (options) {
+            var opts = $.extend({}, $.fn.createCart.defaults, options);
             return this.each(function () {
                 var _this = $(this);
-                $.fn.drawCart(_this, ordertype);
+                $.fn.drawCart(_this, opts);
             })
         }
-
-        $.fn.drawCart = function (obj, ordertype) {
-            Global.post("/ShoppingCart/GetShoppingCartCount", { ordertype: ordertype }, function (data) {
+        $.fn.createCart.defaults = {
+            ordertype: 0,
+            guid: ""
+        };
+        $.fn.drawCart = function (obj, opts) {
+            Global.post("/ShoppingCart/GetShoppingCartCount", {
+                ordertype: opts.ordertype
+            }, function (data) {
                 doT.exec("plug/shoppingcart/shoppingcart.html", function (templateFun) {
                     var innerText = templateFun([]);
                     innerText = $(innerText);
@@ -31,7 +37,7 @@ define(function (require, exports, module) {
                     innerText.find(".cart-header").click(function () {
                         if ($("#shopping-cart .totalcount").html() > 0) {
                             $(this).hide();
-                            $.fn.drawCartProduct(innerText, ordertype);
+                            $.fn.drawCartProduct(innerText, opts);
                         }
                     });
 
@@ -45,10 +51,12 @@ define(function (require, exports, module) {
             });
         }
         //加载购物车明细
-        $.fn.drawCartProduct = function (obj, ordertype) {
+        $.fn.drawCartProduct = function (obj, opts) {
             obj.find(".cart-mainbody").show();
             obj.find(".cart-product-list").empty();
-            Global.post("/ShoppingCart/GetShoppingCart", { ordertype: ordertype }, function (data) {
+            Global.post("/ShoppingCart/GetShoppingCart", {
+                ordertype: opts.ordertype
+            }, function (data) {
                 doT.exec("plug/shoppingcart/product-list.html", function (templateFun) {
                     if (data.Items.length > 0) {
                         var innerText = templateFun(data.Items);
@@ -56,7 +64,7 @@ define(function (require, exports, module) {
 
                         //详情页增加单据类型
                         innerText.find(".productname").each(function () {
-                            $(this).attr("href", $(this).attr("href") + "&type=" + ordertype);
+                            $(this).attr("href", $(this).attr("href") + "&type=" + opts.ordertype);
                         });
 
                         //删除产品
@@ -77,7 +85,7 @@ define(function (require, exports, module) {
                         });
 
                         //入库单
-                        if (ordertype == 1) {
+                        if (opts.ordertype == 1) {
                             obj.find(".btnconfirm").attr("href", "/Purchase/ConfirmPurchase");
                         }
                         obj.find(".cart-product-list").append(innerText);
