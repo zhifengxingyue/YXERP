@@ -19,9 +19,9 @@
         <div class="logo left">
             <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
         </div>
-      @*   <div class="left" style="font-size:14px;padding-top:16px;padding-left:5px;color:#fff;">
-            上海云销信息科技
-        </div>*@
+         <div class="left companyName" title="上海云销信息科技有限公司">
+            上海云销信息科技有限公司
+        </div>
         <ul id="controllerMenu" class="menu left">
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
             { 
@@ -86,6 +86,17 @@
             <li class="item"><a href="/Home/Logout">安全退出</a></li>
         </ul>
     </div>
+
+    @*点击公司名称展开下拉列表*@
+    <div class="dropdown-companyinfo hide">
+        <div class="top-lump"></div>
+        <ul class="items-list">
+            <li class="item"><a href="/Home/Logout">编辑公司</a></li>
+            <li class="item pTop5" style="border:none;"><a onclick="location.href='/Auction/BuyNow';" class="btn">立即购买</a></li>
+        </ul>
+    </div>
+
+    <div class="feedback">意见反馈</div>
     <script type="text/javascript" src="/Scripts/sea.js"></script>
     <script type="text/javascript" src="/Scripts/sea-config.js"></script>
     <script type="text/javascript">

@@ -2,11 +2,35 @@
 /*header样式*/
 header { height:50px; width:100%; background-color:#2F73B8; position:fixed; top:0; z-index:999; opacity:0.9;}
 
-header .logo { width:30px; height:30px; margin-top:10px; margin-left:15px; }
-header .logo img{ height:30px; }
+header .logo { width:16px; height:16px; margin-top:18px; margin-left:5px; }
+header .logo img{ height:16px; }
+
+
+header .companyName {
+font-size:14px;padding-top:16px;padding-left:5px;color:#BFD2F2; 
+cursor:pointer;
+width:168px;
+white-space:nowrap;
+overflow: hidden; 
+text-overflow:ellipsis;
+}
+
+header .companyName:hover {
+  color:#fff;  
+}
+
+/*公司名称点击下拉列表*/
+.dropdown-companyinfo { position:fixed; background-color:#fff; width:190px; z-index:1000; border-radius:2px; border:solid 1px #eee;
+box-shadow:0 0 5px #ccc; top:50px; left:0px;}
+.dropdown-companyinfo .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
+width:0; height:0; position:absolute; left:85px; top:-9px; }
+.dropdown-companyinfo .items-list { padding:5px 0; overflow:auto; }
+.dropdown-companyinfo .items-list .item{ height:35px; line-height:35px; float:left; width:190px; text-align:center;border-bottom:solid 1px #eee;}
+/*.dropdown-companyinfo .items-list .item a{ display:inline-block; font-size:14px; color:#666;}
+.dropdown-companyinfo .items-list .item:hover{ background-color:#eee; }*/
 
 /*二级菜单*/
-header .menu { height:50px; margin-left:160px; }
+header .menu { height:50px; margin-left:15px; }
 header .menu a{  height:50px; line-height:50px;text-align:center; width:110px; display:inline-block; }
 header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:15px; float:left; }
 header .menu a span{ margin-left:8px; float:left; color:#BFD2F2; font-size:14px;}
@@ -35,7 +59,7 @@ header .currentuser:hover .dropdown-top{ border-top:solid 6px #fff;}
                                width:0; height:0; position:absolute; left:50px; top:-9px; }
 .dropdown-userinfo .items-list { padding:5px 0; overflow:auto; }
 .dropdown-userinfo .items-list .item{ height:35px; line-height:35px; float:left; width:120px; }
-.items-list .item a{ width:70px;padding-left:30px; display:inline-block; font-size:14px; color:#666;}
+.dropdown-userinfo .items-list .item a{ width:70px;padding-left:30px; display:inline-block; font-size:14px; color:#666;}
 .dropdown-userinfo .items-list .item:hover{ background-color:#eee; }
 .modules-list .modules-item:hover a{ color:#2F73B8; }
 
@@ -127,6 +151,12 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
 .table-add li input[type="text"] { height:20px; line-height:20px; padding:2px 5px; width:150px; }
 .table-add li textarea {resize:none; height:80px; line-height:20px; padding:1px 5px; border:solid 1px #ccc; width:350px; border-radius:2px;}
 .table-add span {  display:inline-block; color:#333; vertical-align:top;}
+
+/*意见反馈*/
+.feedback {
+    width:16px;position:fixed;right:0px;top:320px;background-color:#eee;font-size:14px;padding:5px;border:solid 1px #ccc;cursor:pointer;color:#666;
+}
+
 
 
 

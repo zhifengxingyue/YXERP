@@ -83,7 +83,6 @@ namespace CloudSalesDAL
                                        new SqlParameter("@Address",address),
                                        new SqlParameter("@Description",description),
                                        new SqlParameter("@ContactName",contactName),
-                                       new SqlParameter("@Description",description),
                                        new SqlParameter("@Logo",logo),
                                        new SqlParameter("@OfficePhone",officePhone),
                                        new SqlParameter("@CreateUserID",userid)

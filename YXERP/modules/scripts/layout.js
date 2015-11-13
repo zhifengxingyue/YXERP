@@ -4,7 +4,8 @@
 define(function (require, exports, module) {
     var $ = require("jquery"),
         doT = require("dot"),
-        Global = require("global");
+        Global = require("global"),
+        Easydialog = require("easydialog");
 
     var LayoutObject = {};
     //初始化数据
@@ -28,6 +29,10 @@ define(function (require, exports, module) {
             }
             if (!$(e.target).parents().hasClass("currentuser") && !$(e.target).hasClass("currentuser")) {
                 $(".dropdown-userinfo").fadeOut("1000");
+            }
+
+            if (!$(e.target).parents().hasClass("companyName") && !$(e.target).hasClass("companyName")) {
+                $(".dropdown-companyinfo").fadeOut("1000");
             }
         });
 
@@ -72,6 +77,11 @@ define(function (require, exports, module) {
             $(".dropdown-userinfo").fadeIn("1000");
         });
 
+        //公司名称信息展开
+        $(".companyName").click(function () {
+            $(".dropdown-companyinfo").fadeIn("1000");
+        });
+
         //二级菜单图标事件处理
         $("#controllerMenu a").mouseenter(function () {
             var _this = $(this).find("img");
@@ -89,6 +99,25 @@ define(function (require, exports, module) {
 
         //二级菜单选中名称
         $(".controller-name").html($("#controllerMenu .select span").html());
+
+        //意见反馈
+        $(".feedback").click(function () {
+            var html = "aaaaaaaa";
+            Easydialog.open({
+                container: {
+                    id: "show-model-detail",
+                    header: "意见反馈",
+                    content: html,
+                    yesFn: function () {
+                       
+                    },
+                    callback: function () {
+
+                    }
+                }
+            });
+
+        });
 
        
     }
