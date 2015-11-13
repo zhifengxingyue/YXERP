@@ -40,6 +40,38 @@ namespace CloudSalesBusiness
             return list;
         }
 
+        public OrderEntity GetOrderByID(string orderid, string agentid, string clientid)
+        {
+            DataSet ds = OrdersDAL.BaseProvider.GetOrderByID(orderid, agentid, clientid);
+            OrderEntity model = new OrderEntity();
+            if (ds.Tables["Order"].Rows.Count > 0)
+            {
+                
+                model.FillData(ds.Tables["Order"].Rows[0]);
+                model.OrderType = SystemBusiness.BaseBusiness.GetOrderTypeByID(model.TypeID, model.AgentID, model.ClientID);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+                if (ds.Tables["Customer"].Rows.Count > 0)
+                {
+                    model.Customer = new CustomerEntity();
+                    model.Customer.FillData(ds.Tables["Customer"].Rows[0]);
+                }
+                if (ds.Tables["Details"].Rows.Count > 0)
+                {
+                    model.Details = new List<OrderDetail>();
+                    foreach (DataRow dr in ds.Tables["Details"].Rows)
+                    {
+                        OrderDetail detail = new OrderDetail();
+                        detail.FillData(dr);
+                        model.Details.Add(detail);
+                    }
+                }
+                
+                
+            }
+            return model;
+        }
+
         #endregion
 
         #region 添加

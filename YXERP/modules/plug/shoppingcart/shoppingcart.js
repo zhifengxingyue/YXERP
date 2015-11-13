@@ -89,6 +89,8 @@ define(function (require, exports, module) {
                         //入库单
                         if (opts.ordertype == 1) {
                             obj.find(".btnconfirm").attr("href", "/Purchase/ConfirmPurchase");
+                        }else if (opts.ordertype == 11) {
+                            obj.find(".btnconfirm").attr("href", "/Orders/Detail/" + opts.guid);
                         }
                         obj.find(".cart-product-list").append(innerText);
                     } else {

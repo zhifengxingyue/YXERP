@@ -50,6 +50,20 @@ namespace YXERP.Controllers
             return View("FilterProducts");
         }
 
+        public ActionResult Detail(string id)
+        {
+            var model = OrdersBusiness.BaseBusiness.GetOrderByID(id, CurrentUser.AgentID, CurrentUser.ClientID);
+            ViewBag.Model = model;
+            if (model.Status == 0)
+            {
+                return View("ConfirmOrder");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         #region Ajax
 
         public JsonResult GetOrders(string filter)

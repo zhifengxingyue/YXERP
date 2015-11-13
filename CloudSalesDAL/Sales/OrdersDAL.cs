@@ -45,6 +45,18 @@ namespace CloudSalesDAL
             return ds;
         }
 
+        public DataSet GetOrderByID(string orderid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@OrderID",orderid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            DataSet ds = GetDataSet("P_GetOrderByID", paras, CommandType.StoredProcedure, "Order|Customer|Details");
+            return ds;
+        }
+
         #endregion
 
         #region 添加

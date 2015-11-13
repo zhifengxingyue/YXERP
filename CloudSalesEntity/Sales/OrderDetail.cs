@@ -27,7 +27,6 @@ namespace CloudSalesEntity
 		{}
 		#region Model
 		private int _autoid;
-		private string _docid;
 		private string _productid;
 		private int _quantity=0;
 		private decimal _price=0M;
