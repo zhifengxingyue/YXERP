@@ -31,5 +31,7 @@ AS
 --客户端
 update Clients set CompanyName=@CompanyName,
 MobilePhone=@MobilePhone,Industry=@Industry, CityCode=@CityCode, 
-Address=@Address,Description=@Description,ContactName=@ContactName where ClientiD=@ClientiD
+Address=@Address,Description=@Description,ContactName=@ContactName,
+Logo=@Logo,OfficePhone=@OfficePhone
+ where ClientiD=@ClientiD
 

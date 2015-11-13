@@ -11,6 +11,13 @@
         var _self = this;
         _self.bindEvent();
 
+        VerifyObject = Verify.createVerify({
+            element: ".verify",
+            emptyAttr: "data-empty",
+            verifyType: "data-type",
+            regText: "data-text"
+        });
+
         ObjectJS.getDetail();
     }
 
@@ -50,6 +57,10 @@
 
         //保存公司基本信息
         $("#btnSaveClient").click(function () {
+            if (!VerifyObject.isPass()) {
+                return false;
+            };
+
             ObjectJS.saveModel();
         });
     }
