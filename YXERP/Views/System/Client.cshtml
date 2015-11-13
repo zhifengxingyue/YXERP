@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "公司信息";
+}
+
+@section css{
+    <link rel="stylesheet" href="/modules/css/system/system.css" />
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/system/client"], function (obj) {
+            obj.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">公司信息</span>
+</div>
+
+<div class="search-box">
+    <div class="search-header">
+        <ul class="search-stages">
+            <li data-id="0" class="hover">基本信息</li>
+            <li data-id="1">授权信息</li>
+        </ul>
+    </div>
+</div>
+
+<div class="content-body">
+    <div name="clientInfo">
+        <ul class="table-add">
+            <li>
+                <span class="width80">公司名称：</span><input type="text" id="CompanyName" data-empty="* 必填" class="input verify" />
+            </li>
+            <li>
+                <span class="width80">公司Logo：</span><span id="Logo"></span>
+            </li>
+            <li>
+                <span class="width80">联系人：</span>
+                <span><input type="text" id="ContactName" class="verify" data-empty="联系人不能为空!" /></span>
+            </li>
+            <li>
+                <span class="width80">联系电话：</span>
+                <span><input type="text" id="MobilePhone" class="verify" data-type="mobile" maxlength="11" data-text="格式不正确!" data-empty="电话不能为空!" /></span>
+            </li>
+            <li>
+                <span class="width80">办公电话：</span>
+                <span><input type="text" id="OfficePhone" class="verify" data-type="mobile" maxlength="11" data-text="格式不正确!" data-empty="电话不能为空!" /></span>
+            </li>
+            <li>
+                <span class="width80">行业：</span>
+                <span>
+                     <select id="Industry">
+                        @foreach (CloudSalesEntity.Industry model in (List<CloudSalesEntity.Industry>)ViewBag.Industry)
+                        {
+                            <option value="@(model.IndustryID)" data-name="@(model.Name)">@(model.Name)</option>
+                        }
+                        <option value="">其他行业</option>
+                    </select>
+                </span>
+            </li>
+            <li>
+                <span class="width80">地址：</span>
+                <span id="citySpan">
+            
+                </span>
+            </li>
+            <li>
+                <span class="width80"></span>
+                <span><input type="text" placeholder="详细地址..." class="width300" id="Address" /></span>
+            </li>
+            <li>
+                <span class="width80">备注：</span>
+                <textarea id="Description" style="max-width:800px;max-height:600px;"></textarea>
+            </li>
+        </ul>
+
+        <img class="brand-img hide" id="PosterDisImg" alt="" />
+
+        <div class="mTop20">
+            <span  class="btn" id="btnSaveClient" >保存</span>
+            <a href="javascript:void(0);" onclick="history.go(-1)"  class="btn mLeft20">返回</a>
+        </div>
+    </div>
+
+    <div class="hide" name="clientInfo">
+        <ul class="table-add">
+            <li>
+                <span class="width80">授权人数：</span><span id="UserQuantity"></span>
+            </li>
+            <li>
+                <span class="width80">截至时间：</span><span id="EndTime"></span>
+            </li>
+        </ul>
+
+        <div class="mTop20">
+            <span class="btn" onclick="location.href='/Auction/BuyNow';" >立即购买</span>
+            <a href="javascript:void(0);" onclick="history.go(-1)"  class="btn mLeft20">返回</a>
+        </div>
+    </div>
+</div>
+
+ <input type="hidden" id="CompanyLogo" />
+

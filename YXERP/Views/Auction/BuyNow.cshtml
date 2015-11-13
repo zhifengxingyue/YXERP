@@ -1,25 +1,39 @@
-﻿@{
-    ViewBag.Title = "BuyNow";
+﻿<!DOCTYPE html>
+@{
     Layout = null;
+    var CurrentUser = (CloudSalesEntity.Users)Session["ClientManager"];
 }
-
-<script src="/Scripts/jquery-1.11.1.js"></script>
-<script type="text/javascript" src="/Scripts/sea.js"></script>
-<script type="text/javascript" src="/Scripts/sea-config.js"></script>
-<script type="text/javascript">
-   
-    $(function () {
-        seajs.use(["scripts/auction/buynow"], function (ObjectJS) {
-            ObjectJS.init();
-        });
-    });
-</script>
-
+<html>
+<head>
+<title>购买云销系统</title>
+<link href="/modules/css/layout.css" rel="stylesheet" />
 <link href="/modules/css/base.css" rel="stylesheet" />
 <link href="/modules/css/auction/buynow.css" rel="stylesheet" />
 
 <script src="/Scripts/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/Scripts/sea.js"></script>
+<script type="text/javascript" src="/Scripts/sea-config.js"></script>
 <script src="/modules/scripts/auction/buynow.js"></script>
+</head>
+<body>
+<header>
+    <div class="logo left">
+        <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
+    </div>
+
+    <div id="currentUser" class="currentuser right">
+        <span>
+            <img src="@(string.IsNullOrEmpty(CurrentUser.Avatar)?"/modules/images/defaultavatar.png":CurrentUser.Avatar)" class="avatar" />
+        </span>
+        <span class="username">
+            @(CurrentUser.Name)
+        </span>
+        <span class="dropdown">
+            <span class="dropdown-top"></span>
+            <span class="dropdown-bottom"></span>
+        </span>
+    </div>
+</header>
 
 <div class="step">
     <div class="mBottom20">
@@ -28,7 +42,7 @@
             <div class="left stepDes stepDesActive">选择产品</div>
             <div class="clear"></div>
         </div>
-        <div class="left  sureOrder">
+        <div class="left mLeft15 sureOrder">
             <div class="stepIco left" style="margin-left:46px;">2</div>
             <div class="left stepDes">确认订单</div>
             <div class="clear"></div>
@@ -128,6 +142,33 @@
 <div class="payProductOrder hide">
      aaaaaaaaaaaaaaa
 </div>
+
+<div class="dropdown-userinfo hide">
+    <div class="top-lump"></div>
+    <ul class="items-list">
+        <li class="item"><a href="/Home/Logout">安全退出</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(function () {
+        seajs.use(["scripts/auction/buynow"], function (ObjectJS) {
+            ObjectJS.init();
+        });
+
+        //登录信息展开
+        $("#currentUser").click(function () {
+            $(".dropdown-userinfo").fadeIn("1000");
+        });
+
+        $(document).click(function (e) {
+            if (!$(e.target).parents().hasClass("currentuser") && !$(e.target).hasClass("currentuser")) {
+                $(".dropdown-userinfo").fadeOut("1000");
+            }
+        });
+    });
+</script>
+</body>
+</html>
 
 
 

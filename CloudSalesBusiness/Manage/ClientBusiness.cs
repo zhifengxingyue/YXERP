@@ -112,7 +112,7 @@ namespace CloudSalesBusiness
             result = 1;
             return ClientDAL.BaseProvider.UpdateClient(model.ClientID, model.CompanyName
                 , model.ContactName, model.MobilePhone, model.Industry
-                , model.CityCode, model.Address, model.Description
+                , model.CityCode, model.Address, model.Description,model.Logo,model.OfficePhone
                 , userid);
 
         }

@@ -263,6 +263,7 @@
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
     <Content Include="modules\scripts\system\teams.js" />
+    <Content Include="modules\scripts\system\client.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\activity\activity_card_list.html" />
     <Content Include="modules\template\activity\activity_reply_list.html" />
@@ -321,6 +322,7 @@
     <Content Include="Views\Auction\BuyNow.cshtml" />
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Orders\Orders.cshtml" />
+    <Content Include="Views\System\Client.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

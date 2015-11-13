@@ -23,6 +23,8 @@ CREATE PROCEDURE [dbo].M_UpdateClient
 @Address nvarchar(200),
 @Description nvarchar(200),
 @ContactName nvarchar(50),
+@Logo nvarchar(200),
+@OfficePhone nvarchar(50),
 @CreateUserID nvarchar(64)
 AS
 
