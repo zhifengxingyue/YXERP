@@ -264,6 +264,7 @@
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
     <Content Include="modules\scripts\system\teams.js" />
+    <Content Include="modules\scripts\system\client.js" />
     <Content Include="modules\template\activity\activity_list.html" />
     <Content Include="modules\template\activity\activity_card_list.html" />
     <Content Include="modules\template\activity\activity_reply_list.html" />

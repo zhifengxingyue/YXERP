@@ -68,6 +68,13 @@ namespace CloudSalesEntity
 			set{ _companyname=value;}
 			get{return _companyname;}
 		}
+
+        public string Logo
+        {
+            set;
+            get;
+        }
+
 		/// <summary>
 		/// 
 		/// </summary>
