@@ -19,6 +19,9 @@
         <div class="logo left">
             <a href="/Home/Index"><img src="/modules/images/ico-home.png" /></a>
         </div>
+      @*   <div class="left" style="font-size:14px;padding-top:16px;padding-left:5px;color:#fff;">
+            上海云销信息科技
+        </div>*@
         <ul id="controllerMenu" class="menu left">
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
             { 

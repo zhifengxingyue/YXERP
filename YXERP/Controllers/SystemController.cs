@@ -60,6 +60,11 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult Client()
+        {
+            return View();
+        }
+
         #region Ajax
 
         #region 客户来源

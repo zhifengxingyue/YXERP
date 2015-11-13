@@ -313,6 +313,7 @@
     <Content Include="Views\Auction\BuyNow.cshtml" />
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Orders\Orders.cshtml" />
+    <Content Include="Views\System\Client.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
