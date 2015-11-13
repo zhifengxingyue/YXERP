@@ -50,6 +50,8 @@
     <Compile Include="Custom\ReplyEntity.cs" />
     <Compile Include="Log\CustomerLogEntity.cs" />
     <Compile Include="Manage\ClientOrder.cs" />
+    <Compile Include="Sales\OrderEntity.cs" />
+    <Compile Include="Sales\OrderDetail.cs" />
     <Compile Include="System\CustomSourceEntity.cs" />
     <Compile Include="System\CustomStageEntity.cs" />
     <Compile Include="Manage\ClientAuthorizeLog.cs" />

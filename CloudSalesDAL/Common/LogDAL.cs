@@ -65,5 +65,20 @@ namespace CloudSalesDAL
                                    };
             return Task.Run(() => { return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0; });
         }
+
+        public static Task<bool> AddOrdersLog(string orderid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
+        {
+            string sqlText = "insert into OrdersLog(OrderID,Remark,CreateUserID,OperateIP,GUID,AgentID,ClientID) values(@OrderID,@Remark,@CreateUserID,@OperateIP,@GUID,@AgentID,@ClientID)";
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@OrderID" , orderid),
+                                     new SqlParameter("@Remark" , remark),
+                                     new SqlParameter("@CreateUserID" , userid),
+                                     new SqlParameter("@OperateIP" , operateip),
+                                     new SqlParameter("@GUID" , guid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            return Task.Run(() => { return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0; });
+        }
     }
 }

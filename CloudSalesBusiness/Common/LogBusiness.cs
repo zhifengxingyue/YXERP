@@ -55,14 +55,6 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 记录操作日志
         /// </summary>
-        /// <param name="userid">操作人ID</param>
-        /// <param name="funcname">方法名</param>
-        /// <param name="type">日志类型</param>
-        /// <param name="modules">模块</param>
-        /// <param name="entity">对象</param>
-        /// <param name="guid">对象标志</param>
-        /// <param name="message">信息</param>
-        /// <param name="operateip">操作IP</param>
         public static async void AddOperateLog(string userid, string funcname, EnumLogType type, EnumLogModules modules, EnumLogEntity entity, string guid, string message, string operateip)
         {
             await LogDAL.AddOperateLog(userid, funcname, (int)type, (int)modules, (int)entity, guid, message, operateip);
@@ -71,10 +63,6 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 记录错误日志
         /// </summary>
-        /// <param name="userid">操作人ID/param>
-        /// <param name="message">错误信息</param>
-        /// <param name="systemtype">系统类型</param>
-        /// <param name="operateip">操作IP</param>
         public static async void AddErrorLog(string userid, string message, EnumSystemType systemtype, string operateip)
         {
             await LogDAL.AddErrorLog(userid, message, (int)systemtype, operateip);
@@ -86,6 +74,14 @@ namespace CloudSalesBusiness
         public static async void AddCustomerLog(string customerid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
         {
             await LogDAL.AddCustomerLog(customerid, remark, userid, operateip, guid, agentid, clientid);
+        }
+
+        /// <summary>
+        /// 订单日志
+        /// </summary>
+        public static async void AddOrdersLog(string orderid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
+        {
+            await LogDAL.AddOrdersLog(orderid, remark, userid, operateip, guid, agentid, clientid);
         }
 
         #endregion

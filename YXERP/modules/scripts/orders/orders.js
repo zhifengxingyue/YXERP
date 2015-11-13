@@ -8,11 +8,8 @@
 
     var Params = {
         SearchType: 1,
-        Type: -1,
-        SourceID: "",
-        StageID: "",
-        Status: 1,
-        Mark: -1,
+        TypeID: '',
+        Status: -1,
         UserID: "",
         AgentID: "",
         TeamID: "",
@@ -78,41 +75,23 @@
                 _self.getList();
             });
         });
-        //客户来源
-        Global.post("/Customer/GetCustomerSources", { }, function (data) {
+        //订单类型
+        Global.post("/System/GetOrderTypes", {}, function (data) {
             require.async("dropdown", function () {
-                $("#customerSource").dropdown({
-                    prevText: "来源-",
+                $("#orderType").dropdown({
+                    prevText: "类型-",
                     defaultText: "全部",
                     defaultValue: "",
                     data: data.items,
-                    dataValue: "SourceID",
-                    dataText: "SourceName",
+                    dataValue: "TypeID",
+                    dataText: "TypeName",
                     width: "180",
                     onChange: function (data) {
                         Params.PageIndex = 1;
-                        Params.SourceID = data.value;
+                        Params.TypeID = data.value;
                         _self.getList();
                     }
                 });
-            });
-        });
-        //客户类型
-        require.async("dropdown", function () {
-            var items = [{ ID: 1, Name: "企业客户" }, { ID: 0, Name: "个人客户" }];
-            $("#customerType").dropdown({
-                prevText: "类型-",
-                defaultText: "全部",
-                defaultValue: "-1",
-                data: items,
-                dataValue: "ID",
-                dataText: "Name",
-                width: "180",
-                onChange: function (data) {
-                    Params.PageIndex = 1;
-                    Params.Type = data.value;
-                    _self.getList();
-                }
             });
         });
 
@@ -216,7 +195,7 @@
         var _self = this;
         $("#checkAll").addClass("ico-check").removeClass("ico-checked");
         $(".tr-header").nextAll().remove();
-        Global.post("/Customer/GetCustomers", { filter: JSON.stringify(Params) }, function (data) {
+        Global.post("/Orders/GetOrders", { filter: JSON.stringify(Params) }, function (data) {
             _self.bindList(data);
         });
     }
@@ -224,7 +203,7 @@
     ObjectJS.bindList = function (data) {
         var _self = this;
 
-        doT.exec("template/customer/customers.html", function (template) {
+        doT.exec("template/orders/orders.html", function (template) {
             var innerhtml = template(data.items);
             innerhtml = $(innerhtml);
 
@@ -281,23 +260,11 @@
             }
         });
     }
-    //标记客户
-    ObjectJS.markCustomer = function (ids, mark, callback) {
-        if (mark < 0) {
-            alert("不能标记此选项!");
-            return false;
-        }
-        Global.post("/Customer/UpdateCustomMark", {
-            ids: ids,
-            mark: mark
-        }, function (data) {
-            callback && callback(data.status);
-        });
-    }
+
     //转移客户
     ObjectJS.ChangeOwner = function (ids, userid) {
         var _self = this;
-        Global.post("/Customer/UpdateCustomOwner", {
+        Global.post("/Orders/UpdateOrderOwner", {
             userid: userid,
             ids: ids
         }, function (data) {
