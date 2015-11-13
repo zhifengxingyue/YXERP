@@ -54,6 +54,22 @@ namespace CloudSalesBusiness
             return list;
         }
 
+        public List<CustomerEntity> GetCustomersByKeywords(string keywords, string userid,string agentid,string clientid)
+        {
+            List<CustomerEntity> list = new List<CustomerEntity>();
+            DataSet ds = CustomDAL.BaseProvider.GetCustomersByKeywords(keywords, userid, agentid, clientid);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                CustomerEntity model = new CustomerEntity();
+                model.FillData(dr);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+                model.Source = SystemBusiness.BaseBusiness.GetCustomSourcesByID(model.SourceID, model.AgentID, model.ClientID);
+                model.Stage = SystemBusiness.BaseBusiness.GetCustomStageByID(model.StageID, model.AgentID, model.ClientID);
+                list.Add(model);
+            }
+            return list;
+        }
+
         public CustomerEntity GetCustomerByID(string customerid, string agentid, string clientid)
         {
             DataSet ds = CustomDAL.BaseProvider.GetCustomerByID(customerid, agentid, clientid);

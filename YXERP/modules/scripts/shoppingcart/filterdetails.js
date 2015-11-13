@@ -103,6 +103,7 @@ define(function (require, exports, module) {
                     unitid: $("#unit li.hover").data("id"),
                     isBigUnit: $("#unit li.hover").data("value"),
                     ordertype: _self.ordertype,
+                    guid: _self.guid,
                     remark: remark
                 }, function (data) {
                     if (data.Status) {

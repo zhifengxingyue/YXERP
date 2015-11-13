@@ -21,6 +21,7 @@ CREATE PROCEDURE [dbo].[P_AddShoppingCart]
 @Quantity int=1,
 @UnitID nvarchar(64),
 @IsBigUnit int=0,
+@GUID nvarchar(64)='',
 @UserID nvarchar(64),
 @Remark nvarchar(max),
 @OperateIP nvarchar(50)
@@ -29,14 +30,14 @@ begin tran
 
 declare @Err int=0
 
-if not exists(select AutoID from ShoppingCart where ProductDetailID=@ProductDetailID and UserID=@UserID and IsBigUnit=@IsBigUnit and OrderType=@OrderType)
+if not exists(select AutoID from ShoppingCart where ProductDetailID=@ProductDetailID  and IsBigUnit=@IsBigUnit and OrderType=@OrderType and [GUID]=@GUID)
 begin
-	insert into ShoppingCart(OrderType,ProductDetailID,ProductID,UnitID,IsBigUnit,Quantity,Remark,CreateTime,UserID,OperateIP)
-	values(@OrderType,@ProductDetailID,@ProductID,@UnitID,@IsBigUnit,@Quantity,@Remark,GETDATE(),@UserID,@OperateIP)
+	insert into ShoppingCart(OrderType,ProductDetailID,ProductID,UnitID,IsBigUnit,Quantity,Remark,CreateTime,UserID,OperateIP,[GUID])
+	values(@OrderType,@ProductDetailID,@ProductID,@UnitID,@IsBigUnit,@Quantity,@Remark,GETDATE(),@UserID,@OperateIP,@GUID)
 end
 else 
 begin
-	update ShoppingCart set Quantity=Quantity+@Quantity,Remark=@Remark where ProductDetailID=@ProductDetailID and UserID=@UserID and OrderType=@OrderType and IsBigUnit=@IsBigUnit
+	update ShoppingCart set Quantity=Quantity+@Quantity,Remark=@Remark where ProductDetailID=@ProductDetailID and [GUID]=@GUID and OrderType=@OrderType and IsBigUnit=@IsBigUnit 
 end
 
 set @Err+=@@error

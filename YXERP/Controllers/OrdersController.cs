@@ -45,5 +45,28 @@ namespace YXERP.Controllers
             return View("Orders");
         }
 
+        public ActionResult ChooseProducts(string id)
+        {
+            ViewBag.Type = (int)EnumDocType.Order;
+            ViewBag.GUID = id;
+            ViewBag.Title = "新建订单-选择产品";
+            return View("FilterProducts");
+        }
+
+        #region Ajax
+
+        public JsonResult CreateOrder(string customerid)
+        {
+            string orderid = OrdersBusiness.BaseBusiness.CreateOrder(customerid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("id", orderid);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        #endregion
+
     }
 }

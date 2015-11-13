@@ -10,16 +10,16 @@ namespace CloudSalesDAL
 {
     public class ShoppingCartDAL : BaseDAL
     {
-        public static DataTable GetShoppingCart(int ordertype, string userid)
+        public static DataTable GetShoppingCart(int ordertype, string guid)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@OrderType",ordertype),
-                                     new SqlParameter("@UserID" , userid),
+                                     new SqlParameter("@GUID" , guid),
                                    };
             return GetDataTable("P_GetShoppingCart", paras, CommandType.StoredProcedure);
         }
 
-        public static bool AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, int ordertype, string remark, string userid, string operateip)
+        public static bool AddShoppingCart(string productid, string detailsid, int quantity, string unitid, int isBigUnit, int ordertype, string remark, string guid, string userid, string operateip)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@OrderType",ordertype),
@@ -29,6 +29,7 @@ namespace CloudSalesDAL
                                      new SqlParameter("@UnitID" , unitid),
                                      new SqlParameter("@IsBigUnit" , isBigUnit),
                                      new SqlParameter("@Remark" , remark),
+                                     new SqlParameter("@GUID" , guid),
                                      new SqlParameter("@UserID" , userid),
                                      new SqlParameter("@OperateIP" , operateip)
                                    };

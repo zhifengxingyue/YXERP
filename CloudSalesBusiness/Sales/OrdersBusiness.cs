@@ -14,7 +14,7 @@ namespace CloudSalesBusiness
 {
     public class OrdersBusiness
     {
-
+        public static OrdersBusiness BaseBusiness = new OrdersBusiness();
         #region 查询
 
         /// <summary>
@@ -139,6 +139,20 @@ namespace CloudSalesBusiness
         #endregion
 
         #region 添加
+
+
+        public string CreateOrder(string customerid, string operateid, string agentid, string clientid)
+        {
+            string id = Guid.NewGuid().ToString();
+            string code = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+            bool bl = OrdersDAL.BaseProvider.CreateOrder(id, code, customerid, operateid, agentid, clientid);
+            if (!bl)
+            {
+                return "";
+            }
+            return id;
+        }
 
         /// <summary>
         /// 创建单据

@@ -271,7 +271,7 @@
 
                 //打开产品详情页
                 html.find(".productimg,.name").each(function () {
-                    $(this).attr("href", $(this).attr("href") + "&type=" + _self.type);
+                    $(this).attr("href", $(this).attr("href") + "&type=" + _self.type + "&guid=" + _self.guid);
                 });
                 //加入购物车
                 html.find(".btnAddCart").click(function () {
@@ -454,6 +454,7 @@
                     unitid: $("#unit li.hover").data("id"),
                     isBigUnit: $("#unit li.hover").data("value"),
                     ordertype: _self.type,
+                    guid: _self.guid,
                     remark: remark
                 }, function (data) {
                     if (data.Status) {

@@ -126,6 +126,18 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult GetCustomersByKeywords(string keywords, int isAll = 0)
+        {
+
+            List<CustomerEntity> list = CustomBusiness.BaseBusiness.GetCustomersByKeywords(keywords, isAll == 0 ? CurrentUser.UserID : "", CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult GetCustomerByID(string customerid)
         {
             var model = CustomBusiness.BaseBusiness.GetCustomerByID(customerid, CurrentUser.AgentID, CurrentUser.ClientID);

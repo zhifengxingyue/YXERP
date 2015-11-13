@@ -24,7 +24,8 @@ define(function (require, exports, module) {
         };
         $.fn.drawCart = function (obj, opts) {
             Global.post("/ShoppingCart/GetShoppingCartCount", {
-                ordertype: opts.ordertype
+                ordertype: opts.ordertype,
+                guid: opts.guid
             }, function (data) {
                 doT.exec("plug/shoppingcart/shoppingcart.html", function (templateFun) {
                     var innerText = templateFun([]);
@@ -55,7 +56,8 @@ define(function (require, exports, module) {
             obj.find(".cart-mainbody").show();
             obj.find(".cart-product-list").empty();
             Global.post("/ShoppingCart/GetShoppingCart", {
-                ordertype: opts.ordertype
+                ordertype: opts.ordertype,
+                guid: opts.guid
             }, function (data) {
                 doT.exec("plug/shoppingcart/product-list.html", function (templateFun) {
                     if (data.Items.length > 0) {
@@ -64,7 +66,7 @@ define(function (require, exports, module) {
 
                         //详情页增加单据类型
                         innerText.find(".productname").each(function () {
-                            $(this).attr("href", $(this).attr("href") + "&type=" + opts.ordertype);
+                            $(this).attr("href", $(this).attr("href") + "&type=" + opts.ordertype + "&guid=" + opts.guid);
                         });
 
                         //删除产品
