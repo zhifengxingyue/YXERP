@@ -62,6 +62,7 @@ namespace YXERP.Controllers
 
         public ActionResult Client()
         {
+            ViewBag.Industry =CloudSalesBusiness.Manage.IndustryBusiness.GetIndustrys();
             return View();
         }
 
@@ -583,6 +584,42 @@ namespace YXERP.Controllers
             };
         }
 
+        #endregion
+
+        #region 公司信息
+        /// <summary>
+        /// 获取客户详情
+        /// </summary>
+        public JsonResult GetClientDetail()
+        {
+            var item = ClientBusiness.GetClientDetail(CurrentUser.ClientID);
+            JsonDictionary.Add("Item", item);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        /// <summary>
+        /// 保存公司基本信息
+        /// </summary>
+        public JsonResult SaveClient(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Clients model = serializer.Deserialize<Clients>(entity);
+            model.ClientID = CurrentUser.ClientID;
+            int result = 0;
+
+            bool flag = ClientBusiness.UpdateClient(model, CurrentUser.UserID, out result);
+            JsonDictionary.Add("Result", flag ? 1 : 0);
+
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
         #endregion
