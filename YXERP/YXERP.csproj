@@ -125,6 +125,7 @@
     <None Include="modules\plug\umeditor\net\Uploader.cs" />
     <Compile Include="Models\FilterUser.cs" />
     <Compile Include="Models\FilterCustomer.cs" />
+    <Compile Include="Models\FilterOrders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\homeico\account.png" />
     <Content Include="Content\homeico\agents.png" />
@@ -273,6 +274,7 @@
     <Content Include="modules\template\customer\customerlogs.html" />
     <Content Include="modules\template\customer\contacts.html" />
     <Content Include="modules\template\customer\contact-detail.html" />
+    <Content Include="modules\template\orders\orders.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
     <Content Include="modules\template\organization\department-detail.html" />
@@ -505,7 +507,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\tempfile\" />
     <Folder Include="Content\uploadFiles\" />
-    <Folder Include="modules\template\orders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

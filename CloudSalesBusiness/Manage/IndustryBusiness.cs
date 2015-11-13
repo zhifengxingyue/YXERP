@@ -66,9 +66,17 @@ namespace CloudSalesBusiness.Manage
 
         public static Industry GetIndustryDetail(string id)
         {
+            if (IndustryBusiness.Industrys.Where(m => m.IndustryID == id).Count() > 0)
+            {
+                return IndustryBusiness.Industrys.Where(m => m.IndustryID == id).FirstOrDefault();
+            }
             Industry model = new Industry();
             DataTable dt = new IndustryDAL().GetIndustryDetail(id);
-            model.FillData(dt.Rows[0]);
+            if (dt.Rows.Count > 0)
+            {
+                model.FillData(dt.Rows[0]);
+                IndustryBusiness.Industrys.Add(model);
+            }
 
             return model;
         }

@@ -27,21 +27,18 @@ namespace YXERP.Controllers
         {
             ViewBag.Title = "我的订单";
             ViewBag.Type = (int)EnumSearchType.Myself;
-            ViewBag.OrderTypes = SystemBusiness.BaseBusiness.GetOrderTypes(CurrentUser.AgentID, CurrentUser.ClientID);
             return View("Orders");
         }
         public ActionResult BranchOrder()
         {
             ViewBag.Title = "下属订单";
             ViewBag.Type = (int)EnumSearchType.Branch;
-            ViewBag.OrderTypes = SystemBusiness.BaseBusiness.GetOrderTypes(CurrentUser.AgentID, CurrentUser.ClientID);
             return View("Orders");
         }
         public ActionResult Orders()
         {
             ViewBag.Title = "所有订单";
             ViewBag.Type = (int)EnumSearchType.All;
-            ViewBag.OrderTypes = SystemBusiness.BaseBusiness.GetOrderTypes(CurrentUser.AgentID, CurrentUser.ClientID);
             return View("Orders");
         }
 
@@ -54,6 +51,24 @@ namespace YXERP.Controllers
         }
 
         #region Ajax
+
+        public JsonResult GetOrders(string filter)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            FilterOrders model = serializer.Deserialize<FilterOrders>(filter);
+            int totalCount = 0;
+            int pageCount = 0;
+
+            var list = OrdersBusiness.BaseBusiness.GetOrders(model.SearchType, model.TypeID, model.Status, model.UserID, model.TeamID, model.AgentID, model.BeginTime, model.EndTime, model.Keywords, model.PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
+            JsonDictionary.Add("totalCount", totalCount);
+            JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         public JsonResult CreateOrder(string customerid)
         {

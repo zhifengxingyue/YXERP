@@ -43,7 +43,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult DocDetail(string id)
         {
-            ViewBag.Model = OrdersBusiness.GetStorageDetail(id, CurrentUser.ClientID);
+            ViewBag.Model = StockBusiness.GetStorageDetail(id, CurrentUser.ClientID);
             return View();
         }
 
@@ -63,8 +63,8 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult AuditDetail(string id)
         {
-            ViewBag.Wares = new SystemBusiness().GetWareHouses(CurrentUser.ClientID); 
-            ViewBag.Model = OrdersBusiness.GetStorageDetail(id, CurrentUser.ClientID);
+            ViewBag.Wares = new SystemBusiness().GetWareHouses(CurrentUser.ClientID);
+            ViewBag.Model = StockBusiness.GetStorageDetail(id, CurrentUser.ClientID);
             return View();
         }
 
@@ -86,7 +86,7 @@ namespace YXERP.Controllers
             var model = serializer.Deserialize<CloudSalesEntity.StorageDoc>(doc);
             model.DocType = (int)EnumDocType.RK;
 
-            var id = OrdersBusiness.CreateStorageDoc(model, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            var id = StockBusiness.CreateStorageDoc(model, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("ID", id);
             return new JsonResult
             {
@@ -106,7 +106,7 @@ namespace YXERP.Controllers
         public JsonResult GetMyPurchase(string keyWords, int pageIndex, int totalCount, int status = -1, bool isAll = false)
         {
             int pageCount = 0;
-            List<StorageDoc> list = OrdersBusiness.GetStorageDocList(isAll ? string.Empty : CurrentUser.UserID, EnumDocType.RK, (EnumDocStatus)status, keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            List<StorageDoc> list = StockBusiness.GetStorageDocList(isAll ? string.Empty : CurrentUser.UserID, EnumDocType.RK, (EnumDocStatus)status, keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
@@ -123,7 +123,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult DeletePurchase(string docid)
         {
-            var bl = new OrdersBusiness().DeleteDoc(docid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            var bl = new StockBusiness().DeleteDoc(docid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
 
             return new JsonResult
@@ -139,7 +139,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult InvalidPurchase(string docid)
         {
-            var bl = new OrdersBusiness().InvalidDoc(docid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            var bl = new StockBusiness().InvalidDoc(docid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
 
             return new JsonResult
@@ -157,7 +157,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult UpdateStorageDetailWare(string autoid, string wareid, string depotid)
         {
-            var bl = new OrdersBusiness().UpdateStorageDetailWare(autoid, wareid, depotid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            var bl = new StockBusiness().UpdateStorageDetailWare(autoid, wareid, depotid, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
 
             return new JsonResult
@@ -173,7 +173,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult AuditPurchase(string ids)
         {
-            bool bl = new OrdersBusiness().AuditStorageIn(ids, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            bool bl = new StockBusiness().AuditStorageIn(ids, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {
@@ -193,7 +193,7 @@ namespace YXERP.Controllers
         public JsonResult GetStorageDocLog(string docid, int pageIndex, int totalCount)
         {
             int pageCount = 0;
-            List<StorageDocAction> list = OrdersBusiness.GetStorageDocAction(docid, 10, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID);
+            List<StorageDocAction> list = StockBusiness.GetStorageDocAction(docid, 10, pageIndex, ref totalCount, ref pageCount, CurrentUser.AgentID);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);

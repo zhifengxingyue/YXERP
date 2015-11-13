@@ -19,11 +19,10 @@
 <div class="search-box">
     <div class="search-header">
         <ul class="search-status">
-            <li data-id="" class="hover">全部阶段</li>
-            @foreach (var model in (List<CloudSalesEntity.OrderTypeEntity>)ViewBag.OrderTypes)
-            {
-                <li data-id="@(model.TypeID)">@(model.TypeName)</li>
-            }
+            <li data-id="-1" class="hover">全部订单</li>
+            <li data-id="0" class="">草案订单</li>
+            <li data-id="1" class="">未审核订单</li>
+            <li data-id="2" class="">已审核订单</li>
         </ul>
     </div>
     <div class="search-body mTop20">
@@ -36,13 +35,13 @@
     <table class="table-list mTop10">
         <tr class="tr-header">
             <td class="width30"></td>
+            <td class="tLeft width150">订单编号</td>
             <td class="tLeft">客户名称</td>
-            <td class="width50">类型</td>
-            <td class="width150">来源</td>
-            <td class="width100">阶段</td>
+            <td class="width100">订单类型</td>
+            <td class="width100">状态</td>
+            <td class="width100 tRight">总金额</td>
             <td class="width100">联系人</td>
-            <td class="width100">联系电话</td>
-            <td class="width50"><span id="filterMark"></span></td>          
+            <td class="width100">联系电话</td>     
             <td class="width100">拥有者</td>
             <td class="width150">创建时间</td>
             <td class="width50">操作</td>

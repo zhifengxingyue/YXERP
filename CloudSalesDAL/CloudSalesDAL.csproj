@@ -51,7 +51,8 @@
     <Compile Include="Manage\ClientOrderDAL.cs" />
     <Compile Include="Manage\ModulesProductDAL.cs" />
     <Compile Include="Manage\ExpressCompanyDAL.cs" />
-    <Compile Include="Stock\OrdersDAL.cs" />
+    <Compile Include="Sales\OrdersDAL.cs" />
+    <Compile Include="Stock\StockDAL.cs" />
     <Compile Include="Manage\IndustryDAL.cs" />
     <Compile Include="Stock\ProductsDAL.cs" />
     <Compile Include="Common\CommonDAL.cs" />

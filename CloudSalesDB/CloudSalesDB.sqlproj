@@ -246,4 +246,7 @@
   <ItemGroup>
     <None Include="Procedures\Sales\P_CreateOrder.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_GetOrders.sql" />
+  </ItemGroup>
 </Project>
