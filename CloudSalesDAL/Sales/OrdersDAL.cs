@@ -66,6 +66,19 @@ namespace CloudSalesDAL
 
         #region 编辑、删除
 
+        public bool UpdateOrderOwner(string orderid, string userid, string operateid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@OrderID",orderid),
+                                     new SqlParameter("@UserID",userid),
+                                     new SqlParameter("@OperateID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+
+            return ExecuteNonQuery("P_UpdateOrderOwner", paras, CommandType.StoredProcedure) > 0;
+        }
+
         #endregion
 
     }

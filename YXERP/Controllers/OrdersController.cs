@@ -81,6 +81,27 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult UpdateOrderOwner(string ids, string userid)
+        {
+            bool bl = false;
+            string[] list = ids.Split(',');
+            foreach (var id in list)
+            {
+                if (!string.IsNullOrEmpty(id) && OrdersBusiness.BaseBusiness.UpdateOrderOwner(id, userid, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID))
+                {
+                    bl = true;
+                }
+            }
+
+
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
     }

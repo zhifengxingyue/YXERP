@@ -62,6 +62,17 @@ namespace CloudSalesBusiness
 
         #region 编辑、删除
 
+        public bool UpdateOrderOwner(string orderid, string userid, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = OrdersDAL.BaseProvider.UpdateOrderOwner(orderid, userid, operateid, agentid, clientid);
+            if (bl)
+            {
+                var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
+                string msg = "订单拥有者更换为：" + model.Name;
+                LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, userid, agentid, clientid);
+            }
+            return bl;
+        }
 
         #endregion
     }

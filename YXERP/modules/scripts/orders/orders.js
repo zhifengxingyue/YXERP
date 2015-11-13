@@ -264,7 +264,7 @@
     //转移客户
     ObjectJS.ChangeOwner = function (ids, userid) {
         var _self = this;
-        Global.post("/Customer/UpdateCustomOwner", {
+        Global.post("/Orders/UpdateOrderOwner", {
             userid: userid,
             ids: ids
         }, function (data) {
