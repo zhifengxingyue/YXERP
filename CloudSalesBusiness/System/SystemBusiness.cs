@@ -125,6 +125,10 @@ namespace CloudSalesBusiness
 
         public CustomSourceEntity GetCustomSourcesByID(string sourceid, string agentid, string clientid)
         {
+            if (string.IsNullOrEmpty(sourceid))
+            {
+                return null;
+            }
             var list = GetCustomSources(agentid, clientid);
             if (list.Where(m => m.SourceID == sourceid).Count() > 0)
             {
@@ -172,6 +176,10 @@ namespace CloudSalesBusiness
 
         public CustomStageEntity GetCustomStageByID(string stageid, string agentid, string clientid)
         {
+            if (string.IsNullOrEmpty(stageid))
+            {
+                return null;
+            }
             var list = GetCustomStages(agentid, clientid);
             if (list.Where(m => m.StageID == stageid).Count() > 0)
             {
@@ -219,6 +227,10 @@ namespace CloudSalesBusiness
 
         public OrderTypeEntity GetOrderTypeByID(string typeid, string agentid, string clientid)
         {
+            if (string.IsNullOrEmpty(typeid))
+            {
+                return null;
+            }
             var list = GetOrderTypes(agentid, clientid);
             if (list.Where(m => m.TypeID == typeid).Count() > 0)
             {
@@ -260,6 +272,11 @@ namespace CloudSalesBusiness
 
         public TeamEntity GetTeamByID(string teamid, string agentid)
         {
+
+            if (string.IsNullOrEmpty(teamid))
+            {
+                return null;
+            }
             var list = GetTeams(agentid);
             if (list.Where(m => m.TeamID == teamid).Count() > 0)
             {

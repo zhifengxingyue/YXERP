@@ -252,4 +252,10 @@
   <ItemGroup>
     <None Include="Procedures\Sales\P_UpdateOrderOwner.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_GetOrderByID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_SubmitOrder.sql" />
+  </ItemGroup>
 </Project>

@@ -165,6 +165,8 @@ namespace CloudSalesEntity
 
         public string CustomerName { get; set; }
 
+        public CustomerEntity Customer { get; set; }
+
         /// <summary>
         /// 填充数据
         /// </summary>

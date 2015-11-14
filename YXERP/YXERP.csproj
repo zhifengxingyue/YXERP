@@ -181,7 +181,7 @@
     <Content Include="modules\css\customer\activity.css" />
     <Content Include="modules\css\customer\customer.css" />
     <Content Include="modules\css\home\home.css" />
-    <Content Include="modules\css\orders\orders.css" />
+    <Content Include="modules\css\sales\orders.css" />
     <Content Include="modules\css\shoppingcart\confirmcart.css" />
     <Content Include="modules\css\stock\purchase.css" />
     <Content Include="modules\css\base.css" />
@@ -254,6 +254,7 @@
     <Content Include="modules\scripts\customer\customer.js" />
     <Content Include="modules\scripts\customer\create.js" />
     <Content Include="modules\scripts\customer\detail.js" />
+    <Content Include="modules\scripts\orders\confirmorder.js" />
     <Content Include="modules\scripts\orders\orders.js" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
@@ -327,6 +328,8 @@
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Orders\Orders.cshtml" />
     <Content Include="Views\System\Client.cshtml" />
+    <Content Include="Views\Orders\Detail.cshtml" />
+    <Content Include="Views\Orders\ConfirmOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

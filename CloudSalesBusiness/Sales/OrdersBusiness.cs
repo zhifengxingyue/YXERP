@@ -40,6 +40,38 @@ namespace CloudSalesBusiness
             return list;
         }
 
+        public OrderEntity GetOrderByID(string orderid, string agentid, string clientid)
+        {
+            DataSet ds = OrdersDAL.BaseProvider.GetOrderByID(orderid, agentid, clientid);
+            OrderEntity model = new OrderEntity();
+            if (ds.Tables["Order"].Rows.Count > 0)
+            {
+                
+                model.FillData(ds.Tables["Order"].Rows[0]);
+                model.OrderType = SystemBusiness.BaseBusiness.GetOrderTypeByID(model.TypeID, model.AgentID, model.ClientID);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+                if (ds.Tables["Customer"].Rows.Count > 0)
+                {
+                    model.Customer = new CustomerEntity();
+                    model.Customer.FillData(ds.Tables["Customer"].Rows[0]);
+                }
+                if (ds.Tables["Details"].Rows.Count > 0)
+                {
+                    model.Details = new List<OrderDetail>();
+                    foreach (DataRow dr in ds.Tables["Details"].Rows)
+                    {
+                        OrderDetail detail = new OrderDetail();
+                        detail.FillData(dr);
+                        model.Details.Add(detail);
+                    }
+                }
+                
+                
+            }
+            return model;
+        }
+
         #endregion
 
         #region 添加
@@ -70,6 +102,17 @@ namespace CloudSalesBusiness
                 var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
                 string msg = "订单拥有者更换为：" + model.Name;
                 LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, userid, agentid, clientid);
+            }
+            return bl;
+        }
+
+        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string typeid, int expresstype, string remark, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = OrdersDAL.BaseProvider.SubmitOrder(orderid, personName, mobileTele, cityCode, address, typeid, expresstype, remark, operateid, agentid, clientid);
+            if (bl)
+            {
+                string msg = "确认提交订单";
+                LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, operateid, agentid, clientid);
             }
             return bl;
         }
