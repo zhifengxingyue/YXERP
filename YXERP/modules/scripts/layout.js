@@ -88,19 +88,54 @@ define(function (require, exports, module) {
 
         //意见反馈
         $(".feedback").click(function () {
-            var html = "aaaaaaaa";
-            Easydialog.open({
-                container: {
-                    id: "show-model-detail",
-                    header: "意见反馈",
-                    content: html,
-                    yesFn: function () {
-                       
-                    },
-                    callback: function () {
+            doT.exec("template/feedback/feedback_add.html", function (template) {
+                var html = template([]);
 
+                Easydialog.open({
+                    container: {
+                        id: "show-model-feedback",
+                        header: "意见反馈",
+                        content: html,
+                        yesFn: function () {
+                            var entity = {
+                                Title: $("#feedback-title").val(),
+                                ContactName: $("#feedback-contactname").val(),
+                                MobilePhone: $("#feedback-mobilephone").val(),
+                                Type: $("#feedback-type").val(),
+                                FilePath: $("#feedback-filepath").val(),
+                                Remark: $("#feedback-remark").val()
+                            };
+                            Global.post("/FeedBack/InsertFeedBack", { entity: JSON.stringify(entity) }, function (data) {
+                                if (data.Result == 1) {
+                                    alert("反馈成功");
+                                }
+                            });
+                        },
+                        callback: function () {
+
+                        }
                     }
-                }
+                });
+
+                $("#feedback-contactname").val($("#txt_username").val());
+                $("#feedback-mobilephone").val($("#txt_usermobilephone").val());
+
+                var Upload = require("upload");
+                //选择意见反馈附件
+                Upload.createUpload({
+                    element: "#feedback-file",
+                    buttonText: "选择附件",
+                    className: "",
+                    data: { folder: '/Content/tempfile/', action: 'add', oldPath: "" },
+                    success: function (data, status) {
+                        if (data.Items.length > 0) {
+                            $("#feedback-filepath").val(data.Items[0]);
+                            var arr=data.Items[0].split("/");
+                            $("#feedback-filename").html(arr[arr.length-1]);
+                        }
+                    }
+                });
+
             });
 
         });
