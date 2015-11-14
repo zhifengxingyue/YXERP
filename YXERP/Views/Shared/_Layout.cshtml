@@ -48,16 +48,14 @@
     </header>
     <div class="main-body">
         <nav>
-            @*<div class="top-nav">
-                <span class="controller-name">功能菜单</span>
-            </div>*@
             @foreach (CloudSalesEntity.Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, controllerMenu.PCode))
             { 
                 <div class="controller @(model.Controller.ToUpper()==controller ? "select" : "")">
                     <div class="controller-box">
                         <div class="controller-name">
-                            <span class="name left">@(model.Name)</span>
                             <span class="open left @(model.Controller.ToUpper()==controller ? "rotate" : "")"></span>
+                            <span class="name left">@(model.Name)</span>
+                            
                         </div>
                     </div>
                     

@@ -14,9 +14,7 @@
 }
 <div class="header-box">
     <span class="header-title left">新建客户</span>
-    <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")" class="ico-back left">
-        返回客户列表
-    </a>
+    
 </div>
 <div class="content-body">
     <ul class="table-add">
@@ -90,7 +88,9 @@
     </ul>
     <div class="mTop20">
         <div class="btn" id="btnSave">保存</div>
-        @*<a href="javascript:history.go(-1);" class="btnccc" >返回</a>*@
+        <a class="btn mLeft10" href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")">
+            返回
+        </a>
     </div>
 </div>
 

@@ -48,16 +48,15 @@ define(function (require, exports, module) {
    
         $(".controller-box").click(function () {
             var _this = $(this).parent();
-            
             if (!_this.hasClass("select")) {
-                _self.setRotateR(_this.siblings(".select").find(".open"), -90, 3, 0);
-                _this.siblings().removeClass("select");
-                _this.siblings().find(".action-box").hide();
-
-                _self.setRotateL(_this.find(".open"), 0, 3, -90);
+                _self.setRotateR(_this.find(".open"), 0, 90);
                 _this.addClass("select");
-                _this.find(".action-box").show();
-            } 
+                _this.find(".action-box").slideDown(200);
+            } else {
+                _self.setRotateL(_this.find(".open"), 90, 0);
+                _this.removeClass("select");
+                _this.find(".action-box").slideUp(200);
+            }
         });
 
         //登录信息展开
@@ -140,25 +139,25 @@ define(function (require, exports, module) {
 
         });
     }
-    //旋转按钮
-    LayoutObject.setRotateR = function (obj, i, x, v) {
+    //旋转按钮（顺时针）
+    LayoutObject.setRotateR = function (obj, i, v) {
         var _self = this;
-        if (v >= 0 && i < v) {
-            i += x;
+        if (i < v) {
+            i += 3;
             setTimeout(function () {
-                obj.css("transform", "rotate(-" + i + "deg)");
-                _self.setRotateR(obj, i, x, v);
+                obj.css("transform", "rotate(" + i + "deg)");
+                _self.setRotateR(obj, i, v);
             }, 5)
         }
     }
-    //旋转按钮
-    LayoutObject.setRotateL = function (obj, i, x, v) {
+    //旋转按钮(逆时针)
+    LayoutObject.setRotateL = function (obj, i, v) {
         var _self = this;
-        if (v < 0 && -i > v) {
-            i += x;
+        if (i > v) {
+            i -= 3;
             setTimeout(function () {
-                obj.css("transform", "rotate(-" + i + "deg)");
-                _self.setRotateL(obj, i, x, v);
+                obj.css("transform", "rotate(" + i + "deg)");
+                _self.setRotateL(obj, i, v);
             }, 5)
         } 
     }

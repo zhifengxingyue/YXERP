@@ -14,15 +14,15 @@
 }
 <div class="header-box">
     <span class="header-title left">草案订单-确认订单信息</span>
-    <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Orders/MyOrder" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Orders/MyOrder'}")" class="ico-back left">
+    <a href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Orders/MyOrder" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Orders/MyOrder'}")" class="ico-back right">
         返回订单列表
     </a>
 </div>
 <div class="content-body">
     <div class="title-body">
         <div class="left title">订单编号：@(model.OrderCode)</div>
-      
-        <span class="right lineHeight25 mRight20">草案订单</span>
+       
+        <span class="right lineHeight25">草案订单</span>
         <span class="right lineHeight25">订单状态：</span>
     </div>
     <div class="customerinfo">
@@ -74,7 +74,7 @@
         <ul class="tab-nav-ul left">
             <li class="hover" data-id="navRemark">产品明细</li>
         </ul>
-        <a href="/Orders/ChooseProducts/@(model.OrderID)" class="btn right">返回选择产品</a>
+        
     </div>
     <table class="table-list mTop20">
         <tr class="tr-header">
@@ -111,7 +111,8 @@
             <td></td>
         </tr>
     </table>
-    <div class="bottom-div">
-        <input type="button" class="btnconfirm right" id="btnconfirm" value="提交订单" />
-    </div>
+    
+
+    <div class="btn right mTop30" id="btnconfirm" >提交订单</div>
+    <a href="/Orders/ChooseProducts/@(model.OrderID)" class="btnccc right mTop30 mRight20">继续添加产品</a>
 </div>

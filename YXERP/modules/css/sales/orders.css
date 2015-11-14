@@ -28,11 +28,11 @@
 
 .normal { color:#4a98e7; }
 
-.title-body { border-bottom:solid 1px #4a98e7 ; height:35px; }
-.title-body .title { font-size:18px; color:#666; }
+.title-body { height:35px; }
+.title-body .title { font-size:16px; color:#666; }
 
 
-.customerinfo { margin-top:20px; overflow:auto;}
+.customerinfo { overflow:auto;}
 .customerinfo .baseinfo{ width:80%; min-width:600px; float:left;}
 .customerinfo .baseinfo li{ width:50%; float:left; overflow:auto; line-height:30px; padding:5px 0; }
 

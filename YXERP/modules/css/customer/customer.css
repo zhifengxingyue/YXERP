@@ -33,12 +33,12 @@
 
 .normal { color:#4a98e7; }
 
-.title-body { border-bottom:solid 1px #4a98e7 ; height:35px; }
+.title-body { height:35px; }
 .title-body .customer-type { border:solid 1px #4a98e7; height:20px; width:20px; border-radius:11px; line-height:18px; text-align:center; font-size:14px; color:#4a98e7;}
 .title-body .title { font-size:18px; color:#666; }
 
 
-.customerinfo { margin-top:20px; overflow:auto;}
+.customerinfo { overflow:auto;}
 .customerinfo .baseinfo{ width:80%; min-width:600px; float:left;}
 .customerinfo .baseinfo li{ width:50%; float:left; height:35px; line-height:35px; }
 .baseinfo li span{ width:100px; float:left; height:35px; line-height:35px; color:#999; }

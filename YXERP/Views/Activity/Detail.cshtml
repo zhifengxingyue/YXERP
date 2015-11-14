@@ -14,6 +14,9 @@
 <div class="header-box">
     <span class="header-title left">活动详情</span>
     <a class="ico-add" href="/Customer/Create/@ViewBag.ActivityID" target="_blank">新建客户</a>
+    <a class="ico-back right" href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Activity/MyActivity" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Activity/MyActivity'}")" >
+        返回活动列表
+    </a>
 </div>
 
 <div class="content-body">
