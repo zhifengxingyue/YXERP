@@ -191,7 +191,7 @@ define(function (require, exports, module) {
             IsNew: $("#isNew").prop("checked") ? 1 : 0,
             IsRecommend: $("#isRecommend").prop("checked") ? 1 : 0,
             IsAllow: $("#isAllow").prop("checked") ? 1 : 0,
-            IsAutoSend: $("#isAutoSend").prop("checked") ? 1 : 0,
+            IsAutoSend: 0, //$("#isAutoSend").prop("checked") ? 1 : 0,
             EffectiveDays: $("#effectiveDays").val(),
             DiscountValue:1,
             ProductImage: _self.ProductImage,

@@ -9,18 +9,18 @@ header .companyName { font-size: 14px; padding:16px 0 0 5px; color: #BFD2F2; cur
 header .companyName:hover { color: #fff; }
 
 /*公司名称点击下拉列表*/
-.dropdown-companyinfo { position:fixed; background-color:#fff; width:190px; z-index:1000; border-radius:2px; border:solid 1px #eee;
+.dropdown-companyinfo { position:fixed; background-color:#fff; width:210px; z-index:1000; border-radius:2px; border:solid 1px #eee;
                         box-shadow:0 0 5px #ccc; top:50px; left:0px;}
 .dropdown-companyinfo .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
-                                   width:0; height:0; position:absolute; left:85px; top:-9px; }
+                                   width:0; height:0; position:absolute; left:90px; top:-9px; }
 .dropdown-companyinfo .items-list { padding:5px 0; overflow:auto; }
-.dropdown-companyinfo .items-list .item{ height:35px; line-height:35px; float:left; width:190px; text-align:center;border-bottom:solid 1px #eee;}
+.dropdown-companyinfo .items-list .item{ height:35px; line-height:35px; float:left; width:210px; text-align:center;border-bottom:solid 1px #eee;}
 
 /*一级菜单*/
 header .menu { height:50px; margin-left:30px; }
-header .menu a{  height:50px; line-height:50px;text-align:center; width:110px; display:inline-block; }
+header .menu a{  height:50px; line-height:50px;text-align:center; width:100px; display:inline-block; }
 header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:15px; float:left; }
-header .menu a span{ margin-left:15px; float:left; color:#BFD2F2; font-size:14px;}
+header .menu a span{ margin-left:10px; float:left; color:#BFD2F2; font-size:14px;}
 header .menu .select{ background-color:#174A7F;color:#fff;}
 header .menu a:hover span,header .menu .select span{ color:#fff;}
 
