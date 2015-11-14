@@ -49,6 +49,7 @@
     <Compile Include="Custom\CustomBusiness.cs" />
     <Compile Include="Manage\ClientOrderBusiness.cs" />
     <Compile Include="Manage\ExpressCompanyBusiness.cs" />
+    <Compile Include="Manage\FeedBackBusiness.cs" />
     <Compile Include="Manage\ModulesProductBusiness.cs" />
     <Compile Include="Sales\OrdersBusiness.cs" />
     <Compile Include="Manage\IndustryBusiness.cs" />
