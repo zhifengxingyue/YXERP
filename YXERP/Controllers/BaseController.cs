@@ -50,19 +50,5 @@ namespace YXERP.Controllers
         /// </summary>
         protected Dictionary<string, object> JsonDictionary = new Dictionary<string, object>();
 
-        /// <summary>
-        /// 获取云销系统一级菜单列表
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetTopMenus()
-        {
-            JsonDictionary.Add("Items", CurrentUser.Menus.Where(m => m.PCode == ExpandClass.CLIENT_TOP_CODE).ToList());
-            return new JsonResult()
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
     }
 }
