@@ -406,6 +406,7 @@
                             $("#price").html("￥" + model.ProductDetails[i].BigPrice.toFixed(2));
                         }
                         $("#productimg").attr("src", model.ProductDetails[i].ImgS);
+                        $("#productStockQuantity").text(model.ProductDetails[i].StockIn - model.ProductDetails[i].LogicOut);
                         return;
                     } else {
                         $("#addcart").prop("disabled", true).addClass("addcartun");
@@ -482,6 +483,7 @@
                 }
                 $("#price").html("￥" + model.ProductDetails[i].Price.toFixed(2));
                 $("#productimg").attr("src", model.ProductDetails[i].ImgS);
+                $("#productStockQuantity").text(model.ProductDetails[i].StockIn - model.ProductDetails[i].LogicOut);
                 break;
             }
         }

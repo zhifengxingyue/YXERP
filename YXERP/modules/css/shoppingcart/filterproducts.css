@@ -99,3 +99,5 @@
 
 .addcart { height:36px; background-color:#B10000; color:#fff; font-size:14px; font-weight:bold; padding:0 20px; border:none; cursor:pointer; margin-top:8px; }
 .addcartun { background-color:#ccc; color:#fff;  }
+
+.choose-div .stock { height:50px; line-height:50px; }

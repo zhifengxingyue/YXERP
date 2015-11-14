@@ -13,7 +13,9 @@ define(function (require, exports, module) {
         _self.ordertype = ordertype;
         _self.guid = guid;
         model = JSON.parse(model.replace(/&quot;/g, '"'));
-        
+
+        $("#productStockQuantity").text(model.StockIn - model.LogicOut);
+
         _self.bindDetail(model);
         _self.bindEvent(model);
 
@@ -55,6 +57,7 @@ define(function (require, exports, module) {
                             $("#price").html("￥" + model.ProductDetails[i].BigPrice.toFixed(2));
                         }
                         $("#productimg").attr("src", model.ProductDetails[i].ImgS);
+                        $("#productStockQuantity").text(model.ProductDetails[i].StockIn - model.ProductDetails[i].LogicOut);
                         return;
                     } else {
                         $("#addcart").prop("disabled", true).addClass("addcartun");
@@ -129,6 +132,7 @@ define(function (require, exports, module) {
                 }
                 $("#price").html("￥" + model.ProductDetails[i].Price.toFixed(2));
                 $("#productimg").attr("src", model.ProductDetails[i].ImgS);
+                $("#productStockQuantity").text(model.ProductDetails[i].StockIn - model.ProductDetails[i].LogicOut);
                 break;
             }
         }

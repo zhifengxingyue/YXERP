@@ -35,6 +35,8 @@
 .addcart { height:36px; background-color:#B10000; color:#fff; font-size:14px; font-weight:bold; padding:0 20px; border:none; cursor:pointer; margin-top:8px; }
 .addcartun { background-color:#ccc; color:#fff;  }
 
+.choose-div .stock { height:50px; line-height:50px; }
+
 /*产品属性*/
 .show-nav { height: 30px; width: 90%; line-height: 30px; margin-top: 20px; border-width: 2px 1px 1px; border-style: solid; 
             border-color: #999 #DEDFDE #DEDFDE; background-color: #F7F7F7; overflow: visible; }
