@@ -157,6 +157,22 @@ nav .select { background-color:#fff; border-left-color:#318AE4; margin-top:-2px;
     width:16px;position:fixed;right:0px;top:320px;background-color:#eee;font-size:14px;padding:5px;border:solid 1px #ccc;cursor:pointer;color:#666;
 }
 
+.feedback_dialog li {
+margin-top:10px;
+}
+
+.feedback_dialog li .input {
+width:180px;
+}
+
+.feedback_dialog li .textarea {
+width:300px;
+}
+
+.feedback_dialog span {
+display:inline-block;
+}
+
 
 
 

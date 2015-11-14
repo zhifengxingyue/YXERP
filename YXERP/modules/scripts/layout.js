@@ -144,6 +144,8 @@ define(function (require, exports, module) {
                     success: function (data, status) {
                         if (data.Items.length > 0) {
                             $("#feedback-filepath").val(data.Items[0]);
+                            var arr=data.Items[0].split("/");
+                            $("#feedback-filename").html(arr[arr.length-1]);
                         }
                     }
                 });
