@@ -108,6 +108,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerRPTController.cs" />
+    <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfomationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -275,6 +276,7 @@
     <Content Include="modules\template\customer\customerlogs.html" />
     <Content Include="modules\template\customer\contacts.html" />
     <Content Include="modules\template\customer\contact-detail.html" />
+    <Content Include="modules\template\feedback\feedback_add.html" />
     <Content Include="modules\template\orders\orders.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
     <Content Include="modules\template\organization\departments.html" />
