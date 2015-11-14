@@ -56,6 +56,7 @@ namespace YXERP.Controllers
             ViewBag.Model = model;
             if (model.Status == 0)
             {
+                ViewBag.OrderTypes = SystemBusiness.BaseBusiness.GetOrderTypes(CurrentUser.AgentID, CurrentUser.ClientID);
                 return View("ConfirmOrder");
             }
             else
@@ -109,6 +110,22 @@ namespace YXERP.Controllers
 
 
             JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SubmitOrder(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            OrderEntity model = serializer.Deserialize<OrderEntity>(entity);
+
+
+            var bl = OrdersBusiness.BaseBusiness.SubmitOrder(model.OrderID, model.PersonName, model.MobileTele, model.CityCode, model.Address, model.TypeID, model.ExpressType, model.Remark, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+
             return new JsonResult
             {
                 Data = JsonDictionary,

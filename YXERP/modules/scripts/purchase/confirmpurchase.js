@@ -1,9 +1,6 @@
 ﻿
 define(function (require, exports, module) {
-    var City = require("city"), CityObj,
-        Global = require("global");
-
-    require("switch");
+    var Global = require("global");
 
     var ObjectJS = {};
     //添加页初始化
@@ -14,13 +11,6 @@ define(function (require, exports, module) {
     //绑定事件
     ObjectJS.bindEvent = function () {
         var _self = this;
-
-        $("#btnSave").on("click", function () {
-            if (!VerifyObject.isPass()) {
-                return;
-            }
-            _self.savaEntity();
-        });
 
         //编辑数量
         $(".quantity").change(function () {

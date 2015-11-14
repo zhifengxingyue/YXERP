@@ -91,6 +91,29 @@ namespace CloudSalesDAL
             return ExecuteNonQuery("P_UpdateOrderOwner", paras, CommandType.StoredProcedure) > 0;
         }
 
+        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string typeid, int expresstype, string remark, string operateid, string agentid, string clientid)
+        {
+            int result = 0;
+            SqlParameter[] paras = { 
+                                     new SqlParameter("@Result",result),
+                                     new SqlParameter("@OrderID",orderid),
+                                     new SqlParameter("@PersonName",personName),
+                                     new SqlParameter("@MobileTele" , mobileTele),
+                                     new SqlParameter("@CityCode" , cityCode),
+                                     new SqlParameter("@Address" , address),
+                                     new SqlParameter("@TypeID" , typeid),
+                                     new SqlParameter("@ExpressType" , expresstype),
+                                     new SqlParameter("@Remark" , remark),
+                                     new SqlParameter("@UserID" , operateid),
+                                     new SqlParameter("@AgentID" , agentid),
+                                     new SqlParameter("@ClientID" , clientid)
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("P_SubmitOrder", paras, CommandType.StoredProcedure);
+            result = Convert.ToInt32(paras[0].Value);
+            return result == 1;
+        }
+
         #endregion
 
     }

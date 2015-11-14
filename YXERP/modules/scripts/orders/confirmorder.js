@@ -4,13 +4,13 @@ define(function (require, exports, module) {
         Global = require("global"),
         ChooseUser = require("chooseuser");
 
-    require("switch");
-
     var ObjectJS = {};
     //添加页初始化
-    ObjectJS.init = function () {
-        ObjectJS.bindEvent();
-        ObjectJS.getAmount();
+    ObjectJS.init = function (orderid) {
+        var _self=this;
+        _self.orderid = orderid;
+        _self.bindEvent();
+        _self.getAmount();
     }
     //绑定事件
     ObjectJS.bindEvent = function () {
@@ -78,17 +78,25 @@ define(function (require, exports, module) {
             });
         });
 
+        //提交订单
         $("#btnconfirm").click(function () {
-            _self.submitOrder();
+            confirm("请确认订单信息是否填写正确，提交后只能编辑价格，确认提交吗？", function () {
+                _self.submitOrder();
+            });
+            
         });
 
+        CityObj = City.createCity({
+            elementID: "city"
+        });
+        
     }
     //计算总金额
     ObjectJS.getAmount = function () {
         var amount = 0;
         $(".amount").each(function () {
             var _this = $(this);
-            _this.html((_this.prevAll(".tr-quantity").find("input").val() * _this.prevAll(".tr-price").find("input").val()).toFixed(2));
+            _this.html((_this.prevAll(".tr-quantity").find("input").val() * _this.prevAll(".tr-price").find("label").text()).toFixed(2));
             amount += _this.html() * 1;
         });
         $("#amount").text(amount.toFixed(2));
@@ -114,32 +122,29 @@ define(function (require, exports, module) {
     //保存
     ObjectJS.submitOrder = function () {
         var _self = this;
-        var totalamount = 0, list = [];
+        var totalamount = 0, bl = false;
         //单据明细
         $(".cart-item").each(function () {
-            var _this = $(this);
-            var model = {
-                AutoID: _this.data("autoid"),
-                ProductDetailID: _this.data("id"),
-                Quantity: _this.find(".quantity").val(),
-                Price: _this.find(".price").val(),
-                BatchCode: _this.find(".batch").val(),
-                TotalMoney: _this.find(".quantity").val() * _this.find(".price").val()
-            };
-            list.push(model);
-            totalamount += model.TotalMoney;
+            bl = true;
         });
-        if (list.length <= 0) {
+        if (!bl) {
             return;
         }
         var entity = {
-            TotalMoney: totalamount,
-            Remark: $("#remark").val(),
-            Details: list
+            OrderID: _self.orderid,
+            PersonName: $("#personName").val().trim(),
+            MobileTele: $("#mobileTele").val().trim(),
+            CityCode: CityObj.getCityCode(),
+            Address: $("#address").val().trim(),
+            TypeID: $("#orderType").val().trim(),
+            ExpressType: $("#expressType").val().trim(),
+            Remark: $("#remark").val()
         };
-        Global.post("/Purchase/SubmitPurchase", { doc: JSON.stringify(entity) }, function (data) {
-            if (data.ID.length > 0) {
-                location.href = "/Purchase/MyPurchase";
+        Global.post("/Orders/SubmitOrder", { entity: JSON.stringify(entity) }, function (data) {
+            if (data.status) {
+                location.href = location.href;
+            } else {
+                location.href = location.href;
             }
         })
     }

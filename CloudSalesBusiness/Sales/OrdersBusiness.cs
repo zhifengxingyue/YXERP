@@ -106,6 +106,17 @@ namespace CloudSalesBusiness
             return bl;
         }
 
+        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string typeid, int expresstype, string remark, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = OrdersDAL.BaseProvider.SubmitOrder(orderid, personName, mobileTele, cityCode, address, typeid, expresstype, remark, operateid, agentid, clientid);
+            if (bl)
+            {
+                string msg = "确认提交订单";
+                LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, operateid, agentid, clientid);
+            }
+            return bl;
+        }
+
         #endregion
     }
 }
