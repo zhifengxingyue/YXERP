@@ -149,7 +149,7 @@ namespace CloudSalesBusiness
             bool bl = OrdersDAL.BaseProvider.SubmitOrder(orderid, personName, mobileTele, cityCode, address, typeid, expresstype, remark, operateid, agentid, clientid);
             if (bl)
             {
-                string msg = "确认提交订单";
+                string msg = "提交订单";
                 LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, operateid, agentid, clientid);
             }
             return bl;

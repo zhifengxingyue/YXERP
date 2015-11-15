@@ -53,6 +53,11 @@ set @Err=0
 
 select @PIDList=PIDList,@SaleAttr=SaleAttr from Category where CategoryID=@CategoryID
 
+if(@BigUnitID=@SmallUnitID)
+begin
+	set @BigSmallMultiple=1
+end
+
 select @Multiple=BigSmallMultiple from [Products] where ProductID=@ProductID
 
 Update [Products] set [ProductName]=@ProductName,ProductCode=@ProductCode,[GeneralName]=@GeneralName,[IsCombineProduct]=@IsCombineProduct,[BrandID]=@BrandID,
@@ -67,7 +72,14 @@ where ProductID=@ProductID
 --处理子产品大单位价格
 if(@Multiple<>@BigSmallMultiple)
 begin
-	update ProductDetail set BigPrice=BigPrice/@Multiple*@BigSmallMultiple where ProductID=@ProductID
+	if(@BigSmallMultiple=1)
+	begin
+		update ProductDetail set BigPrice=Price where ProductID=@ProductID
+	end
+	else
+	begin
+		update ProductDetail set BigPrice=BigPrice/@Multiple*@BigSmallMultiple where ProductID=@ProductID
+	end
 	set @Err+=@@Error
 end
 

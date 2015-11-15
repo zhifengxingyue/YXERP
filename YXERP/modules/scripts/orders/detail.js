@@ -70,6 +70,10 @@ define(function (require, exports, module) {
                         } else {
                             if (data.result = 0) {
                                 alert("订单审核失败，可能因为订单状态已改变，请刷新页面后重试！");
+                            } else if (data.result = 2) {
+                                alert("产品库存不足，订单审核失败！");
+                            } else if (data.result = 3) {
+                                alert("账户余额不足，订单审核失败！");
                             } else {
                                 alert("订单审核失败！");
                             }

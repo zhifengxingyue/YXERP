@@ -54,6 +54,11 @@ set @ProductID=NEWID()
 
 select @PIDList=PIDList,@SaleAttr=SaleAttr from Category where CategoryID=@CategoryID
 
+if(@BigUnitID=@SmallUnitID)
+begin
+	set @BigSmallMultiple=1
+end
+
 IF(NOT EXISTS(SELECT 1 FROM [Products] WHERE [ProductCode]=@ProductCode and ClientID=@ClientID))--产品编号唯一，编号不存在时才能执行插入
 BEGIN
 		INSERT INTO [Products]([ProductID],[ProductCode],[ProductName],[GeneralName],[IsCombineProduct],[BrandID],[BigUnitID],[SmallUnitID],[BigSmallMultiple] ,
