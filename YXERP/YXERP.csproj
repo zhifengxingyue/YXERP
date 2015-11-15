@@ -236,6 +236,7 @@
     <Content Include="modules\scripts\customer\detail.js" />
     <Content Include="modules\scripts\orders\confirmorder.js" />
     <Content Include="modules\scripts\orders\orders.js" />
+    <Content Include="modules\scripts\orders\detail.js" />
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\organization\structure.js" />
@@ -254,7 +255,7 @@
     <Content Include="modules\template\customer\replys.html" />
     <Content Include="modules\template\customer\customers.html" />
     <Content Include="modules\template\customer\customer-detail.html" />
-    <Content Include="modules\template\customer\customerlogs.html" />
+    <Content Include="modules\template\common\logs.html" />
     <Content Include="modules\template\customer\contacts.html" />
     <Content Include="modules\template\customer\contact-detail.html" />
     <Content Include="modules\template\feedback\feedback_add.html" />

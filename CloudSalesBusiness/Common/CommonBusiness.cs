@@ -81,6 +81,16 @@ namespace CloudSalesBusiness
 
         #endregion
 
+
+        public static CityEntity GetCityByCode(string citycode)
+        {
+            if (string.IsNullOrEmpty(citycode))
+            {
+                return null;
+            }
+            return Citys.Where(m => m.CityCode == citycode).FirstOrDefault();
+        }
+
         /// <summary>
         /// 修改表中某字段值
         /// </summary>

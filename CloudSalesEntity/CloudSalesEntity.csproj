@@ -48,7 +48,7 @@
     <Compile Include="Custom\CustomerEntity.cs" />
     <Compile Include="Custom\ExtentEntity.cs" />
     <Compile Include="Custom\ReplyEntity.cs" />
-    <Compile Include="Log\CustomerLogEntity.cs" />
+    <Compile Include="Log\LogEntity.cs" />
     <Compile Include="Manage\ClientOrder.cs" />
     <Compile Include="Manage\FeedBack.cs" />
     <Compile Include="Sales\OrderEntity.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Stock\ProductAttr.cs" />
     <Compile Include="Stock\ProductDetail.cs" />
     <Compile Include="Stock\ProductImg.cs" />
-    <Compile Include="Stock\ProductQuantity.cs" />
+    <Compile Include="Stock\ProductStock.cs" />
     <Compile Include="Stock\Products.cs" />
     <Compile Include="Stock\ProductStream.cs" />
     <Compile Include="Stock\ProductUnit.cs" />

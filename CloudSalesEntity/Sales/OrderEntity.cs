@@ -72,9 +72,9 @@ namespace CloudSalesEntity
         /// 
         /// </summary>
         public string CountryCode { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+
+        public CityEntity City { get; set; }
+
         public string CityCode { get; set; }
         /// <summary>
         /// 
@@ -100,6 +100,8 @@ namespace CloudSalesEntity
         /// 
         /// </summary>
         public int ExpressType { get; set; }
+
+        public string ExpressTypeStr { get; set; }
 
         [Property("Lower")] 
         public string ExpressID { get; set; }

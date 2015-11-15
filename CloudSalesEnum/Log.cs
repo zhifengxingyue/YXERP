@@ -31,4 +31,11 @@ namespace CloudSalesEnum
         Brand = 1,
         ProductUnit
     }
+
+    //日志对象类型
+    public enum EnumLogObjectType
+    {
+        Customer = 1,
+        Orders = 2
+    }
 }

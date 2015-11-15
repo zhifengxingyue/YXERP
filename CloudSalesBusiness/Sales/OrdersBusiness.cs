@@ -32,7 +32,8 @@ namespace CloudSalesBusiness
 
                 model.StatusStr = model.Status == 0 ? "草案订单" 
                                 : model.Status == 1 ? "未审核" 
-                                : model.Status == 2 ? "已审核" 
+                                : model.Status == 2 ? "已审核"
+                                : model.Status == 9 ? "已删除" 
                                 : "";
 
                 list.Add(model);
@@ -51,6 +52,21 @@ namespace CloudSalesBusiness
                 model.OrderType = SystemBusiness.BaseBusiness.GetOrderTypeByID(model.TypeID, model.AgentID, model.ClientID);
                 model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+
+                model.StatusStr = model.Status == 0 ? "草案订单" 
+                                : model.Status == 1 ? "未审核" 
+                                : model.Status == 2 ? "已审核"
+                                : model.Status == 9 ? "已删除" 
+                                : "";
+
+                model.ExpressTypeStr = model.ExpressType == 0 ? "邮寄"
+                                : model.ExpressType == 1 ? "海运"
+                                : model.ExpressType == 2 ? "空运"
+                                : model.ExpressType == 3 ? "自提"
+                                : "";
+
+                model.City = CommonBusiness.GetCityByCode(model.CityCode);
+
                 if (ds.Tables["Customer"].Rows.Count > 0)
                 {
                     model.Customer = new CustomerEntity();
@@ -94,6 +110,28 @@ namespace CloudSalesBusiness
 
         #region 编辑、删除
 
+        public bool UpdateOrderPrice(string orderid, string autoid, string name, decimal price, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = OrdersDAL.BaseProvider.UpdateOrderPrice(orderid, autoid, price, operateid, agentid, clientid);
+            if (bl)
+            {
+                string msg = "修改产品" + name + "价格：" + price;
+                LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, autoid, agentid, clientid);
+            }
+            return bl;
+        }
+
+        public bool DeleteOrder(string orderid, string operateid, string ip, string agentid, string clientid)
+        {
+            bool bl = OrdersDAL.BaseProvider.DeleteOrder(orderid, operateid, agentid, clientid);
+            if (bl)
+            {
+                string msg = "删除订单";
+                LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, "", agentid, clientid);
+            }
+            return bl;
+        }
+
         public bool UpdateOrderOwner(string orderid, string userid, string operateid, string ip, string agentid, string clientid)
         {
             bool bl = OrdersDAL.BaseProvider.UpdateOrderOwner(orderid, userid, operateid, agentid, clientid);
@@ -101,7 +139,7 @@ namespace CloudSalesBusiness
             {
                 var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
                 string msg = "订单拥有者更换为：" + model.Name;
-                LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, userid, agentid, clientid);
+                LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, userid, agentid, clientid);
             }
             return bl;
         }
@@ -112,7 +150,18 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 string msg = "确认提交订单";
-                LogBusiness.AddOrdersLog(orderid, msg, operateid, ip, operateid, agentid, clientid);
+                LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, operateid, agentid, clientid);
+            }
+            return bl;
+        }
+
+        public bool EffectiveOrder(string orderid, string operateid, string ip, string agentid, string clientid,out int result)
+        {
+            bool bl = OrdersDAL.BaseProvider.EffectiveOrder(orderid, operateid, agentid, clientid, out result);
+            if (bl)
+            {
+                string msg = "审核订单";
+                LogBusiness.AddLog(orderid, EnumLogObjectType.Orders, msg, operateid, ip, "", agentid, clientid);
             }
             return bl;
         }

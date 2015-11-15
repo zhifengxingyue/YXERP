@@ -29,9 +29,9 @@ AS
 declare @WareID nvarchar(64),@DepotID nvarchar(64)
 
 --绑定默认仓库
-if exists(select AutoID from ProductQuantity where ProductDetailID=@ProductDetailID)
+if exists(select AutoID from ProductStock where ProductDetailID=@ProductDetailID)
 begin
-	select top 1 @WareID=WareID,@DepotID=DepotID from ProductQuantity where ProductDetailID=@ProductDetailID order by BatchCode desc
+	select top 1 @WareID=WareID,@DepotID=DepotID from ProductStock where ProductDetailID=@ProductDetailID order by BatchCode desc
 end
 else
 begin

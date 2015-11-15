@@ -258,4 +258,13 @@
   <ItemGroup>
     <None Include="Procedures\Sales\P_SubmitOrder.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_UpdateOrderPrice.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_DeleteOrder.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Sales\P_EffectiveOrder.sql" />
+  </ItemGroup>
 </Project>

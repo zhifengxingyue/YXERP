@@ -47,20 +47,20 @@ begin
 end
 
 --处理库存
-if exists(select AutoID from ProductQuantity where ProductDetailID=@DetailID and WareID=@WareID and DepotID=@DepotID and BatchCode=@BatchCode)
+if exists(select AutoID from ProductStock where ProductDetailID=@DetailID and WareID=@WareID and DepotID=@DepotID and BatchCode=@BatchCode)
 begin
-	update ProductQuantity set StockIn=StockIn+@Quantity where ProductDetailID=@DetailID and WareID=@WareID and DepotID=@DepotID and BatchCode=@BatchCode
+	update ProductStock set StockIn=StockIn+@Quantity where ProductDetailID=@DetailID and WareID=@WareID and DepotID=@DepotID and BatchCode=@BatchCode
 end
 else
 begin
-	insert into ProductQuantity(ProductDetailID,ProductID,StockIn,StockOut,BatchCode,WareID,DepotID,ClientID)
+	insert into ProductStock(ProductDetailID,ProductID,StockIn,StockOut,BatchCode,WareID,DepotID,ClientID)
 						values (@DetailID,@ProductID,@Quantity,0,@BatchCode,@WareID,@DepotID,@ClientID)
 end
 set @Err+=@@Error
 
 --处理产品流水
-insert into ProductStream(ProductDetailID,ProductID,DocID,DocCode,BatchCode,DocDate,DocType,Quantity,WareID,DepotID,CreateUserID,ClientID)
-					values(@DetailID,@ProductID,@DocID,@DocCode,@BatchCode,CONVERT(varchar(100), GETDATE(), 112),1,@Quantity,@WareID,@DepotID,@UserID,@ClientID)
+insert into ProductStream(ProductDetailID,ProductID,DocID,DocCode,BatchCode,DocDate,DocType,Mark,Quantity,WareID,DepotID,CreateUserID,ClientID)
+					values(@DetailID,@ProductID,@DocID,@DocCode,@BatchCode,CONVERT(varchar(100), GETDATE(), 112),1,0,@Quantity,@WareID,@DepotID,@UserID,@ClientID)
 
 --修改单据明细状态
 update StorageDetail set Status=1 where  AutoID=@AutoID 

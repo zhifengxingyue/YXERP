@@ -206,7 +206,7 @@ namespace CloudSalesBusiness
             if (!bl)
             {
                 string msg = "编辑客户信息";
-                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, "", agentid, clientid);
+                LogBusiness.AddLog(customerid, EnumLogObjectType.Customer, msg, operateid, ip, "", agentid, clientid);
             }
             return bl;
         }
@@ -218,7 +218,7 @@ namespace CloudSalesBusiness
             {
                 var model = SystemBusiness.BaseBusiness.GetCustomStageByID(stageid, agentid, clientid);
                 string msg = "客户阶段更换为：" + model.StageName;
-                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, stageid, agentid, clientid);
+                LogBusiness.AddLog(customerid, EnumLogObjectType.Customer, msg, operateid, ip, stageid, agentid, clientid);
             }
             return bl;
         }
@@ -230,7 +230,7 @@ namespace CloudSalesBusiness
             {
                 var model = OrganizationBusiness.GetUserByUserID(userid, agentid);
                 string msg = "客户拥有者更换为：" + model.Name;
-                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, userid, agentid, clientid);
+                LogBusiness.AddLog(customerid, EnumLogObjectType.Customer, msg, operateid, ip, userid, agentid, clientid);
             }
             return bl;
         }
@@ -249,7 +249,7 @@ namespace CloudSalesBusiness
             {
                 var model = CommonBusiness.GetEnumDesc(status);
                 string msg = "客户状态更换为：" + model;
-                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, status.ToString(), agentid, clientid);
+                LogBusiness.AddLog(customerid, EnumLogObjectType.Customer, msg, operateid, ip, status.ToString(), agentid, clientid);
             }
             return bl;
         }
@@ -260,7 +260,7 @@ namespace CloudSalesBusiness
             if (bl)
             {
                 string msg = "标记客户颜色";
-                LogBusiness.AddCustomerLog(customerid, msg, operateid, ip, mark.ToString(), agentid, clientid);
+                LogBusiness.AddLog(customerid, EnumLogObjectType.Customer, msg, operateid, ip, mark.ToString(), agentid, clientid);
             }
             return bl;
         }

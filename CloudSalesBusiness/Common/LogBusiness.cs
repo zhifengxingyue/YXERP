@@ -17,17 +17,28 @@ namespace CloudSalesBusiness
         #region
 
         /// <summary>
-        /// 客户日志
+        /// 获取日志
         /// </summary>
         /// <returns></returns>
-        public static List<CustomerLogEntity> GetCustomerLogs(string customerid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid)
+        public static List<LogEntity> GetLogs(string guid, EnumLogObjectType type, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid)
         {
-            DataTable dt = CommonBusiness.GetPagerData("CustomerLog", "*", "CustomerID='" + customerid + "'", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+            string tablename = "";
+            switch (type)
+            {
+                case EnumLogObjectType.Customer:
+                    tablename = "CustomerLog";
+                    break;
+                case EnumLogObjectType.Orders:
+                    tablename = "OrdersLog";
+                    break;
+            }
 
-            List<CustomerLogEntity> list = new List<CustomerLogEntity>();
+            DataTable dt = CommonBusiness.GetPagerData(tablename, "*", "LogGUID='" + guid + "'", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+
+            List<LogEntity> list = new List<LogEntity>();
             foreach (DataRow dr in dt.Rows)
             {
-                CustomerLogEntity model = new CustomerLogEntity();
+                LogEntity model = new LogEntity();
                 model.FillData(dr);
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
 
@@ -69,19 +80,21 @@ namespace CloudSalesBusiness
         }
 
         /// <summary>
-        /// 客户日志
+        /// 记录日志
         /// </summary>
-        public static async void AddCustomerLog(string customerid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
+        public static async void AddLog(string logguid, EnumLogObjectType type, string remark, string userid, string operateip, string guid, string agentid, string clientid)
         {
-            await LogDAL.AddCustomerLog(customerid, remark, userid, operateip, guid, agentid, clientid);
-        }
-
-        /// <summary>
-        /// 订单日志
-        /// </summary>
-        public static async void AddOrdersLog(string orderid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
-        {
-            await LogDAL.AddOrdersLog(orderid, remark, userid, operateip, guid, agentid, clientid);
+            string tablename = "";
+            switch (type)
+            {
+                case EnumLogObjectType.Customer:
+                    tablename = "CustomerLog";
+                    break;
+                case EnumLogObjectType.Orders:
+                    tablename = "OrdersLog";
+                    break;
+            }
+            await LogDAL.AddLog(tablename, logguid, remark, userid, operateip, guid, agentid, clientid);
         }
 
         #endregion

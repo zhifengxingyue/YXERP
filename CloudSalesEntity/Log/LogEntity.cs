@@ -5,9 +5,9 @@ using System.Text;
 
 namespace CloudSalesEntity
 {
-    public class CustomerLogEntity
+    public class LogEntity
     {
-        public string CustomerID { get; set; }
+        public string LogGUID { get; set; }
 
         public string Remark { get; set; }
 

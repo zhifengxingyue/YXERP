@@ -138,7 +138,7 @@ define(function (require, exports, module) {
             Address: $("#address").val().trim(),
             TypeID: $("#orderType").val().trim(),
             ExpressType: $("#expressType").val().trim(),
-            Remark: $("#remark").val()
+            Remark: $("#remark").val().trim()
         };
         Global.post("/Orders/SubmitOrder", { entity: JSON.stringify(entity) }, function (data) {
             if (data.status) {

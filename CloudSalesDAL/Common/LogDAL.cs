@@ -51,26 +51,11 @@ namespace CloudSalesDAL
             return Task.Run(() => { return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0; });
         }
 
-        public static Task<bool> AddCustomerLog(string customerid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
+        public static Task<bool> AddLog(string tablename, string Logguid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
         {
-            string sqlText = "insert into CustomerLog(CustomerID,Remark,CreateUserID,OperateIP,GUID,AgentID,ClientID) values(@CustomerID,@Remark,@CreateUserID,@OperateIP,@GUID,@AgentID,@ClientID)";
+            string sqlText = "insert into " + tablename + "(LogGUID,Remark,CreateUserID,OperateIP,GUID,AgentID,ClientID) values(@LogGUID,@Remark,@CreateUserID,@OperateIP,@GUID,@AgentID,@ClientID)";
             SqlParameter[] paras = { 
-                                     new SqlParameter("@CustomerID" , customerid),
-                                     new SqlParameter("@Remark" , remark),
-                                     new SqlParameter("@CreateUserID" , userid),
-                                     new SqlParameter("@OperateIP" , operateip),
-                                     new SqlParameter("@GUID" , guid),
-                                     new SqlParameter("@AgentID" , agentid),
-                                     new SqlParameter("@ClientID" , clientid)
-                                   };
-            return Task.Run(() => { return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0; });
-        }
-
-        public static Task<bool> AddOrdersLog(string orderid, string remark, string userid, string operateip, string guid, string agentid, string clientid)
-        {
-            string sqlText = "insert into OrdersLog(OrderID,Remark,CreateUserID,OperateIP,GUID,AgentID,ClientID) values(@OrderID,@Remark,@CreateUserID,@OperateIP,@GUID,@AgentID,@ClientID)";
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@OrderID" , orderid),
+                                     new SqlParameter("@LogGUID" , Logguid),
                                      new SqlParameter("@Remark" , remark),
                                      new SqlParameter("@CreateUserID" , userid),
                                      new SqlParameter("@OperateIP" , operateip),

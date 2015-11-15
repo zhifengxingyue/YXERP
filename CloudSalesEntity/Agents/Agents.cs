@@ -49,9 +49,8 @@ namespace CloudSalesEntity
 			set{ _autoid=value;}
 			get{return _autoid;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+
+        [Property("Lower")] 
 		public string AgentID
 		{
 			set{ _agentid=value;}
@@ -65,9 +64,8 @@ namespace CloudSalesEntity
 			set{ _companyname=value;}
 			get{return _companyname;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+
+        [Property("Lower")] 
 		public string IndustryID
 		{
 			set{ _industryid=value;}
@@ -137,25 +135,22 @@ namespace CloudSalesEntity
 			set{ _createtime=value;}
 			get{return _createtime;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+
+        [Property("Lower")] 
 		public string CreateUserID
 		{
 			set{ _createuserid=value;}
 			get{return _createuserid;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+
+        [Property("Lower")] 
 		public string ParentID
 		{
 			set{ _parentid=value;}
 			get{return _parentid;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+
+        [Property("Lower")] 
 		public string ClientID
 		{
 			set{ _clientid=value;}
@@ -163,9 +158,14 @@ namespace CloudSalesEntity
 		}
 		#endregion Model
 
+        [Property("Lower")] 
         public string MDProjectID { get; set; }
 
         public int IsDefault { get; set; }
+
+        public decimal TotalIn { get; set; }
+
+        public decimal TotalOut { get; set; }
 
         public void FillData(System.Data.DataRow dr) 
         {

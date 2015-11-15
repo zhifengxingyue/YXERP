@@ -262,7 +262,7 @@
             pageindex: page
         }, function (data) {
            
-            doT.exec("template/customer/customerlogs.html", function (template) {
+            doT.exec("template/common/logs.html", function (template) {
                 var innerhtml = template(data.items);
                 innerhtml = $(innerhtml);
                 $("#customerLog").append(innerhtml);
