@@ -12,13 +12,13 @@ define(function (require, exports, module) {
         status: -1,
         pageIndex: 1,
         totalCount: 0,
-        isAll: false
+        type: 1
     };
     var ObjectJS = {};
     //初始化
-    ObjectJS.init = function (isAudit) {
+    ObjectJS.init = function (type) {
         var _self = this;
-        Params.isAll = isAudit;
+        Params.type = type;
         _self.bindEvent();
         _self.getList();
     }
@@ -30,6 +30,18 @@ define(function (require, exports, module) {
                 Params.keyWords = keyWords;
                 _self.getList();
             });
+        });
+
+        //切换状态
+        $(".search-status li").click(function () {
+            var _this = $(this);
+            if (!_this.hasClass("hover")) {
+                _this.siblings().removeClass("hover");
+                _this.addClass("hover");
+                Params.pageIndex = 1;
+                Params.status = _this.data("id");
+                _self.getList();
+            }
         });
 
         $(document).click(function (e) {
@@ -56,46 +68,43 @@ define(function (require, exports, module) {
             });
         });
 
+        $("#delete").click(function () {
+            confirm("采购单删除后不可恢复,确认删除吗？", function () {
+                Global.post("/Purchase/DeletePurchase", { docid: _self.docid }, function (data) {
+                    if (data.Status) {
+                        Params.pageIndex = 1;
+                        _self.getList();
+                    } else {
+                        alert("删除失败！");
+                    }
+                });
+            });
+        });
+
     }
     //获取单据列表
     ObjectJS.getList = function () {
         var _self = this;
         $(".tr-header").nextAll().remove();
-        var url = "/Purchase/GetMyPurchase",
-            template = "template/purchase/mypurchase.html";
-        
-        if (Params.isAll) {
-            template = "template/purchase/purchaseaudit.html";
-        }
+        var url = "/Purchase/GetPurchases",
+            template = "template/purchase/purchases.html";
 
         Global.post(url, Params, function (data) {
             doT.exec(template, function (templateFun) {
-                var innerText = templateFun(data.Items);
+                var innerText = templateFun(data.items);
                 innerText = $(innerText);
                 $(".tr-header").after(innerText);
 
-                //删除事件
-                $(".ico-del").click(function () {
-                    confirm("采购单删除后不可恢复,确认删除吗？", function () {
-                        Global.post("/Purchase/DeletePurchase", { docid: $(this).data("id") }, function (data) {
-                            if (data.Status) {
-                                Params.pageIndex = 1;
-                                _self.getList();
-                            } else {
-                                alert("删除失败！");
-                            }
-                        });
-                    });
-                });
                 //下拉事件
                 $(".dropdown").click(function () {
                     var _this = $(this);
                     if (_this.data("status") == 0) {
                         $("#invalid").show();
+                        $("#delete").show();
                     } else {
                         $("#invalid").hide();
+                        $("#delete").hide();
                     }
-
                     var position = _this.find(".ico-dropdown").position();
                     $(".dropdown-ul").css({ "top": position.top + 15, "left": position.left-40 }).show().mouseleave(function () {
                         $(this).hide();
@@ -127,43 +136,16 @@ define(function (require, exports, module) {
     }
 
     //审核页初始化
-    ObjectJS.initDetail = function (wares) {
+    ObjectJS.initDetail = function (wareid) {
         var _self = this;
-        wares = JSON.parse(wares.replace(/&quot;/g, '"'));
-        //绑定仓库
-        $(".item").each(function () {
-            var _this = $(this), ware = $("<select data-id='" + _this.data("id") + "'></select>"), warebox = _this.find(".ware-li"), depotbox = _this.find(".depot-li");
-            for (var i = 0, j = wares.length; i < j; i++) {
-                ware.append($("<option value='" + wares[i].WareID + "'>" + wares[i].Name + "</option>"))
-            }
-            ware.val(warebox.data("id"));
 
-            //选择仓库
-            ware.change(function () {
-                var _ware = $(this);
-                if (CacheDepot[_ware.val()]) {
-                    _self.bindDepot(_ware.parent().next(), CacheDepot[_ware.val()], _ware.val(), _ware.data("id"), true);
-                } else {
-                    Global.post("/System/GetDepotSeatsByWareID", { wareid: _ware.val() }, function (data) {
-                        CacheDepot[_ware.val()] = data.Items;
-                        _self.bindDepot(_ware.parent().next(), CacheDepot[_ware.val()], _ware.val(), _ware.data("id"), true);
-                    });
-                }
-            });
-
-            ware.prop("disabled", warebox.data("status") == 1);
-
-            warebox.append(ware);
-
-            if (CacheDepot[warebox.data("id")]) {
-                _self.bindDepot(depotbox, CacheDepot[warebox.data("id")], warebox.data("id"), _this.data("id"),false);
-            } else {
-                Global.post("/System/GetDepotSeatsByWareID", { wareid: warebox.data("id") }, function (data) {
-                    CacheDepot[warebox.data("id")] = data.Items;
-                    _self.bindDepot(depotbox, data.Items, warebox.data("id"), _this.data("id"), false);
-                });
-            }
-        })
+        Global.post("/System/GetDepotSeatsByWareID", { wareid: wareid }, function (data) {
+            CacheDepot[wareid] = data.Items;
+            $(".item").each(function () {
+                var _this = $(this), depotbox = _this.find(".depot-li");
+                _self.bindDepot(depotbox, data.Items, wareid, _this.data("id"));
+            })
+        });        
 
         //全部选中
         $("#checkall").click(function () {
@@ -189,7 +171,7 @@ define(function (require, exports, module) {
     }
 
     //绑定货位
-    ObjectJS.bindDepot = function (depotbox, depots, wareid, autoid, change) {
+    ObjectJS.bindDepot = function (depotbox, depots, wareid, autoid) {
 
         depotbox.empty();
         var depot = $("<select data-id='" + autoid + "' data-wareid='" + wareid + "'></select>");
@@ -197,11 +179,8 @@ define(function (require, exports, module) {
             depot.append($("<option value='" + depots[i].DepotID + "' >" + depots[i].DepotCode + "</option>"))
         }
 
-        if (!change) {
-            depot.val(depotbox.data("id"));
-        } else {
-            depot.children().first().prop("checked", true);
-        }
+        depot.val(depotbox.data("id"));
+
         //选择仓库
         depot.change(function () {
             Global.post("/Purchase/UpdateStorageDetailWare", {
@@ -218,18 +197,6 @@ define(function (require, exports, module) {
         depot.prop("disabled", depotbox.data("status") == 1);
 
         depotbox.append(depot);
-
-        if (change && depot.val()) {
-            Global.post("/Purchase/UpdateStorageDetailWare", {
-                autoid: autoid,
-                wareid: wareid,
-                depotid: depot.val()
-            }, function (data) {
-                if (!data.Status) {
-                    alert("操作失败,请刷新页面重新操作！");
-                };
-            });
-        };
     }
 
 

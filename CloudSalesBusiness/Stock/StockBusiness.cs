@@ -27,7 +27,7 @@ namespace CloudSalesBusiness
                 model.FillData(dr);
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, clientID);
                 model.StatusStr = GetDocStatusStr(model.DocType, model.Status);
-
+                model.WareHouse = SystemBusiness.BaseBusiness.GetWareByID(model.WareID, model.ClientID);
                 list.Add(model);
             }
             return list;
@@ -42,7 +42,7 @@ namespace CloudSalesBusiness
                 model.FillData(ds.Tables["Doc"].Rows[0]);
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, clientid);
                 model.StatusStr = GetDocStatusStr(model.DocType, model.Status);
-
+                model.WareHouse = SystemBusiness.BaseBusiness.GetWareByID(model.WareID, model.ClientID);
                 model.Details = new List<StorageDetail>();
                 foreach (DataRow item in ds.Tables["Details"].Rows)
                 {
@@ -112,13 +112,13 @@ namespace CloudSalesBusiness
 
             try
             {
-                bool bl = StockDAL.AddStorageDoc(docid, model.DocType, model.TotalMoney, model.CityCode, model.Address, model.Remark, userid, operateip, clientid, tran);
+                bool bl = StockDAL.AddStorageDoc(docid, model.DocType, model.TotalMoney, model.CityCode, model.Address, model.Remark, model.WareID, userid, operateip, clientid, tran);
                 if (bl)
                 {
                     //单据明细
                     foreach (var detail in model.Details)
                     {
-                        if (!StockDAL.AddStorageDocDetail(docid, detail.AutoID, detail.ProductDetailID, detail.Quantity, detail.Price, detail.TotalMoney, detail.BatchCode, clientid, tran))
+                        if (!StockDAL.AddStorageDocDetail(docid, detail.AutoID, detail.ProductDetailID, detail.Quantity, detail.Price, detail.TotalMoney, detail.BatchCode, model.WareID, clientid, tran))
                         {
                             tran.Rollback();
                             conn.Dispose();

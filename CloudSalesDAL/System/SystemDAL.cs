@@ -122,7 +122,7 @@ namespace CloudSalesDAL
         public DataTable GetWareHouses(string clientID)
         {
             SqlParameter[] paras = { new SqlParameter("@ClientID", clientID) };
-            DataTable dt = GetDataTable("select WareID,Name from WareHouse where Status<>9 and ClientID=@ClientID", paras, CommandType.Text);
+            DataTable dt = GetDataTable("select * from WareHouse where Status<>9 and ClientID=@ClientID", paras, CommandType.Text);
             return dt;
         }
 

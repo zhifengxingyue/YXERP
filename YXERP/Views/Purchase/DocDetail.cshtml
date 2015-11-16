@@ -15,17 +15,21 @@
     <span class="header-title left">采购单详细信息</span>
 </div>
 <div class="content-body">
-    <ul class="docinfo">
+    <ul class="baseinfo">
         <li>单据编号：@(model.DocCode)</li>
         <li>创建人：@(model.CreateUser.Name)</li>
         <li>创建日期：@(model.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"))</li>
         <li>总金额：@(model.TotalMoney.ToString("f2"))</li>
         <li>状态：@(model.StatusStr)</li>
+        <li>仓库：@(model.WareHouse!=null?model.WareHouse.Name:"")</li>
+        <li style="width:100%;">备注：@(model.Remark)</li>
     </ul>
-    <div class="clear pTop10">
-        备注：@(model.Remark)
+     <div class="tab-nav mTop30">
+        <ul class="tab-nav-ul left">
+            <li class="hover" data-id="navRemark">产品明细</li>
+        </ul>
     </div>
-    <table class="table-list mTop50">
+    <table class="table-list mTop20">
         <tr class="tr-header">
             <td class="tLeft">产品名称</td>
             <td class="tLeft">规格</td>

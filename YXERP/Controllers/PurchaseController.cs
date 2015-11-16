@@ -34,8 +34,15 @@ namespace YXERP.Controllers
 
         public ActionResult MyPurchase()
         {
-            return View();
+            ViewBag.Type = EnumSearchType.Myself;
+            return View("Purchases");
         }
+        public ActionResult Purchases()
+        {
+            ViewBag.Type = EnumSearchType.All;
+            return View("Purchases");
+        }
+
         /// <summary>
         /// 我的采购详情
         /// </summary>
@@ -53,6 +60,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult ConfirmPurchase()
         {
+            ViewBag.Wares = SystemBusiness.BaseBusiness.GetWareHouses(CurrentUser.ClientID);
             ViewBag.Items = ShoppingCartBusiness.GetShoppingCart(EnumDocType.RK, CurrentUser.UserID);
             return View();
         }
@@ -68,10 +76,7 @@ namespace YXERP.Controllers
             return View();
         }
 
-        public ActionResult PurchaseAudit()
-        {
-            return View();
-        }
+        
 
         #region Ajax
 
@@ -103,11 +108,11 @@ namespace YXERP.Controllers
         /// <param name="totalCount"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public JsonResult GetMyPurchase(string keyWords, int pageIndex, int totalCount, int status = -1, bool isAll = false)
+        public JsonResult GetPurchases(string keyWords, int pageIndex, int totalCount, int status = -1, int type = 1)
         {
             int pageCount = 0;
-            List<StorageDoc> list = StockBusiness.GetStorageDocList(isAll ? string.Empty : CurrentUser.UserID, EnumDocType.RK, (EnumDocStatus)status, keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
-            JsonDictionary.Add("Items", list);
+            List<StorageDoc> list = StockBusiness.GetStorageDocList(type == 3 ? string.Empty : CurrentUser.UserID, EnumDocType.RK, (EnumDocStatus)status, keyWords, PageSize, pageIndex, ref totalCount, ref pageCount, CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
             return new JsonResult

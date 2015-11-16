@@ -64,9 +64,7 @@ namespace CloudSalesEntity
             set { _autoid = value; }
             get { return _autoid; }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string DocID
         {
             set { _docid = value; }
@@ -101,9 +99,7 @@ namespace CloudSalesEntity
             get { return _returnstatus; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string ProdiverID
         {
             set { _prodiverid = value; }
@@ -143,9 +139,7 @@ namespace CloudSalesEntity
             set { _returnmoney = value; }
             get { return _returnmoney; }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string OriginalCode
         {
             set { _originalcode = value; }
@@ -216,9 +210,7 @@ namespace CloudSalesEntity
             set { _conveyancetype = value; }
             get { return _conveyancetype; }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string ExpressID
         {
             set { _conveyancecompany = value; }
@@ -256,9 +248,7 @@ namespace CloudSalesEntity
             set { _feedback = value; }
             get { return _feedback; }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string CreateUserID
         {
             set { _createuserid = value; }
@@ -288,9 +278,7 @@ namespace CloudSalesEntity
             set { _operateip = value; }
             get { return _operateip; }
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Property("Lower")] 
         public string ClientID
         {
             set { _clientid = value; }
@@ -308,6 +296,10 @@ namespace CloudSalesEntity
         public string DocCode { get; set; }
 
         public Users CreateUser { get; set; }
+        [Property("Lower")] 
+        public string WareID { get; set; }
+
+        public WareHouse WareHouse { get; set; }
 
         /// <summary>
         /// 填充数据

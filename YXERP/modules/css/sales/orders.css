@@ -1,5 +1,5 @@
 ﻿
-/*客户列表-搜索*/
+
 .search-header { border-bottom:solid 2px #4a98e7 ; height:35px; overflow:auto;}
 .search-header .search-status { height:35px; line-height:35px; float:left; margin-left:20px; }
 .search-header .search-status li{ float:left; padding:0 10px; cursor:pointer; min-width:60px; text-align:center; color:#666;}
@@ -33,8 +33,8 @@
 
 
 .customerinfo { overflow:auto;}
-.customerinfo .baseinfo{ width:80%; min-width:600px; float:left;}
-.customerinfo .baseinfo li{ width:50%; float:left; overflow:auto; line-height:30px; padding:5px 0; }
+.baseinfo{ width:80%; min-width:600px; float:left;}
+.baseinfo li{ width:50%; float:left; overflow:auto; line-height:30px; padding:5px 0; }
 
 .baseinfo li span{ width:100px; float:left; display:inline-block; color:#999; }
 

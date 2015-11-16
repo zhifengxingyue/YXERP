@@ -127,9 +127,9 @@ namespace CloudSalesEntity
 			set{ _returnmoney=value;}
 			get{return _returnmoney;}
 		}
-
+        [Property("Lower")] 
         public string WareID { get; set; }
-
+        [Property("Lower")] 
         public string DepotID { get; set; }
 
 		/// <summary>
@@ -140,9 +140,7 @@ namespace CloudSalesEntity
 			set{ _batchcode=value;}
 			get{return _batchcode;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
+        [Property("Lower")] 
 		public string ClientID
 		{
 			set{ _clientid=value;}

@@ -21,6 +21,8 @@ namespace CloudSalesBusiness
         private static Dictionary<string, List<OrderTypeEntity>> _ordertypes;
         private static Dictionary<string, List<TeamEntity>> _teams;
 
+        private static Dictionary<string, List<WareHouse>> _wares;
+
         /// <summary>
         /// 客户来源
         /// </summary>
@@ -94,6 +96,25 @@ namespace CloudSalesBusiness
             set
             {
                 _teams = value;
+            }
+        }
+
+        /// <summary>
+        /// 仓库
+        /// </summary>
+        private static Dictionary<string, List<WareHouse>> WareHouses
+        {
+            get
+            {
+                if (_wares == null)
+                {
+                    _wares = new Dictionary<string, List<WareHouse>>();
+                }
+                return _wares;
+            }
+            set
+            {
+                _wares = value;
             }
         }
 
@@ -294,16 +315,6 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 获取仓库列表
-        /// </summary>
-        /// <param name="keyWords">关键词</param>
-        /// <param name="pageSize">每页条数</param>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="totalCount">总记录数</param>
-        /// <param name="pageCount">总页数</param>
-        /// <param name="clientID">客户端ID</param>
-        /// <returns></returns>
         public List<WareHouse> GetWareHouses(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             DataSet ds = SystemDAL.BaseProvider.GetWareHouses(keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
@@ -319,13 +330,13 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 获取所有仓库（ID和Name）
-        /// </summary>
-        /// <param name="clientID"></param>
-        /// <returns></returns>
         public List<WareHouse> GetWareHouses(string clientID)
         {
+            if (WareHouses.ContainsKey(clientID))
+            {
+                return WareHouses[clientID];
+            }
+
             DataTable dt = SystemDAL.BaseProvider.GetWareHouses(clientID);
 
             List<WareHouse> list = new List<WareHouse>();
@@ -335,16 +346,24 @@ namespace CloudSalesBusiness
                 model.FillData(dr);
                 list.Add(model);
             }
+            WareHouses.Add(clientID, list);
             return list;
         }
 
-        /// <summary>
-        /// 根据ID获取仓库详情
-        /// </summary>
-        /// <param name="wareid"></param>
-        /// <returns></returns>
         public WareHouse GetWareByID(string wareid, string clientid)
         {
+            if (string.IsNullOrEmpty(wareid))
+            {
+                return null;
+            }
+
+            var list = GetWareHouses(clientid);
+
+            if (list.Where(m => m.WareID == wareid).Count() > 0)
+            {
+                return list.Where(m => m.WareID == wareid).FirstOrDefault();
+            }
+
             DataTable dt = SystemDAL.BaseProvider.GetWareByID(wareid);
 
             WareHouse model = new WareHouse();
@@ -353,6 +372,8 @@ namespace CloudSalesBusiness
                 model.FillData(dt.Rows[0]);
                 model.City = CommonBusiness.Citys.Where(c => c.CityCode == model.CityCode).FirstOrDefault();
             }
+
+            WareHouses[clientid].Add(model);
             return model;
         }
 
@@ -567,8 +588,26 @@ namespace CloudSalesBusiness
             var id = Guid.NewGuid().ToString();
             if (SystemDAL.BaseProvider.AddWareHouse(id, warecode, name, shortname, citycode, status, depotcode, depotname, description, operateid, clientid))
             {
+                
+                var model = new WareHouse()
+                {
+                    WareID = id,
+                    WareCode = warecode,
+                    Name = name,
+                    ShortName = shortname,
+                    CityCode = citycode,
+                    Status = status,
+                    Description = description,
+                    CreateUserID = operateid,
+                    ClientID = clientid,
+                    CreateTime = DateTime.Now
+                };
+                WareHouses[clientid].Add(model);
                 return id.ToString();
             }
+
+            
+
             return string.Empty;
         }
 
@@ -757,14 +796,38 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        public bool UpdateWareHouse(string id,string code ,string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
+        public bool UpdateWareHouse(string id, string code, string name, string shortname, string citycode, int status, string description, string operateid, string clientid)
         {
-            return SystemDAL.BaseProvider.UpdateWareHouse(id, code, name, shortname, citycode, status, description);
+            var bl = SystemDAL.BaseProvider.UpdateWareHouse(id, code, name, shortname, citycode, status, description);
+            if (bl)
+            {
+                var model = GetWareByID(id, clientid);
+                model.WareCode = code;
+                model.Name = name;
+                model.ShortName = shortname;
+                model.CityCode = citycode;
+                model.Status = status;
+                model.Description = description;
+            }
+            return bl;
         }
 
         public bool UpdateWareHouseStatus(string id, EnumStatus status, string operateid, string clientid)
         {
-            return CommonBusiness.Update("WareHouse", "Status", (int)status, " WareID='" + id + "'");
+            bool bl= CommonBusiness.Update("WareHouse", "Status", (int)status, " WareID='" + id + "'");
+            if (bl)
+            {
+                var model = GetWareByID(id, clientid);
+                if (status == EnumStatus.Delete)
+                {
+                    WareHouses[clientid].Remove(model);
+                }
+                else
+                {
+                    model.Status = (int)status;
+                }
+            }
+            return bl;
         }
 
         public bool UpdateDepotSeat(string id, string name, int status, string description, string operateid, string clientid)

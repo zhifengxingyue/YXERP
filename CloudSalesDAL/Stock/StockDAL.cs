@@ -52,7 +52,7 @@ namespace CloudSalesDAL
 
         #region 添加
 
-        public static bool AddStorageDoc(string docid, int doctype, decimal totalmoney, string cityCode, string address, string remark, string userid, string operateip, string clientid, SqlTransaction tran)
+        public static bool AddStorageDoc(string docid, int doctype, decimal totalmoney, string cityCode, string address, string remark, string wareid, string userid, string operateip, string clientid, SqlTransaction tran)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@DocID",docid),
@@ -62,6 +62,7 @@ namespace CloudSalesDAL
                                      new SqlParameter("@CityCode" , cityCode),
                                      new SqlParameter("@Address" , address),
                                      new SqlParameter("@Remark" , remark),
+                                     new SqlParameter("@WareID" , wareid),
                                      new SqlParameter("@UserID" , userid),
                                      new SqlParameter("@OperateIP" , operateip),
                                      new SqlParameter("@ClientID" , clientid)
@@ -69,7 +70,7 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(tran, "P_AddStorageDoc", paras, CommandType.StoredProcedure) > 0;
         }
 
-        public static bool AddStorageDocDetail(string docid, int cartAutoID, string productdetailid, int qunatity, decimal price, decimal totalmoney, string batchcode, string clientid, SqlTransaction tran)
+        public static bool AddStorageDocDetail(string docid, int cartAutoID, string productdetailid, int qunatity, decimal price, decimal totalmoney, string batchcode, string wareid, string clientid, SqlTransaction tran)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@DocID",docid),
@@ -79,6 +80,7 @@ namespace CloudSalesDAL
                                      new SqlParameter("@Price" , price),
                                      new SqlParameter("@TotalMoney" , totalmoney),
                                      new SqlParameter("@BatchCode" , batchcode),
+                                     new SqlParameter("@WareID" , wareid),
                                      new SqlParameter("@ClientID" , clientid)
                                    };
 

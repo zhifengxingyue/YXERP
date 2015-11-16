@@ -240,7 +240,7 @@
     <Content Include="modules\scripts\organization\roles.js" />
     <Content Include="modules\scripts\organization\users.js" />
     <Content Include="modules\scripts\organization\structure.js" />
-    <Content Include="modules\scripts\purchase\mypurchase.js" />
+    <Content Include="modules\scripts\purchase\purchases.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
     <Content Include="modules\scripts\system\ordertype.js" />
@@ -273,8 +273,7 @@
     <Content Include="modules\template\organization\setuserrole.html" />
     <Content Include="modules\template\products\product_child_add_list.html" />
     <Content Include="modules\template\products\brand-detail.html" />
-    <Content Include="modules\template\purchase\mypurchase.html" />
-    <Content Include="modules\template\purchase\purchaseaudit.html" />
+    <Content Include="modules\template\purchase\purchases.html" />
     <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
@@ -285,9 +284,8 @@
     <Content Include="modules\template\system\ordertypes.html" />
     <Content Include="modules\template\system\team-detail.html" />
     <Content Include="Views\Purchase\ConfirmPurchase.cshtml" />
-    <Content Include="Views\Purchase\MyPurchase.cshtml" />
+    <Content Include="Views\Purchase\Purchases.cshtml" />
     <Content Include="Views\CustomerRPT\Index.cshtml" />
-    <Content Include="Views\Purchase\PurchaseAudit.cshtml" />
     <Content Include="Views\Purchase\DocDetail.cshtml" />
     <Content Include="Views\Purchase\AuditDetail.cshtml" />
     <Content Include="Views\Home\InfoPage.cshtml" />

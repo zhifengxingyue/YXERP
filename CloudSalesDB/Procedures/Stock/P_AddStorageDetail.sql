@@ -22,20 +22,20 @@ CREATE PROCEDURE [dbo].[P_AddStorageDetail]
 @Price decimal(18,2),
 @TotalMoney decimal(18,2)=0,
 @BatchCode nvarchar(20)='',
+@WareID nvarchar(64)='',
 @ClientID nvarchar(64)
 AS
 
 
-declare @WareID nvarchar(64),@DepotID nvarchar(64)
+declare @DepotID nvarchar(64)
 
 --绑定默认仓库
-if exists(select AutoID from ProductStock where ProductDetailID=@ProductDetailID)
+if exists(select AutoID from ProductStock where ProductDetailID=@ProductDetailID and WareID=@WareID)
 begin
-	select top 1 @WareID=WareID,@DepotID=DepotID from ProductStock where ProductDetailID=@ProductDetailID order by BatchCode desc
+	select top 1 @DepotID=DepotID from ProductStock where ProductDetailID=@ProductDetailID and WareID=@WareID order by BatchCode desc
 end
 else
 begin
-	select top 1 @WareID = WareID from WareHouse where ClientID=@ClientID and Status=1
 	select top 1 @DepotID = DepotID from DepotSeat where WareID=@WareID and Status=1
 end
 

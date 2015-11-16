@@ -22,10 +22,11 @@ CREATE PROCEDURE [dbo].[P_AddStorageDoc]
 @CityCode nvarchar(10)='',
 @Address nvarchar(500)='',
 @Remark nvarchar(500)='',
+@WareID nvarchar(64)='',
 @UserID nvarchar(64),
 @OperateIP nvarchar(50),
 @ClientID nvarchar(64)
 AS
 
-insert into StorageDoc(DocID,DocCode,DocType,Status,TotalMoney,CityCode,Address,Remark,CreateUserID,CreateTime,OperateIP,ClientID)
-values(@DocID,@DocCode,@DocType,0,@TotalMoney,@CityCode,@Address,@Remark,@UserID,GETDATE(),@OperateIP,@ClientID)
+insert into StorageDoc(DocID,DocCode,DocType,Status,TotalMoney,CityCode,Address,Remark,WareID,CreateUserID,CreateTime,OperateIP,ClientID)
+values(@DocID,@DocCode,@DocType,0,@TotalMoney,@CityCode,@Address,@Remark,@WareID,@UserID,GETDATE(),@OperateIP,@ClientID)

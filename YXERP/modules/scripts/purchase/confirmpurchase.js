@@ -85,7 +85,12 @@ define(function (require, exports, module) {
     ObjectJS.submitOrder = function () {
         var _self = this;
         var totalamount = 0, list = [];
-        //单据明细
+
+        if (!$("#warehouse").val()) {
+            alert("请选择仓库！");
+            return;
+        }
+
         $(".cart-item").each(function () {
             var _this = $(this);
             var model = {
@@ -103,6 +108,7 @@ define(function (require, exports, module) {
             return;
         }
         var entity = {
+            WareID: $("#warehouse").val(),
             TotalMoney: totalamount,
             Remark: $("#remark").val(),
             Details: list

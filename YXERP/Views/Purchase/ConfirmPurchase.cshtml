@@ -3,6 +3,7 @@
 }
 
 <link href="/modules/css/shoppingcart/confirmcart.css" rel="stylesheet" />
+<link href="/modules/css/stock/purchase.css" rel="stylesheet" />
 @section scripts{
     <script type="text/javascript">
         seajs.use(["scripts/purchase/confirmpurchase"], function (obj) {
@@ -11,9 +12,29 @@
     </script>
 }
 <div class="header-box">
-    <span class="header-title left">采购入库-确认订单信息</span>
+    <span class="header-title left">确认采购入库单</span>
 </div>
 <div class="content-body">
+     <ul class="baseinfo">
+        <li>
+            <span>仓库：</span>
+                <select id="warehouse">
+                @foreach (var ware in (List<CloudSalesEntity.WareHouse>)ViewBag.Wares)
+                {
+                    <option value="@(ware.WareID)">@(ware.Name)</option> 
+                }
+            </select>
+        </li>
+        <li style="width:100%;"><span>备注：</span> 
+            <textarea id="remark" class="width310"></textarea>
+
+        </li>
+    </ul>
+    <div class="tab-nav mTop30">
+        <ul class="tab-nav-ul left">
+            <li class="hover" data-id="navRemark">产品明细</li>
+        </ul>
+    </div>
     <table class="table-list">
         <tr class="tr-header">
             <td class="tLeft">产品名称</td>
@@ -52,9 +73,7 @@
         </tr>
     </table>
     <div class="bottom-div">
-        <span class="left">备注：</span>
-        <textarea id="remark" class="width300"></textarea>
-        <input type="button" class="btnconfirm right" id="btnconfirm" value="提交采购单" />
+        <div class="btnconfirm right" id="btnconfirm">提交采购单</div>
         <a href="Purchase" class="goback right">返回选择产品</a>
     </div>
 </div>
