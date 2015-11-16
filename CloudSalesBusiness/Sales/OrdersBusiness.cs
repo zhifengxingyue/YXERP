@@ -41,6 +41,29 @@ namespace CloudSalesBusiness
             return list;
         }
 
+
+        public List<OrderEntity> GetOrdersByCustomerID(string customerid, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        {
+            List<OrderEntity> list = new List<OrderEntity>();
+            DataTable dt = CommonBusiness.GetPagerData("Orders", "*", "CustomerID='" + customerid + "' and Status<>9", "AutoID", pageSize, pageIndex, out totalCount, out pageCount, false);
+            foreach (DataRow dr in dt.Rows)
+            {
+                OrderEntity model = new OrderEntity();
+                model.FillData(dr);
+                model.OrderType = SystemBusiness.BaseBusiness.GetOrderTypeByID(model.TypeID, model.AgentID, model.ClientID);
+                model.Owner = OrganizationBusiness.GetUserByUserID(model.OwnerID, model.AgentID);
+
+                model.StatusStr = model.Status == 0 ? "草案订单"
+                                : model.Status == 1 ? "未审核"
+                                : model.Status == 2 ? "已审核"
+                                : model.Status == 9 ? "已删除"
+                                : "";
+
+                list.Add(model);
+            }
+            return list;
+        }
+
         public OrderEntity GetOrderByID(string orderid, string agentid, string clientid)
         {
             DataSet ds = OrdersDAL.BaseProvider.GetOrderByID(orderid, agentid, clientid);
@@ -91,7 +114,6 @@ namespace CloudSalesBusiness
         #endregion
 
         #region 添加
-
 
         public string CreateOrder(string customerid, string operateid, string agentid, string clientid)
         {

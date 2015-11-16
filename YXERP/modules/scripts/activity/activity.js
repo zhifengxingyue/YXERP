@@ -16,7 +16,7 @@
         PageIndex:1,
         KeyWords: "",
         IsAll: 0,
-        Stage:-1,
+        Stage:2,
         BeginTime: "",
         EndTime: "",
         FilterType: 0,

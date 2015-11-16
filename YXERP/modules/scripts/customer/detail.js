@@ -220,13 +220,15 @@
             if (_this.data("id") == "navLog" && (!_this.data("first") || _this.data("first") == 0)) {
                 _this.data("first", "1");
                 _self.getLogs(model.CustomerID, 1);
-            }
-            else if (_this.data("id") == "navContact" ) {
+            } else if (_this.data("id") == "navContact") {
                 $("#addContact").show();
                 if ((!_this.data("first") || _this.data("first") == 0)) {
                     _this.data("first", "1");
                     _self.getContacts(model.CustomerID);
                 }
+            } else if (_this.data("id") == "navOrder" && (!_this.data("first") || _this.data("first") == 0)) {
+                _this.data("first", "1");
+                _self.getOrders(model.CustomerID, 1);
             }
         });
 
@@ -285,6 +287,45 @@
                 float: "left",
                 onChange: function (page) {
                     _self.getLogs(customerid, page);
+                }
+            });
+        });
+    }
+    //获取订单
+    ObjectJS.getOrders = function (customerid, page) {
+        var _self = this;
+        $("#navOrder .tr-header").nextAll().remove();
+        Global.post("/Orders/GetOrdersByCustomerID", {
+            customerid: customerid,
+            pagesize: 10,
+            pageindex: page
+        }, function (data) {
+
+            doT.exec("template/orders/cuatomerorders.html", function (template) {
+                var innerhtml = template(data.items);
+                console.log(innerhtml);
+
+                innerhtml = $(innerhtml);
+                $("#navOrder .tr-header").after(innerhtml);
+            });
+            $("#pagerOrders").paginate({
+                total_count: data.totalCount,
+                count: data.pageCount,
+                start: page,
+                display: 5,
+                border: true,
+                border_color: '#fff',
+                text_color: '#333',
+                background_color: '#fff',
+                border_hover_color: '#ccc',
+                text_hover_color: '#000',
+                background_hover_color: '#efefef',
+                rotate: true,
+                images: false,
+                mouse: 'slide',
+                float: "left",
+                onChange: function (page) {
+                    _self.getOrders(customerid, page);
                 }
             });
         });
