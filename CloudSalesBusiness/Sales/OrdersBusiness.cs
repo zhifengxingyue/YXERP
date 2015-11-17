@@ -95,18 +95,16 @@ namespace CloudSalesBusiness
                     model.Customer = new CustomerEntity();
                     model.Customer.FillData(ds.Tables["Customer"].Rows[0]);
                 }
+                model.Details = new List<OrderDetail>();
                 if (ds.Tables["Details"].Rows.Count > 0)
                 {
-                    model.Details = new List<OrderDetail>();
                     foreach (DataRow dr in ds.Tables["Details"].Rows)
                     {
                         OrderDetail detail = new OrderDetail();
                         detail.FillData(dr);
                         model.Details.Add(detail);
                     }
-                }
-                
-                
+                }  
             }
             return model;
         }

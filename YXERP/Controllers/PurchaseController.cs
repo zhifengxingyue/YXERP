@@ -34,11 +34,13 @@ namespace YXERP.Controllers
 
         public ActionResult MyPurchase()
         {
+            ViewBag.Title = "我的采购";
             ViewBag.Type = EnumSearchType.Myself;
             return View("Purchases");
         }
         public ActionResult Purchases()
         {
+            ViewBag.Title = "所有采购";
             ViewBag.Type = EnumSearchType.All;
             return View("Purchases");
         }

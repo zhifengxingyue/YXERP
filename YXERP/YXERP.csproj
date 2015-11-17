@@ -109,6 +109,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomerRPTController.cs" />
     <Compile Include="Controllers\FeedBackController.cs" />
+    <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfomationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -310,6 +311,8 @@
     <Content Include="Views\System\Client.cshtml" />
     <Content Include="Views\Orders\Detail.cshtml" />
     <Content Include="Views\Orders\ConfirmOrder.cshtml" />
+    <Content Include="Views\Finance\Index.cshtml" />
+    <Content Include="Views\Finance\PayableBills.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

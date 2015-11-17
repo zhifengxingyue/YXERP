@@ -45,7 +45,7 @@
                     <img src="/Content/homeico/stock.png" />
                     <h2>库存</h2>
                 </a>
-                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="104000000").FirstOrDefault().IsAllow?"/Finance/Index":"javascript:void(0)")" class="account item">
+                <a data-width="1" data-height="1" href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="104000000").FirstOrDefault().IsAllow?"/Finance/Index":"javascript:void(0)")" class="account item">
                     <img src="/Content/homeico/account.png" />
                     <h2>财务</h2>
                 </a>
