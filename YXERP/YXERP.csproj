@@ -104,6 +104,7 @@
     <Compile Include="Common\ExpandClass.cs" />
     <Compile Include="Common\UserAuthorize.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\AgentsController.cs" />
     <Compile Include="Controllers\AuctionController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -313,6 +314,7 @@
     <Content Include="Views\Orders\ConfirmOrder.cshtml" />
     <Content Include="Views\Finance\Index.cshtml" />
     <Content Include="Views\Finance\PayableBills.cshtml" />
+    <Content Include="Views\Agents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

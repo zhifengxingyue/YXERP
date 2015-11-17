@@ -14,6 +14,7 @@
 }
 <div class="header-box">
     <span class="header-title left">客户详情</span>
+    <a href="/Orders/Create/@ViewBag.ID" target="_blank" class="ico-add left">新建订单</a>
     <a class="ico-back right" href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Customer/MyCustomer" : "javascript:if(history.length>1){ history.go(-1);} else{ location.href='/Customer/MyCustomer'}")" >
         返回客户列表
     </a>

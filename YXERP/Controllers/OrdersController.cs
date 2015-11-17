@@ -65,6 +65,19 @@ namespace YXERP.Controllers
             }
         }
 
+        public ActionResult Create(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return Redirect("/Orders/MyOrder");
+            }
+            string orderid = OrdersBusiness.BaseBusiness.CreateOrder(id, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            if (string.IsNullOrEmpty(orderid))
+            {
+                return Redirect("/Orders/MyOrder");
+            }
+            return Redirect("/Orders/ChooseProducts/" + orderid);
+        }
         #region Ajax
 
         public JsonResult GetOrders(string filter)

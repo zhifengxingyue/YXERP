@@ -78,8 +78,6 @@ namespace YXERP.Controllers
             return View();
         }
 
-        
-
         #region Ajax
 
         /// <summary>
