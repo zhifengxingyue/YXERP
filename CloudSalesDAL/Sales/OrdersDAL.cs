@@ -117,7 +117,7 @@ namespace CloudSalesDAL
             return ExecuteNonQuery("P_DeleteOrder", paras, CommandType.StoredProcedure) > 0;
         }
 
-        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string typeid, int expresstype, string remark, string operateid, string agentid, string clientid)
+        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string postalcode, string typeid, int expresstype, string remark, string operateid, string agentid, string clientid)
         {
             int result = 0;
             SqlParameter[] paras = { 
@@ -127,6 +127,7 @@ namespace CloudSalesDAL
                                      new SqlParameter("@MobileTele" , mobileTele),
                                      new SqlParameter("@CityCode" , cityCode),
                                      new SqlParameter("@Address" , address),
+                                     new SqlParameter("@PostalCode" , postalcode),
                                      new SqlParameter("@TypeID" , typeid),
                                      new SqlParameter("@ExpressType" , expresstype),
                                      new SqlParameter("@Remark" , remark),

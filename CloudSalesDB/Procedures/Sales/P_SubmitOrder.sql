@@ -20,6 +20,7 @@ CREATE PROCEDURE [dbo].[P_SubmitOrder]
 	@MobileTele nvarchar(50)='',
 	@CityCode nvarchar(50)='',
 	@Address nvarchar(50)='',
+	@PostalCode nvarchar(20)='',
 	@TypeID nvarchar(64)='',
 	@ExpressType int=0,
 	@Remark nvarchar(500)='',
@@ -57,7 +58,7 @@ set @Err+=@@error
 
 select @TotalMoney=sum(TotalMoney) from OrderDetail where OrderID=@OrderID and ClientID=@ClientID
 
-update Orders set Status=1,PersonName=@PersonName,MobileTele=@MobileTele,CityCode=@CityCode,Address=@Address,TypeID=@TypeID,ExpressType=@ExpressType,Remark=@Remark,TotalMoney=@TotalMoney 
+update Orders set Status=1,PersonName=@PersonName,MobileTele=@MobileTele,CityCode=@CityCode,Address=@Address,PostalCode=@PostalCode,TypeID=@TypeID,ExpressType=@ExpressType,Remark=@Remark,TotalMoney=@TotalMoney 
 			  where OrderID=@OrderID and ClientID=@ClientID and Status=0
 
 set @Err+=@@error

@@ -164,9 +164,9 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string typeid, int expresstype, string remark, string operateid, string ip, string agentid, string clientid)
+        public bool SubmitOrder(string orderid, string personName, string mobileTele, string cityCode, string address, string postalcode, string typeid, int expresstype, string remark, string operateid, string ip, string agentid, string clientid)
         {
-            bool bl = OrdersDAL.BaseProvider.SubmitOrder(orderid, personName, mobileTele, cityCode, address, typeid, expresstype, remark, operateid, agentid, clientid);
+            bool bl = OrdersDAL.BaseProvider.SubmitOrder(orderid, personName, mobileTele, cityCode, address, postalcode, typeid, expresstype, remark, operateid, agentid, clientid);
             if (bl)
             {
                 string msg = "提交订单";

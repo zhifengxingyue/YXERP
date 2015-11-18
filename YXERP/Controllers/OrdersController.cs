@@ -152,7 +152,7 @@ namespace YXERP.Controllers
             OrderEntity model = serializer.Deserialize<OrderEntity>(entity);
 
 
-            var bl = OrdersBusiness.BaseBusiness.SubmitOrder(model.OrderID, model.PersonName, model.MobileTele, model.CityCode, model.Address, model.TypeID, model.ExpressType, model.Remark, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
+            var bl = OrdersBusiness.BaseBusiness.SubmitOrder(model.OrderID, model.PersonName, model.MobileTele, model.CityCode, model.Address, model.PostalCode, model.TypeID, model.ExpressType, model.Remark, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("status", bl);
 
             return new JsonResult

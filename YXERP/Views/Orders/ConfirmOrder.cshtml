@@ -64,8 +64,13 @@
                     <option value="3">自提</option> 
                 </select>
             </li>
-            <li style="width:100%;"><span>备注：</span> 
+            <li>
+                <span>备注：</span> 
                 <textarea id="remark" class="width310"></textarea>
+            </li>
+            <li>
+                <span>邮编：</span> 
+                 <input type="text" id="postalcode" maxlength="10" value="@(model.PostalCode)" />
 
             </li>
         </ul>
