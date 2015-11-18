@@ -48,6 +48,12 @@
     <Compile Include="Custom\CustomerEntity.cs" />
     <Compile Include="Custom\ExtentEntity.cs" />
     <Compile Include="Custom\ReplyEntity.cs" />
+    <Compile Include="Finance\Billing.cs" />
+    <Compile Include="Finance\BillingInvoice.cs" />
+    <Compile Include="Finance\BillingPay.cs" />
+    <Compile Include="Finance\StorageBilling.cs" />
+    <Compile Include="Finance\StorageBillingInvoice.cs" />
+    <Compile Include="Finance\StorageBillingPay.cs" />
     <Compile Include="Log\LogEntity.cs" />
     <Compile Include="Manage\ClientOrder.cs" />
     <Compile Include="Manage\FeedBack.cs" />
@@ -108,6 +114,7 @@
       <Name>CloudSalesEnum</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

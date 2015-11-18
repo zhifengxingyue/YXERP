@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace YXERP.Controllers
 {
-    public class AgentsController : Controller
+    public class AgentsController : BaseController
     {
         //
         // GET: /Agents/

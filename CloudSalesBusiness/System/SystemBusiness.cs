@@ -588,7 +588,10 @@ namespace CloudSalesBusiness
             var id = Guid.NewGuid().ToString();
             if (SystemDAL.BaseProvider.AddWareHouse(id, warecode, name, shortname, citycode, status, depotcode, depotname, description, operateid, clientid))
             {
-                
+                if (!WareHouses.ContainsKey(clientid))
+                {
+                    GetWareHouses(clientid);
+                }
                 var model = new WareHouse()
                 {
                     WareID = id,
@@ -830,9 +833,9 @@ namespace CloudSalesBusiness
             return bl;
         }
 
-        public bool UpdateDepotSeat(string id, string name, int status, string description, string operateid, string clientid)
+        public bool UpdateDepotSeat(string id, string depotcode, string name, int status, string description, string operateid, string clientid)
         {
-            return SystemDAL.BaseProvider.UpdateDepotSeat(id, name, status, description);
+            return SystemDAL.BaseProvider.UpdateDepotSeat(id, depotcode, name, status, description);
         }
 
         public bool UpdateDepotSeatStatus(string id, EnumStatus status, string operateid, string clientid)

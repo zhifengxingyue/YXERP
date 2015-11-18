@@ -1,5 +1,52 @@
 ﻿@{
-    ViewBag.Title = "PayableBills";
+    ViewBag.Title = "应付账款";
 }
+@section css{
+<link href="/modules/css/finance/finance.css" rel="stylesheet" />
+ }
 
-<h2>PayableBills</h2>
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/finance/payablebills"], function (ObjectJS) {
+            ObjectJS.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">应付账款</span>
+</div>
+<div class="search-box">
+    <div class="search-header">
+        <ul class="search-status">
+            <li data-id="-1" class="hover">全部</li>
+            <li data-id="0" class="">未付款</li>
+            <li data-id="1" class="">部分付款</li>
+            <li data-id="2" class="">已付款</li>
+        </ul>
+    </div>
+    <div class="search-body mTop20">
+        <div class="left" id="invoiceStatus"></div>
+        <div class="right searth-module" data-text="关键字搜索..." data-width="160"> </div>
+    </div>
+</div>
+<div class="content-body">
+    <table class="table-list mTop10">
+        <tr class="tr-header">
+            <td class="tLeft width150">账单编号</td>
+            <td class="tLeft width150">源单据编号</td>
+            <td class="width100 tRight">总金额</td>
+            <td class="width80">付款状态</td>
+            <td class="width100 tRight">付款金额</td>
+            <td class="width100">开票状态</td>
+            <td class="width150">创建人</td>
+            <td class="width150">创建时间</td>
+        </tr>
+    </table>
+    @*<ul class="left batch-operate mTop20">
+        <li class="width100 mTop5">
+            <span class="ico-check pLeft5" id="checkAll">批量操作</span>
+        </li>
+    </ul>*@
+    <div id="pager" class="mTop20"></div>
+</div>
+

@@ -142,7 +142,7 @@ define(function (require, exports, module) {
     ObjectJS.saveModel = function (model) {
         var _self = this;
         Global.post("/System/SaveWareHouse", { ware: JSON.stringify(model) }, function (data) {
-            if (data.ID.length > 0) {
+            if (data.ID) {
                 location.href = "/System/WareHouse"
             }
         });

@@ -64,6 +64,7 @@
     <Folder Include="Procedures\Custom" />
     <Folder Include="Procedures\ShoppingCart" />
     <Folder Include="Procedures\Sales" />
+    <Folder Include="Procedures\Finance" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\InitDatabase.sql" />
@@ -266,5 +267,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\Sales\P_EffectiveOrder.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_GetPayableBills.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_GetPayableBillByID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_CreateStorageBillingPay.sql" />
   </ItemGroup>
 </Project>

@@ -38,8 +38,8 @@ begin
 end
 
 --代理商信息
-declare @IsDefault int,@levelMoney decimal(18,4)
-select @IsDefault=IsDefault,@levelMoney=TotalIn-TotalOut-FreezeMoney from Agents where AgentID=@OrderAgentID
+declare @IsDefault int,@levelMoney decimal(18,4),@FreezeMoney  decimal(18,4)
+select @IsDefault=IsDefault,@levelMoney=TotalIn-TotalOut-FreezeMoney,@FreezeMoney=FreezeMoney from Agents where AgentID=@OrderAgentID
 
 
 --代理商订单信息
@@ -130,7 +130,7 @@ select @AgentOrderID,OrderCode,TypeID,2,0,@AgentOrderMoney,CityCode,Address,Post
 
 --代理商账户处理
 insert into AgentsAccounts(AgentID,HappenMoney,EndMoney,Mark,SubjectID,Remark,CreateUserID,ClientID)
-values(@OrderAgentID,@AgentOrderMoney,@levelMoney-@AgentOrderMoney,1,1,'采购订单支出，订单号：'+@AgentOrderID,@OperateID,@ClientID)
+values(@OrderAgentID,@AgentOrderMoney,@levelMoney+@FreezeMoney-@AgentOrderMoney,1,1,'采购订单支出，订单号：'+@AgentOrderID,@OperateID,@ClientID)
 
 update Agents set TotalOut=TotalOut-@AgentOrderMoney where AgentID=@OrderAgentID
 

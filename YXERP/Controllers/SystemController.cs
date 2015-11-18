@@ -482,7 +482,7 @@ namespace YXERP.Controllers
             {
                 id = new SystemBusiness().AddDepotSeat(model.DepotCode, model.WareID, model.Name, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID);
             }
-            else if (new SystemBusiness().UpdateDepotSeat(model.DepotID, model.Name, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID))
+            else if (new SystemBusiness().UpdateDepotSeat(model.DepotID, model.DepotCode, model.Name, model.Status.Value, model.Description, CurrentUser.UserID, CurrentUser.ClientID))
             {
                 id = model.WareID;
             }

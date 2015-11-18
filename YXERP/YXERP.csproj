@@ -129,6 +129,7 @@
     <Compile Include="Models\FilterUser.cs" />
     <Compile Include="Models\FilterCustomer.cs" />
     <Compile Include="Models\FilterOrders.cs" />
+    <Compile Include="Models\FilterBills.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\homeico\account.png" />
     <Content Include="Content\homeico\agents.png" />
@@ -159,6 +160,8 @@
     <Content Include="Content\menuico\customhover.png" />
     <Content Include="Content\menuico\custom.png" />
     <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
+    <Content Include="modules\css\default\detail.css" />
+    <Content Include="modules\css\finance\finance.css" />
     <Content Include="modules\css\auction\buynow.css" />
     <Content Include="modules\css\customer\activity.css" />
     <Content Include="modules\css\customer\customer.css" />
@@ -236,6 +239,8 @@
     <Content Include="modules\scripts\customer\customer.js" />
     <Content Include="modules\scripts\customer\create.js" />
     <Content Include="modules\scripts\customer\detail.js" />
+    <Content Include="modules\scripts\finance\detail.js" />
+    <Content Include="modules\scripts\finance\payablebills.js" />
     <Content Include="modules\scripts\orders\confirmorder.js" />
     <Content Include="modules\scripts\orders\orders.js" />
     <Content Include="modules\scripts\orders\detail.js" />
@@ -261,6 +266,9 @@
     <Content Include="modules\template\customer\contacts.html" />
     <Content Include="modules\template\customer\contact-detail.html" />
     <Content Include="modules\template\feedback\feedback_add.html" />
+    <Content Include="modules\template\finance\payable-detail.html" />
+    <Content Include="modules\template\finance\payablebills.html" />
+    <Content Include="modules\template\finance\storagebillingpays.html" />
     <Content Include="modules\template\orders\orders.html" />
     <Content Include="modules\template\orders\cuatomerorders.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />
@@ -315,6 +323,7 @@
     <Content Include="Views\Finance\Index.cshtml" />
     <Content Include="Views\Finance\PayableBills.cshtml" />
     <Content Include="Views\Agents\Index.cshtml" />
+    <Content Include="Views\Finance\PayableBillsDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

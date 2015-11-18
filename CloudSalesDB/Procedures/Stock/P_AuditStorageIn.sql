@@ -19,6 +19,7 @@ CREATE PROCEDURE [dbo].[P_AuditStorageIn]
 @BillingCode nvarchar(50),
 @UserID nvarchar(64),
 @OperateIP nvarchar(64),
+@AgentID nvarchar(64)='',
 @ClientID nvarchar(64)
 AS
 
@@ -85,8 +86,8 @@ else
 begin
 	Update StorageDoc set Status=2 where DocID=@DocID
 	--全部上架生成账单
-	insert into StorageBilling(BillingID,BillingCode,DocID,DocCode,TotalMoney,Type,Status,PayStatus,InvoiceStatus,ClientID,CreateUserID)
-						values(NEWID(),@BillingCode,@DocID,@DocCode,@TotalMoney,1,1,0,0,@ClientID,@UserID)
+	insert into StorageBilling(BillingID,BillingCode,DocID,DocCode,TotalMoney,Type,Status,PayStatus,InvoiceStatus,AgentID,ClientID,CreateUserID)
+						values(NEWID(),@BillingCode,@DocID,@DocCode,@TotalMoney,1,1,0,0,@AgentID,@ClientID,@UserID)
 end
 
 set @Err+=@@Error

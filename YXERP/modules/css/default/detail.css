@@ -1,0 +1,25 @@
+﻿
+/*弹出层-新建*/
+.easydialog-create { min-width:400px;  }
+.easydialog-create li{ margin-top:10px; overflow:auto; }
+.easydialog-create li span{ display:inline-block; vertical-align:top;}
+.easydialog-create li input[type="text"]{ width:180px; }
+.easydialog-create li textarea{ width:350px; min-height:75px; }
+.easydialog-create li .create-column{ width:80px;}
+
+/*详情页Title*/
+.content-title { height:35px; }
+.content-title .titlename { font-size:16px; color:#666; }
+
+/*详情页-信息*/
+.content-info { width:80%; min-width:600px; overflow:auto; }
+.content-info li{ width:50%; float:left; height:35px; line-height:35px; }
+.content-info li .column-title{ width:100px; float:left; color:#999; }
+.content-info li .column-value{ max-width:300px; float:left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:#666;}
+
+
+
+
+
+
+

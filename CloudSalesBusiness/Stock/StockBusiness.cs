@@ -164,13 +164,13 @@ namespace CloudSalesBusiness
             return new StockDAL().UpdateStorageDetailWare(autoid, wareid, depotid);
         }
 
-        public bool AuditStorageIn(string ids, string userid, string operateip, string clientid)
+        public bool AuditStorageIn(string ids, string userid, string operateip, string agentid, string clientid)
         {
             bool bl = false;
 
             foreach (string autoid in ids.Split(','))
             {
-                if (new StockDAL().AuditStorageIn(autoid, userid, operateip, clientid))
+                if (new StockDAL().AuditStorageIn(autoid, userid, operateip, agentid, clientid))
                 {
                     bl = true;
                 }

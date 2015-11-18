@@ -118,13 +118,14 @@ namespace CloudSalesDAL
             return ExecuteNonQuery("P_UpdateStorageStatus", paras, CommandType.StoredProcedure) > 0;
         }
 
-        public bool AuditStorageIn(string autoid, string userid, string operateip, string clientid)
+        public bool AuditStorageIn(string autoid, string userid, string operateip, string agentid, string clientid)
         {
             SqlParameter[] paras = { 
                                      new SqlParameter("@AutoID",autoid),
                                      new SqlParameter("@BillingCode",DateTime.Now.ToString("yyyyMMddHHmmssfff")),
                                      new SqlParameter("@UserID",userid),
                                      new SqlParameter("@OperateIP",operateip),
+                                     new SqlParameter("@AgentID",agentid),
                                      new SqlParameter("@ClientID",clientid)
                                    };
             return ExecuteNonQuery("P_AuditStorageIn", paras, CommandType.StoredProcedure) > 0;

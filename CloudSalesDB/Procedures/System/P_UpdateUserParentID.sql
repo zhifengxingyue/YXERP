@@ -25,7 +25,7 @@ begin tran
 declare @Err int =0 
 
 --只能有一个顶点
-if(@ParentID='6666666666' and exists(select AutoID from Users where ParentID='6666666666'))
+if(@ParentID='6666666666' and exists(select AutoID from Users where ParentID='6666666666' and AgentID=@AgentID))
 begin
 	rollback tran
 	return

@@ -178,7 +178,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult AuditPurchase(string ids)
         {
-            bool bl = new StockBusiness().AuditStorageIn(ids, CurrentUser.UserID, OperateIP, CurrentUser.ClientID);
+            bool bl = new StockBusiness().AuditStorageIn(ids, CurrentUser.UserID, OperateIP, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("Status", bl);
             return new JsonResult
             {

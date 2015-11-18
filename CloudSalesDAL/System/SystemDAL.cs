@@ -396,12 +396,13 @@ namespace CloudSalesDAL
             return ExecuteNonQuery(sqlText, paras, CommandType.Text) > 0;
         }
 
-        public bool UpdateDepotSeat(string id, string name, int status, string description)
+        public bool UpdateDepotSeat(string id, string depotcode, string name, int status, string description)
         {
-            string sqlText = "Update DepotSeat set Name=@Name,Status=@Status,Description=@Description,UpdateTime=getdate() " +
+            string sqlText = "Update DepotSeat set DepotCode=@DepotCode,Name=@Name,Status=@Status,Description=@Description,UpdateTime=getdate() " +
                             "  where DepotID=@DepotID ";
             SqlParameter[] paras = { 
                                      new SqlParameter("@DepotID" , id),
+                                     new SqlParameter("@DepotCode" , depotcode),
                                      new SqlParameter("@Name" , name),
                                      new SqlParameter("@Status" , status),
                                      new SqlParameter("@Description" , description)

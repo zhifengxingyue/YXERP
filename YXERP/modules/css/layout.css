@@ -18,15 +18,15 @@ header .companyName:hover { color: #fff; }
 
 /*一级菜单*/
 header .menu { height:50px; margin-left:30px; }
-header .menu a{  height:50px; line-height:50px;text-align:center; width:100px; display:inline-block; }
-header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:15px; float:left; }
+header .menu a{  height:50px; line-height:50px;text-align:center; width:80px; display:inline-block; }
+header .menu a img{ width:16px; height:16px; margin-top:18px; margin-left:10px; float:left; }
 header .menu a span{ margin-left:10px; float:left; color:#BFD2F2; font-size:14px;}
 header .menu .select{ background-color:#174A7F;color:#fff;}
 header .menu a:hover span,header .menu .select span{ color:#fff;}
 
 
 /*登录信息*/
-header .currentuser { margin-right:50px; cursor:pointer;}
+header .currentuser { margin-right:30px; cursor:pointer;}
 header .currentuser span{ display:inline-block; float:left;}
 header .currentuser .avatar { height:35px; width:35px; border:solid 1px #2F74B9; border-radius:18px; margin-top:7px;}
 header .currentuser .username { margin-left:10px; color:#BFD2F2; line-height:50px; font-size:14px; }
@@ -41,7 +41,7 @@ header .currentuser:hover .dropdown-top{ border-top:solid 6px #fff;}
 
 
 .dropdown-userinfo { position:fixed; background-color:#fff; width:120px; z-index:1000; border-radius:2px; border:solid 1px #eee;
-                     box-shadow:0 0 5px #ccc; top:50px; right:40px;}
+                     box-shadow:0 0 5px #ccc; top:50px; right:20px;}
 .dropdown-userinfo .top-lump { border-bottom:solid 10px #fff; border-left:solid 12px transparent ;border-right:solid 12px transparent; 
                                width:0; height:0; position:absolute; left:50px; top:-9px; }
 .dropdown-userinfo .items-list { padding:5px 0; overflow:auto; }

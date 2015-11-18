@@ -167,6 +167,11 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static Users GetUserByUserID(string userid, string agentid)
         {
+            if (string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(agentid))
+            {
+                return null;
+            }
+
             var list = GetUsers(agentid);
             if (list.Where(u => u.UserID == userid).Count() > 0)
             {
@@ -236,6 +241,10 @@ namespace CloudSalesBusiness
         /// <returns></returns>
         public static List<Users> GetUsers(string agentid)
         {
+            if (string.IsNullOrEmpty(agentid))
+            {
+                return new List<Users>();
+            }
             if (!Users.ContainsKey(agentid))
             {
                 List<Users> list = new List<CloudSalesEntity.Users>();
