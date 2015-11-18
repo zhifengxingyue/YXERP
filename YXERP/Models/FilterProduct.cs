@@ -21,6 +21,8 @@ namespace YXERP.Models
 
         public string OrderBy { get; set; }
 
+        public int DocType { get; set; }
+
         public bool IsAsc { get; set; }
 
         public int PageIndex { get; set; }

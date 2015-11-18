@@ -382,7 +382,7 @@ namespace CloudSalesBusiness
         /// <param name="pageCount"></param>
         /// <param name="clientID"></param>
         /// <returns></returns>
-        public List<Products> GetFilterProducts(string categoryid, List<FilterAttr> Attrs, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
+        public List<Products> GetFilterProducts(string categoryid, List<FilterAttr> Attrs, int doctype, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
             StringBuilder attrbuild = new StringBuilder();
@@ -399,7 +399,7 @@ namespace CloudSalesBusiness
                 }
             }
 
-            DataSet ds = dal.GetFilterProducts(categoryid, attrbuild.ToString(), salebuild.ToString(), beginprice, endprice, keyWords, orderby, isasc ? 1 : 0, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
+            DataSet ds = dal.GetFilterProducts(categoryid, attrbuild.ToString(), salebuild.ToString(), doctype, beginprice, endprice, keyWords, orderby, isasc ? 1 : 0, pageSize, pageIndex, ref totalCount, ref pageCount, clientID);
 
             List<Products> list = new List<Products>();
             foreach (DataRow dr in ds.Tables[0].Rows)

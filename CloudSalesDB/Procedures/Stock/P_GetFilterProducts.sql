@@ -26,6 +26,7 @@ GO
 ************************************************************/
 CREATE PROCEDURE [dbo].[P_GetFilterProducts]
 	@CategoryID nvarchar(64),
+	@DocType int=-1,
 	@BeginPrice nvarchar(20)='',
 	@EndPrice nvarchar(20)='',
 	@AttrWhere nvarchar(4000)='',
@@ -70,6 +71,11 @@ AS
 	if(@keyWords <> '')
 	begin
 		set @condition +=' and (ProductName like ''%'+@keyWords+'%'' or  ProductCode like ''%'+@keyWords+'%'' or  GeneralName like ''%'+@keyWords+'%'') '
+	end
+
+	if(@DocType=11)
+	begin
+		set @condition +=' and P.Status=1 and pd.Status=1 '
 	end
 
 	set @condition += @AttrWhere

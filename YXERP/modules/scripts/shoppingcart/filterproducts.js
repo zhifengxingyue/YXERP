@@ -15,6 +15,7 @@
         EndPrice: "",
         PageIndex: 1,
         keyWords: "",
+        DocType: -1,
         OrderBy: "pd.CreateTime desc",
         IsAsc:false
     }
@@ -25,6 +26,7 @@
         var _self = this;
         _self.type = type;
         _self.guid = guid;
+        Params.DocType = type;
         _self.getChildCategory("");
         _self.bindEvent();
         $(".content-body").createCart({
@@ -259,6 +261,7 @@
             BeginPrice: Params.BeginPrice,
             EndPrice: Params.EndPrice,
             OrderBy: Params.OrderBy,
+            DocType: Params.DocType,
             IsAsc: Params.IsAsc,
             Attrs: attrs
         }, params);
