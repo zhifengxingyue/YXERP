@@ -79,6 +79,7 @@ namespace CloudSalesBusiness
                 {
                     StorageBillingInvoice invoice = new StorageBillingInvoice();
                     invoice.FillData(dr);
+                    invoice.CreateUser = OrganizationBusiness.GetUserByUserID(invoice.CreateUserID, invoice.AgentID);
                     model.StorageBillingInvoices.Add(invoice);
                 }
             }
@@ -87,12 +88,32 @@ namespace CloudSalesBusiness
 
         #endregion
 
-        #region
+        #region 添加
 
         public bool CreateStorageBillingPay(string billingid, int type, int paytype, decimal paymoney, DateTime paytime, string remark, string userid, string agentid, string clientid)
         {
             bool bl = FinanceDAL.BaseProvider.CreateStorageBillingPay(billingid, type, paytype, paymoney, paytime, remark, userid, agentid, clientid);
             return bl;
+        }
+
+        public string CreateStorageBillingInvoice(string billingid, int type, decimal invoicemoney, string invoicecode, string remark, string userid, string agentid, string clientid)
+        {
+            string id = Guid.NewGuid().ToString().ToLower();
+            bool bl = FinanceDAL.BaseProvider.CreateStorageBillingInvoice(id, billingid, type, invoicemoney, invoicecode, remark, userid, agentid, clientid);
+            if (bl)
+            {
+                return id;
+            }
+            return "";
+        }
+
+        #endregion
+
+        #region 编辑/删除
+
+        public bool DeleteStorageBillingInvoice(string invoiceid, string billingid, string userid, string agentid, string clientid)
+        {
+            return FinanceDAL.BaseProvider.DeleteStorageBillingInvoice(invoiceid, billingid, userid, agentid, clientid);
         }
 
         #endregion

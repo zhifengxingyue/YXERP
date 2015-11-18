@@ -86,6 +86,12 @@ define(function (require, exports, module) {
             
         });
 
+        $("#btndelete").click(function () {
+            confirm("订单删除后不可恢复，确认删除吗？", function () {
+                _self.deleteOrder();
+            });
+        });
+
         CityObj = City.createCity({
             elementID: "city"
         });
@@ -147,6 +153,18 @@ define(function (require, exports, module) {
                 location.href = location.href;
             }
         })
+    }
+
+    //删除订单
+    ObjectJS.deleteOrder = function () {
+        var _self = this;
+        Global.post("/Orders/DeleteOrder", { orderid: _self.orderid }, function (data) {
+            if (data.status) {
+                location.href = "/Orders/MyOrder";
+            } else {
+                alert("订单删除失败，可能因为订单状态已改变，请刷新页面后重试！");
+            }
+        });
     }
 
     module.exports = ObjectJS;

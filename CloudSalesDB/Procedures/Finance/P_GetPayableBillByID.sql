@@ -22,6 +22,6 @@ AS
 	
 	select * from StorageBilling where BillingID=@BillingID and AgentID=@AgentID
 
-	select * from StorageBillingPay where BillingID=@BillingID and AgentID=@AgentID
+	select * from StorageBillingPay where BillingID=@BillingID and AgentID=@AgentID and Status<>9 order by PayTime desc
 
-	select * from StorageBillingInvoice  where BillingID=@BillingID and AgentID=@AgentID
+	select * from StorageBillingInvoice  where BillingID=@BillingID and AgentID=@AgentID and Status<>9 order by AutoID desc

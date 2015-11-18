@@ -27,7 +27,7 @@ declare @Err int=0,@Status int
 
 select @Status=Status from Orders where OrderID=@OrderID  and ClientID=@ClientID
 
-if(@Status<>1)
+if(@Status > 1)
 begin
 	rollback tran
 	return
@@ -35,6 +35,11 @@ end
 
 
 Update Orders set Status=9 where OrderID=@OrderID
+
+if(@Status=0)
+begin
+	delete from ShoppingCart where [GUID]=@OrderID and OrderType=11
+end
 
 set @Err+=@@error
 

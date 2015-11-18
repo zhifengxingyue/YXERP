@@ -48,9 +48,10 @@
     <div class="tab-nav mTop30">
         <ul class="tab-nav-ul left">
             <li class="hover" data-id="navPays">付款记录</li>
+            <li class="" data-id="navInvoices">开票记录</li>
         </ul>
         <div id="addPay" class="btn right">付款登记</div>
-        <div id="addInvoice" class="btn right">登记发票</div>
+        <div id="addInvoice" class="btn right">发票登记</div>
     </div>
     <table id="navPays" class="nav-partdiv table-list mTop20">
         <tr class="tr-header">
@@ -61,8 +62,18 @@
             <td class="width200 tRight">登记时间</td>
         </tr>
     </table>
+    <table id="navInvoices" class="nav-partdiv table-list mTop20 hide">
+        <tr class="tr-header">
+            <td class="width100 tLeft">发票类型</td>
+            <td class="">开票金额</td>
+            <td class="">发票号码</td>
+            <td class="tLeft">备注</td>
+            <td class="width150">登记人</td>
+            <td class="width200">登记时间</td>
+            <td class="width50">操作</td>
+        </tr>
+    </table>
 </div>
 <ul class="dropdown-ul hide" style="width:65px;">
-    <li id="editContact">编辑</li>
-    <li id="deleteContact">删除</li>
+    <li id="deleteInvoice">删除</li>
 </ul>

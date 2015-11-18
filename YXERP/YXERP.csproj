@@ -161,7 +161,7 @@
     <Content Include="Content\menuico\custom.png" />
     <Content Include="DLL\Net.Sourceforge.Pinyin4j.dll" />
     <Content Include="modules\css\default\detail.css" />
-    <Content Include="modules\css\finance\finance.css" />
+    <Content Include="modules\css\default\list.css" />
     <Content Include="modules\css\auction\buynow.css" />
     <Content Include="modules\css\customer\activity.css" />
     <Content Include="modules\css\customer\customer.css" />
@@ -269,6 +269,8 @@
     <Content Include="modules\template\finance\payable-detail.html" />
     <Content Include="modules\template\finance\payablebills.html" />
     <Content Include="modules\template\finance\storagebillingpays.html" />
+    <Content Include="modules\template\finance\invoice-detail.html" />
+    <Content Include="modules\template\finance\storagebillinginvoices.html" />
     <Content Include="modules\template\orders\orders.html" />
     <Content Include="modules\template\orders\cuatomerorders.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />

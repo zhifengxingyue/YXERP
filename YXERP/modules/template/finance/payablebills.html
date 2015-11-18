@@ -10,6 +10,7 @@
     <td class="center">{%=item.PayStatusStr%}</td>
     <td class="tRight">{%=item.PayMoney.toFixed(2)%}</td>
     <td class="center">{%=item.InvoiceStatusStr%}</td>
+    <td class="tRight">{%=item.InvoiceMoney.toFixed(2)%}</td>
     <td class='center'>{%=(item.CreateUser ? item.CreateUser.Name:"--")%}</td>
     <td class='center'>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
 </tr>

@@ -277,4 +277,10 @@
   <ItemGroup>
     <None Include="Procedures\Finance\P_CreateStorageBillingPay.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_CreateStorageBillingInvoice.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_DeleteStorageBillingInvoice.sql" />
+  </ItemGroup>
 </Project>

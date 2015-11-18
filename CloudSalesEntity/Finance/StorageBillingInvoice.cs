@@ -57,6 +57,9 @@ namespace CloudSalesEntity
 			set{ _autoid=value;}
 			get{return _autoid;}
 		}
+
+        public string InvoiceID { get; set; }
+
         [Property("Lower")] 
 		public string BillingID
 		{
@@ -219,6 +222,8 @@ namespace CloudSalesEntity
 			set{ _updatetime=value;}
 			get{return _updatetime;}
 		}
+
+        public Users CreateUser { get; set; }
 
         [Property("Lower")]
         public string AgentID { get; set; }

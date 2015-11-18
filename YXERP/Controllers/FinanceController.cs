@@ -86,6 +86,35 @@ namespace YXERP.Controllers
             };
         }
 
+        public JsonResult SaveStorageBillingInvoice(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            StorageBillingInvoice model = serializer.Deserialize<StorageBillingInvoice>(entity);
+
+            var id = FinanceBusiness.BaseBusiness.CreateStorageBillingInvoice(model.BillingID, model.Type, model.InvoiceMoney, model.InvoiceCode, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            model.InvoiceID = id;
+            model.CreateUser = CurrentUser;
+            JsonDictionary.Add("item", model);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteStorageBillingInvoice(string id, string billingid)
+        {
+            var bl = FinanceBusiness.BaseBusiness.DeleteStorageBillingInvoice(id, billingid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
     }
 }
