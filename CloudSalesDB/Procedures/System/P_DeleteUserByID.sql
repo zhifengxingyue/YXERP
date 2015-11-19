@@ -24,7 +24,19 @@ begin tran
 
 set @Result=0
 
-declare @Err int=0
+declare @Err int=0,@RoleID nvarchar(64)
+
+--防止自杀式删除用户，管理员至少保留一个
+select @RoleID from Users where UserID=@UserID and AgentID=@AgentID
+if exists (select AutoID from Roles where RoleID=@RoleID and IsDefault=1)
+begin
+	if not exists(select UserID from Users where RoleID=@RoleID and Status=1 and UserID<>@UserID)
+	begin
+		set @Result=0
+		rollback tran
+		return
+	end
+end
 
 Update Users set Status=9,ParentID='' where UserID=@UserID and AgentID=@AgentID
 

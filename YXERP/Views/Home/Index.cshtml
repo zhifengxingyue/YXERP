@@ -49,7 +49,7 @@
                     <img src="/Content/homeico/account.png" />
                     <h2>财务</h2>
                 </a>
-                <a data-width="1" data-height="1" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="106000000").FirstOrDefault().IsAllow?"/CustomerRPT/Index":"javascript:void(0)")" class="report item">
+                <a data-width="1" data-height="1" href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="106000000").FirstOrDefault().IsAllow?"/CustomerRPT/Index":"javascript:void(0)")" class="report item">
                     <img src="/Content/homeico/report.png" />
                     <h2>统计</h2>
                 </a>
@@ -62,7 +62,7 @@
                     <h2>系统</h2>
                 </a>
             </div>
-            <a data-width="1" data-height="2" href="@(CurrentUser.Menus.Where(m=>m.MenuCode=="105000000").FirstOrDefault().IsAllow?"/Agents/Index":"javascript:void(0)")" class="agents item">
+            <a data-width="1" data-height="2" href="@(!CurrentUser.Menus.Where(m=>m.MenuCode=="105000000").FirstOrDefault().IsAllow?"/Agents/Index":"javascript:void(0)")" class="agents item">
                 <img src="/Content/homeico/agents.png" />
                 <h2>代理商</h2>
             </a>
