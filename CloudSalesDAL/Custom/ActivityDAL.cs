@@ -42,21 +42,23 @@ namespace CloudSalesDAL
 
         }
 
-        public DataTable GetActivityByID(string activityid)
+        public DataTable GetActivityByID(string activityid, string agentid, string clientid)
         {
-            string sqlText = "select * from Activity where ActivityID=@ActivityID";
+            string sqlText = "select * from Activity where ActivityID=@ActivityID and ClientID=@ClientID";
             SqlParameter[] paras = { 
-                                     new SqlParameter("@ActivityID",activityid)
+                                     new SqlParameter("@ActivityID",activityid),
+                                     new SqlParameter("@ClientID",clientid)
                                    };
 
             return GetDataTable(sqlText, paras, CommandType.Text);
         }
 
-        public DataTable GetActivityByCode(string activitycode)
+        public DataTable GetActivityByCode(string activitycode, string agentid, string clientid)
         {
-            string sqlText = "select * from Activity where ActivityCode=@ActivityCode";
+            string sqlText = "select * from Activity where ActivityCode=@ActivityCode  and ClientID=@ClientID";
             SqlParameter[] paras = { 
-                                     new SqlParameter("@ActivityCode",activitycode)
+                                     new SqlParameter("@ActivityCode",activitycode),
+                                     new SqlParameter("@ClientID",clientid)
                                    };
 
             return GetDataTable(sqlText, paras, CommandType.Text);

@@ -21,11 +21,11 @@ CREATE PROCEDURE [dbo].[P_GetOrderByID]
 AS
 declare @CustomerID nvarchar(64),@Status int 
 
-select @CustomerID=CustomerID,@Status=Status from Orders where OrderID=@OrderID
+select @CustomerID=CustomerID,@Status=Status from Orders where OrderID=@OrderID and ClientID=@ClientID
 
-select * from Orders where OrderID=@OrderID
+select * from Orders where OrderID=@OrderID and ClientID=@ClientID
 
-select * from Customer where CustomerID=@CustomerID
+select * from Customer where CustomerID=@CustomerID and ClientID=@ClientID
 
 if(@Status=0)
 begin

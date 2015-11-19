@@ -83,7 +83,7 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public JsonResult GetActivityDetail(string activityID)
         {
-            ActivityEntity model =ActivityBusiness.GetActivityByID(activityID);
+            ActivityEntity model = ActivityBusiness.GetActivityByID(activityID, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("Item", model);
             return new JsonResult
             {

@@ -71,6 +71,8 @@ namespace CloudSalesEntity
 			set{ _status=value;}
 			get{return _status;}
 		}
+
+        public string StatusStr { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -232,6 +234,8 @@ namespace CloudSalesEntity
 			get{return _clientid;}
 		}
 		#endregion Model
+
+        public Users CreateUser { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {

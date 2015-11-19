@@ -53,6 +53,13 @@ namespace YXERP.Controllers
         public ActionResult Detail(string id)
         {
             var model = OrdersBusiness.BaseBusiness.GetOrderByID(id, CurrentUser.AgentID, CurrentUser.ClientID);
+
+            if (model == null || string.IsNullOrEmpty(model.OrderID))
+            {
+                return Redirect("/Orders/MyOrder");
+            }
+
+
             ViewBag.Model = model;
             ViewBag.OrderTypes = SystemBusiness.BaseBusiness.GetOrderTypes(CurrentUser.AgentID, CurrentUser.ClientID);
             if (model.Status == 0)

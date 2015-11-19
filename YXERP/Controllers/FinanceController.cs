@@ -36,7 +36,22 @@ namespace YXERP.Controllers
             return View();
         }
 
-        #region Ajax
+        public ActionResult ReceivableBills()
+        {
+            return View();
+        }
+
+        public ActionResult OrderBillsDetail(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return Redirect("ReceivableBills");
+            }
+            ViewBag.ID = id;
+            return View();
+        }
+
+        #region Ajax应付账款
 
         public JsonResult GetPayableBills(string filter)
         {
@@ -104,6 +119,87 @@ namespace YXERP.Controllers
         }
 
         public JsonResult DeleteStorageBillingInvoice(string id, string billingid)
+        {
+            var bl = FinanceBusiness.BaseBusiness.DeleteStorageBillingInvoice(id, billingid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        #endregion
+
+        #region Ajax应收账款
+
+        public JsonResult GetOrderBills(string filter)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            FilterBills model = serializer.Deserialize<FilterBills>(filter);
+            int totalCount = 0;
+            int pageCount = 0;
+
+            var list = FinanceBusiness.BaseBusiness.GetOrderBills(model.PayStatus, model.InvoiceStatus, model.BeginTime, model.EndTime, model.Keywords, model.PageSize, model.PageIndex, ref totalCount, ref pageCount, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
+            JsonDictionary.Add("totalCount", totalCount);
+            JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetOrderBillByID(string id)
+        {
+            var model = FinanceBusiness.BaseBusiness.GetOrderBillByID(id, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("model", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SaveOrderBillingPay(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            BillingPay model = serializer.Deserialize<BillingPay>(entity);
+
+            bool bl = FinanceBusiness.BaseBusiness.CreateBillingPay(model.BillingID, model.Type, model.PayType, model.PayMoney, model.PayTime, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            if (bl)
+            {
+                model.CreateUser = CurrentUser;
+                JsonDictionary.Add("item", model);
+            }
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult SaveOrderBillingInvoice(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            StorageBillingInvoice model = serializer.Deserialize<StorageBillingInvoice>(entity);
+
+            var id = FinanceBusiness.BaseBusiness.CreateStorageBillingInvoice(model.BillingID, model.Type, model.InvoiceMoney, model.InvoiceCode, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            model.InvoiceID = id;
+            model.CreateUser = CurrentUser;
+            JsonDictionary.Add("item", model);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult DeleteOrderBillingInvoice(string id, string billingid)
         {
             var bl = FinanceBusiness.BaseBusiness.DeleteStorageBillingInvoice(id, billingid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("status", bl);

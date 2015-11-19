@@ -76,6 +76,8 @@ namespace CloudSalesEntity
 			set{ _paytype=value;}
 			get{return _paytype;}
 		}
+
+        public string PayTypeStr { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>

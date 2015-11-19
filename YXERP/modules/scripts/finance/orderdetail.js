@@ -11,7 +11,7 @@
     ObjectJS.init = function (id) {
         var _self = this;
         _self.billingid = id;
-        Global.post("/Finance/GetPayableBillByID", { id: id }, function (data) {
+        Global.post("/Finance/GetOrderBillByID", { id: id }, function (data) {
             if (data.model.BillingID) {
                 _self.bindInfo(data.model);
                 _self.bindEvent(data.model);
@@ -27,15 +27,15 @@
         var _self = this;
 
         $("#infoBillingCode").html("账单编号：" + model.BillingCode);
-        $("#infoSourceCode").attr("href", $("#infoSourceCode").attr("href") + "/" + model.DocID).html(model.DocCode);
+        $("#infoSourceCode").attr("href", $("#infoSourceCode").attr("href") + "/" + model.OrderID).html(model.OrderCode);
         $("#infoTotalMoney").html(model.TotalMoney.toFixed(2));
         $("#infoPayMoney").html(model.PayMoney.toFixed(2));
         $("#infoInvoiceMoney").html(model.InvoiceMoney.toFixed(2));
         $("#infoCreateTime").html(model.CreateTime.toDate("yyyy-MM-dd hh:mm:ss"));
         $("#infoCreateUser").html(model.CreateUser ? model.CreateUser.Name : "--");
 
-        _self.getPays(model.StorageBillingPays, true);
-        _self.getInvoices(model.StorageBillingInvoices, true)
+        _self.getPays(model.BillingPays, true);
+        _self.getInvoices(model.BillingInvoices, true);
     }
 
     //绑定事件
@@ -140,7 +140,7 @@
             Easydialog.open({
                 container: {
                     id: "show-pays-detail",
-                    header: "付款登记",
+                    header: "收款登记",
                     content: innerText,
                     yesFn: function () {
                         if (!VerifyPay.isPass()) {
@@ -148,7 +148,7 @@
                         }
                         var entity = {
                             BillingID: _self.billingid,
-                            Type: 1,
+                            Type: 2,
                             PayType: $("#paytype").val(),
                             PayTypeStr: $("#paytype option:selected").html(),
                             PayMoney: $("#paymoney").val().trim(),
@@ -156,7 +156,7 @@
                             Remark: $("#remark").val().trim()
                         };
                         confirm("请核对金额和日期是否正确，提交后不可修改，确认提交吗？", function () {
-                            _self.savePayablePay(entity);
+                            _self.saveBillPay(entity);
                         });
                         return false;
                         
@@ -232,10 +232,10 @@
         });
     }
     //保存付款
-    ObjectJS.savePayablePay = function (model) {
+    ObjectJS.saveBillPay = function (model) {
         Easydialog.close();
         var _self = this;
-        Global.post("/Finance/SaveStorageBillingPay", { entity: JSON.stringify(model) }, function (data) {
+        Global.post("/Finance/SaveOrderBillingPay", { entity: JSON.stringify(model) }, function (data) {
             if (data.item) {
                 $("#infoPayMoney").html(($("#infoPayMoney").html() * 1 + data.item.PayMoney).toFixed(2));
                 _self.getPays([data.item], false)

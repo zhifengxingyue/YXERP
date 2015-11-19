@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "采购账单详情";
+    ViewBag.Title = "销售账单详情";
 }
 @section css{
 
@@ -7,14 +7,14 @@
 @section scripts{
     <script src="/modules/plug/laydate/laydate.js"></script>
     <script type="text/javascript">
-        seajs.use(["scripts/finance/detail"], function (ObjectJS) {
+        seajs.use(["scripts/finance/orderdetail"], function (ObjectJS) {
             ObjectJS.init('@ViewBag.ID');
         });
     </script>
 }
 <div class="header-box">
-    <span class="header-title left">采购账单详情</span>
-    <a class="ico-back right" href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Finance/PayableBills" : "javascript:history.go(-1);")" >
+    <span class="header-title left">销售账单详情</span>
+    <a class="ico-back right" href="@(Url.RequestContext.HttpContext.Request.UrlReferrer == null ? "/Finance/ReceivableBills" : "javascript:history.go(-1);")" >
         返回
     </a>
 </div>
@@ -24,17 +24,17 @@
     </div>
     <ul class="content-info">
         <li>
-            <span class="column-title">应付金额：</span>
+            <span class="column-title">应收金额：</span>
             <span class="column-value" id="infoTotalMoney"></span>
         </li>
         <li>
-            <span class="column-title">采购单号：</span>
+            <span class="column-title">订单编号：</span>
             <span class="column-value">
-                <a href="/Purchase/DocDetail" target="_blank" id="infoSourceCode"> </a>
+                <a href="/Orders/Detail" target="_blank" id="infoSourceCode"> </a>
             </span>
         </li>
         <li>
-            <span class="column-title">已付金额：</span>
+            <span class="column-title">已收金额：</span>
             <span class="column-value" id="infoPayMoney"></span>
         </li>
         <li>
@@ -51,16 +51,15 @@
     </ul>
     <div class="tab-nav mTop30">
         <ul class="tab-nav-ul left">
-            <li class="hover" data-id="navPays">付款记录</li>
+            <li class="hover" data-id="navPays">收款记录</li>
             <li class="" data-id="navInvoices">开票记录</li>
         </ul>
-        <div id="addPay" class="btn right">付款登记</div>
-        <div id="addInvoice" class="btn right">发票登记</div>
+        <div id="addPay" class="btn right">收款登记</div>
     </div>
     <table id="navPays" class="nav-partdiv table-list mTop20">
         <tr class="tr-header">
-            <td class="width150 tLeft">付款日期</td>
-            <td class="">付款金额</td>
+            <td class="width150 tLeft">收款日期</td>
+            <td class="">收款金额</td>
             <td class="width100">支付方式</td>
             <td class="tLeft">备注</td>
             <td class="width150">登记人</td>
@@ -73,12 +72,13 @@
             <td class="">开票金额</td>
             <td class="">发票号码</td>
             <td class="tLeft">备注</td>
-            <td class="width150">登记人</td>
-            <td class="width200">登记时间</td>
+            <td class="width150">申请人</td>
+            <td class="width200">申请时间</td>
             <td class="width50">操作</td>
         </tr>
     </table>
 </div>
 <ul class="dropdown-ul hide" style="width:65px;">
+    <li id="auditInvoice">审核</li>
     <li id="deleteInvoice">删除</li>
 </ul>

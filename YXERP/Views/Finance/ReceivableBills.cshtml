@@ -1,26 +1,26 @@
 ﻿@{
-    ViewBag.Title = "采购账单";
+    ViewBag.Title = "销售账单";
 }
 @section css{
 
 }
 @section scripts{
     <script type="text/javascript">
-        seajs.use(["scripts/finance/payablebills"], function (ObjectJS) {
+        seajs.use(["scripts/finance/orderbills"], function (ObjectJS) {
             ObjectJS.init();
         });
     </script>
 }
 <div class="header-box">
-    <span class="header-title left">采购账单</span>
+    <span class="header-title left">销售账单</span>
 </div>
 <div class="search-box">
     <div class="search-header">
         <ul class="search-status search-tab">
             <li data-id="-1" class="hover">全部</li>
-            <li data-id="0" class="">未付款</li>
-            <li data-id="1" class="">部分付款</li>
-            <li data-id="2" class="">已付款</li>
+            <li data-id="0" class="">未收款</li>
+            <li data-id="1" class="">部分收款</li>
+            <li data-id="2" class="">已收款</li>
         </ul>
     </div>
     <div class="search-body mTop20">
@@ -32,7 +32,7 @@
     <table class="table-list mTop10">
         <tr class="tr-header">
             <td class="tLeft width150">账单编号</td>
-            <td class="tLeft width150">采购单号</td>
+            <td class="tLeft width150">订单编号</td>
             <td class="width100 tRight">总金额</td>
             <td class="width80">付款状态</td>
             <td class="width100 tRight">付款金额</td>

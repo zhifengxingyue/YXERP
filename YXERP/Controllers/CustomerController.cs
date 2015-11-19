@@ -153,7 +153,7 @@ namespace YXERP.Controllers
 
         public JsonResult GetActivityBaseInfoByID(string activityid)
         {
-            var model = ActivityBusiness.GetActivityBaseInfoByID(activityid);
+            var model = ActivityBusiness.GetActivityBaseInfoByID(activityid, CurrentUser.AgentID, CurrentUser.ClientID);
             JsonDictionary.Add("model", model);
             return new JsonResult
             {

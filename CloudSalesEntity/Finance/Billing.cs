@@ -15,6 +15,7 @@
 *└──────────────────────────────────┘
 */
 using System;
+using System.Collections.Generic;
 namespace CloudSalesEntity
 {
 	/// <summary>
@@ -104,6 +105,8 @@ namespace CloudSalesEntity
 			set{ _paystatus=value;}
 			get{return _paystatus;}
 		}
+
+        public string PayStatusStr { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -128,6 +131,10 @@ namespace CloudSalesEntity
 			set{ _invoicestatus=value;}
 			get{return _invoicestatus;}
 		}
+        public string InvoiceStatusStr { get; set; }
+
+        public decimal InvoiceMoney { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -158,6 +165,9 @@ namespace CloudSalesEntity
 			set{ _createuserid=value;}
 			get{return _createuserid;}
 		}
+
+        public Users CreateUser { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -179,6 +189,11 @@ namespace CloudSalesEntity
 			get{return _clientid;}
 		}
 		#endregion Model
+
+
+        public List<BillingPay> BillingPays { get; set; }
+
+        public List<BillingInvoice> BillingInvoices { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {

@@ -52,7 +52,12 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult DocDetail(string id)
         {
-            ViewBag.Model = StockBusiness.GetStorageDetail(id, CurrentUser.ClientID);
+            var model = StockBusiness.GetStorageDetail(id, CurrentUser.ClientID);
+            if (model == null || string.IsNullOrEmpty(model.DocID))
+            {
+                return Redirect("/Purchase/MyPurchase");
+            }
+            ViewBag.Model = model;
             return View();
         }
 

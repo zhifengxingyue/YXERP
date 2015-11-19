@@ -76,6 +76,8 @@ namespace CloudSalesEntity
 			set{ _paytype=value;}
 			get{return _paytype;}
 		}
+
+        public string PayTypeStr { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -131,6 +133,8 @@ namespace CloudSalesEntity
 			set{ _clientid=value;}
 			get{return _clientid;}
 		}
+
+        public Users CreateUser { get; set; }
 		#endregion Model
 
         public void FillData(System.Data.DataRow dr)

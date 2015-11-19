@@ -68,7 +68,7 @@ nav .action-box { width:200px; background-color:#f7f7f7;}
 nav .action-box .action { width:200px; height:50px; line-height:50px;}
 nav .action-box a{ width:200px; display:inline-block; color:#666; text-align:center;}
 
-nav .action-box .action:hover a,nav .action-box .select a{ color:#318AE4; }
+nav .action-box .action:hover a,nav .action-box .select a{ color:#318AE4; text-decoration:none; }
 
 nav .action-box .select { width:201px; background-color:#fff; margin-top:-1px; height:51px; line-height:52px;}
 

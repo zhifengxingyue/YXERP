@@ -64,10 +64,10 @@ namespace CloudSalesBusiness
         /// </summary>
         /// <param name="activityid"></param>
         /// <returns></returns>
-        public static ActivityEntity GetActivityByID(string activityid)
+        public static ActivityEntity GetActivityByID(string activityid, string agentid, string clientid)
         {
             ActivityEntity model = new ActivityEntity();
-            DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid);
+            DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid, agentid, clientid);
             if (dt.Rows.Count > 0)
             {
                 model.FillData(dt.Rows[0]);
@@ -82,10 +82,10 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        public static ActivityEntity GetActivityBaseInfoByID(string activityid)
+        public static ActivityEntity GetActivityBaseInfoByID(string activityid, string agentid, string clientid)
         {
             ActivityEntity model = new ActivityEntity();
-            DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid);
+            DataTable dt = ActivityDAL.BaseProvider.GetActivityByID(activityid, agentid, clientid);
             if (dt.Rows.Count > 0)
             {
                 model.FillData(dt.Rows[0]);
@@ -98,10 +98,10 @@ namespace CloudSalesBusiness
         /// </summary>
         /// <param name="activitycode"></param>
         /// <returns></returns>
-        public static ActivityEntity GetActivityByCode(string activitycode)
+        public static ActivityEntity GetActivityByCode(string activitycode, string agentid, string clientid)
         {
             ActivityEntity model = new ActivityEntity();
-            DataTable dt = ActivityDAL.BaseProvider.GetActivityByCode(activitycode);
+            DataTable dt = ActivityDAL.BaseProvider.GetActivityByCode(activitycode, agentid, clientid);
             if (dt.Rows.Count > 0)
             {
                 model.FillData(dt.Rows[0]);

@@ -9,7 +9,7 @@
 
 /*详情页Title*/
 .content-title { height:35px; }
-.content-title .titlename { font-size:16px; color:#666; }
+.content-title .titlename { font-size:14px; color:#666; }
 
 /*详情页-信息*/
 .content-info { width:80%; min-width:600px; overflow:auto; }

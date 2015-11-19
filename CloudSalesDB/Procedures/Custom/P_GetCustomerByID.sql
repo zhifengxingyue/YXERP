@@ -22,9 +22,9 @@ AS
 
 declare @ActivityID nvarchar(64)
 
-select @ActivityID=ActivityID from Customer where CustomerID=@CustomerID
+select @ActivityID=ActivityID from Customer where CustomerID=@CustomerID and ClientID=@ClientID
 
-select * from Customer where CustomerID=@CustomerID
+select * from Customer where CustomerID=@CustomerID and ClientID=@ClientID
 
 select * from Contact where 1<>1 and CustomerID=@CustomerID and Status<>9
 
