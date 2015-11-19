@@ -58,6 +58,9 @@ namespace CloudSalesEntity
 			get{return _autoid;}
 		}
         [Property("Lower")] 
+        public string InvoiceID { get; set; }
+
+        [Property("Lower")] 
 		public string BillingID
 		{
 			set{ _billingid=value;}
@@ -81,6 +84,8 @@ namespace CloudSalesEntity
 			set{ _type=value;}
 			get{return _type;}
 		}
+
+        public int CustomerType { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -161,6 +166,8 @@ namespace CloudSalesEntity
 			set{ _address=value;}
 			get{return _address;}
 		}
+        public string PostalCode { get; set; }
+
 		/// <summary>
 		/// 
 		/// </summary>

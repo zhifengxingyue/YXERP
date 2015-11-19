@@ -13,7 +13,7 @@ namespace CloudSalesDAL
         public static OrdersDAL BaseProvider = new OrdersDAL();
         #region 查询
 
-        public DataSet GetOrders(int searchtype, string typeid, int status, string searchuserid, string searchteamid, string searchagentid, string begintime, string endtime, 
+        public DataSet GetOrders(int searchtype, string typeid, int status, int paystatus, int invoicestatus, string searchuserid, string searchteamid, string searchagentid, string begintime, string endtime, 
                                 string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
         {
             SqlParameter[] paras = { 
@@ -22,6 +22,8 @@ namespace CloudSalesDAL
                                        new SqlParameter("@SearchType",searchtype),
                                        new SqlParameter("@TypeID",typeid),
                                        new SqlParameter("@Status",status),
+                                       new SqlParameter("@PayStatus",paystatus),
+                                       new SqlParameter("@InvoiceStatus",invoicestatus),
                                        new SqlParameter("@SearchUserID",searchuserid),
                                        new SqlParameter("@SearchTeamID",searchteamid),
                                        new SqlParameter("@SearchAgentID",searchagentid),

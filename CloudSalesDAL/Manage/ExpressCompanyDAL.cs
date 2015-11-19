@@ -12,6 +12,12 @@ namespace CloudSalesDAL.Manage
     {
         public static ExpressCompanyDAL BaseProvider = new ExpressCompanyDAL();
         #region 查询
+
+        public DataTable GetExpressCompanys()
+        {
+            return GetDataTable("select * from ExpressCompany where Status<>9");
+        }
+
         public DataTable GetExpressCompanyDetail(string id)
         {
 

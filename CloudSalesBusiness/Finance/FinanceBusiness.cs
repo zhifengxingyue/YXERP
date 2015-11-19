@@ -228,6 +228,23 @@ namespace CloudSalesBusiness
             return bl;
         }
 
+        public string CreateBillingInvoice(string billingid, int type, int customertype, decimal invoicemoney, string title, string citycode, string address, string postalcode, string name, string mobile, string remark, string userid, string agentid, string clientid)
+        {
+            string id = Guid.NewGuid().ToString().ToLower();
+            bool bl = FinanceDAL.BaseProvider.CreateBillingInvoice(id, billingid, type, customertype, invoicemoney, title, citycode, address, postalcode, name, mobile, remark, userid, agentid, clientid);
+            if (bl)
+            {
+                return id;
+            }
+            return "";
+        }
+
+        public bool AuditBillingInvoice(string invoiceid, string billingid, decimal invoicemoney, string invoicecode, string expressid, string expresscode, string userid, string agentid, string clientid)
+        {
+            bool bl = FinanceDAL.BaseProvider.AuditBillingInvoice(invoiceid, billingid, invoicemoney, invoicecode, expressid, expresscode, userid, agentid, clientid);
+            return bl;
+        }
+
         #endregion
 
         #region 编辑/删除
@@ -235,6 +252,11 @@ namespace CloudSalesBusiness
         public bool DeleteStorageBillingInvoice(string invoiceid, string billingid, string userid, string agentid, string clientid)
         {
             return FinanceDAL.BaseProvider.DeleteStorageBillingInvoice(invoiceid, billingid, userid, agentid, clientid);
+        }
+
+        public bool DeleteBillingInvoice(string invoiceid, string billingid, string userid, string agentid, string clientid)
+        {
+            return FinanceDAL.BaseProvider.DeleteBillingInvoice(invoiceid, billingid, userid, agentid, clientid);
         }
 
         #endregion

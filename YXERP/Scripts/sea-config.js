@@ -19,6 +19,8 @@ seajs.config({
         "verify": "plug/verify.js",
         //城市地区
         "city": "plug/city.js",
+        //快递公司
+        "express": "plug/express.js",
         //上传
         "upload": "plug/upload/upload.js",
         //开关插件

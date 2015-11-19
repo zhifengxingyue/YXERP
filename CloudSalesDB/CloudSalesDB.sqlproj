@@ -292,4 +292,13 @@
   <ItemGroup>
     <None Include="Procedures\Finance\P_CreateBillingPay.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_CreateBillingInvoice.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_DeleteBillingInvoice.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_AuditBillingInvoice.sql" />
+  </ItemGroup>
 </Project>

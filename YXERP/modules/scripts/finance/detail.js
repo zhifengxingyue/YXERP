@@ -121,7 +121,7 @@
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
                 var position = _this.find(".ico-dropdown").position();
-                $(".dropdown-ul li").data("id", _this.data("id")).data("userid", _this.data("userid"));
+                $(".dropdown-ul li").data("id", _this.data("id"));
                 $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 50 }).show().mouseleave(function () {
                     $(this).hide();
                 });

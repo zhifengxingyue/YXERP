@@ -18,6 +18,8 @@ CREATE PROCEDURE [dbo].[P_GetOrders]
 	@SearchType int,
 	@TypeID nvarchar(64)='',
 	@Status int=-1,
+	@PayStatus int=-1,
+	@InvoiceStatus int=-1,
 	@SearchUserID nvarchar(64)='',
 	@SearchTeamID nvarchar(64)='',
 	@SearchAgentID nvarchar(64)='',
@@ -39,8 +41,8 @@ AS
 	@orderColumn nvarchar(4000),
 	@isAsc int
 
-	select @tableName='Orders o join Customer cus on o.CustomerID=cus.CustomerID ',
-	@columns='o.*,cus.Name CustomerName ',
+	select @tableName='Orders o join Customer cus on o.CustomerID=cus.CustomerID left join Billing b on o.OrderID=b.OrderID',
+	@columns='o.*,cus.Name CustomerName,b.PayMoney,b.PayStatus,b.InvoiceStatus ',
 	@key='o.AutoID',
 	@orderColumn='o.CreateTime desc',
 	@isAsc=0
@@ -98,6 +100,16 @@ AS
 	if(@Status<>-1)
 	begin
 		set @condition +=' and o.Status = '+convert(nvarchar(2), @Status)
+	end
+
+	if(@PayStatus<>-1)
+	begin
+		set @condition +=' and b.PayStatus = '+convert(nvarchar(2), @PayStatus)
+	end
+
+	if(@InvoiceStatus<>-1)
+	begin
+		set @condition +=' and b.InvoiceStatus = '+convert(nvarchar(2), @InvoiceStatus)
 	end
 
 	if(@BeginTime<>'')

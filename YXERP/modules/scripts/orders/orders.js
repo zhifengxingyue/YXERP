@@ -10,6 +10,8 @@
         SearchType: 1,
         TypeID: '',
         Status: -1,
+        PayStatus: -1,
+        InvoiceStatus: -1,
         UserID: "",
         AgentID: "",
         TeamID: "",
@@ -92,6 +94,51 @@
                         _self.getList();
                     }
                 });
+            });
+        });
+
+        //支付状态
+        require.async("dropdown", function () {
+            var items = [
+                { ID: 0, Name: "未付款" },
+                { ID: 1, Name: "部分付款" },
+                { ID: 2, Name: "已付款" }
+            ];
+            $("#payStatus").dropdown({
+                prevText: "付款-",
+                defaultText: "全部",
+                defaultValue: "-1",
+                data: items,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    Params.PageIndex = 1;
+                    Params.PayStatus = data.value;
+                    _self.getList();
+                }
+            });
+        });
+        //开票状态
+        require.async("dropdown", function () {
+            var items = [
+                { ID: 0, Name: "未开票" },
+                { ID: 1, Name: "已申请" },
+                { ID: 2, Name: "已开票" }
+            ];
+            $("#invoiceStatus").dropdown({
+                prevText: "开票-",
+                defaultText: "全部",
+                defaultValue: "-1",
+                data: items,
+                dataValue: "ID",
+                dataText: "Name",
+                width: "180",
+                onChange: function (data) {
+                    Params.PageIndex = 1;
+                    Params.InvoiceStatus = data.value;
+                    _self.getList();
+                }
             });
         });
 

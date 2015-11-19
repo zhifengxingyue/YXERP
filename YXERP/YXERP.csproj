@@ -234,6 +234,7 @@
     <Content Include="modules\plug\choosecustomer\choosecustomer.html" />
     <Content Include="modules\plug\choosecustomer\choosecustomer.js" />
     <Content Include="modules\plug\choosecustomer\style.css" />
+    <Content Include="modules\plug\express.js" />
     <Content Include="modules\scripts\activity\activity.js" />
     <Content Include="modules\scripts\auction\buynow.js" />
     <Content Include="modules\scripts\customer\customer.js" />
@@ -274,6 +275,9 @@
     <Content Include="modules\template\finance\invoice-detail.html" />
     <Content Include="modules\template\finance\storagebillinginvoices.html" />
     <Content Include="modules\template\finance\orderbills.html" />
+    <Content Include="modules\template\finance\orderinvoice-detail.html" />
+    <Content Include="modules\template\finance\billinginvoices.html" />
+    <Content Include="modules\template\finance\invoice-audit.html" />
     <Content Include="modules\template\orders\orders.html" />
     <Content Include="modules\template\orders\cuatomerorders.html" />
     <Content Include="modules\template\shoppingcart\product-detail.html" />

@@ -182,12 +182,12 @@ namespace YXERP.Controllers
             };
         }
 
-        public JsonResult SaveOrderBillingInvoice(string entity)
+        public JsonResult SaveBillingInvoice(string entity)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            StorageBillingInvoice model = serializer.Deserialize<StorageBillingInvoice>(entity);
+            BillingInvoice model = serializer.Deserialize<BillingInvoice>(entity);
 
-            var id = FinanceBusiness.BaseBusiness.CreateStorageBillingInvoice(model.BillingID, model.Type, model.InvoiceMoney, model.InvoiceCode, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            var id = FinanceBusiness.BaseBusiness.CreateBillingInvoice(model.BillingID, model.Type, model.CustomerType, model.InvoiceMoney, model.InvoiceTitle, model.CityCode, model.Address, model.PostalCode, model.ContactName, model.ContactPhone, model.Remark, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
             model.InvoiceID = id;
             model.CreateUser = CurrentUser;
             JsonDictionary.Add("item", model);
@@ -199,9 +199,25 @@ namespace YXERP.Controllers
             };
         }
 
-        public JsonResult DeleteOrderBillingInvoice(string id, string billingid)
+        public JsonResult DeleteBillingInvoice(string id, string billingid)
         {
-            var bl = FinanceBusiness.BaseBusiness.DeleteStorageBillingInvoice(id, billingid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            var bl = FinanceBusiness.BaseBusiness.DeleteBillingInvoice(id, billingid, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("status", bl);
+
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult AuditBillingInvoice(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            BillingInvoice model = serializer.Deserialize<BillingInvoice>(entity);
+
+            bool bl = FinanceBusiness.BaseBusiness.AuditBillingInvoice(model.InvoiceID, model.BillingID, model.InvoiceMoney, model.InvoiceCode, model.ExpressID, model.ExpressCode, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+
             JsonDictionary.Add("status", bl);
 
             return new JsonResult

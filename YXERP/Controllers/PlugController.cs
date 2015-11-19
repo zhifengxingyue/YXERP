@@ -139,6 +139,17 @@ namespace YXERP.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        //快递公司
+        public JsonResult GetExpress()
+        {
+            var list = CloudSalesBusiness.Manage.ExpressCompanyBusiness.GetExpressCompanys();
+            JsonDictionary.Add("items", list);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
     }
 }

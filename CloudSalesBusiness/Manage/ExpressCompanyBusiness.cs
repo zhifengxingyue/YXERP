@@ -26,6 +26,21 @@ namespace CloudSalesBusiness.Manage
         #endregion
 
         #region  查
+        public static List<ExpressCompany> GetExpressCompanys()
+        {
+            DataTable dt = ExpressCompanyDAL.BaseProvider.GetExpressCompanys();
+            List<ExpressCompany> list = new List<ExpressCompany>();
+            ExpressCompany model;
+            foreach (DataRow item in dt.Rows)
+            {
+                model = new ExpressCompany();
+                model.FillData(item);
+                list.Add(model);
+            }
+
+            return list;
+        }
+
         public static List<ExpressCompany> GetExpressCompanys(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
             DataTable dt = CommonBusiness.GetPagerData("ExpressCompany", "*", " Status<>9 ", "AutoID", pageSize, pageIndex, out totalCount, out pageCount);

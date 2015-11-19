@@ -20,6 +20,8 @@ CREATE PROCEDURE [dbo].[P_GetOrderBillByID]
 	@ClientID nvarchar(64)
 AS
 	
+	select @BillingID=BillingID from Billing where BillingID=@BillingID or OrderID=@BillingID
+
 	select * from Billing where BillingID=@BillingID and AgentID=@AgentID
 
 	select * from BillingPay where BillingID=@BillingID and AgentID=@AgentID and Status<>9 order by PayTime desc

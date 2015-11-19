@@ -147,6 +147,29 @@ namespace CloudSalesDAL
             return ExecuteNonQuery("P_CreateBillingPay", paras, CommandType.StoredProcedure) > 0;
         }
 
+        public bool CreateBillingInvoice(string id, string billingid, int type, int customertype, decimal invoicemoney, string title, string citycode, string address, string postalcode, string name, string mobile, string remark, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@InvoiceID",id),
+                                       new SqlParameter("@BillingID",billingid),
+                                       new SqlParameter("@Type",type),
+                                       new SqlParameter("@CustomerType",customertype),
+                                       new SqlParameter("@InvoiceMoney",invoicemoney),
+                                       new SqlParameter("@InvoiceTitle",title),
+                                       new SqlParameter("@CityCode",citycode),
+                                       new SqlParameter("@Address",address),
+                                       new SqlParameter("@PostalCode",postalcode),
+                                       new SqlParameter("@ContactName",name),
+                                       new SqlParameter("@ContactPhone",mobile),
+                                       new SqlParameter("@Remark",remark),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            return ExecuteNonQuery("P_CreateBillingInvoice", paras, CommandType.StoredProcedure) > 0;
+        }
+
         #endregion
 
         #region 编辑/删除
@@ -162,6 +185,36 @@ namespace CloudSalesDAL
                                    };
 
             return ExecuteNonQuery("P_DeleteStorageBillingInvoice", paras, CommandType.StoredProcedure) > 0;
+        }
+
+        public bool DeleteBillingInvoice(string invoiceid, string billingid, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@InvoiceID",invoiceid),
+                                       new SqlParameter("@BillingID",billingid),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            return ExecuteNonQuery("P_DeleteBillingInvoice", paras, CommandType.StoredProcedure) > 0;
+        }
+
+        public bool AuditBillingInvoice(string invoiceid, string billingid, decimal invoicemoney, string invoicecode, string expressid, string expresscode, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@InvoiceID",invoiceid),
+                                       new SqlParameter("@BillingID",billingid),
+                                       new SqlParameter("@InvoiceMoney",invoicemoney),
+                                       new SqlParameter("@InvoiceCode",invoicecode),
+                                       new SqlParameter("@ExpressID",expressid),
+                                       new SqlParameter("@ExpressCode",expresscode),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+
+            return ExecuteNonQuery("P_AuditBillingInvoice", paras, CommandType.StoredProcedure) > 0;
         }
 
         #endregion

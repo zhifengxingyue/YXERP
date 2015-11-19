@@ -1,7 +1,7 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
-        City = require("city"), CityObject, CityContact,
         Verify = require("verify"), VerifyPay, VerifyInvoice,
+        Express = require("express"), ExpressInvoice,
         doT = require("dot"),
         Easydialog = require("easydialog");
     require("pager");
@@ -33,9 +33,12 @@
         $("#infoInvoiceMoney").html(model.InvoiceMoney.toFixed(2));
         $("#infoCreateTime").html(model.CreateTime.toDate("yyyy-MM-dd hh:mm:ss"));
         $("#infoCreateUser").html(model.CreateUser ? model.CreateUser.Name : "--");
-
         _self.getPays(model.BillingPays, true);
         _self.getInvoices(model.BillingInvoices, true);
+
+        if (model.BillingInvoices.length > 0) {
+            _self.invocieMoney = model.BillingInvoices[0].InvoiceMoney;
+        }
     }
 
     //绑定事件
@@ -78,19 +81,23 @@
         $("#deleteInvoice").click(function () {
             var _this = $(this);
             confirm("删除后不可恢复，确认删除此开票记录吗？", function () {
-                Global.post("/Finance/DeleteStorageBillingInvoice", {
+                Global.post("/Finance/DeleteBillingInvoice", {
                     id: _this.data("id"),
-                    billingid: _self.billingid
+                    billingid: _this.data("billingid")
                 }, function (data) {
                     if (data.status) {
                         var ele = $("#navInvoices tr[data-id='" + _this.data("id") + "']");
-                        $("#infoInvoiceMoney").html(($("#infoInvoiceMoney").html() * 1 - ele.find(".money").html() * 1).toFixed(2));
                         ele.remove();
                     } else {
-                        alert("网络异常,请稍后重试!");
+                        alert("申请已通过审核，不能删除!");
                     }
                 });
             });
+        });
+
+        $("#auditInvoice").click(function () {
+            var _this = $(this);
+            _self.auditInvoice(_this.data("id"));
         });
 
     }
@@ -114,17 +121,24 @@
         if (empty) {
             $("#navInvoices .tr-header").nextAll().remove();
         }
-        doT.exec("template/finance/storagebillinginvoices.html", function (template) {
+        doT.exec("template/finance/billinginvoices.html", function (template) {
             var innerhtml = template(items);
             innerhtml = $(innerhtml);
 
+            innerhtml.find(".ico-dropdown").each(function () {
+                if ($(this).data("status") == 1) {
+                    $(this).remove();
+                }
+            });
             innerhtml.find(".dropdown").click(function () {
                 var _this = $(this);
-                var position = _this.find(".ico-dropdown").position();
-                $(".dropdown-ul li").data("id", _this.data("id")).data("userid", _this.data("userid"));
-                $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 50 }).show().mouseleave(function () {
-                    $(this).hide();
-                });
+                if ($(this).data("status") != 1) {
+                    var position = _this.find(".ico-dropdown").position();
+                    $(".dropdown-ul li").data("id", _this.data("id")).data("billingid", _this.data("billingid"));
+                    $(".dropdown-ul").css({ "top": position.top + 20, "left": position.left - 50 }).show().mouseleave(function () {
+                        $(this).hide();
+                    });
+                }
                 return false;
             });
 
@@ -189,9 +203,9 @@
     }
 
     //登记发票
-    ObjectJS.addInvoice = function () {
+    ObjectJS.auditInvoice = function (id) {
         var _self = this;
-        doT.exec("template/finance/invoice-detail.html", function (template) {
+        doT.exec("template/finance/invoice-audit.html", function (template) {
             var innerText = template();
             Easydialog.open({
                 container: {
@@ -203,17 +217,18 @@
                             return false;
                         }
                         var entity = {
+                            InvoiceID: id,
                             BillingID: _self.billingid,
-                            Type: $("#invoicetype").val(),
                             InvoiceMoney: $("#invoicemoney").val().trim(),
                             InvoiceCode: $("#invoicecode").val().trim(),
-                            Remark: $("#remark").val().trim()
+                            ExpressID: ExpressInvoice.getID(),
+                            ExpressCode: $("#expresscode").val().trim()
                         };
                         if (entity.InvoiceMoney <= 0) {
                             alert("开票金额必须大于0！");
                             return false;
                         }
-                        _self.savePayableInvoice(entity);
+                        _self.saveInvoice(entity);
                     },
                     callback: function () {
 
@@ -221,8 +236,13 @@
                 }
             });
 
+            
             $("#invoicemoney").focus();
+            $("#invoicemoney").val(_self.invocieMoney.toFixed(2));
 
+            ExpressInvoice = Express.create({
+                elementID: "expressid"
+            });
             VerifyInvoice = Verify.createVerify({
                 element: ".verify",
                 emptyAttr: "data-empty",
@@ -245,15 +265,16 @@
         });
     }
     //保存发票信息
-    ObjectJS.savePayableInvoice = function (model) {
-        Easydialog.close();
+    ObjectJS.saveInvoice = function (model) {
         var _self = this;
-        Global.post("/Finance/SaveStorageBillingInvoice", { entity: JSON.stringify(model) }, function (data) {
-            if (data.item.InvoiceID) {
-                $("#infoInvoiceMoney").html(($("#infoInvoiceMoney").html() * 1 + data.item.InvoiceMoney).toFixed(2));
-                _self.getInvoices([data.item], false)
+        Global.post("/Finance/AuditBillingInvoice", { entity: JSON.stringify(model) }, function (data) {
+            if (data.status) {
+                var ele = $("#navInvoices tr[data-id='" + model.InvoiceID + "']");
+                ele.find(".dropdown").empty().unbind();
+                ele.find(".invoicestatus").html("已审核");
+                $("#infoInvoiceMoney").html(model.InvoiceMoney);
             } else {
-                alert("网络异常,请稍后重试!");
+                alert("开票申请已通过审核或已删除，请刷新页面重新操作！")
             }
         });
     }

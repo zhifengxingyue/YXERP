@@ -17,6 +17,10 @@ namespace YXERP.Models
 
         public int Status { get; set; }
 
+        public int PayStatus { get; set; }
+
+        public int InvoiceStatus { get; set; }
+
         public string UserID { get; set; }
 
         public string AgentID { get; set; }
