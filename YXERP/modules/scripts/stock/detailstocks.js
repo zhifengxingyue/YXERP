@@ -6,6 +6,7 @@
     var CacheDetails = [];
 
     var Params = {
+        WareID: "",
         Keywords: "",
         PageIndex: 1,
         PageSize: 20
@@ -23,6 +24,26 @@
     ObjectJS.bindEvent = function (type) {
         var _self = this;
 
+
+        Global.post("/System/GetAllWareHouses", {}, function (data) {
+            require.async("dropdown", function () {
+                $("#wares").dropdown({
+                    prevText: "仓库-",
+                    defaultText: "全部",
+                    defaultValue: "",
+                    data: data.items,
+                    dataValue: "WareID",
+                    dataText: "Name",
+                    width: "180",
+                    onChange: function (data) {
+                        Params.PageIndex = 1;
+                        Params.WareID = data.value;
+                        _self.getList();
+                    }
+                });
+            });
+        });
+
         //关键字搜索
         require.async("search", function () {
             $(".searth-module").searchKeys(function (keyWords) {
@@ -37,7 +58,7 @@
     ObjectJS.getList = function () {
         var _self = this;
         $(".tr-header").nextAll().remove();
-        Global.post("/Stock/GetProductStocks", Params, function (data) {
+        Global.post("/Stock/GetDetailStocks", Params, function (data) {
             _self.bindList(data);
         });
     }
@@ -45,35 +66,9 @@
     ObjectJS.bindList = function (data) {
         var _self = this;
 
-        doT.exec("template/stock/stocks.html", function (template) {
+        doT.exec("template/stock/batchstocks.html", function (template) {
             var innerhtml = template(data.items);
             innerhtml = $(innerhtml);
-
-            //展开明细
-            innerhtml.find(".dropdown").click(function () {
-                var _this = $(this);
-                if (!_this.data("first") || _this.data("first") == 0) {
-                    _this.data("first", 1).data("status", "open");
-                    if (CacheDetails[_this.data("id")]) {
-                        _self.bindDetails(CacheDetails[_this.data("id")], _this.parent())
-                    } else {
-                        Global.post("/Stock/GetProductDetailStocks", {
-                            productid: _this.data("id")
-                        }, function (details) {
-                            CacheDetails[_this.data("id")] = details.items;
-                            _self.bindDetails(details.items, _this.parent());
-                        });
-                    }
-                } else {
-                    if (_this.data("status") == "open") {
-                        _this.data("status", "close");
-                        _this.parent().nextAll("tr[data-pid='" + _this.data("id") + "']").hide();
-                    } else {
-                        _this.data("status", "open");
-                        _this.parent().nextAll("tr[data-pid='" + _this.data("id") + "']").show();
-                    }
-                }
-            });
 
             $(".tr-header").after(innerhtml);
 
@@ -97,16 +92,6 @@
                 Params.PageIndex = page;
                 _self.getList();
             }
-        });
-    }
-
-    ObjectJS.bindDetails = function (items, ele) {
-        var _self = this;
-
-        doT.exec("template/stock/detailstocks.html", function (template) {
-            var innerhtml = template(items);
-            innerhtml = $(innerhtml);
-            ele.after(innerhtml);
         });
     }
 

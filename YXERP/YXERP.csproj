@@ -256,6 +256,7 @@
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
     <Content Include="modules\scripts\stock\stocks.js" />
+    <Content Include="modules\scripts\stock\detailstocks.js" />
     <Content Include="modules\scripts\system\ordertype.js" />
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
@@ -300,6 +301,7 @@
     <Content Include="modules\template\purchase\storagedocaction.html" />
     <Content Include="modules\template\stock\stocks.html" />
     <Content Include="modules\template\stock\detailstocks.html" />
+    <Content Include="modules\template\stock\batchstocks.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
     <Content Include="modules\template\system\teamuser.html" />
@@ -343,6 +345,7 @@
     <Content Include="Views\Finance\OrderBillsDetail.cshtml" />
     <Content Include="Views\Finance\AccountBills.cshtml" />
     <Content Include="Views\Stock\Stocks.cshtml" />
+    <Content Include="Views\Stock\DetailStocks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

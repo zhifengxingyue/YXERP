@@ -78,6 +78,28 @@ namespace CloudSalesDAL
             return GetDataTable("select * from ProductDetail where ProductID=@ProductID and ClientID=@ClientID and Status<>9 ", paras, CommandType.Text);
         }
 
+        public DataSet GetDetailStocks(string wareid, string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@TotalCount",SqlDbType.Int),
+                                       new SqlParameter("@PageCount",SqlDbType.Int),
+                                       new SqlParameter("@WareID",wareid),
+                                       new SqlParameter("@KeyWords",keywords),
+                                       new SqlParameter("@PageSize",pageSize),
+                                       new SqlParameter("@PageIndex",pageIndex),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+            paras[0].Value = totalCount;
+            paras[1].Value = pageCount;
+
+            paras[0].Direction = ParameterDirection.InputOutput;
+            paras[1].Direction = ParameterDirection.InputOutput;
+            DataSet ds = GetDataSet("P_GetDetailStocks", paras, CommandType.StoredProcedure, "Products");
+            totalCount = Convert.ToInt32(paras[0].Value);
+            pageCount = Convert.ToInt32(paras[1].Value);
+            return ds;
+        }
+
         #endregion
 
         #region 添加

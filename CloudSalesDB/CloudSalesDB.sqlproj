@@ -311,4 +311,7 @@
   <ItemGroup>
     <None Include="Procedures\Stock\P_GetProductStocks.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Stock\P_GetDetailStocks.sql" />
+  </ItemGroup>
 </Project>

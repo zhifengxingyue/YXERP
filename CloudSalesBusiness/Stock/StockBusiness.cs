@@ -149,6 +149,42 @@ namespace CloudSalesBusiness
             return list;
         }
 
+        public List<ProductStock> GetDetailStocks(string wareid, string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
+        {
+            DataSet ds = StockDAL.BaseProvider.GetDetailStocks(wareid, keywords, pageSize, pageIndex, ref totalCount, ref pageCount, clientid);
+
+            List<ProductStock> list = new List<ProductStock>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                ProductStock model = new ProductStock();
+                model.FillData(dr);
+                model.SaleAttrValueString = "";
+                if (!string.IsNullOrEmpty(model.SaleAttrValue))
+                {
+                    string[] attrs = model.SaleAttrValue.Split(',');
+                    foreach (string attrid in attrs)
+                    {
+                        if (!string.IsNullOrEmpty(attrid))
+                        {
+                            var attr = new ProductsBusiness().GetProductAttrByID(attrid.Split(':')[0], clientid);
+                            var value = attr.AttrValues.Where(m => m.ValueID == attrid.Split(':')[1]).FirstOrDefault();
+                            if (attr != null && value != null)
+                            {
+                                model.SaleAttrValueString += attr.AttrName + "：" + value.ValueName + "，";
+                            }
+                        }
+                    }
+                    if (model.SaleAttrValueString.Length > 0)
+                    {
+                        model.SaleAttrValueString = model.SaleAttrValueString.Substring(0, model.SaleAttrValueString.Length - 1);
+                    }
+                }
+                list.Add(model);
+            }
+            return list;
+        }
+
+
         #endregion
 
         #region 添加

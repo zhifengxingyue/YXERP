@@ -374,6 +374,17 @@ namespace YXERP.Controllers
 
         #region 仓库货位
 
+        public JsonResult GetAllWareHouses()
+        {
+            List<WareHouse> list = new SystemBusiness().GetWareHouses(CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         /// <summary>
         /// 获取仓库列表
         /// </summary>

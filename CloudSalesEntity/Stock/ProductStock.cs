@@ -29,8 +29,8 @@ namespace CloudSalesEntity
 		private int _autoid;
 		private string _productid;
 		private string _produceddate;
-		private long? _stockin=0;
-		private long? _stockout=0;
+		private int _stockin=0;
+		private int _stockout=0;
 		private string _batchcode="";
 		private string _warecode="";
 		private string _depotcode="";
@@ -68,7 +68,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
-		public long? StockIn
+		public int StockIn
 		{
 			set{ _stockin=value;}
 			get{return _stockin;}
@@ -76,7 +76,7 @@ namespace CloudSalesEntity
 		/// <summary>
 		/// 
 		/// </summary>
-		public long? StockOut
+        public int StockOut
 		{
 			set{ _stockout=value;}
 			get{return _stockout;}
@@ -106,6 +106,16 @@ namespace CloudSalesEntity
 			set{ _depotcode=value;}
 			get{return _depotcode;}
 		}
+
+        public string SaleAttrValue { get; set; }
+
+        public string SaleAttrValueString { get; set; }
+
+        public string WareName { get; set; }
+
+        public string ProductName { get; set; }
+
+        public string ProductCode { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -115,6 +125,11 @@ namespace CloudSalesEntity
 			get{return _clientid;}
 		}
 		#endregion Model
+
+        public void FillData(System.Data.DataRow dr)
+        {
+            dr.FillData(this);
+        }
 
 	}
 }
