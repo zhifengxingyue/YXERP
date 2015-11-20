@@ -51,6 +51,29 @@ namespace YXERP.Controllers
             return View();
         }
 
+        public ActionResult AccountBills()
+        {
+            return View();
+        }
+
+
+        public JsonResult GetAccountBills(int Mark, string Keywords, string BeginTime, string EndTime, int PageIndex, int PageSize)
+        {
+            int totalCount = 0;
+            int pageCount = 0;
+
+            var list = FinanceBusiness.BaseBusiness.GetAccountBills(Mark, BeginTime, EndTime, Keywords, PageSize, PageIndex, ref totalCount, ref pageCount, CurrentUser.UserID, CurrentUser.AgentID, CurrentUser.ClientID);
+            JsonDictionary.Add("items", list);
+            JsonDictionary.Add("totalCount", totalCount);
+            JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
         #region Ajax应付账款
 
         public JsonResult GetPayableBills(string filter)

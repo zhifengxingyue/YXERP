@@ -301,4 +301,7 @@
   <ItemGroup>
     <None Include="Procedures\Finance\P_AuditBillingInvoice.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\Finance\P_GetClientAccountBills.sql" />
+  </ItemGroup>
 </Project>

@@ -29,13 +29,13 @@ begin tran
 
 	declare @Err int=0
 
-	declare @TotalMoney decimal(18,4),@TotalPayMoney decimal(18,4)
+	declare @TotalMoney decimal(18,4),@TotalPayMoney decimal(18,4),@BillingCode nvarchar(50)
 
 	insert into StorageBillingPay(BillingID,Type,Status,PayType,PayTime,PayMoney,Remark,CreateTime,CreateUserID,AgentID,ClientID)
 			values(@BillingID,@Type,1,@PayType,@PayTime,@PayMoney,@Remark,getdate(),@UserID,@AgentID,@ClientID)
 	set @Err+=@@error
 
-	select @TotalMoney=TotalMoney,@TotalPayMoney=PayMoney from StorageBilling where BillingID=@BillingID
+	select @TotalMoney=TotalMoney,@TotalPayMoney=PayMoney,@BillingCode=BillingCode from StorageBilling where BillingID=@BillingID
 
 	if(@TotalPayMoney+@PayMoney>=@TotalMoney)
 	begin
@@ -56,7 +56,7 @@ begin tran
 	select @levelMoney=TotalIn-TotalOut-FreezeMoney,@FreezeMoney=FreezeMoney from Clients where ClientID=@ClientID
 
 	insert into ClientAccounts(AgentID,HappenMoney,EndMoney,Mark,SubjectID,Remark,CreateUserID,ClientID)
-	values(@AgentID,@PayMoney,@levelMoney+@FreezeMoney-@PayMoney,1,1,'应付账款支出，账单编号：'+@BillingID,@UserID,@ClientID)
+	values(@AgentID,@PayMoney,@levelMoney+@FreezeMoney-@PayMoney,1,1,'采购账单支出，账单编号：'+@BillingCode,@UserID,@ClientID)
 
 	set @Err+=@@error
 	update Clients set TotalOut=TotalOut-@PayMoney where ClientID=@ClientID

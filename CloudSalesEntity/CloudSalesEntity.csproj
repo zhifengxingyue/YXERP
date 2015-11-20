@@ -51,6 +51,7 @@
     <Compile Include="Finance\Billing.cs" />
     <Compile Include="Finance\BillingInvoice.cs" />
     <Compile Include="Finance\BillingPay.cs" />
+    <Compile Include="Finance\ClientAccountsEntity.cs" />
     <Compile Include="Finance\StorageBilling.cs" />
     <Compile Include="Finance\StorageBillingInvoice.cs" />
     <Compile Include="Finance\StorageBillingPay.cs" />

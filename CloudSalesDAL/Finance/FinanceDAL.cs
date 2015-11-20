@@ -92,6 +92,31 @@ namespace CloudSalesDAL
             return ds;
         }
 
+        public DataSet GetAccountBills(int mark, string begintime, string endtime, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@totalCount",SqlDbType.Int),
+                                       new SqlParameter("@pageCount",SqlDbType.Int),
+                                       new SqlParameter("@Mark",mark),
+                                       new SqlParameter("@BeginTime",begintime),
+                                       new SqlParameter("@EndTime",endtime),
+                                       new SqlParameter("@Keywords",keyWords),
+                                       new SqlParameter("@pageSize",pageSize),
+                                       new SqlParameter("@pageIndex",pageIndex),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@AgentID", agentid),
+                                       new SqlParameter("@ClientID",clientid)
+                                   };
+            paras[0].Value = totalCount;
+            paras[1].Value = pageCount;
+
+            paras[0].Direction = ParameterDirection.InputOutput;
+            paras[1].Direction = ParameterDirection.InputOutput;
+            DataSet ds = GetDataSet("P_GetClientAccountBills", paras, CommandType.StoredProcedure);
+            totalCount = Convert.ToInt32(paras[0].Value);
+            pageCount = Convert.ToInt32(paras[1].Value);
+            return ds;
+        }
         #endregion
 
         #region 添加

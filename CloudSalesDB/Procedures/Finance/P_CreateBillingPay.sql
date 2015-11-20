@@ -29,13 +29,13 @@ begin tran
 
 	declare @Err int=0
 
-	declare @TotalMoney decimal(18,4),@TotalPayMoney decimal(18,4),@OrderID nvarchar(64)
+	declare @TotalMoney decimal(18,4),@TotalPayMoney decimal(18,4),@OrderID nvarchar(64),@BillingCode nvarchar(50)
 
 	insert into BillingPay(BillingID,Type,Status,PayType,PayTime,PayMoney,Remark,CreateTime,CreateUserID,AgentID,ClientID)
 			values(@BillingID,@Type,1,@PayType,@PayTime,@PayMoney,@Remark,getdate(),@UserID,@AgentID,@ClientID)
 	set @Err+=@@error
 
-	select @TotalMoney=TotalMoney,@TotalPayMoney=PayMoney,@OrderID=OrderID from Billing where BillingID=@BillingID
+	select @TotalMoney=TotalMoney,@TotalPayMoney=PayMoney,@OrderID=OrderID,@BillingCode=BillingCode from Billing where BillingID=@BillingID
 
 	if(@TotalPayMoney+@PayMoney>=@TotalMoney)
 	begin
@@ -60,7 +60,7 @@ begin tran
 	if(@DefaultAgentID=@AgentID)
 	begin
 		insert into ClientAccounts(AgentID,HappenMoney,EndMoney,Mark,SubjectID,Remark,CreateUserID,ClientID)
-		values(@AgentID,@PayMoney,@levelMoney+@FreezeMoney+@PayMoney,0,1,'应收账款收入，账单编号：'+@BillingID,@UserID,@ClientID)
+		values(@AgentID,@PayMoney,@levelMoney+@FreezeMoney+@PayMoney,0,1,'销售账单收款，账单编号：'+@BillingCode,@UserID,@ClientID)
 
 		set @Err+=@@error
 		update Clients set TotalIn=TotalIn+@PayMoney where ClientID=@ClientID

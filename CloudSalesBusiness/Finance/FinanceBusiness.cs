@@ -201,6 +201,22 @@ namespace CloudSalesBusiness
             }
             return model;
         }
+
+        public List<ClientAccountsEntity> GetAccountBills(int mark, string begintime, string endtime, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid, string agentid, string clientid)
+        {
+            List<ClientAccountsEntity> list = new List<ClientAccountsEntity>();
+            DataSet ds = FinanceDAL.BaseProvider.GetAccountBills(mark, begintime, endtime, keyWords, pageSize, pageIndex, ref totalCount, ref pageCount, userid, agentid, clientid);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                ClientAccountsEntity model = new ClientAccountsEntity();
+                model.FillData(dr);
+
+                model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, model.AgentID);
+
+                list.Add(model);
+            }
+            return list;
+        }
         #endregion
 
         #region 添加
@@ -239,11 +255,6 @@ namespace CloudSalesBusiness
             return "";
         }
 
-        public bool AuditBillingInvoice(string invoiceid, string billingid, decimal invoicemoney, string invoicecode, string expressid, string expresscode, string userid, string agentid, string clientid)
-        {
-            bool bl = FinanceDAL.BaseProvider.AuditBillingInvoice(invoiceid, billingid, invoicemoney, invoicecode, expressid, expresscode, userid, agentid, clientid);
-            return bl;
-        }
 
         #endregion
 
@@ -258,6 +269,13 @@ namespace CloudSalesBusiness
         {
             return FinanceDAL.BaseProvider.DeleteBillingInvoice(invoiceid, billingid, userid, agentid, clientid);
         }
+
+        public bool AuditBillingInvoice(string invoiceid, string billingid, decimal invoicemoney, string invoicecode, string expressid, string expresscode, string userid, string agentid, string clientid)
+        {
+            bool bl = FinanceDAL.BaseProvider.AuditBillingInvoice(invoiceid, billingid, invoicemoney, invoicecode, expressid, expresscode, userid, agentid, clientid);
+            return bl;
+        }
+
 
         #endregion
     }
