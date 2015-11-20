@@ -13,7 +13,7 @@ namespace CloudSalesBusiness
 {
     public class StockBusiness
     {
-
+        public static StockBusiness BaseBusiness = new StockBusiness();
         #region 查询
 
         public static List<StorageDoc> GetStorageDocList(string userid, EnumDocType type, EnumDocStatus status, string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
@@ -93,6 +93,56 @@ namespace CloudSalesBusiness
                 StorageDocAction model = new StorageDocAction();
                 model.FillData(dr);
                 model.CreateUser = OrganizationBusiness.GetUserByUserID(model.CreateUserID, agentid);
+
+                list.Add(model);
+            }
+            return list;
+        }
+
+        public List<Products> GetProductStocks(string keywords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string agentid, string clientid)
+        {
+            DataSet ds = StockDAL.BaseProvider.GetProductStocks(keywords, pageSize, pageIndex, ref totalCount, ref pageCount, clientid);
+
+            List<Products> list = new List<Products>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                Products model = new Products();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+
+        public List<ProductDetail> GetProductDetailStocks(string productid, string agentid, string clientid)
+        {
+            DataTable dt = StockDAL.BaseProvider.GetProductDetailStocks(productid, clientid);
+
+            List<ProductDetail> list = new List<ProductDetail>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ProductDetail model = new ProductDetail();
+                model.FillData(dr);
+                model.SaleAttrValueString = "";
+                if (!string.IsNullOrEmpty(model.SaleAttrValue)) 
+                {
+                    string[] attrs = model.SaleAttrValue.Split(',');
+                    foreach (string attrid in attrs)
+                    {
+                        if (!string.IsNullOrEmpty(attrid))
+                        {
+                            var attr = new ProductsBusiness().GetProductAttrByID(attrid.Split(':')[0], clientid);
+                            var value = attr.AttrValues.Where(m => m.ValueID == attrid.Split(':')[1]).FirstOrDefault();
+                            if (attr != null && value != null)
+                            {
+                                model.SaleAttrValueString += attr.AttrName + "：" + value.ValueName + "，";
+                            }
+                        }
+                    }
+                    if (model.SaleAttrValueString.Length > 0)
+                    {
+                        model.SaleAttrValueString = model.SaleAttrValueString.Substring(0, model.SaleAttrValueString.Length - 1);
+                    }
+                }
 
                 list.Add(model);
             }

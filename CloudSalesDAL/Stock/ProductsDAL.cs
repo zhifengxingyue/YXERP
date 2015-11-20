@@ -63,6 +63,13 @@ namespace CloudSalesDAL
             return dt;
         }
 
+        public DataSet GetAttrs(string clientid)
+        {
+            SqlParameter[] paras = { new SqlParameter("@ClientID", clientid) };
+            DataSet ds = GetDataSet("P_GetAttrsByClientID", paras, CommandType.StoredProcedure, "Attrs|Values");
+            return ds;
+        }
+
         public DataSet GetAttrList(string categoryid, string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientid)
         {
             SqlParameter[] paras = { 

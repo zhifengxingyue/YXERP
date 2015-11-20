@@ -120,6 +120,7 @@
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -254,6 +255,7 @@
     <Content Include="modules\scripts\purchase\purchases.js" />
     <Content Include="modules\scripts\purchase\confirmpurchase.js" />
     <Content Include="modules\scripts\purchase\docdetail.js" />
+    <Content Include="modules\scripts\stock\stocks.js" />
     <Content Include="modules\scripts\system\ordertype.js" />
     <Content Include="modules\scripts\system\sources.js" />
     <Content Include="modules\scripts\system\stages.js" />
@@ -296,6 +298,8 @@
     <Content Include="modules\template\products\brand-detail.html" />
     <Content Include="modules\template\purchase\purchases.html" />
     <Content Include="modules\template\purchase\storagedocaction.html" />
+    <Content Include="modules\template\stock\stocks.html" />
+    <Content Include="modules\template\stock\detailstocks.html" />
     <Content Include="modules\template\system\sources.html" />
     <Content Include="modules\template\system\sources-detail.html" />
     <Content Include="modules\template\system\teamuser.html" />
@@ -338,6 +342,7 @@
     <Content Include="Views\Finance\ReceivableBills.cshtml" />
     <Content Include="Views\Finance\OrderBillsDetail.cshtml" />
     <Content Include="Views\Finance\AccountBills.cshtml" />
+    <Content Include="Views\Stock\Stocks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

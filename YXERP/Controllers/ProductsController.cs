@@ -122,7 +122,15 @@ namespace YXERP.Controllers
         /// <returns></returns>
         public ActionResult ChooseDetail(string pid, string did, int type = 0, string guid = "")
         {
+            if (string.IsNullOrEmpty(pid))
+            {
+                return Redirect("ProductList");
+            }
             var model = new ProductsBusiness().GetProductByIDForDetails(pid);
+            if (model == null || string.IsNullOrEmpty(model.ProductID))
+            {
+                return Redirect("ProductList");
+            }
             ViewBag.Model = model;
             ViewBag.DetailID = did;
             ViewBag.OrderType = type;
@@ -314,7 +322,7 @@ namespace YXERP.Controllers
             {
                 attrID = new ProductsBusiness().AddProductAttr(model.AttrName, model.Description, model.CategoryID, model.Type, CurrentUser.UserID, CurrentUser.ClientID);
             }
-            else if (new ProductsBusiness().UpdateProductAttr(model.AttrID, model.AttrName, model.Description, OperateIP, CurrentUser.UserID))
+            else if (new ProductsBusiness().UpdateProductAttr(model.AttrID, model.AttrName, model.Description, OperateIP, CurrentUser.UserID, CurrentUser.ClientID))
             {
                 attrID = model.AttrID.ToString();
             }
@@ -341,7 +349,7 @@ namespace YXERP.Controllers
             }
             else
             {
-                var model = new ProductsBusiness().GetProductAttrByID(attrID);
+                var model = new ProductsBusiness().GetProductAttrByID(attrID, CurrentUser.ClientID);
                 JsonDictionary.Add("Item", model);
             }
             return new JsonResult
@@ -368,7 +376,7 @@ namespace YXERP.Controllers
                 {
                     valueID = new ProductsBusiness().AddAttrValue(model.ValueName, model.AttrID, CurrentUser.UserID, CurrentUser.ClientID);
                 }
-                else if (new ProductsBusiness().UpdateAttrValue(model.ValueID, model.ValueName, OperateIP, CurrentUser.UserID))
+                else if (new ProductsBusiness().UpdateAttrValue(model.ValueID, model.AttrID, model.ValueName, OperateIP, CurrentUser.UserID, CurrentUser.ClientID))
                 {
                     valueID = model.ValueID.ToString();
                 }

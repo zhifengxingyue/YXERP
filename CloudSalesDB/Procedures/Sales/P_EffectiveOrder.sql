@@ -103,9 +103,9 @@ begin
 							values(@AgentOrderID,@ProductDetailID,@ProductID,@UnitID,0,@Quantity,@Price,@ProductAmount,@Remark,@ClientID)
 		
 		--产品库存处理
-		update Products set SaleCount=SaleCount+@Quantity,LogicOut=LogicOut+@Quantity where ProductID=@ProductID
+		update Products set LogicOut=LogicOut+@Quantity where ProductID=@ProductID
 
-		update ProductDetail set SaleCount=SaleCount+@Quantity,LogicOut=LogicOut+@Quantity where ProductDetailID=@ProductDetailID
+		update ProductDetail set LogicOut=LogicOut+@Quantity where ProductDetailID=@ProductDetailID
 
 		set @Err+=@@error
 

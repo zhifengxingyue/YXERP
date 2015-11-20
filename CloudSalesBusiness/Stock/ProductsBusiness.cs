@@ -23,18 +23,28 @@ namespace CloudSalesBusiness
 
         public static object SingleLock = new object();
 
+        #region Cache
+
+        private static Dictionary<string, List<ProductAttr>> _attrs;
+
+        private static Dictionary<string, List<ProductAttr>> ClientAttrs
+        {
+            get 
+            {
+                if (_attrs == null)
+                {
+                    _attrs = new Dictionary<string, List<ProductAttr>>();
+                }
+                return _attrs;
+            }
+            set { _attrs = value; }
+        }
+
+        #endregion
+
+
         #region 查询
 
-        /// <summary>
-        /// 获取品牌列表
-        /// </summary>
-        /// <param name="keyWords">关键词</param>
-        /// <param name="pageSize">每页条数</param>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="totalCount">总记录数</param>
-        /// <param name="pageCount">总页数</param>
-        /// <param name="clientID">客户端ID</param>
-        /// <returns></returns>
         public List<Brand> GetBrandList(string keyWords, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
@@ -66,11 +76,6 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 获取品牌实体
-        /// </summary>
-        /// <param name="brandID">传入参数</param>
-        /// <returns></returns>
         public Brand GetBrandByBrandID(string brandID)
         {
             var dal = new ProductsDAL();
@@ -85,10 +90,6 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 获取单位列表
-        /// </summary>
-        /// <returns></returns>
         public List<ProductUnit> GetClientUnits(string clientid)
         {
             var dal = new ProductsDAL();
@@ -101,6 +102,32 @@ namespace CloudSalesBusiness
                 model.FillData(dr);
                 list.Add(model);
             }
+            return list;
+        }
+
+        public List<ProductAttr> GetAttrs(string clientid)
+        {
+            if (ClientAttrs.ContainsKey(clientid))
+            {
+                return ClientAttrs[clientid];
+            }
+
+            List<ProductAttr> list = new List<ProductAttr>();
+            DataSet ds = new ProductsDAL().GetAttrs(clientid);
+            foreach (DataRow dr in ds.Tables["Attrs"].Rows)
+            {
+                ProductAttr model = new ProductAttr();
+                model.FillData(dr);
+                model.AttrValues = new List<AttrValue>();
+                foreach (DataRow item in ds.Tables["Values"].Rows)
+                {
+                    AttrValue attrValue = new AttrValue();
+                    attrValue.FillData(item);
+                    model.AttrValues.Add(attrValue);
+                }
+            }
+            ClientAttrs.Add(clientid, list);
+
             return list;
         }
 
@@ -136,12 +163,6 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 获取属性列表
-        /// </summary>
-        /// <param name="categoryid">产品分类ID</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public List<ProductAttr> GetAttrList(string categoryid, string clientid)
         {
             var dal = new ProductsDAL();
@@ -157,39 +178,34 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 根据属性ID获取属性
-        /// </summary>
-        /// <param name="attrID"></param>
-        /// <returns></returns>
-        public ProductAttr GetProductAttrByID(string attrID)
+        public ProductAttr GetProductAttrByID(string attrid, string clientid)
         {
+            var list = GetAttrs(clientid);
+            if (list.Where(m => m.AttrID == attrid).Count() > 0)
+            {
+                return list.Where(m => m.AttrID == attrid).FirstOrDefault();
+            }
             var dal = new ProductsDAL();
-            DataSet ds = dal.GetProductAttrByID(attrID);
+            DataSet ds = dal.GetProductAttrByID(attrid);
 
             ProductAttr model = new ProductAttr();
             if (ds.Tables.Contains("Attrs") && ds.Tables["Attrs"].Rows.Count > 0)
             {
                 model.FillData(ds.Tables["Attrs"].Rows[0]);
-                List<AttrValue> list = new List<AttrValue>();
+                model.AttrValues = new List<AttrValue>();
                 foreach (DataRow item in ds.Tables["Values"].Rows)
                 {
                     AttrValue attrValue = new AttrValue();
                     attrValue.FillData(item);
-                    list.Add(attrValue);
+                    model.AttrValues.Add(attrValue);
                 }
-                model.AttrValues = list;
             }
-            
+
+            ClientAttrs[clientid].Add(model);
             
             return model;
         }
 
-        /// <summary>
-        /// 获取下级分类
-        /// </summary>
-        /// <param name="categoryid">分类ID</param>
-        /// <returns></returns>
         public List<Category> GetChildCategorysByID(string categoryid, string clientid)
         {
             var dal = new ProductsDAL();
@@ -209,8 +225,6 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 获取产品分类
         /// </summary>
-        /// <param name="categoryid">分类ID</param>
-        /// <returns></returns>
         public Category GetCategoryByID(string categoryid)
         {
             var dal = new ProductsDAL();
@@ -228,8 +242,6 @@ namespace CloudSalesBusiness
         /// <summary>
         /// 获取产品分类详情（包括属性和值）
         /// </summary>
-        /// <param name="categoryid">分类ID</param>
-        /// <returns></returns>
         public Category GetCategoryDetailByID(string categoryid)
         {
             var dal = new ProductsDAL();
@@ -271,16 +283,6 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 获取产品列表
-        /// </summary>
-        /// <param name="keyWords">关键词</param>
-        /// <param name="pageSize">页Size</param>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="totalCount">总数</param>
-        /// <param name="pageCount">总页数</param>
-        /// <param name="clientID">客户端ID</param>
-        /// <returns></returns>
         public List<Products> GetProductList(string categoryid, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
@@ -296,11 +298,6 @@ namespace CloudSalesBusiness
             return list;
         }
 
-        /// <summary>
-        /// 根据产品ID获取产品信息(包括子产品)
-        /// </summary>
-        /// <param name="productid"></param>
-        /// <returns></returns>
         public Products GetProductByID(string productid)
         {
             var dal = new ProductsDAL();
@@ -355,33 +352,12 @@ namespace CloudSalesBusiness
             return model;
         }
 
-        /// <summary>
-        /// 是否存在产品编码
-        /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
         public bool IsExistProductCode(string code, string clientid)
         {
             object obj = CommonBusiness.Select("Products", " Count(0) ", "ClientID='" + clientid + "' and ProductCode='" + code + "'");
             return Convert.ToInt32(obj) > 0;
         }
 
-        /// <summary>
-        /// 筛选产品
-        /// </summary>
-        /// <param name="categoryid">分类ID</param>
-        /// <param name="Attrs">属性</param>
-        /// <param name="beginprice"></param>
-        /// <param name="endprice"></param>
-        /// <param name="keyWords"></param>
-        /// <param name="orderby">排序字段</param>
-        /// <param name="isasc">是否升序</param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="totalCount"></param>
-        /// <param name="pageCount"></param>
-        /// <param name="clientID"></param>
-        /// <returns></returns>
         public List<Products> GetFilterProducts(string categoryid, List<FilterAttr> Attrs, int doctype, string beginprice, string endprice, string keyWords, string orderby, bool isasc, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string clientID)
         {
             var dal = new ProductsDAL();
@@ -520,100 +496,66 @@ namespace CloudSalesBusiness
             }
         }
 
-        /// <summary>
-        /// 添加单位
-        /// </summary>
-        /// <param name="unitName">单位名称</param>
-        /// <param name="description">描述</param>
-        /// <returns></returns>
         public string AddUnit(string unitName, string description,string operateid,string clientid)
         {
             var dal = new ProductsDAL();
             return dal.AddUnit(unitName, description, operateid, clientid);
         }
-        /// <summary>
-        /// 添加属性
-        /// </summary>
-        /// <param name="attrName">属性名称</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
+
         public string AddProductAttr(string attrName, string description, string categoryID, int type, string operateid, string clientid)
         {
-            var attrID = Guid.NewGuid().ToString();
+            var attrID = Guid.NewGuid().ToString().ToLower();
             var dal = new ProductsDAL();
             if (dal.AddProductAttr(attrID, attrName, description, categoryID, type, operateid, clientid))
             {
-                return attrID.ToString();
+                if (ClientAttrs.ContainsKey(clientid))
+                {
+                    ClientAttrs[clientid].Add(new ProductAttr()
+                    {
+                        AttrID = attrID,
+                        AttrName = attrName,
+                        Description = description,
+                        CategoryID = categoryID,
+                        ClientID = clientid,
+                        CreateTime = DateTime.Now,
+                        CreateUserID = operateid,
+                        Status = 1,
+                        AttrValues = new List<AttrValue>()
+                    });
+                }
+                return attrID;
             }
             return string.Empty;
         }
 
-        /// <summary>
-        /// 添加属性值
-        /// </summary>
-        /// <param name="valueName">值</param>
-        /// <param name="attrID">属性ID</param>
-        /// <returns></returns>
         public string AddAttrValue(string valueName, string attrID, string operateid, string clientid)
         {
-            var valueID = Guid.NewGuid().ToString();
+            var valueID = Guid.NewGuid().ToString().ToLower();
             var dal = new ProductsDAL();
             if (dal.AddAttrValue(valueID, valueName, attrID, operateid, clientid))
             {
-                return valueID.ToString();
+                var model = GetProductAttrByID(attrID, clientid);
+                model.AttrValues.Add(new AttrValue()
+                {
+                    ValueID = valueID,
+                    ValueName = valueName,
+                    Status = 1,
+                    AttrID = attrID,
+                    ClientID = clientid,
+                    CreateTime = DateTime.Now
+                });
+
+                return valueID;
             }
             return string.Empty;
         }
 
-        /// <summary>
-        /// 添加产品分类
-        /// </summary>
-        /// <param name="categoryCode">编码</param>
-        /// <param name="categoryName">名称</param>
-        /// <param name="pid">上级ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="attrlist">规格参数</param>
-        /// <param name="saleattr">销售属性</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public string AddCategory(string categoryCode, string categoryName, string pid, int status, List<string> attrlist, List<string> saleattr, string description, string operateid, string clientid)
         {
             var dal = new ProductsDAL();
             return dal.AddCategory(categoryCode, categoryName, pid, status, string.Join(",", attrlist), string.Join(",", saleattr), description, operateid, clientid);
         }
 
-        /// <summary>
-        /// 添加产品
-        /// </summary>
-        /// <param name="productCode">产品编码</param>
-        /// <param name="productName">产品名称</param>
-        /// <param name="generalName">常用名</param>
-        /// <param name="iscombineproduct">是否组合产品</param>
-        /// <param name="brandid">品牌ID</param>
-        /// <param name="bigunitid">大单位</param>
-        /// <param name="smallunitid">小单位</param>
-        /// <param name="bigSmallMultiple">大小单位比例</param>
-        /// <param name="categoryid">分类ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="attrlist">属性列表</param>
-        /// <param name="valuelist">值列表</param>
-        /// <param name="attrvaluelist">属性值键值对</param>
-        /// <param name="commonprice">原价</param>
-        /// <param name="price">优惠价</param>
-        /// <param name="weight">重量</param>
-        /// <param name="isnew">是否新品</param>
-        /// <param name="isRecommend">是否推荐</param>
-        /// <param name="effectiveDays">有效期天数</param>
-        /// <param name="discountValue">折扣</param>
-        /// <param name="productImg">产品图片</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public string AddProduct(string productCode, string productName, string generalName, bool iscombineproduct, string brandid, string bigunitid, string smallunitid, int bigSmallMultiple,
                                  string categoryid, int status, string attrlist, string valuelist, string attrvaluelist, decimal commonprice, decimal price, decimal weight, bool isnew,
                                  bool isRecommend, int isallow, int isautosend, int effectiveDays, decimal discountValue, string productImg, string shapeCode, string description, List<ProductDetail> details, string operateid, string clientid)
@@ -649,38 +591,13 @@ namespace CloudSalesBusiness
                 return pid;
             }
         }
-        /// <summary>
-        /// 添加分类通用属性
-        /// </summary>
-        /// <param name="categoryid"></param>
-        /// <param name="attrid"></param>
-        /// <param name="type"></param>
-        /// <param name="operateIP"></param>
-        /// <param name="operateID"></param>
-        /// <returns></returns>
+        
         public bool AddCategoryAttr(string categoryid, string attrid, int type, string operateIP, string operateID)
         {
             var dal = new ProductsDAL();
             return dal.AddCategoryAttr(categoryid, attrid, type, operateID);
         }
 
-        /// <summary>
-        /// 添加子产品
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="productCode">产品Code</param>
-        /// <param name="shapeCode">条形码</param>
-        /// <param name="attrlist">规格</param>
-        /// <param name="valuelist">值</param>
-        /// <param name="attrvaluelist"></param>
-        /// <param name="price">价格</param>
-        /// <param name="weight">重量</param>
-        /// <param name="unitid">单位</param>
-        /// <param name="productImg">图片</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public string AddProductDetails(string productid, string productCode, string shapeCode, string attrlist, string valuelist, string attrvaluelist, decimal price, decimal weight,decimal bigprice, string productImg, string description, string operateid, string clientid)
         {
             lock (SingleLock)
@@ -744,14 +661,6 @@ namespace CloudSalesBusiness
             return dal.UpdateBrand(brandID, name, anotherName, countryCode, cityCode, status, icopath, remark, brandStyle, operateIP, operateID);
         }
 
-        /// <summary>
-        /// 编辑单位
-        /// </summary>
-        /// <param name="unitID">单位ID</param>
-        /// <param name="unitName">单位名称</param>
-        /// <param name="desciption">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <returns></returns>
         public bool UpdateUnit(string unitID, string unitName, string desciption, string operateID)
         {
             var dal = new ProductsDAL();
@@ -761,84 +670,50 @@ namespace CloudSalesBusiness
             return dal.UpdateUnit(unitID, unitName, desciption);
         }
 
-        /// <summary>
-        /// 编辑单位状态
-        /// </summary>
-        /// <param name="unitID">单位ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
         public bool UpdateUnitStatus(string unitID, EnumStatus status, string operateIP, string operateID)
         {
             var dal = new ProductsDAL();
             return dal.UpdateUnitStatus(unitID, (int)status);
         }
 
-        /// <summary>
-        /// 编辑属性信息
-        /// </summary>
-        /// <param name="attrID">属性ID</param>
-        /// <param name="attrName">属性名称</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
-        public bool UpdateProductAttr(string attrID, string attrName, string description, string operateIP, string operateID)
+        public bool UpdateProductAttr(string attrID, string attrName, string description, string operateIP, string operateID,string clientid)
         {
             var dal = new ProductsDAL();
-            return dal.UpdateProductAttr(attrID, attrName, description);
+            var bl = dal.UpdateProductAttr(attrID, attrName, description);
+            if (bl)
+            {
+                var model = GetProductAttrByID(attrID, clientid);
+                model.AttrName = attrName;
+                model.Description = description;
+            }
+            return bl;
         }
 
-        /// <summary>
-        /// 编辑属性值
-        /// </summary>
-        /// <param name="valueID">值ID</param>
-        /// <param name="valueName">名称</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
-        public bool UpdateAttrValue(string valueID, string valueName, string operateIP, string operateID)
+        public bool UpdateAttrValue(string valueID, string attrid, string valueName, string operateIP, string operateID, string clientid)
         {
             var dal = new ProductsDAL();
-            return dal.UpdateAttrValue(valueID, valueName);
+            var bl = dal.UpdateAttrValue(valueID, valueName);
+            if (bl)
+            {
+                var model = GetProductAttrByID(attrid, clientid);
+                var value = model.AttrValues.Where(m => m.ValueID == valueID).FirstOrDefault();
+                value.ValueName = valueName;
+            }
+            return bl;
         }
-        /// <summary>
-        /// 编辑属性状态
-        /// </summary>
-        /// <param name="attrid">属性ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
+
         public bool UpdateProductAttrStatus(string attrid, EnumStatus status, string operateIP, string operateID)
         {
             var dal = new ProductsDAL();
             return dal.UpdateProductAttrStatus(attrid, (int)status);
         }
-        /// <summary>
-        /// 编辑产品分类属性状态
-        /// </summary>
-        /// <param name="categoryid">分类ID</param>
-        /// <param name="attrid">属性ID</param>
-        /// <param name="status"></param>
-        /// <param name="operateIP"></param>
-        /// <param name="operateID"></param>
-        /// <returns></returns>
+
         public bool UpdateCategoryAttrStatus(string categoryid, string attrid, EnumStatus status, int type, string operateIP, string operateID)
         {
             var dal = new ProductsDAL();
             return dal.UpdateCategoryAttrStatus(categoryid, attrid, (int)status, type);
         }
 
-        /// <summary>
-        /// 编辑属性值状态
-        /// </summary>
-        /// <param name="valueid">属性值ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
         public bool UpdateAttrValueStatus(string valueid, EnumStatus status, string operateIP, string operateID)
         {
             var dal = new ProductsDAL();
@@ -857,70 +732,21 @@ namespace CloudSalesBusiness
             return dal.DeleteCategory(categoryid, operateid, out result);
         }
 
-        /// <summary>
-        /// 编辑产品状态
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="status">状态</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
         public bool UpdateProductStatus(string productid, EnumStatus status, string operateIP, string operateID)
         {
             return CommonBusiness.Update("Products", "Status", ((int)status).ToString(), " ProductID='" + productid + "'");
         }
-        /// <summary>
-        /// 编辑产品是否新品
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="isNew">true 新品</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
+
         public bool UpdateProductIsNew(string productid, bool isNew, string operateIP, string operateID)
         {
             return CommonBusiness.Update("Products", "IsNew", isNew ? "1" : "0", " ProductID='" + productid + "'");
         }
-        /// <summary>
-        /// 编辑产品是否推荐
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="isRecommend">true 推荐</param>
-        /// <param name="operateIP">操作IP</param>
-        /// <param name="operateID">操作人</param>
-        /// <returns></returns>
+
         public bool UpdateProductIsRecommend(string productid, bool isRecommend, string operateIP, string operateID)
         {
             return CommonBusiness.Update("Products", "IsRecommend", isRecommend ? "1" : "0", " ProductID='" + productid + "'");
         }
 
-        /// <summary>
-        /// 编辑产品信息
-        /// </summary>
-        /// <param name="productid">产品ID</param>
-        /// <param name="productCode">产品编码</param>
-        /// <param name="productName">产品名称</param>
-        /// <param name="generalName">常用名</param>
-        /// <param name="iscombineproduct">是否组合产品</param>
-        /// <param name="brandid">品牌ID</param>
-        /// <param name="bigunitid">大单位</param>
-        /// <param name="smallunitid">小单位</param>
-        /// <param name="bigSmallMultiple">大小单位比例</param>
-        /// <param name="status">状态</param>
-        /// <param name="attrlist">属性列表</param>
-        /// <param name="valuelist">值列表</param>
-        /// <param name="attrvaluelist">属性值键值对</param>
-        /// <param name="commonprice">原价</param>
-        /// <param name="price">优惠价</param>
-        /// <param name="weight">重量</param>
-        /// <param name="isnew">是否新品</param>
-        /// <param name="isRecommend">是否推荐</param>
-        /// <param name="effectiveDays">有效期天数</param>
-        /// <param name="discountValue">折扣</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid">操作人</param>
-        /// <param name="clientid">客户端ID</param>
-        /// <returns></returns>
         public bool UpdateProduct(string productid,string productCode, string productName, string generalName, bool iscombineproduct, string brandid, string bigunitid, string smallunitid, int bigSmallMultiple,
                          int status, string categoryid, string attrlist, string valuelist, string attrvaluelist, decimal commonprice, decimal price, decimal weight, bool isnew,
                          bool isRecommend, int isallow, int isautosend, int effectiveDays, decimal discountValue, string productImg, string shapeCode, string description, string operateid, string clientid)
@@ -945,36 +771,11 @@ namespace CloudSalesBusiness
                                     valuelist, attrvaluelist, commonprice, price, weight, isnew, isRecommend, isallow, isautosend, effectiveDays, discountValue, productImg, shapeCode, description, operateid, clientid);
         }
 
-        /// <summary>
-        /// 编辑子产品状态
-        /// </summary>
-        /// <param name="productdetailid"></param>
-        /// <param name="status"></param>
-        /// <param name="operateIP"></param>
-        /// <param name="operateID"></param>
-        /// <returns></returns>
         public bool UpdateProductDetailsStatus(string productdetailid, EnumStatus status, string operateIP, string operateID)
         {
             return CommonBusiness.Update("ProductDetail", "Status", (int)status, " ProductDetailID='" + productdetailid + "'");
         }
 
-
-        /// <summary>
-        /// 编辑子产品
-        /// </summary>
-        /// <param name="detailid">子产品ID</param>
-        /// <param name="productid">产品ID</param>
-        /// <param name="productCode">产品Code</param>
-        /// <param name="shapeCode">条形码</param>
-        /// <param name="attrlist">规格</param>
-        /// <param name="valuelist">值</param>
-        /// <param name="attrvaluelist"></param>
-        /// <param name="price">价格</param>
-        /// <param name="weight">重量</param>
-        /// <param name="description">描述</param>
-        /// <param name="operateid"></param>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
         public bool UpdateProductDetails(string detailid, string productid, string productCode, string shapeCode, decimal bigPrice, string attrlist, string valuelist, string attrvaluelist, decimal price, decimal weight, string description, string productImg, string operateid, string clientid)
         {
             lock (SingleLock)
